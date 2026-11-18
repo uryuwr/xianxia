@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 洞府总览（v2）</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/strokes.css">
+<link rel="stylesheet" href="kit/ink-ui.css">
+<script src="kit/ink-ui.js"></script>
+<style>
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+.abs { position: absolute; }
+/* 洞府本身就是界面：设施是挂在画里的签 */
+.painting { left: 200px; top: 0; width: 1080px; height: 608px; background: url(img/pavilion.jpg) 0 0 / 100% 100%; mix-blend-mode: multiply; filter: sepia(.12) contrast(1.02);
+  -webkit-mask-image: radial-gradient(ellipse 62% 70% at 55% 42%, #000 55%, transparent 96%); mask-image: radial-gradient(ellipse 62% 70% at 55% 42%, #000 55%, transparent 96%); }
+.side { left: 52px; top: 44px; display: flex; gap: 16px; }
+.side .t { writing-mode: vertical-rl; font-size: 70px; color: var(--ink); }
+.side .ink-tiba { margin-top: 12px; }
+.res { left: 50px; top: 400px; display: flex; flex-direction: column; gap: 12px; }
+.res .c { display: flex; align-items: center; gap: 10px; }
+.res .c .n { font-family: var(--f-display); font-size: 24px; color: var(--ink); line-height: 1; }
+.res .c .n small { font-family: var(--f-ui); font-size: 11px; color: var(--ink-dan); margin-left: 4px; }
+.tag { position: absolute; }
+.tag .ink-paper { padding: 14px 9px 12px; }
+.tag.on .ink-paper > .ink-sheet::before { background: var(--ink-tex-paper), #fbf6e8; }
+.hint { position: absolute; font-family: var(--f-ui); font-size: 11px; color: var(--ink-nong); white-space: nowrap; padding: 4px 14px; background: radial-gradient(ellipse at center, rgba(245,240,227,.95) 50%, rgba(245,240,227,0) 74%); }
+.hint b { color: var(--zhu); font-weight: 700; }
+.todo { left: 250px; top: 560px; width: 560px; padding: 18px 26px 18px; }
+.todo .ink-h { font-size: 18px; margin-bottom: 4px; }
+.todo .cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 30px; }
+.todo .ink-row { font-size: 14px; padding: 5px 2px; }
+.todo .ink-row .v { font-family: var(--f-kai); font-size: 14px; }
+.go { right: 58px; bottom: 40px; display: flex; align-items: center; gap: 22px; }
+</style>
+</head>
+<body class="ink-stage">
+  <div class="abs painting"></div>
+
+  <div class="abs side">
+    <div class="t ink-splash">青岚洞府</div>
+    <div class="ink-tiba">山不在高 · 有灵则名<span class="ink-seal two" style="--s:30px;display:inline-flex">二阶</span></div>
+  </div>
+  <div class="abs res">
+    <div class="c"><span class="ink-seal round gold" style="--s:26px;font-size:12px">石</span><span class="n">2,431<small>灵石</small></span></div>
+    <div class="c"><span class="ink-seal round green" style="--s:26px;font-size:12px">材</span><span class="n">38<small>灵材</small></span></div>
+    <div class="c"><span class="ink-seal round blue" style="--s:26px;font-size:12px">丹</span><span class="n">9<small>丹药</small></span></div>
+    <div class="c"><span class="ink-seal round" style="--s:26px;font-size:12px">修</span><span class="n">1,306<small>/ 1,400</small></span></div>
+  </div>
+
+  <!-- 设施挂签：钉在画里对应的位置 -->
+  <div class="tag" style="left:440px;top:262px"><div class="ink-paper slip ink-tag">参悟蒲团<small>一阶</small><s></s></div></div>
+  <span class="hint" style="left:490px;top:300px">寒冰锥 · 可悟<b>二重</b></span>
+  <div class="tag" style="left:568px;top:120px"><div class="ink-paper slip ink-tag">仓库<small>二阶</small></div></div>
+  <div class="tag on" style="left:812px;top:110px"><div class="ink-paper slip ink-tag on">炼丹炉<small>二阶</small><s></s></div></div>
+  <span class="hint" style="left:864px;top:150px">聚气丹 ×2 <b>可炼</b></span>
+  <div class="tag" style="left:618px;top:356px"><div class="ink-paper slip ink-tag">鉴宝台<small>一阶</small><s></s></div></div>
+  <span class="hint" style="left:668px;top:394px">未鉴定 <b>1</b></span>
+  <div class="tag" style="left:914px;top:346px"><div class="ink-paper slip ink-tag">药园<small>一阶</small></div></div>
+  <span class="hint" style="left:964px;top:384px">寒露草 · 再二局成熟</span>
+  <div class="tag" style="left:1172px;top:300px"><div class="ink-paper slip ink-tag">灵泉<small>一阶</small></div></div>
+  <div class="tag" style="left:1056px;top:120px"><div class="ink-paper slip ink-tag locked">炼器鼎<small>未建 · 三阶开</small></div></div>
+  <div class="tag" style="left:930px;top:470px"><div class="ink-paper slip ink-tag on">出行台</div></div>
+
+  <section class="abs todo ink-paper alt">
+    <div class="ink-h">今日可办</div>
+    <div class="cols ink-list">
+      <div class="ink-row"><span class="k">炼丹炉</span><span class="v">聚气丹 ×2 可炼</span></div>
+      <div class="ink-row"><span class="k">鉴宝台</span><span class="v">未鉴定的剑 · 宝光</span></div>
+      <div class="ink-row"><span class="k">参悟蒲团</span><span class="v">寒冰锥 二重 · 三卷已齐</span></div>
+      <div class="ink-row"><span class="k">境界</span><span class="v">距六层 94 修为</span></div>
+    </div>
+  </section>
+
+  <div class="abs go">
+    <span class="ink-btn">境界 <span class="key">C</span></span>
+    <span class="ink-btn">天机镜 <span class="key">M</span></span>
+    <button class="ink-seal-btn">出行</button>
+  </div>
+</body>
+</html>

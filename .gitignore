@@ -1,0 +1,32 @@
+node_modules/
+dist/
+work/
+
+# ---- 临时产物（测试 / 性能 / 视频 / 构建 / 打包），不进仓库 ----
+# 注：上面的 work/ 已整体排除；下面逐条列出，便于以后若放开 work/ 时仍然生效
+work/shots/
+work/regress/
+work/perf/
+work/perf_backup/
+work/video/
+work/tmp/
+work/*_tmp/
+*.blend1
+dist/
+release/
+node_modules/
+node_modules/.vite/
+.vite/
+# Python 虚拟环境与缓存（数值 / 关卡 sim）
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+docs/review/level/_cache/
+# 系统 / 编辑器杂项
+.DS_Store
+Thumbs.db
+*.log
+
+# 大文件 / 本地工程
+*.blend

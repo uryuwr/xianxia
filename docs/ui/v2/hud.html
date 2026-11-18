@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 游戏内 HUD（v2）</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/strokes.css">
+<link rel="stylesheet" href="kit/ink-ui.css">
+<script src="kit/ink-ui.js"></script>
+<style>
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+body { background: #ddd url(img/play.jpg) center / cover; position: relative; font-family: var(--f-kai); color: var(--ink); }
+.abs { position: absolute; }
+/* 左上：生命与真气 */
+.vitals { left: 58px; top: 26px; --wash-color: rgba(240, 234, 220, 0.9); padding: 10px 4px; }
+.vitals .realm { font-family: var(--f-display); font-size: 15px; letter-spacing: .14em; color: var(--ink-nong); margin-left: 2px; }
+.dash { display: flex; gap: 7px; margin: 4px 0 0 46px; }
+.dash i { width: 11px; height: 11px; background: var(--ink-jiao); -webkit-mask: var(--ink-splash-1) center / 160% 160% no-repeat; mask: var(--ink-splash-1) center / 160% 160% no-repeat; }
+.dash i.off { background: var(--ink-qing); }
+/* 上中：天时 */
+.sky { left: 50%; top: 14px; transform: translateX(-50%); width: 360px; text-align: center; --wash-color: rgba(240, 234, 220, 0.7); padding: 4px 0 8px; }
+.sky .times { display: flex; justify-content: space-between; font-family: var(--f-display); font-size: 16px; color: var(--ink-dan); padding: 0 14px; }
+.sky .times b { font-weight: 400; color: var(--ink); font-size: 22px; line-height: 18px; }
+.sky .times .night { color: var(--zhu); opacity: .55; }
+.sky .track { position: relative; height: 12px; margin: 2px 4px 0; }
+.sky .track .ink-bar { position: absolute; inset: 0; --bc: var(--ink-nong); }
+.sky .mark { position: absolute; top: -5px; width: 14px; height: 22px; background: var(--zhu); border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; transform: translateX(-50%); box-shadow: 0 0 0 2px rgba(245,240,227,.8); }
+.sky .left { font-family: var(--f-ui); font-size: 12px; color: var(--ink-zhong); margin-top: 3px; letter-spacing: .05em; }
+.sky .left b { color: var(--zhu); font-weight: 700; }
+/* 右上：灵值 + 天机镜 */
+.loot { right: 200px; top: 30px; display: flex; gap: 8px; align-items: flex-start; --wash-color: rgba(240, 234, 220, 0.9); padding: 8px 4px; }
+.loot .lbl { writing-mode: vertical-rl; font-family: var(--f-display); font-size: 16px; letter-spacing: .3em; color: var(--ink-nong); }
+.loot .num { font-family: var(--f-display); font-size: 46px; line-height: 1; color: #7c5d1a; text-shadow: 0 0 10px rgba(245,240,227,.9); }
+.loot .sub { font-family: var(--f-ui); font-size: 12px; color: var(--ink-zhong); margin-top: 4px; text-align: right; }
+.loot .sub b { color: var(--shiqing); }
+.mirror { right: 34px; top: 30px; --z: 138px; }
+.mirror .map { background: url(img/overview.jpg) 52% 58% / 330% auto; filter: sepia(.25) saturate(.8) contrast(1.05); }
+.mirror .fog { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 46% 52%, transparent 34%, rgba(240,232,214,.92) 62%); }
+.mirror .pin { position: absolute; }
+.mirror .you { left: 50%; top: 52%; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 14px solid var(--zhu); transform: translate(-50%, -50%) rotate(28deg); filter: drop-shadow(0 0 2px #fff); }
+.mirror .exit { left: 74%; top: 30%; --s: 26px; }
+.mirror .exit2 { left: 18%; top: 66%; --s: 22px; opacity: .55; }
+.mirror .dir { position: absolute; left: 50%; top: 52%; width: 46px; height: 3px; background: linear-gradient(90deg, var(--zhu), transparent); transform-origin: 0 50%; transform: rotate(-38deg); opacity: .8; border-radius: 2px; }
+.mirror-cap { right: 30px; top: 178px; width: 146px; text-align: center; font-family: var(--f-kai); font-size: 13px; color: var(--ink-zhong); }
+.mirror-cap b { font-family: var(--f-display); font-weight: 400; color: var(--zhu); }
+/* 撤离读条：围着主角的一笔圆相 */
+.chan { left: 579px; top: 296px; width: 124px; height: 124px; --v: .58; --rc: var(--zhu); }
+.chan-text { left: 712px; top: 300px; display: flex; gap: 10px; align-items: flex-start; --wash-color: rgba(240, 234, 220, 0.82); padding: 6px 2px; }
+.chan-text .t1 { writing-mode: vertical-rl; font-family: var(--f-display); font-size: 26px; letter-spacing: .2em; color: var(--ink); }
+.chan-text .t2 { font-family: var(--f-display); font-size: 30px; color: var(--zhu); line-height: 1; }
+.chan-text .t3 { font-family: var(--f-ui); font-size: 12px; color: var(--ink-zhong); margin-top: 6px; line-height: 1.6; }
+/* 下中：技能 */
+.bar { left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 14px; padding: 12px 26px 6px; --wash-color: rgba(240, 234, 220, 0.8); }
+.bar .gap { width: 10px; }
+.bar .base { position: absolute; left: 10px; right: 10px; bottom: 6px; height: 8px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.hud-skill > .ct { position: absolute; left: 50%; bottom: -15px; transform: translateX(-50%); font-family: var(--f-ui); font-size: 10px; color: var(--ink-zhong); white-space: nowrap; }
+/* 右下：境界修为 */
+.xpbox { right: 28px; bottom: 26px; width: 230px; text-align: right; --wash-color: rgba(240, 234, 220, 0.75); padding: 6px 0; }
+.xpbox .r { font-family: var(--f-display); font-size: 20px; letter-spacing: .14em; }
+.xpbox .r small { font-family: var(--f-ui); font-size: 11px; color: var(--ink-zhong); letter-spacing: 0; margin-left: 6px; }
+.xpbox .ink-bar { margin-top: 4px; }
+.xpbox .gain { font-family: var(--f-ui); font-size: 11px; color: #7c5d1a; margin-top: 3px; }
+/* 左下：拾取 */
+.feed { left: 24px; bottom: 30px; display: flex; flex-direction: column; gap: 6px; --wash-color: rgba(240, 234, 220, 0.8); padding: 6px 4px; }
+.feed div { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.feed .ink-slot { --z: 30px; font-size: 15px; }
+.feed .ink-slot::after { opacity: .7; }
+.feed .v { font-family: var(--f-ui); font-size: 11px; color: #7c5d1a; }
+.feed div:nth-child(3) { opacity: .65; } .feed div:nth-child(4) { opacity: .4; }
+/* 预警：右侧来敌 */
+.warn { right: 34px; top: 342px; }
+</style>
+</head>
+<body>
+  <!-- 左上：生命与真气（底衬是一团淡墨，没有边框） -->
+  <div class="abs vitals ink-wash">
+    <div class="realm">林墨</div>
+    <div class="hud-vital" style="margin-top:6px">
+      <span class="lbl">气血</span><div class="ink-bar hp" style="--v:.72;--lag:.8"><i></i><b></b></div><span class="num">238 / 330</span>
+      <span class="lbl">真气</span><div class="ink-bar qi thin" style="--v:.45"><i></i></div><span class="num">74 / 165</span>
+    </div>
+    <div class="dash"><i></i><i class="off"></i></div>
+  </div>
+
+  <!-- 上中：天时 晨午暮夜 -->
+  <div class="abs sky ink-wash">
+    <div class="times"><span>晨</span><span>午</span><b>暮</b><span class="night">夜</span></div>
+    <div class="track"><div class="ink-bar thin" style="--v:.62"><i></i></div><span class="mark" style="left:62%"></span></div>
+    <div class="left">入夜还有 <b>2:14</b> · 妖潮将起</div>
+  </div>
+
+  <!-- 右上：背包灵值（竖排标签 + 泥金大字） -->
+  <div class="abs loot ink-wash">
+    <span class="lbl">灵值</span>
+    <div><div class="num">1,284</div><div class="sub">储物袋 21 / 24 · <b>未鉴定 1</b></div></div>
+  </div>
+  <!-- 天机镜：铜镜小地图 -->
+  <div class="abs hud-mirror mirror">
+    <span class="knob"></span>
+    <div class="map"></div><div class="fog"></div>
+    <span class="dir"></span>
+    <span class="pin exit ink-seal round">撤</span>
+    <span class="pin exit2 ink-seal round ink">阵</span>
+    <span class="pin you"></span>
+  </div>
+  <div class="abs mirror-cap">古传送阵 · <b>东北 38 丈</b></div>
+
+  <!-- 撤离读条 -->
+  <div class="abs ink-ring chan"></div>
+  <div class="abs chan-text ink-wash">
+    <span class="t1">撤离中</span>
+    <div><div class="t2">3.4<small style="font-size:16px"> 息</small></div><div class="t3">阵内守住 · 离阵即断<br>引来妖兽 ×2</div></div>
+  </div>
+
+  <!-- 左下：拾取 -->
+  <div class="abs feed ink-wash">
+    <div><span class="ink-slot q-bao is-unid"><b>剑</b></span>未鉴定的剑 · 宝光 <span class="v">？</span></div>
+    <div><span class="ink-slot q-ling"><b>露</b></span>寒露草 ×3 <span class="v">+36</span></div>
+    <div><span class="ink-slot q-fan"><b>灵</b></span>灵石 ×12 <span class="v">+12</span></div>
+    <div><span class="ink-slot q-ling"><b>悟</b></span>感悟 +6 修为</div>
+  </div>
+
+  <!-- 下中：法术 · 法宝 · 阵法 · 丹药囊 -->
+  <div class="abs bar ink-wash">
+    <span class="base"></span>
+    <div class="hud-skill metal"><span class="k">Q</span>剑<span class="c">18</span></div>
+    <div class="hud-skill water" style="--cd:.62"><span class="k">E</span>冰<span class="cd"></span><span class="t">7</span><span class="c">26</span></div>
+    <div class="hud-skill locked"><span class="k">R</span>锁</div>
+    <span class="gap"></span>
+    <div class="hud-skill metal"><span class="k">右键</span>冥</div>
+    <div class="hud-skill locked"><span class="k">T</span>锁</div>
+    <span class="gap"></span>
+    <div class="hud-skill sm wood"><span class="k">1</span>春<span class="c" style="color:var(--ink-nong)">×3</span></div>
+    <div class="hud-skill sm water"><span class="k">2</span>气<span class="c" style="color:var(--ink-nong)">×2</span></div>
+    <div class="hud-skill sm"><span class="k">3</span>符<span class="c" style="color:var(--ink-nong)">×1</span></div>
+  </div>
+
+  <!-- 右下：境界与修为 -->
+  <div class="abs xpbox ink-wash">
+    <div class="r">练气五层<small>1,102 / 1,400</small></div>
+    <div class="ink-bar xp thin" style="--v:.79"><i></i></div>
+    <div class="gain">本局感悟 +162 · 带回后炼化</div>
+  </div>
+</body>
+</html>

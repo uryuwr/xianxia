@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>静室草图 · 方向 B · 更衣 · 立绘为中心</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<link rel="stylesheet" href="../loadout_v2/common.css"><link rel="stylesheet" href="common.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script><script src="icons.js"></script><script src="../loadout_v2/data.js"></script>
+<script src="common.js"></script><script src="widgets.js"></script>
+<style>
+/* 方向 B：阁中一幅"更衣图"。林墨立在画心，四件随身法器用一笔引线挂在身上（法剑在手、法衣在身、玉佩在腰、法宝浮在肩后）；
+   左上"气象"只露四个大数，点"展开"垂下一轴完整属性卷；下方一道案沿是随身功法栏，"开匣"时功法匣从案上展开；右侧一张纸笺在"行囊 / 法器架"之间切换。 */
+.aura { left: 360px; top: 10px; width: 560px; height: 620px; background: rgba(21,24,27,.05); -webkit-mask: var(--ink-wash-round) center / 100% 100% no-repeat; mask: var(--ink-wash-round) center / 100% 100% no-repeat; }
+.enso { left: 440px; top: 60px; width: 420px; height: 420px; background: rgba(21,24,27,.09); -webkit-mask: var(--ink-enso-full) center / 100% 100% no-repeat; mask: var(--ink-enso-full) center / 100% 100% no-repeat; }
+.por { left: 470px; top: 40px; width: 360px; height: 600px; background: url(../../../../src/ui/ink/portrait_linmo.svg) center top / contain no-repeat; mix-blend-mode: multiply; }
+svg.lead { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; pointer-events: none; }
+svg.lead path { fill: none; stroke: rgba(21,24,27,.42); stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 2 0; }
+svg.lead path.on { stroke: var(--zhu); stroke-width: 2; }
+svg.lead circle { fill: rgba(21,24,27,.6); }
+svg.lead circle.on { fill: var(--zhu); }
+
+.ttl { left: 34px; top: 40px; writing-mode: vertical-rl; font: 44px var(--f-splash, var(--f-display)); letter-spacing: .2em; color: var(--ink); }
+.ttl-seal { left: 40px; top: 230px; }
+.tiba { left: 92px; top: 46px; font: 13px var(--f-kai); color: var(--ink-dan); writing-mode: vertical-rl; letter-spacing: .3em; }
+
+/* 气象：四个大数 */
+.qx { left: 130px; top: 44px; width: 250px; }
+.qx .rn { font: 26px var(--f-display); letter-spacing: .12em; }
+.qx .rx { font: 11px var(--f-ui); color: var(--ink-dan); display: flex; gap: 8px; align-items: center; margin: 2px 0 10px; }
+.qx .big { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.qx .big .cf-st { flex-direction: column; align-items: flex-start; gap: 0; padding: 2px 4px; }
+.qx .big .cf-st .n { font: 12px var(--f-kai); width: auto; }
+.qx .big .cf-st .v { font-size: 32px; text-align: left; min-width: 0; }
+.qx .big .cf-st .ss, .qx .big .cf-bar { display: none; }
+.qx .more { margin-top: 8px; font: 14px var(--f-display); color: var(--ink-nong); cursor: pointer; letter-spacing: .1em; }
+.qx .more::after { content: ""; display: block; width: 92px; height: 6px; margin-top: 2px; background: var(--zhu); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+
+/* 垂下的属性卷（立轴） */
+.zhou { left: 120px; top: 22px; width: 330px; height: 0; overflow: hidden; z-index: 30; transition: height .42s var(--ease-ink); }
+.zhou.open { height: 650px; }
+.zhou .rod { position: absolute; left: -10px; right: -10px; top: 0; height: 12px; background: #4a3f35; border-radius: 6px; z-index: 2; }
+.zhou .rod.b { top: auto; bottom: 0; }
+.zhou .paper { position: absolute; left: 0; right: 0; top: 8px; bottom: 8px; padding: 14px 22px 10px 26px; background: var(--ink-tex-paper), var(--paper-hi); background-blend-mode: multiply; box-shadow: 0 6px 14px rgba(40,32,20,.25); }
+.zhou .hh { display: flex; align-items: center; justify-content: space-between; }
+.zhou .hh b { font: 400 22px var(--f-display); letter-spacing: .2em; }
+.zhou .hh a { font: 12px var(--f-ui); color: var(--ink-dan); cursor: pointer; }
+.zhou .cf-legend { margin-top: 6px; gap: 8px; }
+
+/* 法器签挂点 */
+.tag { position: absolute; }
+.tag .cf-gear .t b { font-size: 17px; }
+.tag .hint { font: 10.5px var(--f-ui); color: var(--ink-dan); margin-top: 2px; }
+
+/* 案沿 + 随身功法 */
+.desk { left: 300px; top: 586px; width: 700px; height: 16px; background: rgba(74,63,53,.5); -webkit-mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; }
+.bar-t { left: 318px; top: 552px; font: 13px var(--f-display); color: var(--ink-zhong); letter-spacing: .2em; display: flex; gap: 14px; align-items: baseline; }
+.bar-t .ink-btn { font-size: 14px; padding: 0 2px 5px; cursor: pointer; }
+.bar { left: 330px; top: 604px; }
+/* 功法匣：从案上展开的一张横卷（两列） */
+.box { left: 300px; top: 210px; width: 660px; height: 330px; box-sizing: border-box; padding: 14px 20px 10px 22px; z-index: 20; transform-origin: 50% 100%; transition: transform .3s var(--ease-ink), opacity .3s; }
+.box.closed { transform: scaleY(.1); opacity: 0; pointer-events: none; }
+.box .bh { display: flex; align-items: baseline; gap: 8px; }
+.box .bh .ink-title { font-size: 22px; }
+.box .bh small { font: 11px var(--f-ui); color: var(--ink-dan); }
+
+/* 右：行囊 / 法器架 */
+.side { left: 1006px; top: 22px; width: 260px; height: 640px; box-sizing: border-box; padding: 12px 16px 10px 18px; }
+.side .ink-tabs { margin: 0 0 4px -8px; }
+.side .ink-tab { font-size: 19px; padding: 2px 8px 7px; cursor: pointer; }
+.side .rack .rh { font: 12px var(--f-ui); color: var(--ink-dan); margin-bottom: 6px; }
+.side .rack .gsel { display: flex; gap: 6px; margin-bottom: 8px; }
+.side .rack .gsel a { font: 15px var(--f-display); padding: 0 6px 4px; cursor: pointer; color: var(--ink-dan); }
+.side .rack .gsel a.on { color: var(--ink); border-bottom: 2px solid var(--zhu); }
+.side .rack .cf-pop { position: static; opacity: 1; pointer-events: auto; width: auto; padding: 0; transform: none !important; }
+.back { left: 1030px; top: 674px; font-size: 19px; }
+.go { left: 1156px; top: 676px; font-size: 16px; color: var(--ink-zhong); }
+</style></head>
+<body class="ink-stage">
+<div class="abs aura"></div><div class="abs enso"></div>
+<div class="abs por"></div>
+<svg class="lead" id="lead"></svg>
+<div class="abs ttl">藏锋阁</div>
+<div class="abs tiba">整衣 · 佩剑 · 理囊</div>
+<div class="abs qx" id="qx"></div>
+<div id="tags"></div>
+<div class="abs desk"></div>
+<div class="abs bar-t"><span>案上 · 随身功法</span><span class="ink-btn" id="boxBtn"></span></div>
+<div class="abs bar cf-bar-w" id="bar"></div>
+<section class="abs box cf-box ink-paper closed" id="box"></section>
+<section class="abs side ink-paper" id="side"></section>
+<div class="abs zhou" id="zhou"><i class="rod"></i><div class="paper" id="zp"></div><i class="rod b"></i></div>
+<span class="abs ink-btn back">回洞府 <span class="key">Esc</span></span>
+<span class="abs ink-btn go">去出行台 ›</span>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const H = CF.H;
+let tab = H.tab || "spell", boxOpen = H.box === "1", zhou = H.zhou === "1", pane = H.pane || "pack", rackSlot = H.rack || "sword";
+// 锚点：立绘 svg 600×1000，放在 (470, 40) 缩放 0.6
+const P0 = [470, 40, 0.6], at = (x, y) => [P0[0] + x * P0[2], P0[1] + y * P0[2]];
+const ANCH = {
+  sword: { a: at(181, 530), tag: [300, 352], right: 1, hint: "在手" },
+  robe: { a: at(330, 420), tag: [300, 196], right: 1, hint: "在身" },
+  jade: { a: at(404, 499), tag: [826, 330], hint: "在腰" },
+  artifact: { a: at(526, 208), tag: [826, 120], hint: "浮于肩后 · V" },
+};
+function artTag() {
+  const a = CF.artifactNow();
+  const on = rackSlot === "artifact" && pane === "rack";
+  const t = a ? `<b style="color:${LD.RAR[a.rarity].t}">${a.name}</b><span>法宝 · ${LD.RAR[a.rarity].n} · 祭炼${"零一二三四五"[a.level]}重${a.native ? " · 本命" : ""}</span>` : `<b class="ink-dim">（空）</b><span>法宝</span>`;
+  return `<div class="cf-gear ${on ? "on" : ""}" data-bgear="artifact">${LO.tokenHTML("artifact", a ? a.uid : null, { size: 52 })}<div class="t">${t}</div></div>`;
+}
+function render() {
+  const R = CF.REALM;
+  $("qx").innerHTML = `<div class="rn">${R.name}</div><div class="rx">${W.xpHTML(110)}<span>修为 ${R.xp} / ${R.need}</span></div>
+    <div class="big">${W.statsHTML({ rows: ["hp", "mp", "atk", "spell"], noGroup: 1, bar: 0 })}</div>
+    <div class="more" data-zhou>${zhou ? "收起属性卷" : "展开属性卷 ▾"}</div>`;
+  // 法器签 + 引线
+  let svg = "", tags = "";
+  for (const [s, o] of Object.entries(ANCH)) {
+    const on = pane === "rack" && rackSlot === s;
+    const g = s === "artifact" ? artTag() : W.gearRowHTML(s, { right: o.right, size: 50 }).replace('data-gear=', 'data-bgear=').replace("cf-gear ", "cf-gear " + (on ? "on " : ""));
+    tags += `<div class="tag" style="left:${o.tag[0]}px;top:${o.tag[1]}px;${o.right ? "width:220px;display:flex;flex-direction:column;align-items:flex-end" : ""}">${g}<div class="hint">${o.hint}</div></div>`;
+    const x0 = o.right ? o.tag[0] + 226 : o.tag[0] - 6, y0 = o.tag[1] + 26, [x1, y1] = o.a;
+    const mx = (x0 + x1) / 2;
+    svg += `<path class="${on ? "on" : ""}" d="M${x0},${y0} C${mx},${y0} ${mx},${y1} ${x1},${y1}"/><circle class="${on ? "on" : ""}" cx="${x1}" cy="${y1}" r="${on ? 4 : 3}"/>`;
+  }
+  $("tags").innerHTML = tags;
+  $("lead").innerHTML = svg;
+  // 案上功法
+  $("bar").innerHTML = W.barHTML({ size: 50 });
+  W.bindBar($("bar"));
+  $("boxBtn").textContent = boxOpen ? "合上功法匣" : "开匣 ▴";
+  const b = W.boxHTML(tab, { cols: 1, dense: 1 });
+  $("box").innerHTML = `<div class="bh"><span class="ink-title">功法匣</span><small>拖到案上的栏位</small></div>${b.tabs}${b.gl}${b.body}`;
+  $("box").classList.toggle("closed", !boxOpen);
+  W.bindBox($("box"), tab);
+  // 右侧：行囊 / 法器架
+  const tabs = `<div class="ink-tabs"><span class="ink-tab ${pane === "pack" ? "on" : ""}" data-pane="pack">行囊</span><span class="ink-tab ${pane === "rack" ? "on" : ""}" data-pane="rack">法器架</span></div>`;
+  let body;
+  if (pane === "pack") body = W.packHTML();
+  else {
+    const sel = `<div class="gsel">${[["sword", "法剑"], ["robe", "法衣"], ["jade", "玉佩"], ["artifact", "法宝"]].map(([k, n]) => `<a data-rack="${k}" class="${rackSlot === k ? "on" : ""}">${n}</a>`).join("")}</div>`;
+    const inner = rackSlot === "artifact"
+      ? `<div class="cf-box">${W.boxHTML("artifact").body}</div><div class="cf-help" style="margin-top:6px">点一件拖到肩后的法宝位；本命法宝身陨不失</div>`
+      : `<div class="cf-pop">${CF.gearHTML(rackSlot)}</div>`;
+    body = `<div class="rack"><div class="rh">点身上的法器，或在这里选部位</div>${sel}${inner}</div>`;
+  }
+  $("side").innerHTML = tabs + body;
+  if (pane === "rack" && rackSlot === "artifact") W.bindBox($("side"), "artifact");
+  // 属性卷
+  $("zhou").classList.toggle("open", zhou);
+  $("zp").innerHTML = `<div class="hh"><b>属性卷</b><a data-zhou>收起 ▴</a></div><div style="display:flex;justify-content:space-between;align-items:center;font:11px var(--f-ui);color:var(--ink-dan)"><span>点任一项看来源</span>${W.modeHTML()}</div>${W.statsHTML({ bar: 60 })}${W.legendHTML()}`;
+  window.inkui && inkui.decorate();
+}
+W.render = render;
+W.statSide = "right";
+document.addEventListener("click", (ev) => {
+  const t = ev.target.closest("[data-tab]");
+  if (t) { tab = t.dataset.tab; LO.setHeld(null); return render(); }
+  if (ev.target.closest("#boxBtn")) { boxOpen = !boxOpen; return render(); }
+  if (ev.target.closest("[data-zhou]")) { zhou = !zhou; if (!zhou) CF.closePop(); return render(); }
+  const p = ev.target.closest("[data-pane]");
+  if (p) { pane = p.dataset.pane; return render(); }
+  const r = ev.target.closest("[data-rack]");
+  if (r) { rackSlot = r.dataset.rack; return render(); }
+  const g = ev.target.closest("[data-bgear]");
+  if (g) { pane = "rack"; rackSlot = g.dataset.bgear; return render(); }
+});
+CF.on(render);
+render();
+LO.dnd();
+W.applyHash();
+LO.ready();
+</script>
+</body></html>

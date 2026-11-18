@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>药园 UI v2 · 两个方向，先选再做</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../mock_bag_v2/fonts.css">
+  <link rel="stylesheet" href="../kit/strokes.css">
+  <link rel="stylesheet" href="garden.css">
+</head>
+<body class="gy-gallery">
+  <main class="gy-gallery-main">
+    <header class="gy-gallery-head">
+      <div><p class="gy-eyebrow">墨途 · 药园独立 UI / 可点击草图</p><h1>一园，两种读法</h1></div>
+      <p>药园从丹器房独立。只比较打开后的操作界面，不改变场景中的 3D 方块田格和围栏。<br>所有操作都在内存演示，不读写真实存档；本阶段不落地游戏正式 UI。建议打开单页体验。</p>
+    </header>
+    <div class="gy-gallery-toolbar">
+      <label for="compare-preset">让两案使用同一情境</label>
+      <select id="compare-preset">
+        <option value="full">满级搬迁 · 五畦混合状态</option>
+        <option value="lv0">Lv0 · 单畦</option>
+        <option value="no-seeds">无种子</option>
+        <option value="many-seeds">种子多页</option>
+        <option value="soil-short">施土不足</option>
+        <option value="upgrade-relocate">扩建 · 尚未搬迁</option>
+        <option value="upgrade-short">扩建 · 缺材料</option>
+        <option value="upgrade-ready">扩建 · 可执行</option>
+        <option value="harvest">成熟 · 单畦 / 全部采收</option>
+      </select>
+      <span class="gy-muted">预览内也能点击；选中方案仅在本页记录，不提交游戏。</span>
+    </div>
+    <section class="gy-options" aria-label="药园方案对比">
+      <article class="gy-option">
+        <iframe id="preview-a" class="gy-frame" src="a_overview.html#preset=full" title="A 园圃总览交互预览"></iframe>
+        <h2>A · 园圃总览 <small>推荐</small></h2>
+        <p>左边看全园，右边只办选中这一畦的事。空地选苗，生长看出行次数，成熟手动收。五畦状态始终可见，照看小园最直接。</p>
+        <p><strong>取舍</strong>　种子区较紧凑，每年份每页两种；通过翻页而非内部滚动容纳多种草苗。</p>
+        <div class="gy-choice-row"><button class="gy-button gy-primary" data-choice="a" aria-pressed="false">倾向 A · 看全园</button><a id="open-a" href="a_overview.html#preset=full" target="_blank" rel="noopener">打开 A 单页体验 ↗</a></div>
+      </article>
+      <article class="gy-option">
+        <iframe id="preview-b" class="gy-frame" src="b_folio.html#preset=full" title="B 药圃册页交互预览"></iframe>
+        <h2>B · 药圃册页 <small>大区分页</small></h2>
+        <p>巡园、移栽、采收、扩建各占一整页。移栽页给种子更大的阅读区，每年份每页四种；不把内容塞进小浮窗里滚动。</p>
+        <p><strong>取舍</strong>　一次只看一个任务，字与图更舒展；移栽时不同时看到全园，任务切换多一步。</p>
+        <div class="gy-choice-row"><button class="gy-button gy-primary" data-choice="b" aria-pressed="false">倾向 B · 翻册页</button><a id="open-b" href="b_folio.html#preset=full" target="_blank" rel="noopener">打开 B 单页体验 ↗</a></div>
+      </article>
+    </section>
+    <p id="choice-result" class="gy-choice-result" role="status" aria-live="polite">尚未选择。建议先比较「五畦混合」「种子多页」「施土不足」三个情境。</p>
+    <section class="gy-gallery-bottom">
+      <div>
+        <h3>这轮请选什么</h3>
+        <p>一、偏好全园常见的 A，还是任务分开的 B？<br>二、种子每页两种，还是四种，哪种密度更舒服？<br>三、保留「全部采收」在右下角，还是更倾向只进采收页操作？</p>
+        <p style="margin-top:12px">默认建议：A 总览 + 年份分页 + 右下全部采收。种子选择、扩建条件与采收去向在两案中完全一致。</p>
+      </div>
+      <div>
+        <h3>不变的边界</h3>
+        <ul>
+          <li>等级基础地块 1 / 2 / 3 / 4；搬迁且 Lv＞0 加 1，最多 5 块，不把 8 个模型插槽当作可开地。</li>
+          <li>按出行次数成长；成熟留地，手动采收进入仓库。</li>
+          <li>F 统一打开药园，不在场景直接采收；无自动播种、新肥料或真实存档访问。</li>
+          <li>年份分页，禁止小面板内滚动；园务说明的砚台翻页支持键盘。</li>
+        </ul>
+        <p>通过现有项目开发服务器访问此目录。资源来自项目字体、纸纹、物品图集、RARITY 与 inkReadable；无外部库。草图验收与截图仅供方案比较，不代表用户已选型或正式 UI 已落地。</p>
+      </div>
+    </section>
+  </main>
+  <script src="index.js"></script>
+</body>
+</html>

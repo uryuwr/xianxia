@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>装配 v2 · 方向一 · 出行·随身（入口 a）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css"><link rel="stylesheet" href="common.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script><script src="icons.js"></script><script src="data.js"></script>
+<style>
+/* 方向一：出行准备里直接装配。版式沿用 src/ui/screens/prep.js（左扇面去处、中立绘、右行囊、右下朱印），
+   立绘右侧挂一张"功法匣"纸笺，立绘下方一排"随身功法"栏。 */
+.hd { left: 52px; top: 26px; display: flex; align-items: center; gap: 16px; }
+.hd .ink-title { font-size: 40px; }
+.hd .ink-rule { width: 130px; }
+.hd .sub { font: 12px var(--f-ui); color: var(--ink-dan); }
+
+/* 去处：扇面 + 列表 */
+.fan { left: 34px; top: 84px; width: 360px; height: 176px; background: var(--ink-tex-cloud), radial-gradient(ellipse at 50% 85%, var(--fan-c), transparent 72%), var(--paper-lo); background-blend-mode: multiply; display: flex; align-items: center; justify-content: center; }
+.fan .nm { font: 50px var(--f-splash); color: var(--ink); text-shadow: 0 0 14px rgba(245,240,227,.9); margin-top: -34px; letter-spacing: .04em; }
+.fan-seal { left: 318px; top: 112px; }
+.regs { left: 52px; top: 270px; width: 342px; }
+.regs .ink-row { cursor: pointer; align-items: center; padding: 5px 2px; }
+.regs .nm { font: 21px var(--f-display); letter-spacing: .1em; color: var(--ink-zhong); }
+.regs .on .nm { color: var(--ink); }
+.regs .note { font: 12px var(--f-ui); color: var(--ink-dan); }
+.regs .lv { margin-left: auto; font: 15px var(--f-display); color: var(--ink-zhong); }
+.regs .on .lv { color: var(--zhu); }
+.regs .lock .nm { color: var(--ink-dan); }
+
+.facts { left: 52px; top: 362px; width: 342px; }
+.facts .ink-row { font-size: 13px; padding: 4px 2px; align-items: center; }
+.facts .ink-row .k { min-width: 3em; font-size: 13px; }
+.facts .ink-row .v { font-size: 14px; letter-spacing: .04em; }
+.facts .shield { display: block; padding: 7px 2px 4px; }
+.facts .shield .top { display: flex; align-items: center; gap: 10px; }
+.facts .shield .k { font: 13px var(--f-kai); color: var(--ink-zhong); min-width: 3em; }
+.facts .shield .shs { display: flex; gap: 10px; margin-left: auto; }
+.facts .shield .shs .shd { font-size: 14px; }
+.facts .shield .shs small { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 2px; }
+.facts .advice { margin: 5px 0 0 3.6em; font: 14px/1.55 var(--f-kai); color: var(--ink-nong); }
+.facts .advice b { font: 400 16px var(--f-display); color: var(--c); }
+.facts .cov { margin: 6px 0 0 3.6em; gap: 2px 12px; font-size: 12.5px; }
+.facts .cov .shd { font-size: 13px; }
+.facts .cov .shd::before { width: 10px; height: 10px; border-width: 1.5px; }
+.facts .swap { margin: 5px 0 0 3.6em; display: flex; gap: 12px; flex-wrap: wrap; }
+.facts .swap .ink-btn { font-size: 14px; padding: 0 4px 6px; letter-spacing: .04em; color: var(--ink-nong); cursor: pointer; }
+.facts .swap .ink-btn .els { margin-right: 4px; }
+
+.stats { left: 52px; top: 662px; font: 12px var(--f-ui); color: var(--ink-zhong); }
+
+/* 立绘 */
+.por { left: 404px; top: 42px; width: 300px; height: 520px; background: url(../../../../src/ui/ink/portrait_linmo.svg) center top / contain no-repeat; mix-blend-mode: multiply; }
+.who { left: 420px; top: 90px; writing-mode: vertical-rl; font: 22px var(--f-display); letter-spacing: .2em; display: flex; align-items: center; gap: 8px; }
+
+/* 随身功法栏 */
+.bar { left: 418px; top: 556px; display: flex; align-items: flex-start; gap: 14px; }
+.bar .grp { display: flex; gap: 12px; align-items: flex-start; }
+.bar .grp + .grp { margin-left: 10px; padding-left: 20px; position: relative; }
+.bar .grp + .grp::before { content: ""; position: absolute; left: 0; top: 18px; width: 8px; height: 46px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; }
+.slot { display: flex; flex-direction: column; align-items: center; width: 60px; position: relative; }
+.slot .key { font: 11px var(--f-ui); color: var(--ink-dan); height: 16px; }
+.slot .cap { margin-top: 6px; font: 13px var(--f-kai); color: var(--ink-nong); white-space: nowrap; text-align: center; }
+.slot .cap.dim { color: var(--ink-dan); }
+.slot.is-locked .sk::after { opacity: .12; }
+.slot.is-locked .sk > b { color: var(--ink-qing); }
+.slot.is-locked .cap { font: 11px/1.35 var(--f-ui); color: var(--ink-dan); margin-top: 4px; }
+.slot .dup { position: absolute; right: 2px; top: 14px; z-index: 4; }
+.bar-h { left: 418px; top: 676px; font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: .02em; }
+.bar-h b { font-weight: 400; color: var(--ink-zhong); }
+.bar-t { left: 418px; top: 536px; font: 13px var(--f-display); color: var(--ink-zhong); letter-spacing: .2em; display: flex; gap: 14px; align-items: baseline; }
+.bar-t .ink-btn { font-size: 13px; padding: 0 2px 5px; letter-spacing: .06em; cursor: pointer; }
+
+/* 功法匣：立绘右侧侧挂的一张纸笺 */
+.box { left: 664px; top: 58px; width: 304px; height: 456px; padding: 18px 20px 14px 22px; transition: transform .32s var(--ease-ink), opacity .32s; transform-origin: 0 0; }
+.box.closed { transform: translateX(30px) rotate(2deg); opacity: 0; pointer-events: none; }
+.box .bh { display: flex; align-items: baseline; gap: 10px; }
+.box .bh .ink-title { font-size: 26px; }
+.box .bh small { font: 11px var(--f-ui); color: var(--ink-dan); }
+.box .ink-tabs { margin: 4px 0 4px -10px; }
+.box .ink-tab { font-size: 17px; padding: 3px 9px 7px; cursor: pointer; }
+.box .ink-tab small { font: 10px var(--f-ui); color: var(--ink-dan); margin-left: 2px; letter-spacing: 0; }
+.box .list { display: flex; flex-direction: column; }
+.box .it { display: flex; align-items: center; gap: 12px; padding: 6px 2px; position: relative; }
+.box .it + .it::before { content: ""; position: absolute; left: 54px; right: 20%; top: 0; height: 5px; background: var(--ink-mist); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.box .it .tx { flex: 1; min-width: 0; }
+.box .it .n { font: 18px/1.2 var(--f-display); color: var(--ink-nong); letter-spacing: .06em; }
+.box .it .l { font: 11.5px/1.45 var(--f-ui); color: var(--ink-dan); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.box .it .l .els { width: 14px; height: 14px; font-size: 10px; margin-right: 3px; vertical-align: -2px; }
+.box .it .at { font: 13px var(--f-display); color: var(--ink-nong); white-space: nowrap; }
+.box .it .at.on { color: var(--ink); }
+.box .it .at.on::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--zhu); margin-right: 5px; vertical-align: 2px; }
+.box .it.ghost .n { color: var(--ink-dan); }
+.box .it.gear .n { color: var(--ink-dan); }
+.box .it.gear .l { color: #8a6a22; }
+.box .it.dense { padding: 4px 2px; }
+.box .it.dense .n { font-size: 17px; }
+.box .more { margin-top: 6px; font: 11.5px/1.6 var(--f-ui); color: var(--ink-dan); }
+.box .gearl { font: 11.5px/1.6 var(--f-ui); color: var(--ink-zhong); margin: 0 0 4px; }
+.box .gearl b { font-weight: 400; color: #8a6a22; }
+.box .foot { position: absolute; left: 22px; right: 20px; bottom: 12px; font: 11px/1.5 var(--f-ui); color: var(--ink-dan); }
+
+/* 行囊（示意） */
+.pack { left: 994px; top: 58px; width: 238px; padding: 18px 20px 16px; }
+.pack .ink-title { font-size: 24px; }
+.pack .ink-title small { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 8px; letter-spacing: 0; }
+.pack .slots { display: flex; flex-wrap: wrap; gap: 10px 12px; margin-top: 8px; }
+.pack .pi { display: flex; flex-direction: column; align-items: center; width: 50px; }
+.pack .pi .c { font: 11px var(--f-ui); color: var(--ink-zhong); margin-top: 2px; white-space: nowrap; }
+.pack .pi .c.hint { color: #2c7d57; }
+.pack .risk { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font: 12.5px/1.6 var(--f-kai); color: var(--zhu); }
+.pi .sk { --el: rgba(21,24,27,.45); }
+
+.back { left: 1004px; top: 664px; font-size: 20px; }
+.go { left: 1130px; top: 580px; }
+.tiba { left: 1236px; top: 440px; height: 120px; font-size: 13px; }
+</style></head>
+<body class="ink-stage">
+<div class="abs hd"><span class="ink-title">出行</span><span class="ink-rule"></span><span class="sub" id="sub"></span></div>
+<div class="abs fan ink-fan" id="fan"><span class="nm" id="fanName"></span></div>
+<div class="abs fan-seal" id="fanSeal"></div>
+<div class="abs regs ink-list" id="regs"></div>
+<div class="abs facts ink-list" id="facts"></div>
+<div class="abs stats" id="stats"></div>
+
+<div class="abs por"></div>
+<div class="abs who">林墨<span class="ink-seal" style="--s:24px">剑</span></div>
+
+<div class="abs bar-t"><span>随身功法</span><span class="ink-btn" id="boxBtn"></span></div>
+<div class="abs bar" id="bar"></div>
+<div class="abs bar-h"><b>拖入栏位</b> · 栏间拖动换位 · 拖出卸下 · 先点功法再点栏位 · 悬停按 <b>Q / E / R / T</b> 直接装入</div>
+
+<section class="abs box ink-paper alt tilt-r" id="box"></section>
+
+<section class="abs pack ink-paper" id="pack"></section>
+<span class="abs ink-btn back">回洞府 <span class="key">Esc</span></span>
+<button class="abs ink-seal-btn go">启程</button>
+<div class="abs ink-tiba tiba">量力而归</div>
+<div id="mb"></div>
+
+<script>
+const { EL, REGIONS, SPELLS, XINFA, FORMATIONS, GEAR, RAR, layerName, hero } = LD;
+const $ = (id) => document.getElementById(id);
+const S = LO.S;
+let tab = "spell", open = !0;
+const ut = (k, i) => LO.unlockText(k, i).replace(/ /g, "");
+
+const FACT = {
+  r1: { beast: "狼妖 · 灰狼 · 石傀", out: "青灵草 · 凝露花 · 铁精", ex: "古传送阵 · 残阵", t: "晨起 · 第九分钟入暮", fan: "rgba(63,154,110,.35)", note: "已探 · 平稳" },
+  r2: { beast: "狼妖 · 蝠妖 · 藤妖 · 碧鳞", out: "寒露草 · 千年竹心 · 紫藤", ex: "三处 · 其一需阵钥", t: "晨起 · 入夜妖潮", fan: "rgba(47,127,168,.32)", note: "探明四成 · 残阵未明" },
+};
+
+const ELN = Object.fromEntries(Object.values(LD.EL).map((e) => [e.n, e.c]));
+const colorB = (html) => html.replace(/<b>(.)<\/b>/g, (m, n) => `<b style="--c:${ELN[n] || "var(--ink)"}">${n}</b>`);
+function els(el) { const e = EL[el]; return `<span class="els" style="--c:${e.c}">${e.n}</span>`; }
+function shd(el, extra = "") { return `<span class="shd" style="--c:${EL[el].c}">${EL[el].n}盾${extra}</span>`; }
+
+function render() {
+  const R = REGIONS[S.region], F = FACT[S.region], h = hero(S.layer);
+  $("sub").textContent = `第九次 · 洞府辰时 · ${layerName(S.layer)} · 储物袋已清空`;
+  // 扇面
+  $("fan").style.setProperty("--fan-c", F.fan);
+  $("fanName").textContent = R.name;
+  $("fanSeal").innerHTML = `<span class="ink-seal two" style="--s:38px">${R.jing}</span>`;
+  // 去处列表
+  $("regs").innerHTML = Object.values(REGIONS).map((r) => {
+    const lock = r.id === "r2" && S.layer < 5;
+    return `<div class="ink-row ${r.id === S.region ? "on" : ""} ${lock ? "lock" : ""}" data-r="${r.id}"><span class="nm">${r.name}</span><span class="note">${lock ? "需练气五层" : FACT[r.id].note}</span><span class="lv">${r.jing}</span></div>`;
+  }).join("") + `<div class="ink-row lock"><span class="nm">黑风岭</span><span class="note">需练气七层 · 未开</span><span class="lv" style="color:var(--ink-dan)">三境</span></div>`;
+  // 去处信息 + 护盾 + 已带覆盖
+  const shields = [...new Set(R.groups.flatMap((g) => g.els))];
+  const cov = LO.coverage();
+  const mix = R.mix || {};
+  // 建议里提到、已领悟未装的法术
+  const carried = S.spells.filter((x, i) => x && LO.unlocked("spell", i));
+  const sugg = [];
+  for (const a of R.advice) for (const id of a.spells) if (LO.have("spell", id) && !carried.includes(id) && !sugg.includes(id)) sugg.push(id);
+  $("facts").innerHTML = `
+    <div class="ink-row"><span class="k">妖谱</span><span class="v">${F.beast}</span></div>
+    <div class="ink-row"><span class="k">出产</span><span class="v">${F.out}</span></div>
+    <div class="ink-row"><span class="k">撤离</span><span class="v">${F.ex}</span></div>
+    <div class="ink-row"><span class="k">天时</span><span class="v">${F.t}</span></div>
+    <div class="ink-row shield"><div class="top"><span class="k">护盾</span><span class="shs">${shields.map((e) => shd(e, mix[e] ? `<small>${Math.round(mix[e] * 10)}成</small>` : "")).join("")}</span></div>
+      <div class="advice">${colorB(R.line.split("；").map((l) => l.replace(/宜带(.)行/g, "宜带<b>$1</b>行").replace(/→ (.) \+ (.)/, "→ <b>$1</b> + <b>$2</b>").replace(/备(.)行/, "备<b>$1</b>行")).join("<br>"))}</div>
+      <div class="cov">${cov.map((c) => `<span class="c ${c.ok ? "ok" : "no"}">${shd(c.el)}<b>${c.ok ? "✓ " + c.by.join("、") : "✗ 缺" + EL[c.counter].n}</b></span>`).join("")}</div>
+      ${sugg.length ? `<div class="swap">${sugg.map((id) => `<span class="ink-btn" data-sugg="${id}">${els(SPELLS[id].el)}换上${SPELLS[id].name}</span>`).join("")}</div>` : ""}
+    </div>`;
+  $("stats").textContent = `气血 ${h.hp} · 真气 ${h.mp} · 攻击 ${h.atk} · 法力 ${h.spell}`;
+  renderBar();
+  renderBox();
+  renderPack();
+  window.inkui && inkui.decorate();
+}
+
+function slotHTML(kind, i, key, size = 54) {
+  const ok = LO.unlocked(kind, i);
+  const id = ok ? LO.get(kind, i) : null;
+  const d = id && LO.defOf(kind, id);
+  const g = kind === "xinfa" && id && LO.gearOf(id);
+  const name = d ? (kind === "xinfa" ? `《${d.name}》` : d.name) : "";
+  const cap = !ok ? ut(kind, i).replace("层解锁", "层<br>解锁") : d ? name : `<span class="dim">空</span>`;
+  return `<div class="slot ${ok ? "" : "is-locked"}" data-slot-kind="${kind}" data-slot-i="${i}" data-id="${id || ""}">
+    <span class="key">${key}</span>${LO.tokenHTML(kind, id, { size, glyph: ok ? "" : "锁", cls: (g ? "is-gray " : "") + ["e1", "e2", "e3"][i % 3] })}
+    ${g ? `<span class="dup ink-seal" style="--s:16px;--seal-rot:6deg" title="同名不叠加">叠</span>` : ""}
+    <span class="cap ${ok ? "" : "lock"}">${cap}</span></div>`;
+}
+function renderBar() {
+  $("bar").innerHTML =
+    `<div class="grp">${[0, 1, 2].map((i) => slotHTML("spell", i, "QER"[i])).join("")}</div>` +
+    `<div class="grp">${slotHTML("formation", 0, "T")}${slotHTML("artifact", 0, "右键")}</div>` +
+    `<div class="grp">${slotHTML("xinfa", 0, "心法")}${slotHTML("xinfa", 1, "心法")}</div>`;
+  $("bar").querySelectorAll(".slot").forEach((el) => el.dataset.id && LO.attachTip(el, el.dataset.slotKind, el.dataset.id));
+  $("boxBtn").innerHTML = open ? "收起功法匣" : "展开功法匣 ▸";
+}
+
+const TABS = [["spell", "法术"], ["xinfa", "心法"], ["artifact", "法宝"], ["formation", "阵盘"]];
+function atLabel(kind, e) {
+  if (e.at < 0 || !LO.unlocked(kind, e.at)) return "";
+  if (kind === "spell") return `<span class="at on">${"QER"[e.at]} 栏</span>`;
+  if (kind === "xinfa") return `<span class="at on">心法${"一二"[e.at]}</span>`;
+  if (kind === "formation") return `<span class="at on">T</span>`;
+  return `<span class="at on">右键</span>`;
+}
+function line(kind, e) {
+  const d = e.def;
+  if (kind === "spell") return e.have ? `${els(d.el)}${EL[d.el].n} · ${d.role} · 冷却 ${d.cd} 秒 · 真气 ${d.cost}` : `未得 · ${d.src}`;
+  if (kind === "formation") return e.have ? `${d.el ? els(d.el) + EL[d.el].n + " · " : "无五行 · "}冷却 ${d.cd} 秒 · ${d.dur} 秒` : d.src;
+  if (kind === "artifact") return `<span style="color:${RAR[d.rarity].t}">${RAR[d.rarity].n}</span> · 祭炼 ${d.level + (d.bonus || 0)} 级${d.native ? " · 本命" : ""}${e.have ? "" : " · 未得"}`;
+  if (e.gear) return `${e.gear.slot}《${e.gear.name}》词条已提供 · 同名不叠加`;
+  return e.have ? d.desc : "未得";
+}
+function renderBox() {
+  const box = $("box");
+  box.classList.toggle("closed", !open);
+  const list = LO.pool(tab);
+  const cnt = (k) => LO.pool(k).filter((e) => e.have).length;
+  const lockAll = !LO.unlocked(tab, 0);
+  let rows = list, extra = "";
+  if (tab === "xinfa") {
+    rows = list.filter((e) => e.have);
+    const no = list.filter((e) => !e.have);
+    extra = `<div class="more">未得 ${no.length} 本：${no.map((e) => "《" + e.def.name + "》").join("")}</div>`;
+  }
+  const dense = rows.length > 5;
+  box.innerHTML = `<div class="bh"><span class="ink-title">功法匣</span><small>已领悟的功法、得到的法宝与阵盘</small></div>
+    <div class="ink-tabs">${TABS.map(([k, n]) => `<span class="ink-tab ${tab === k ? "on" : ""}" data-tab="${k}">${n}<small>${cnt(k)}</small></span>`).join("")}</div>
+    ${tab === "xinfa" ? `<div class="gearl">身上：${GEAR.map((g) => g.affix ? `${g.name}<b>「${g.affix.text}」</b>` : g.name).join(" · ")}</div>` : ""}
+    <div class="list">${rows.map((e) => {
+      const cls = [!e.have ? "ghost" : "", e.gear ? "gear" : "", dense ? "dense" : ""].join(" ");
+      const tok = LO.tokenHTML(tab, e.id, { size: dense ? 40 : 44, ghost: !e.have, cls: e.gear ? "is-gray" : "", sel: !1 });
+      return `<div class="it ${cls}" ${e.have ? `data-src-kind="${tab}" data-src-id="${e.id}"` : ""} data-tip="${e.id}">${tok}<div class="tx"><div class="n">${tab === "xinfa" ? "《" + e.def.name + "》" : e.def.name}</div><div class="l">${line(tab, e)}</div></div>${atLabel(tab, e)}</div>`;
+    }).join("")}</div>${extra}
+    <div class="foot">${lockAll ? `<span class="ink-zhu">${TABS.find((t) => t[0] === tab)[1]}栏${ut(tab, 0)}</span> · 可先看，不能装` : tab === "spell" ? "出门前定好，局内不能换；带对五行比带满要紧。" : tab === "xinfa" ? "装备上的特殊词条等于装了这本心法，同名只算一次。" : tab === "artifact" ? "法宝右键发动；本命法宝身陨不失。" : "阵盘 T 键在鼠标处布阵。"}</div>`;
+  box.querySelectorAll("[data-tip]").forEach((el) => LO.attachTip(el, tab, el.dataset.tip));
+}
+function renderPack() {
+  const pi = (key, n, c, hint) => `<div class="pi"><span class="sk e${(n % 3) + 1}" style="--s:44px"><span class="ico" style="${LO.iconStyle(key)}"></span><i class="lv">×${n}</i></span><span class="c ${hint ? "hint" : ""}">${c}</span></div>`;
+  const R = REGIONS[S.region];
+  $("pack").innerHTML = `<div class="ink-title">行囊<small>丹药 3 种 · 每种 3 枚</small></div>
+    <div class="slots">${pi("huichun_dan", 3, "回春丹")}${pi("huiqi_dan", 3, "回气丹")}${pi("dundi_fu", 1, "遁地符")}${S.region === "r2" ? pi("fu_wood", 2, "木符 · 破土", !0) + pi("fu_water", 1, "水符 · 破火", !0) : pi("fu_metal", 2, "金符 · 破木", !0)}</div>
+    <div class="risk"><span class="ink-seal two" style="--s:34px">风险</span><span>${S.region === "r2" ? "身陨则储物袋只留四分之一，消耗品遗落。" : "身陨则储物袋保留一半；装备与丹药无损。"}</span></div>`;
+}
+
+document.addEventListener("click", (ev) => {
+  const t = ev.target.closest("[data-tab]");
+  if (t) { tab = t.dataset.tab; LO.setHeld(null); return renderBox(); }
+  const r = ev.target.closest("[data-r]");
+  if (r) { S.region = r.dataset.r; return LO.emit(); }
+  const sg = ev.target.closest("[data-sugg]");
+  if (sg) {
+    // 建议的法术：放进第一个空栏；没有空栏就替换一个"本去处用不上"的法术（建议里没提到的），再不行替换最后一栏
+    const id = sg.dataset.sugg, n = LO.slotCount("spell");
+    const need = new Set(REGIONS[S.region].advice.flatMap((a) => a.spells));
+    let i = S.spells.slice(0, n).indexOf(null);
+    if (i < 0) i = S.spells.slice(0, n).findIndex((x) => !need.has(x));
+    if (i < 0) i = n - 1;
+    if (i < 0) return LO.toast("法术栏尚未解锁", "zhu");
+    const old = S.spells[i];
+    if (LO.place("spell", i, id).ok) LO.toast(`${"QER"[i]} 栏：${old ? SPELLS[old].name + " → " : ""}${SPELLS[id].name}`);
+    return;
+  }
+  if (ev.target.closest("#boxBtn")) { open = !open; renderBar(); renderBox(); }
+});
+
+LO.on(render);
+render();
+LO.dnd();
+LO.mockBar($("mb"));
+LO.ready();
+</script>
+</body></html>

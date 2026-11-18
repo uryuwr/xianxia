@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>装配 v2 · 方向三 · 五行盘（可交互草图）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css"><link rel="stylesheet" href="common.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script><script src="icons.js"></script><script src="data.js"></script>
+<style>
+/* ---------------- 背景：两种入口 ---------------- */
+.bg { position: absolute; inset: -16px; background-size: cover; background-position: center; }
+body.from-prep .bg { background-image: url(../png/prep.png); filter: blur(2.5px) saturate(.7); }
+body.from-prep .veil { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(236, 230, 214, .42), rgba(236, 230, 214, .18)), rgba(21, 24, 27, .16); }
+body.from-cave .bg { background-image: url(../forge_v2/bg_cave.png); filter: blur(7px) saturate(.35) brightness(.62); transform: scale(1.03); }
+body.from-cave .veil { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 75% at 50% 50%, rgba(21, 24, 27, .28), rgba(21, 24, 27, .62)), var(--ink-tex-paper); background-blend-mode: normal, multiply; }
+/* 浮在上面的一整张纸 */
+.sheet { position: absolute; left: 34px; top: 38px; width: 1212px; height: 658px; padding: 0; box-sizing: border-box; }
+
+/* ---------------- 顶栏 ---------------- */
+.hd { left: 72px; top: 58px; display: flex; align-items: baseline; gap: 14px; }
+.hd .ink-title { font-size: 40px; }
+.hd .ink-rule { width: 120px; align-self: center; }
+.hd small { font: 13px var(--f-kai); color: var(--ink-zhong); letter-spacing: .04em; }
+.entry { left: 50%; top: 62px; transform: translateX(-50%); margin-left: 120px; display: flex; align-items: baseline; gap: 2px; }
+.entry > span { font: 11px var(--f-ui); color: var(--ink-dan); margin-right: 6px; }
+.entry .ink-tab { font-size: 16px; cursor: pointer; padding: 2px 10px 7px; }
+.close { right: 66px; top: 52px; }
+.close .ink-btn { font-size: 20px; }
+
+/* ---------------- 本去处（左侧纸笺） ---------------- */
+.where { left: 58px; top: 112px; width: 246px; padding: 20px 20px 18px; }
+.where .rn { display: flex; align-items: center; gap: 10px; }
+.where .rn b { font: 400 30px var(--f-display); letter-spacing: .08em; color: var(--ink); }
+.where .rsw { display: flex; gap: 0; margin: 2px 0 4px -10px; }
+.where .rsw .ink-tab { font-size: 15px; padding: 2px 10px 7px; cursor: pointer; }
+.where .via { font: 11px var(--f-ui); color: var(--ink-dan); margin: 2px 0 6px; }
+.where .grp { padding: 7px 0 7px; border-top: 1px solid var(--ink-mist); }
+.where .grp .w { font: 15px var(--f-kai); color: var(--ink-nong); }
+.where .grp .p { font: 11px var(--f-ui); color: var(--ink-dan); }
+.where .grp .s { display: flex; align-items: center; gap: 4px; margin-top: 2px; flex-wrap: wrap; }
+.where .grp .s .shd { font-size: 14px; }
+.where .grp .s .shd::before { width: 10px; height: 10px; }
+.where .grp .s .ar { color: var(--ink-qing); font-size: 11px; }
+.where .grp .s em { font: 11px var(--f-ui); font-style: normal; color: var(--ink-dan); margin-left: 4px; }
+.where .adv { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--ink-qing); }
+.where .adv .t { font: 11px var(--f-ui); color: var(--ink-dan); }
+.where .adv .l { font: 400 14px/1.6 var(--f-display); color: var(--ink-nong); letter-spacing: 0; display: grid; grid-template-columns: 20px 1fr auto; gap: 4px; align-items: center; }
+.where .adv .l .els { flex: none; }
+.where .adv .l.ok { color: var(--ink-zhong); }
+.where .adv .l.ok i { font: 11px var(--f-ui); font-style: normal; color: #2c7d57; }
+.where .adv .l.no i { font: 11px var(--f-ui); font-style: normal; color: var(--zhu); }
+
+/* ---------------- 五行盘 ---------------- */
+.wheel { left: 0; top: 0; width: 1280px; height: 720px; pointer-events: none; }
+.wheel svg { position: absolute; left: 0; top: 0; overflow: visible; }
+.ring { position: absolute; border-radius: 50%; pointer-events: none; }
+.ring.r1 { background: var(--ink-qing); opacity: .7; -webkit-mask: var(--ink-enso-full) 0 0 / 100% 100% no-repeat; mask: var(--ink-enso-full) 0 0 / 100% 100% no-repeat; }
+.ring.wash { background: radial-gradient(closest-side, rgba(245, 240, 227, .7), rgba(225, 216, 194, .25) 70%, transparent); }
+.node { position: absolute; width: 0; height: 0; pointer-events: none; }
+.node > * { pointer-events: auto; }
+.node .halo { position: absolute; left: -66px; top: -66px; width: 132px; height: 132px; border-radius: 50%; background: radial-gradient(closest-side, var(--w), transparent 78%); pointer-events: none; }
+.node .halo::after { content: ""; position: absolute; inset: 6px; background: var(--c); opacity: .22; -webkit-mask: var(--ink-enso-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-enso-1) 0 0 / 100% 100% no-repeat; }
+.node .ch { position: absolute; font: 400 64px/1 var(--f-splash); color: var(--c); opacity: .2; transform: translate(-50%, -50%); pointer-events: none; }
+.node .sp .els { position: absolute; left: -4px; top: -4px; z-index: 4; width: 21px; height: 21px; font-size: 13px; }
+.node .sp { position: absolute; left: -34px; top: -34px; }
+.node .sp .nm { position: absolute; left: 50%; top: 72px; transform: translateX(-50%); white-space: nowrap; font: 14px var(--f-display); color: var(--ink-nong); letter-spacing: .06em; text-align: center; }
+.node .sp .nm small { display: block; font: 10px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+.node .sp.ghost .nm { color: var(--ink-dan); }
+.node .sp .on { position: absolute; right: -6px; top: -6px; z-index: 4; }
+.node .fm { position: absolute; }
+.node .fm .nm { position: absolute; left: 50%; top: 42px; transform: translateX(-50%); white-space: nowrap; font: 11px var(--f-ui); color: var(--ink-dan); }
+.node .fm .on { position: absolute; right: -8px; top: -6px; z-index: 4; }
+.node .sh { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 0; white-space: nowrap; pointer-events: none; }
+.node .sh .shd { font-size: 17px; }
+.node .sh .shd::before { width: 16px; height: 16px; border-width: 2.5px; }
+.node .sh em { font: 11px var(--f-ui); font-style: normal; color: var(--ink-zhong); text-shadow: 0 0 3px var(--paper-hi), 0 0 3px var(--paper-hi); }
+.node .sh .wv { position: absolute; inset: -14px -18px; z-index: -1; background: radial-gradient(closest-side, color-mix(in srgb, var(--c) 16%, transparent), transparent); }
+/* 装备点：朱色小印（栏位键） */
+.keyseal { --s: 20px; font-size: 11px; --seal-rot: 4deg; }
+.edge-lb { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; font: 13px var(--f-display); letter-spacing: .04em; pointer-events: none; text-shadow: 0 0 4px var(--paper-hi), 0 0 4px var(--paper-hi), 0 0 2px var(--paper-hi); }
+.edge-lb.no { color: var(--zhu); font-size: 15px; }
+.edge-lb small { font: 10px var(--f-ui); color: var(--ink-dan); display: block; text-align: center; }
+.ke { position: absolute; transform: translate(-50%, -50%); font: 12px var(--f-kai); color: var(--ink-dan); pointer-events: none; }
+.center { position: absolute; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
+.center .t { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: .1em; }
+.center .n { font: 400 46px/1.05 var(--f-display); color: var(--ink); }
+.center .n small { font-size: 26px; color: var(--ink-dan); }
+.center .n.bad { color: var(--zhu); }
+.center .m { font: 12px var(--f-kai); color: var(--ink-zhong); }
+.legend { left: 342px; top: 548px; font: 11px var(--f-ui); color: var(--ink-dan); display: flex; gap: 14px; align-items: center; }
+.legend i { display: inline-block; width: 26px; height: 0; border-top: 3px solid var(--ink-nong); vertical-align: 3px; margin-right: 4px; }
+.legend i.d { border-top: 3px dotted var(--zhu); }
+
+/* ---------------- 装配栏 ---------------- */
+.bar { left: 330px; top: 570px; display: flex; align-items: flex-start; gap: 26px; }
+.bar .grp { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.bar .grp > .gl { font: 12px var(--f-kai); color: var(--ink-zhong); letter-spacing: .2em; }
+.bar .grp > .row { display: flex; gap: 14px; }
+.bar .grp + .grp { position: relative; }
+.bar .grp + .grp::before { content: ""; position: absolute; left: -14px; top: 22px; height: 52px; width: 6px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; }
+.slot { position: relative; display: flex; flex-direction: column; align-items: center; width: 64px; }
+.slot .kk { font: 11px var(--f-ui); color: var(--ink-dan); height: 15px; }
+.slot .cap { font: 12px var(--f-kai); color: var(--ink-nong); white-space: nowrap; margin-top: 1px; height: 16px; }
+.slot .cap.dup { color: var(--zhu); }
+.slot.is-locked .sk > b { color: var(--ink-dan); font-size: 20px; }
+.slot.is-locked .sk::after { opacity: .14; }
+.slot .dupseal { position: absolute; right: -2px; top: 14px; z-index: 5; --s: 18px; font-size: 10px; }
+
+/* ---------------- 法宝与心法（右侧纸笺） ---------------- */
+.kit { right: 60px; top: 108px; width: 284px; padding: 18px 20px 14px; }
+body.from-cave .kit { top: 104px; }
+.kit h3 { margin: 0 0 4px; font: 400 19px var(--f-display); color: var(--ink-nong); letter-spacing: .12em; display: flex; align-items: baseline; gap: 8px; }
+.kit h3 small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+.kit .arts { display: flex; gap: 12px; margin-bottom: 8px; }
+.kit .it { position: relative; display: flex; flex-direction: column; align-items: center; width: 74px; }
+.kit .it .n { font: 13px var(--f-display); letter-spacing: .04em; white-space: nowrap; margin-top: 2px; }
+.kit .it .c { font: 10px var(--f-ui); color: var(--ink-dan); white-space: nowrap; }
+.kit .it .c.gear { color: #8a6a22; }
+.kit .it .c.on { color: var(--zhu); }
+.kit .it .on-dot { position: absolute; left: 10px; top: 2px; width: 7px; height: 7px; border-radius: 50%; background: var(--zhu); box-shadow: 0 0 0 2px var(--paper-hi); z-index: 5; }
+.kit .xf { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 0; padding-top: 2px; }
+.kit .xf .it { width: auto; }
+.kit .more { display: flex; align-items: center; gap: 4px; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--ink-mist); flex-wrap: wrap; }
+.kit .more > span { font: 11px var(--f-ui); color: var(--ink-dan); margin-right: 4px; }
+.kit .note { font: 11px/1.5 var(--f-ui); color: var(--ink-dan); margin-top: 6px; }
+.kit .note b { font-weight: 400; color: #8a6a22; }
+.kit .fms { display: flex; align-items: center; gap: 8px; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--ink-mist); font: 11px var(--f-ui); color: var(--ink-dan); }
+
+/* ---------------- 右下：启程 / 存 ---------------- */
+.go { right: 70px; bottom: 50px; display: flex; align-items: center; gap: 12px; }
+.go .hint { font: 12px/1.5 var(--f-kai); color: var(--ink-zhong); text-align: right; }
+.go .hint b { font-weight: 400; color: var(--zhu); }
+body.from-cave .go .ink-seal-btn { display: none; }
+body.from-prep .go .cave-only { display: none; }
+body.from-cave .go .prep-only { display: none; }
+.go .ink-seal-btn { --s: 84px; }
+.ops { left: 72px; bottom: 50px; font: 11px/1.7 var(--f-ui); color: var(--ink-dan); width: 230px; }
+.ops b { font-weight: 400; color: var(--ink-zhong); }
+.ld-mock { bottom: 8px; left: 46px; }
+body.from-cave .ld-mock { bottom: 4px; }
+</style></head>
+<body class="from-prep">
+<div class="bg"></div><div class="veil"></div>
+<section class="ink-paper sheet"></section>
+<div class="abs hd"><span class="ink-title">功法</span><span class="ink-rule"></span><small>五行盘 · 看箭头，定带什么出门</small></div>
+<div class="abs entry" id="entry"><span>入口示意</span><a class="ink-tab" data-f="prep">从出行准备打开</a><a class="ink-tab" data-f="cave">从洞府打开</a></div>
+<div class="abs close" id="closer"></div>
+<section class="abs ink-paper slip where" id="where"></section>
+<div class="abs wheel" id="wheel"></div>
+<div class="abs legend"><span><i></i>已带克制法术</span><span><i class="d"></i>缺克制（虚笔）</span><span>淡墨 = 五行相克</span></div>
+<div class="abs bar" id="bar"></div>
+<section class="abs ink-paper slip kit" id="kit"></section>
+<div class="abs go" id="go">
+  <div class="hint prep-only" id="gohint"></div>
+  <div class="hint cave-only" id="savehint"></div>
+  <button class="ink-seal-btn">启程</button>
+</div>
+<div class="abs ops" id="ops"><b>拖</b> 盘上签入栏 · 栏间换位 · 拖出卸下<br><b>点选</b> 先签后栏 · <b>悬停</b>按 Q E R T 直装</div>
+<div id="mb"></div>
+<script>
+(function () {
+  const { EL, BEATS, COUNTER, SPELLS, FORMATIONS, REGIONS, XINFA, RAR } = LD;
+  const S = LO.S;
+  let from = /from=cave/.test(location.hash) ? "cave" : "prep";
+  const ORDER = ["metal", "wood", "earth", "water", "fire"]; // 相克顺序：金克木、木克土、土克水、水克火、火克金
+  const CX = 600, CY = 318, R = 158;
+  const BY_EL = {}; for (const id in SPELLS) BY_EL[SPELLS[id].el] = id;
+  const FM_EL = { metal: "sword_array", fire: "fire_array" };
+  const rad = (d) => (d * Math.PI) / 180;
+  const ang = (i) => -90 + 72 * i;
+  const pt = (a, r = R) => [CX + r * Math.cos(rad(a)), CY + r * Math.sin(rad(a))];
+  const CN = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+
+  const equippedAt = (kind, id) => { const i = LO.pool(kind).find((e) => e.id === id); return i && i.at >= 0 && LO.unlocked(kind, i.at) ? i.at : -1; };
+  const KEYS = { spell: ["Q", "E", "R"], formation: ["T"], artifact: ["右"], xinfa: ["一", "二"] };
+
+  // 护盾标注：多寡（R.mix 有比例时写"六成"，否则写出现在哪）
+  function shareOf(Rg, el) {
+    if (Rg.mix && Rg.mix[el]) return "精英约" + CN[Math.round(Rg.mix[el] * 10)] + "成";
+    const g = Rg.groups.filter((x) => x.els.includes(el));
+    return g.map((x) => (x.phases ? x.tag + (x.els.indexOf(el) === 0 ? "首段" : x.els.indexOf(el) === x.els.length - 1 ? "末段" : "中段") : x.tag)).join(" · ");
+  }
+
+  // ---------------- 五行盘 ----------------
+  function arcPath(a1, a2, r) {
+    const [x1, y1] = pt(a1, r), [x2, y2] = pt(a2, r);
+    return `M${x1.toFixed(1)} ${y1.toFixed(1)} A${r} ${r} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  }
+  function head(a, r, color, w) {
+    // 箭头：在 a 处顺时针方向的两笔短锋
+    const [x, y] = pt(a, r), t = rad(a);
+    const dx = -Math.sin(t), dy = Math.cos(t); // 顺时针切向
+    const nx = Math.cos(t), ny = Math.sin(t);
+    const L = 11 + w;
+    const p1 = [x - dx * L + nx * L * 0.55, y - dy * L + ny * L * 0.55], p2 = [x - dx * L - nx * L * 0.55, y - dy * L - ny * L * 0.55];
+    return `<path d="M${p1[0].toFixed(1)} ${p1[1].toFixed(1)} L${x.toFixed(1)} ${y.toFixed(1)} L${p2[0].toFixed(1)} ${p2[1].toFixed(1)}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+  function drawWheel() {
+    const Rg = REGIONS[S.region];
+    const cov = LO.coverage();
+    const covBy = Object.fromEntries(cov.map((c) => [c.el, c]));
+    let svg = `<svg width="1280" height="720" viewBox="0 0 1280 720"><g filter="url(#ink-rough)">`;
+    let html = `<div class="ring wash" style="left:${CX - R - 92}px;top:${CY - R - 92}px;width:${2 * R + 184}px;height:${2 * R + 184}px"></div>`;
+    html += `<div class="ring r1" style="left:${CX - 88}px;top:${CY - 88}px;width:176px;height:176px;transform:rotate(18deg)"></div>`;
+    let labels = "";
+    ORDER.forEach((el, i) => {
+      const nx = ORDER[(i + 1) % 5]; // el 克 nx
+      const a1 = ang(i) + 21, a2 = ang(i + 1) - 21;
+      const c = covBy[nx]; // 本去处有 nx 盾吗
+      if (!c) {
+        svg += `<path d="${arcPath(a1, a2, R)}" fill="none" stroke="rgba(21,24,27,.3)" stroke-width="2.2" stroke-linecap="round"/>` + head(a2, R, "rgba(21,24,27,.34)", 2.2);
+        const [kx, ky] = pt((a1 + a2) / 2, R - 20);
+        labels += `<span class="ke" style="left:${kx}px;top:${ky}px">克</span>`;
+      } else {
+        const col = c.ok ? EL[el].c : "#b8291a";
+        svg += `<path d="${arcPath(a1, a2, R)}" fill="none" stroke="${col}" stroke-width="${c.ok ? 5 : 3.6}" stroke-linecap="round" ${c.ok ? "" : 'stroke-dasharray="1.5 9"'} opacity="${c.ok ? 0.92 : 0.9}" class="edge ${c.ok ? "ok" : "no"}" data-el="${nx}"/>` + head(a2, R, col, c.ok ? 4 : 3);
+        const [lx, ly] = pt((a1 + a2) / 2, R + 30);
+        labels += c.ok
+          ? `<span class="edge-lb" style="left:${lx}px;top:${ly}px;color:${EL[el].c}">${EL[el].n}克${EL[nx].n} ✓<small>${c.by.join("、")}</small></span>`
+          : `<span class="edge-lb no" style="left:${lx}px;top:${ly}px">缺${EL[el].n}<small>${EL[nx].n}盾无人破</small></span>`;
+        const [kx, ky] = pt((a1 + a2) / 2, R - 20);
+        labels += `<span class="ke" style="left:${kx}px;top:${ky}px;color:${c.ok ? EL[el].c : "#b8291a"}">克</span>`;
+      }
+    });
+    svg += `</g></svg>`;
+    // 节点
+    ORDER.forEach((el, i) => {
+      const a = ang(i), [x, y] = pt(a), e = EL[el];
+      const sid = BY_EL[el], spDef = SPELLS[sid];
+      const have = LO.have("spell", sid), at = equippedAt("spell", sid);
+      const [cx, cy] = [Math.cos(rad(a)), Math.sin(rad(a))];
+      let n = `<div class="node" style="left:${x}px;top:${y}px;--c:${e.c};--w:${e.w}"><div class="halo"></div>`;
+      // 五行字：放在节点内侧（朝盘心）
+      n += `<span class="ch" style="left:-30px;top:-18px">${e.n}</span>`;
+      n += `<div class="sp${have ? "" : " ghost"}" data-src-kind="spell" data-src-id="${sid}">${LO.tokenHTML("spell", sid, { size: 68, ghost: !have, sel: !1 })}<span class="els" style="--c:${e.c}">${e.n}</span>` +
+        (at >= 0 ? `<span class="on ink-seal keyseal">${KEYS.spell[at]}</span>` : "") +
+        `<span class="nm">${spDef.name}<small>${have ? (at >= 0 ? "已带 · " + KEYS.spell[at] : spDef.role) : spDef.src}</small></span></div>`;
+      // 阵盘停靠（剑阵在金、火阵在火）：切向偏出去
+      const fid = FM_EL[el];
+      if (fid) {
+        const [fx, fy] = el === "metal" ? [22, 40] : [-74, 14];
+        const fh = LO.have("formation", fid), fat = equippedAt("formation", fid);
+        n += `<div class="fm" style="left:${fx}px;top:${fy}px" data-src-kind="formation" data-src-id="${fid}">${LO.tokenHTML("formation", fid, { size: 42, ghost: !fh, cls: "e3" })}` +
+          (fat >= 0 ? `<span class="on ink-seal keyseal">T</span>` : "") + `<span class="nm">${FORMATIONS[fid].name}${fh ? "" : " · 未得"}</span></div>`;
+      }
+      // 本去处的护盾：节点外侧
+      if (covBy[el]) {
+        const [sx, sy] = [cx * 104, cy * 104 + (cy > 0.5 ? 8 : 0)];
+        n += `<div class="sh" style="left:${sx}px;top:${sy}px"><i class="wv" style="--c:${e.c}"></i><span class="shd" style="--c:${e.c}">${e.n}盾</span><em>${shareOf(Rg, el)}</em></div>`;
+      }
+      n += `</div>`;
+      html += n;
+    });
+    // 盘心：本去处护盾覆盖
+    const ok = cov.filter((c) => c.ok).length;
+    html += `<div class="center" style="left:${CX}px;top:${CY}px"><div class="t">${Rg.name} · 护盾</div><div class="n ${ok < cov.length ? "bad" : ""}">${ok}<small> / ${cov.length}</small></div><div class="m">${ok === cov.length ? "皆有克制" : "已克 · 尚缺 " + cov.filter((c) => !c.ok).map((c) => EL[c.counter].n).join("、")}</div></div>`;
+    wheel.innerHTML = svg + html + labels;
+  }
+
+  // ---------------- 本去处 ----------------
+  function drawWhere() {
+    const Rg = REGIONS[S.region], cov = LO.coverage();
+    let h = `<div class="rn"><b>${Rg.name}</b><span class="ink-seal two" style="--s:30px">${Rg.jing}</span></div>`;
+    h += from === "cave"
+      ? `<div class="rsw"><span class="ink-tab" style="font-size:11px;padding:2px 2px 7px 10px;font-family:var(--f-ui);letter-spacing:0">预演</span>${Object.values(REGIONS).map((x) => `<a class="ink-tab${x.id === S.region ? " on" : ""}" data-r="${x.id}">${x.name}</a>`).join("")}</div>`
+      : `<div class="via">随出行所选 · 推荐${Rg.realm}</div>`;
+    for (const g of Rg.groups) {
+      h += `<div class="grp"><div class="w">${g.who}</div><div class="p">${g.where}</div><div class="s">` +
+        g.els.map((e) => `<span class="shd" style="--c:${EL[e].c}">${EL[e].n}</span>`).join(`<span class="ar">→</span>`) + `<em>${g.share}</em></div></div>`;
+    }
+    h += `<div class="adv"><div class="t">宜带</div>`;
+    for (const a of Rg.advice) {
+      const carried = cov.some((c) => c.counter === a.el && c.ok);
+      h += `<div class="l ${carried ? "ok" : "no"}"><span class="els" style="--c:${EL[a.el].c}">${EL[a.el].n}</span><span>${a.text}</span>${carried ? "<i>已带</i>" : "<i>未带</i>"}</div>`;
+    }
+    h += `</div>`;
+    where.innerHTML = h;
+    inkui.decorate(where.parentNode);
+  }
+
+  // ---------------- 装配栏 ----------------
+  function slotHTML(kind, i, key) {
+    const lock = !LO.unlocked(kind, i), id = lock ? null : LO.get(kind, i);
+    const d = id && LO.defOf(kind, id);
+    const g = kind === "xinfa" && id ? LO.gearOf(id) : null;
+    const name = d ? (kind === "xinfa" ? "《" + d.name + "》" : d.name) : "";
+    const cap = lock ? `<span class="lock-cap">${LO.unlockText(kind, i)}</span>` : g ? `<span class="cap dup">与${g.slot.slice(-1)}上重复</span>` : `<span class="cap">${name || '<span class="ink-dim" style="font-size:11px;font-family:var(--f-ui)">空 · 拖入</span>'}</span>`;
+    return `<div class="slot${lock ? " is-locked" : ""}" data-slot-kind="${kind}" data-slot-i="${i}"><span class="kk">${key}</span>` +
+      LO.tokenHTML(kind, id, { size: 58, glyph: lock ? "锁" : "", cls: ["e1", "e2", "e3"][i % 3] + (g ? " is-gray" : "") }) +
+      (g ? `<span class="ink-seal dupseal">叠</span>` : "") + cap + `</div>`;
+  }
+  function drawBar() {
+    bar.innerHTML =
+      `<div class="grp"><span class="gl">法术</span><div class="row">${[0, 1, 2].map((i) => slotHTML("spell", i, "QER"[i])).join("")}</div></div>` +
+      `<div class="grp"><span class="gl">阵盘</span><div class="row">${slotHTML("formation", 0, "T")}</div></div>` +
+      `<div class="grp"><span class="gl">法宝</span><div class="row">${slotHTML("artifact", 0, "右键")}</div></div>` +
+      `<div class="grp"><span class="gl">心法</span><div class="row">${[0, 1].map((i) => slotHTML("xinfa", i, "心法" + "一二"[i])).join("")}</div></div>`;
+    bar.querySelectorAll("[data-slot-kind]").forEach((el) => {
+      const k = el.dataset.slotKind, i = +el.dataset.slotI;
+      if (LO.unlocked(k, i) && LO.get(k, i)) LO.attachTip(el, k, LO.get(k, i));
+    });
+  }
+
+  // ---------------- 法宝 · 心法 ----------------
+  function drawKit() {
+    const arts = LO.pool("artifact");
+    const artLock = !LO.unlocked("artifact");
+    let h = `<h3>法宝<small>${artLock ? LO.unlockText("artifact") : "右键祭出 · 一件"}</small></h3><div class="arts">` +
+      arts.map((e) => {
+        const d = e.def, on = e.at >= 0 && !artLock;
+        return `<div class="it" data-src-kind="artifact" data-src-id="${e.id}">${on ? '<i class="on-dot"></i>' : ""}${LO.tokenHTML("artifact", e.id, { size: 50, ghost: !e.have })}` +
+          `<span class="n" style="color:${e.have ? RAR[d.rarity].t : "var(--ink-dan)"}">${d.name}</span><span class="c${on ? " on" : ""}">${!e.have ? "未得" : on ? "已带" : d.native ? "本命" : RAR[d.rarity].n}</span></div>`;
+      }).join("") + `</div>`;
+    const xs = LO.pool("xinfa"), mine = xs.filter((e) => e.have), not = xs.filter((e) => !e.have);
+    h += `<h3>心法<small>${LO.slotCount("xinfa")} 栏 · 被动</small></h3><div class="xf">` +
+      mine.map((e) => {
+        const on = e.at >= 0 && LO.unlocked("xinfa", e.at);
+        const cap = e.gear ? `<span class="c gear">${e.gear.slot.slice(-1)}上已有</span>` : on ? `<span class="c on">心法${"一二"[e.at]}</span>` : `<span class="c">已领悟</span>`;
+        return `<div class="it" data-src-kind="xinfa" data-src-id="${e.id}">${on ? '<i class="on-dot"></i>' : ""}${LO.tokenHTML("xinfa", e.id, { size: 42, cls: e.gear ? "is-gray" : "" })}<span class="n" style="${e.gear ? "color:var(--ink-dan)" : ""}">${e.def.name}</span>${cap}</div>`;
+      }).join("") + `</div>`;
+    h += `<div class="note">灰显：<b>${LD.GEAR.filter((g) => g.affix).map((g) => `${g.slot}《${g.name}》`).join("、")}</b>的词条已提供同名心法 · 同名不叠加，心法栏留给别的</div>`;
+    h += `<div class="more"><span>未得</span>${not.map((e) => `<span data-src-kind="xinfa" data-src-id="${e.id}">${LO.tokenHTML("xinfa", e.id, { size: 28, ghost: !0 })}</span>`).join("")}</div>`;
+    h += `<div class="fms"><span data-src-kind="formation" data-src-id="spirit_array">${LO.tokenHTML("formation", "spirit_array", { size: 30, ghost: !LO.have("formation", "spirit_array") })}</span><span>聚灵阵 · 无五行，不上盘 · 未得</span></div>`;
+    kit.innerHTML = h;
+    inkui.decorate(kit.parentNode);
+  }
+
+  function drawChrome() {
+    document.body.className = "from-" + from;
+    const mbEl = document.getElementById("mb"); mbEl.classList.toggle("dark", from === "cave");
+    entry.querySelectorAll("[data-f]").forEach((a) => a.classList.toggle("on", a.dataset.f === from));
+    closer.innerHTML = from === "cave" ? `<span class="ink-btn">回洞府 <span class="key">Esc</span></span>` : `<span class="ink-btn">收起 <span class="key">Esc</span></span>`;
+    const cov = LO.coverage(), miss = cov.filter((c) => !c.ok);
+    gohint.innerHTML = miss.length ? `${REGIONS[S.region].name}还有 <b>${miss.map((c) => EL[c.el].n + "盾").join("、")}</b> 无克<br>局内不能换法术，定了再走` : `护盾皆有克制<br>局内不能换法术，定了再走`;
+    savehint.innerHTML = `随改随存 · 下次出行沿用<br><span class="ink-dim">出行准备里也能打开这张盘</span>`;
+  }
+
+  function render() {
+    drawChrome(); drawWheel(); drawWhere(); drawBar(); drawKit();
+    document.querySelectorAll("#wheel [data-src-id], #kit [data-src-id]").forEach((el) => LO.attachTip(el, el.dataset.srcKind, el.dataset.srcId));
+  }
+  entry.addEventListener("click", (ev) => { const a = ev.target.closest("[data-f]"); if (a) { from = a.dataset.f; render(); } });
+  where.addEventListener("click", (ev) => { const a = ev.target.closest("[data-r]"); if (a) { S.region = a.dataset.r; LO.emit(); } });
+  window.addEventListener("keydown", (ev) => { if (ev.code === "Escape" && !LO.held) LO.toast(from === "cave" ? "回洞府（示意）" : "收起五行盘，回到出行准备（示意）"); });
+  document.querySelector(".go .ink-seal-btn").addEventListener("click", () => LO.toast("启程（示意）", "zhu"));
+  LO.on(render);
+  render();
+  LO.dnd();
+  LO.mockBar(document.getElementById("mb"));
+  LO.ready();
+})();
+</script>
+</body></html>

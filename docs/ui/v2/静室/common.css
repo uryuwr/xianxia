@@ -1,0 +1,164 @@
+/* 静室（备战建筑）草图公用样式——只给 docs/ui/v2/静室/*.html 用，不是游戏代码。
+   依赖：src/ui/ink/strokes.css、ink-ui.css（游戏水墨套件）、../loadout_v2/common.css（技能签 .sk、悬停纸条、通知、拖拽态）。
+   类名前缀 cf-（避免撞 loadout_v2 与游戏旧类名，见 UI设计/坑.md "通用类名撞车"）。 */
+body.ink-stage { background: var(--ink-tex-paper), var(--paper); }
+
+/* ---------- 来源小印：境 / 器 / 心 / 局 ---------- */
+.cf-src { display: inline-flex; width: 15px; height: 15px; align-items: center; justify-content: center; flex: none; font: 10px/1 var(--f-display); font-style: normal; color: var(--paper-hi); -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; }
+.cf-src.g-境 { background: rgba(21,24,27,.82); }
+.cf-src.g-器 { background: rgba(21,24,27,.5); }
+.cf-src.g-心 { background: rgba(21,24,27,.3); }
+.cf-src.g-局 { background: var(--nijin); }
+.cf-legend { display: flex; gap: 12px; align-items: center; font: 11px var(--f-ui); color: var(--ink-dan); }
+.cf-legend span { display: inline-flex; gap: 4px; align-items: center; }
+
+/* ---------- 一笔分段条（按来源大类） ---------- */
+.cf-bar { position: relative; display: inline-flex; height: 9px; flex: none; -webkit-mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; background: rgba(21,24,27,.08); }
+.cf-bar i { display: block; height: 100%; }
+.cf-bar i.off { background: repeating-linear-gradient(90deg, rgba(184,146,58,.55) 0 3px, transparent 3px 6px); }
+.cf-bar.none { background: transparent; }
+
+/* ---------- 属性行 ---------- */
+.cf-stats { display: flex; flex-direction: column; }
+.cf-gh { display: flex; align-items: baseline; gap: 8px; margin: 4px 0 0; font: 13px var(--f-display); color: var(--ink-zhong); letter-spacing: .3em; }
+.cf-gh::after { content: ""; flex: 1; height: 5px; background: var(--ink-mist); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.cf-st { display: flex; align-items: center; gap: 8px; padding: 1px 4px; cursor: pointer; border-radius: 2px; position: relative; }
+.cf-st:hover { background: rgba(21,24,27,.04); }
+.cf-st.on { background: rgba(184,41,26,.06); }
+.cf-st.on::before { content: ""; position: absolute; left: -10px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: var(--zhu); }
+.cf-st .n { width: 4.2em; font: 14px var(--f-kai); color: var(--ink-zhong); white-space: nowrap; }
+.cf-st .v { min-width: 3.2em; text-align: right; font: 17px/1.2 var(--f-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.cf-st .v small { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 1px; }
+.cf-st .v.tmp { color: #8a6a22; }
+.cf-st .ss { display: flex; gap: 2px; margin-left: auto; }
+.cf-st.flash .v { animation: cfFlash 1.2s ease; }
+@keyframes cfFlash { 0% { color: var(--zhu); transform: scale(1.12); } 100% { color: var(--ink); transform: none; } }
+
+/* 模式切换（洞府中 / 按出行计） */
+.cf-mode { display: inline-flex; gap: 2px; font: 12px var(--f-kai); color: var(--ink-dan); }
+.cf-mode a { cursor: pointer; padding: 0 5px 3px; position: relative; }
+.cf-mode a.on { color: var(--ink); }
+.cf-mode a.on::after { content: ""; position: absolute; left: 2px; right: 2px; bottom: -2px; height: 5px; background: var(--zhu); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+
+/* 修为一笔 */
+.cf-xp { position: relative; display: block; height: 11px; -webkit-mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; background: linear-gradient(90deg, var(--nijin) var(--p), rgba(21,24,27,.1) var(--p)); }
+
+/* ---------- 浮签（点开的明细） ---------- */
+.cf-pop { position: fixed; left: 0; top: 0; z-index: 140; width: 300px; padding: 16px 18px 14px; font: 13px/1.6 var(--f-kai); color: var(--ink-zhong); opacity: 0; pointer-events: none; transition: opacity .14s; }
+.cf-pop.on { opacity: 1; pointer-events: auto; }
+.cf-pop .dh { display: flex; align-items: baseline; gap: 10px; }
+.cf-pop .dn { font: 22px var(--f-display); color: var(--ink); letter-spacing: .1em; }
+.cf-pop .dv { font: 26px var(--f-display); color: var(--ink); }
+.cf-pop .dv small { font: 12px var(--f-ui); color: var(--ink-dan); }
+.cf-pop .dm { margin-left: auto; font: 11px var(--f-ui); color: var(--ink-dan); }
+.cf-pop .dt { font: 12px/1.5 var(--f-kai); color: var(--ink-dan); }
+.cf-pop .dlist { margin-top: 6px; border-top: 1px solid var(--ink-mist); padding-top: 4px; }
+.cf-pop .dr { display: flex; align-items: center; gap: 7px; padding: 2px 0; font-size: 12.5px; }
+.cf-pop .dr .dl { flex: 1; min-width: 0; color: var(--ink-nong); }
+.cf-pop .dr .dl em { font: 10.5px var(--f-ui); font-style: normal; color: #8a6a22; margin-left: 4px; }
+.cf-pop .dr b { font: 400 15px var(--f-display); color: var(--ink); white-space: nowrap; }
+.cf-pop .dr b small { font: 10.5px var(--f-ui); color: var(--ink-dan); }
+.cf-pop .dr.off { opacity: .55; }
+.cf-pop .df { margin-top: 6px; padding-top: 4px; border-top: 1px solid var(--ink-mist); font: 11px/1.6 var(--f-ui); color: var(--ink-dan); }
+/* 法器详情 */
+.cf-pop .gh { display: flex; gap: 12px; align-items: center; margin-bottom: 4px; }
+.cf-pop .gn { font: 22px var(--f-display); letter-spacing: .06em; }
+.cf-pop .gs { font: 12px var(--f-ui); color: var(--ink-dan); }
+.cf-pop .gl { font-size: 12.5px; color: var(--ink-nong); padding: 1px 0; }
+.cf-pop .gl .k { display: inline-block; width: 2.6em; font: 11px var(--f-ui); color: var(--ink-dan); }
+.cf-pop .gl.sp { color: #816a31; }
+.cf-pop .gc { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--ink-mist); }
+.cf-pop .gct { font: 11px var(--f-ui); color: var(--ink-dan); margin-bottom: 2px; }
+.cf-pop .gcr { display: flex; gap: 10px; align-items: center; padding: 4px 2px; cursor: pointer; }
+.cf-pop .gcr:hover { background: rgba(21,24,27,.05); }
+.cf-pop .gcn { font: 16px var(--f-display); }
+.cf-pop .gcn small { font: 11px var(--f-ui); color: var(--ink-dan); }
+.cf-pop .gcd { font: 11.5px/1.5 var(--f-ui); color: var(--ink-zhong); }
+.cf-pop .up { color: #2e7254; } .cf-pop .dn { color: var(--zhu); } .cf-pop .dim { color: var(--ink-dan); }
+.cf-pop .gcd .dn, .cf-pop .gl .dn { font: inherit; letter-spacing: 0; }
+
+/* ---------- 随身法器（圆相签 + 名） ---------- */
+.cf-gear { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.cf-gear .t { white-space: nowrap; }
+.cf-gear .t b { display: block; font: 400 18px var(--f-display); letter-spacing: .06em; }
+.cf-gear .t span { font: 11.5px var(--f-ui); color: var(--ink-dan); }
+.cf-gear .t .sp { color: #816a31; }
+.cf-gear:hover .sk { transform: scale(1.05); }
+.cf-gear.on .sk::after { background: var(--zhu) !important; opacity: 1; }
+.cf-gear .sk { transition: transform .16s var(--ease-ink); }
+
+/* ---------- 行囊：丹药按品质分格 ---------- */
+.cf-pills { display: flex; flex-direction: column; gap: 3px; }
+.cf-pill .ph { display: flex; align-items: baseline; gap: 6px; }
+.cf-pill .ph b { font: 400 16px var(--f-display); color: var(--ink-nong); letter-spacing: .06em; }
+.cf-pill .ph span { font: 11px var(--f-ui); color: var(--ink-dan); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cf-pill .ph .cnt { margin-left: auto; color: var(--ink-zhong); }
+.cf-pill .ph .cnt.full { color: var(--zhu); }
+.cf-pill .qs { display: flex; gap: 6px; margin-top: 2px; }
+.cf-q { display: flex; flex-direction: column; align-items: center; width: 56px; }
+.cf-q .sk { --s: 34px; }
+.cf-q .sk.zero > .ico { opacity: .32; filter: grayscale(.7); }
+.cf-q .sk.zero::after { opacity: .3; }
+.cf-q .qn { display: flex; align-items: center; font: 10.5px var(--f-ui); color: var(--ink-zhong); white-space: nowrap; margin-top: 1px; }
+.cf-q .qn b { font: 400 12px var(--f-display); margin-right: 2px; }
+.cf-q .qn b { font-weight: 400; }
+.cf-q .qn a { cursor: pointer; font: 14px/1 var(--f-display); color: var(--ink-zhong); padding: 0 3px 1px; }
+.cf-q .qn a:hover { color: var(--zhu); }
+.cf-q .qn a.dis { color: var(--ink-qing); cursor: default; }
+.cf-fus { display: flex; gap: 6px; flex-wrap: wrap; }
+.cf-sub { font: 11px var(--f-ui); color: var(--ink-dan); margin: 4px 0 2px; }
+.cf-sub b { font-weight: 400; color: var(--ink-zhong); }
+.cf-pouch { display: flex; gap: 8px; align-items: center; }
+.cf-pouch .em { width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; position: relative; font: 16px var(--f-display); color: var(--ink-qing); cursor: pointer; }
+.cf-pouch .em::after { content: ""; position: absolute; inset: 0; background: var(--ink); opacity: .16; -webkit-mask: var(--ink-enso-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-enso-1) 0 0 / 100% 100% no-repeat; }
+
+/* ---------- 功法匣列表（与 loadout_v2 a 同款，补"来源一行"） ---------- */
+.cf-src-line { font: 11px var(--f-ui); color: var(--ink-dan); }
+.cf-src-line a { color: #816a31; cursor: pointer; border-bottom: 1px dotted #816a31; }
+.cf-page { display: inline-flex; gap: 2px; vertical-align: -1px; margin-right: 4px; }
+.cf-page i { width: 7px; height: 9px; background: var(--ink-qing); -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; }
+.cf-page i.on { background: #816a31; }
+
+/* 草图标记 */
+.cf-mock { position: absolute; left: 14px; bottom: 6px; z-index: 120; font: 11px var(--f-ui); color: var(--ink-dan); display: flex; gap: 6px; }
+.cf-mock a { cursor: pointer; border-bottom: 1px solid transparent; padding: 0 3px; }
+.cf-mock a.on { color: var(--ink); border-bottom-color: var(--zhu); }
+
+/* ---------- 随身功法栏 / 功法匣（照抄 loadout_v2/a_xingqian.html，选择器挂在 .cf-bar-w / .cf-box 下） ---------- */
+.cf-bar-w { display: flex; align-items: flex-start; gap: 14px; }
+.cf-bar-w .grp { display: flex; gap: 10px; align-items: flex-start; }
+.cf-bar-w .grp + .grp { margin-left: 6px; padding-left: 18px; position: relative; }
+.cf-bar-w .grp + .grp::before { content: ""; position: absolute; left: 0; top: 18px; width: 8px; height: 46px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; }
+.cf-bar-w .slot { display: flex; flex-direction: column; align-items: center; width: 58px; position: relative; }
+.cf-bar-w .slot .key { font: 11px var(--f-ui); color: var(--ink-dan); height: 16px; }
+.cf-bar-w .slot .cap { margin-top: 6px; font: 12.5px var(--f-kai); color: var(--ink-nong); white-space: nowrap; text-align: center; }
+.cf-bar-w .slot .cap .dim { color: var(--ink-dan); }
+.cf-bar-w .slot.is-locked .sk::after { opacity: .12; }
+.cf-bar-w .slot.is-locked .sk > b { color: var(--ink-qing); }
+.cf-bar-w .slot.is-locked .cap { font: 11px/1.35 var(--f-ui); color: var(--ink-dan); margin-top: 4px; }
+.cf-bar-w .slot .dup { position: absolute; right: 2px; top: 14px; z-index: 4; }
+.cf-box .ink-tabs { margin: 2px 0 4px -10px; }
+.cf-box .ink-tab { font-size: 16px; padding: 3px 6px 7px; cursor: pointer; white-space: nowrap; }
+.cf-box .ink-tab small { font: 10px var(--f-ui); color: var(--ink-dan); margin-left: 2px; letter-spacing: 0; }
+.cf-box .list { display: flex; flex-direction: column; }
+.cf-box .list.cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; }
+.cf-box .it { display: flex; align-items: center; gap: 10px; padding: 5px 2px; position: relative; }
+.cf-box .it + .it::before { content: ""; position: absolute; left: 50px; right: 20%; top: 0; height: 5px; background: var(--ink-mist); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.cf-box .it .tx { flex: 1; min-width: 0; }
+.cf-box .it .n { font: 17px/1.2 var(--f-display); color: var(--ink-nong); letter-spacing: .06em; }
+.cf-box .it .l { font: 11px/1.45 var(--f-ui); color: var(--ink-dan); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cf-box .it .l .els { width: 14px; height: 14px; font-size: 10px; margin-right: 3px; vertical-align: -2px; }
+.cf-box .it .at { font: 13px var(--f-display); color: var(--ink-nong); white-space: nowrap; }
+.cf-box .it .at.on::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--zhu); margin-right: 5px; vertical-align: 2px; }
+.cf-box .it.ghost .n { color: var(--ink-dan); }
+.cf-box .it.gear .n { color: var(--ink-dan); }
+.cf-box .it.gear .l { color: #816a31; }
+.cf-box .it.dense { padding: 3px 2px; }
+.cf-box .it.dense .n { font-size: 16px; }
+.cf-box .more { margin-top: 4px; font: 11px/1.6 var(--f-ui); color: var(--ink-dan); }
+.cf-box .gearl { font: 11px/1.6 var(--f-ui); color: var(--ink-zhong); margin: 0 0 2px; }
+.cf-box .gearl b { font-weight: 400; color: #816a31; }
+.cf-help { font: 11px var(--f-ui); color: var(--ink-dan); }
+.cf-help b { font-weight: 400; color: var(--ink-zhong); }
+.cf-fus { gap: 2px; }
+.cf-fus .cf-q { width: 52px; }

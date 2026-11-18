@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 炼器 v2 · 三个方向（可交互草图）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../../assets/fonts/MaShanZheng-Regular.ttf"), url("../../../../src/ui/ink/MaShanZheng.woff2") format("woff2"); }
+body { margin: 0; background: #23231f; color: #ece6d6; font: 14px/1.7 "Microsoft YaHei", sans-serif; }
+header { display: flex; align-items: baseline; gap: 26px; padding: 14px 28px 6px; flex-wrap: wrap; }
+header h1 { margin: 0; font: 400 28px "MaShanZheng", KaiTi, serif; letter-spacing: .1em; }
+header .tabs { display: flex; gap: 6px; }
+header .tabs a { font: 400 20px "MaShanZheng", KaiTi, serif; letter-spacing: .08em; color: rgba(236,230,214,.5); padding: 4px 12px 8px; cursor: pointer; position: relative; text-decoration: none; }
+header .tabs a.on { color: #f5f0e3; }
+header .tabs a.on::after { content: ""; position: absolute; left: 6px; right: 4px; bottom: 0; height: 8px; background: #b8291a; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+header small { color: rgba(236,230,214,.55); }
+main { display: flex; gap: 22px; padding: 6px 28px 28px; align-items: flex-start; }
+.stage { flex: none; width: 1280px; height: 720px; box-shadow: 0 8px 30px rgba(0,0,0,.5); background: #000; }
+.stage iframe { width: 1280px; height: 720px; border: 0; display: block; }
+aside { width: 360px; flex: none; }
+aside h2 { font: 400 22px "MaShanZheng", KaiTi, serif; margin: 0 0 4px; letter-spacing: .08em; }
+aside ul { padding-left: 18px; margin: 6px 0 12px; }
+aside li { margin: 2px 0; }
+aside .st a { color: #d9b45e; margin-right: 10px; cursor: pointer; text-decoration: underline dotted; }
+aside .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; }
+aside .pc b { display: block; color: #9cc4a8; font-weight: 400; } aside .pc b.c { color: #e09080; }
+.grid { display: none; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 6px 28px 28px; }
+.grid figure { margin: 0; cursor: pointer; } .grid img { width: 100%; display: block; box-shadow: 0 6px 20px rgba(0,0,0,.5); }
+.grid figcaption { font: 400 18px "MaShanZheng", KaiTi, serif; padding: 6px 2px; }
+body.ov main { display: none; } body.ov .grid { display: grid; }
+.doc { color: rgba(236,230,214,.7); }
+.doc a { color: #d9b45e; }
+</style></head>
+<body>
+<header>
+  <h1>炼器 v2 · 可交互草图</h1><small style="color:#d9b45e">已定稿：方向二 · 鼎为中心（炼丹同版式），游戏内实现截图见 png/forge_v2_impl_*.png</small>
+  <nav class="tabs" id="tabs">
+    <a data-k="a">方向一 · 册页</a>
+    <a data-k="b" class="on">方向二 · 鼎为中心（已定稿）</a>
+    <a data-k="c">方向三 · 器谱长卷</a>
+    <a data-k="ov">并排总览</a>
+  </nav>
+  <small class="doc">说明与选择题见 <a href="../炼器_v2_方案.md">docs/ui/v2/炼器_v2_方案.md</a> · 每个方向左下角有"示意开关"（补齐材料 / 已搬迁溪谷 / 得器方 / 重置），用来看各种状态</small>
+</header>
+<main>
+  <div class="stage"><iframe id="fr" src="b_ding.html"></iframe></div>
+  <aside id="side"></aside>
+</main>
+<section class="grid">
+  <figure data-k="a"><img src="../png/forge_v2_a_cepage.png"><figcaption>方向一 · 册页</figcaption></figure>
+  <figure data-k="b"><img src="../png/forge_v2_b_ding.png"><figcaption>方向二 · 鼎为中心（已定稿，已落地）</figcaption></figure>
+  <figure data-k="c"><img src="../png/forge_v2_c_changjuan.png"><figcaption>方向三 · 器谱长卷</figcaption></figure>
+</section>
+<script>
+const D = {
+  a: {
+    url: "a_cepage.html", t: "方向一 · 册页",
+    idea: "与灵泉·静室同一套装裱册页。左页是器方目录（图标签 + 名 + 横排状态），页脚单独一栏是炼器鼎（设施）；右页左栏「炼成所得」（主材定品 → 品质范围 → 可能品级的属性与身上比较 → 词条池），右栏「炼制所需」（缺的写明出处，可挂念），页底朱印。",
+    pro: ["和已被认可的灵泉册页同构，丹器房三页（炼丹 / 炼器 / 药园）可共用一套壳", "信息密度最高、阅读路径最稳：选 → 看 → 缺什么 → 盖印", "改动最小：现有 panels.js 的数据接口都能直接用"],
+    con: ["物件感最弱，靠图标与印章撑氛围", "炼制的仪式感只在一方印 + 晕开上", "条目多于 7 条时左页要分页或滚动"],
+    st: [["默认", ""], ["缺材料", "#cat=gear"], ["重铸揭示", "#cat=reforge&reveal=1"], ["鼎升阶弹层", "#fac"], ["扩容", "#cat=upgrade"], ["认主（锁）", "#cat=bind"]],
+  },
+  b: {
+    url: "b_ding.html", t: "方向二 · 鼎为中心（已定稿）",
+    idea: "画面中央一尊写意炼器鼎，材料以圆相签围鼎排布（主材在鼎口上方最大，缺的朱色虚圈），左侧器方目录，右侧成品预览纸笺；盖印落在鼎上。",
+    pro: ["仪式感最强，'把材料投进鼎'一眼就懂", "缺料直接显示在鼎周，空位即提示", "盖印、开炉动效的舞台最好"],
+    con: ["鼎占去中间大块，详情与目录被挤到两侧", "辅材多（3 味 + 灵石）时环形排布拥挤", "重铸 / 认主 / 扩容与'投料入鼎'隐喻不完全贴合"],
+    st: [["默认", ""], ["重铸", "#cat=reforge"], ["扩容", "#cat=upgrade"], ["认主", "#cat=bind"]],
+  },
+  c: {
+    url: "c_changjuan.html", t: "方向三 · 器谱长卷",
+    idea: "一幅横向手卷按类别分段（自右向左），每个器方是一列：大圆相签 + 名 + 状态 + 材料小签；点选后卷下托纸展开详情与朱印。炼器鼎挂签在引首。",
+    pro: ["六类器方在一幅卷上一眼看全，可炼 / 缺 / 锁一扫便知", "手卷是风格指南认可的装裱，'展卷'切换有仪式感", "设施挂签在引首，与配方彻底分开"],
+    con: ["自右向左与玩家阅读习惯相反", "卷内留白多、托纸四栏偏挤", "器方变多后靠横移和滚轮，找东西多一步"],
+    st: [["默认", ""], ["重铸揭示", "#cat=reforge&reveal=1"], ["扩容", "#cat=upgrade"], ["认主", "#cat=bind"]],
+  },
+};
+const fr = document.getElementById("fr"), side = document.getElementById("side");
+function show(k) {
+  document.querySelectorAll("#tabs a").forEach((a) => a.classList.toggle("on", a.dataset.k === k));
+  document.body.classList.toggle("ov", k === "ov");
+  if (k === "ov") return;
+  const d = D[k];
+  fr.src = d.url;
+  side.innerHTML = `<h2>${d.t}</h2><p>${d.idea}</p><div class="pc"><div><b>长处</b><ul>${d.pro.map((x) => `<li>${x}</li>`).join("")}</ul></div><div><b class="c">短处</b><ul>${d.con.map((x) => `<li>${x}</li>`).join("")}</ul></div></div>
+    <p class="st">直达状态：${d.st.map(([n, h]) => `<a data-h="${h}">${n}</a>`).join("")}</p>
+    <p class="doc">新窗口打开：<a href="${d.url}" target="_blank">${d.url}</a></p>`;
+  side.querySelectorAll("[data-h]").forEach((a) => (a.onclick = () => { fr.src = d.url + a.dataset.h + (a.dataset.h ? "" : "#") + "&t=" + Date.now(); }));
+}
+document.querySelectorAll("#tabs a").forEach((a) => (a.onclick = () => show(a.dataset.k)));
+document.querySelectorAll(".grid figure").forEach((f) => (f.onclick = () => show(f.dataset.k)));
+show(location.hash.slice(1) || "b");
+</script>
+</body></html>

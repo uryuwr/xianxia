@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 地图图标草图（待选）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css">
+<link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<link rel="stylesheet" href="../mock_bag_v2/fonts.css">
+<style>
+html, body { margin: 0; width: 1280px; }
+body { overflow-x: hidden; background: var(--ink-tex-paper), var(--ink-tex-fiber), #ece6d6; background-blend-mode: multiply, multiply, normal; font-family: var(--f-kai); color: var(--ink); padding: 16px 20px 20px; box-sizing: border-box; }
+h1 { margin: 0; font: 400 30px var(--f-splash); letter-spacing: .1em; }
+.sub { font: 12.5px/1.6 var(--f-ui); color: var(--ink-zhong); margin: 4px 0 10px; }
+.cols { display: grid; grid-template-columns: repeat(3, 400px); gap: 0 20px; }
+.col h2 { margin: 0 0 6px; font: 400 19px var(--f-display); letter-spacing: .1em; display: flex; align-items: baseline; gap: 8px; }
+.col h2 small { font: 12px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+.col.rec h2::after { content: "推荐"; font: 12px var(--f-display); color: var(--paper-hi); background: var(--zhu); padding: 1px 5px 2px; -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; }
+/* 大地图底图：取自 work/shots/loop_map_half.png 的天机镜画心 */
+.map { position: relative; width: 400px; height: 430px; background: url(../../../../work/shots/loop_map_half.png) -230px -110px / 1280px 720px; overflow: hidden; }
+.map::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 30px rgba(236,230,214,.9); pointer-events: none; }
+.mirror { position: relative; flex: none; width: 140px; height: 140px; border-radius: 50%; overflow: hidden; background: url(../../../../work/shots/loop_map_half.png) -150px -175px / 800px 450px; box-shadow: 0 0 0 6px #8a6a3a, 0 0 0 8px #5a4020, inset 0 0 18px rgba(60,40,20,.35); margin: 14px 0 0 12px; }
+.row2 { display: flex; gap: 10px; align-items: flex-start; }
+.mk { position: absolute; transform: translate(-50%, -50%); }
+/* a：剪影图标 + 纸色外晕 */
+.ia { display: block; filter: drop-shadow(0 0 1px #f3eee1) drop-shadow(0 0 1.5px #f3eee1); }
+/* b：印章外框 + 纸色剪影 */
+.ib { position: relative; display: flex; align-items: center; justify-content: center; background: var(--bc); -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; transform: rotate(-4deg); }
+.ib > i { display: block; background: #f5f0e3; -webkit-mask: var(--src) 50% 50% / contain no-repeat; mask: var(--src) 50% 50% / contain no-repeat; }
+.ib.round { -webkit-mask-image: var(--ink-seal-round); mask-image: var(--ink-seal-round); }
+/* c：现状文字印章 */
+.ic { display: flex; align-items: center; justify-content: center; font-family: var(--f-display); line-height: 1; }
+.ic.seal { color: #f5f0e3; background: var(--bc); -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; }
+.ic.word { color: var(--bc); text-shadow: 0 0 2px #f3eee1, 0 0 2px #f3eee1; }
+.over { position: absolute; right: -30%; bottom: -25%; width: 70%; height: 70%; }
+.sub2 { position: absolute; left: 50%; top: 100%; transform: translate(-50%, -10%); font: 11px var(--f-display); text-shadow: 0 0 2px #f3eee1, 0 0 2px #f3eee1; }
+/* 图例 */
+.leg { margin-top: 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 4px; }
+.lg { display: flex; align-items: center; gap: 4px; font: 11.5px var(--f-kai); color: var(--ink-nong); white-space: nowrap; }
+.lg .ic2 { position: relative; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex: none; }
+.lg .ic3 { position: relative; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; flex: none; }
+.note { margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 14px; font: 12.5px/1.65 var(--f-kai); color: var(--ink-nong); }
+.note b { font-family: var(--f-display); font-weight: 400; }
+</style></head><body>
+<h1>地图图标 · 草图（请选一种）</h1>
+<div class="sub">同一张天机镜底图、同一批标记，三种画法并排；下方圆镜为右上铜镜（图标 15px），大地图图标 22px。已清 / 已开 / 取空 / 已采 = 变淡 + 一笔勾；首领已斩 = 一道朱斜笔。品级色只用 RARITY（宝箱：凡品墨灰 / 宝品石青 / 仙品泥金），精英护盾环用技能栏五行色。图标与物品、技能同一套笔路模板与纸性位图（tools/icons/mapicons.js）。</div>
+<div class="cols">
+  <div class="col rec"><h2>甲 · 剪影意象<small>纯简笔图标 + 纸色外晕</small></h2><div class="map" id="mapA"></div><div class="row2"><div class="mirror" id="mirA"></div><div class="leg" id="legA" style="grid-template-columns:repeat(2,1fr);flex:1"></div></div></div>
+  <div class="col"><h2>乙 · 印框意象<small>朱印 / 金印 / 墨印外框，里面是纸色小图</small></h2><div class="map" id="mapB"></div><div class="row2"><div class="mirror" id="mirB"></div><div class="leg" id="legB" style="grid-template-columns:repeat(2,1fr);flex:1"></div></div></div>
+  <div class="col"><h2>丙 · 现状文字印章<small>撤 / 阵 / 残 / 妖 / 精 / 斩 / 箱 …</small></h2><div class="map" id="mapC"></div><div class="row2"><div class="mirror" id="mirC"></div><div class="leg" id="legC" style="grid-template-columns:repeat(2,1fr);flex:1"></div></div></div>
+</div>
+<div class="note">
+  <div><b>甲 · 剪影意象（推荐）</b>：最"像地图"——阵环、妖面、箱、草一眼可辨，和物品、技能图标是一套笔性；颜色就是信息（朱 = 危险、金 = 撤离 / 宝、墨 = 已知之地）。代价：剪影之间要靠形状区分，15px 下"草 / 灵土 / 矿"需要颜色帮忙。</div>
+  <div><b>乙 · 印框意象</b>：保留天机镜"盖印"的手感与远处醒目度（色块大），印色分类（金 = 撤离、朱 = 凶险、墨 = 地物）；但每个点都是一块方印，标记一多画面偏"贴满印章"，15px 下印内小图只剩轮廓。</div>
+  <div><b>丙 · 现状文字</b>：读字即懂、零成本；但小尺寸要读字、同色字（妖 / 斩 / 箱）在墨色底图上易混，和储物袋、技能栏图标化后风格不再统一。</div>
+</div>
+<script type="module">
+import { renderCanvas } from "../../../../tools/icons/inkicons.js";
+import { MAP_ICONS, MAP_STATE, mapSpec, RAR } from "../../../../tools/icons/mapicons.js";
+const URL = {};
+for (const k of Object.keys(MAP_ICONS)) URL[k] = renderCanvas(mapSpec(k), 128, 128, 1).toDataURL();
+const GOLD = "#a8822c", GRAY = "#5a6066", ZHU = "#b8291a", INK = "#22272b", DAN = "rgba(21,24,27,.55)", BLUE = "#2f7fa8", GREEN = "#3f8a5a";
+// 标记定义：a 图标键 / b 印色（或 round）/ c 现状（seal|word, 字, 色, 下标字）
+const D = {
+  player: { a: "player", b: [ZHU, 1], c: ["arrow"], n: "你" },
+  gate: { a: "gate", b: [GOLD], c: ["seal", "阵", GOLD], n: "古传送阵" },
+  ruin: { a: "ruin", b: [GRAY], c: ["seal", "残", GRAY, "？", INK], n: "残阵 · 未明" },
+  ruin_true: { a: "ruin_true", b: [GRAY], c: ["seal", "残", GRAY, "真", BLUE], n: "残阵 · 真" },
+  ruin_fake: { a: "ruin_fake", b: [GRAY], c: ["seal", "残", GRAY, "假", ZHU], n: "残阵 · 假" },
+  boss_exit: { a: "boss_exit", b: [GOLD], c: ["seal", "出", GOLD], n: "首领出口" },
+  cave: { a: "cave", b: [GOLD], c: ["seal", "府", GOLD], n: "破洞府" },
+  mob: { a: "mob", b: [INK], c: ["word", "妖", DAN], n: "妖群" },
+  mob_c: { a: "mob", st: "cleared", b: [INK], c: ["word", "斩", DAN], n: "妖群 · 已清" },
+  elite: { a: "elite", shield: "shield_water", b: [ZHU], c: ["seal", "精", ZHU, "水", ZHU], n: "精英 · 水盾" },
+  boss: { a: "boss", b: [ZHU], c: ["seal", "青牙", ZHU], n: "首领", big: 1 },
+  boss_d: { a: "boss_dead", st: "slain", b: [INK], c: ["seal", "青牙", INK, "斩", INK], n: "首领 · 已斩", big: 1 },
+  chest: { a: "chest", b: [RAR[0]], c: ["word", "箱", RAR[0]], n: "宝箱 · 凡" },
+  chest_night: { a: "chest_night", b: [RAR[2]], c: ["word", "箱", RAR[2]], n: "夜明宝箱" },
+  chest_glow: { a: "chest_glow", b: [RAR[3]], c: ["word", "箱", RAR[3]], n: "灵光宝箱" },
+  chest_o: { a: "chest_night_open", st: "opened", b: [RAR[2]], c: ["word", "箱", RAR[2], "", "", 0.7], n: "已开 · 未搜" },
+  chest_e: { a: "chest_glow_open", st: "empty", b: [RAR[3]], c: ["word", "箱", RAR[3], "✓", INK, 0.35], n: "取空" },
+  herb: { a: "herb", b: [GREEN], c: ["word", "草", RAR[1]], n: "灵草" },
+  herb_d: { a: "herb", st: "done", b: [GREEN], c: ["word", "草", RAR[1], "", "", 0.3], n: "已采" },
+  ore: { a: "ore", b: ["#3a4a52"], c: ["word", "矿", RAR[0]], n: "矿脉" },
+  glow: { a: "glow", b: [RAR[3]], c: ["word", "灵", RAR[3]], n: "灵光点" },
+  soil: { a: "soil", b: ["#9a6a32"], c: ["word", "土", "#9a6a32"], n: "灵土" },
+  den: { a: "den", b: [INK], c: ["seal", "府", INK], n: "遗府" },
+  flag: { a: "flag", b: [ZHU], c: ["flag"], n: "委托" },
+  yuan: { a: "yuan", b: [BLUE, 1], c: ["word", "缘", BLUE], n: "奇遇" },
+  lostbag: { a: "lostbag", b: [ZHU], c: ["seal", "袋", ZHU], n: "遗落储物袋" },
+  tide: { a: "tide", b: [ZHU], c: ["word", "潮", ZHU], n: "妖潮来向" },
+  pin: { a: "pin", b: [INK, 1], c: ["dot"], n: "墨点" },
+};
+function make(key, mode, px) {
+  const d = D[key], st = d.st && MAP_STATE[d.st], s = d.big ? Math.round(px * 1.3) : px;
+  const w = document.createElement("div");
+  w.style.cssText = `position:relative;width:${s}px;height:${s}px;opacity:${mode !== "c" && st ? st.alpha : 1}`;
+  if (mode === "a") {
+    w.innerHTML = `<img class="ia" src="${URL[d.a]}" width="${s}" height="${s}">` + (d.shield ? `<img class="ia" src="${URL[d.shield]}" style="position:absolute;inset:-18%;width:136%;height:136%">` : "");
+  } else if (mode === "b") {
+    const [bc, round] = d.b;
+    w.innerHTML = `<div class="ib${round ? " round" : ""}" style="--bc:${bc};width:${s}px;height:${s}px"><i style="--src:url(${URL[d.a]});width:${Math.round(s * 0.74)}px;height:${Math.round(s * 0.74)}px"></i></div>` + (d.shield ? `<img class="ia" src="${URL[d.shield]}" style="position:absolute;inset:-22%;width:144%;height:144%">` : "");
+  } else {
+    const [t, ch, col, sub, subc, al] = d.c;
+    w.style.opacity = al || 1;
+    if (t === "seal") w.innerHTML = `<div class="ic seal" style="--bc:${col};width:${s * (ch.length > 1 ? 1.5 : 1)}px;height:${s}px;font-size:${s * (ch.length > 1 ? 0.5 : 0.62)}px">${ch}</div>`;
+    else if (t === "word") w.innerHTML = `<div class="ic word" style="--bc:${col};width:${s}px;height:${s}px;font-size:${s * 0.85}px">${ch}</div>`;
+    else if (t === "arrow") w.innerHTML = `<div style="width:0;height:0;margin:auto;border-left:${s * 0.35}px solid transparent;border-right:${s * 0.35}px solid transparent;border-top:${s * 0.8}px solid ${ZHU}"></div>`;
+    else if (t === "flag") w.innerHTML = `<div style="position:absolute;left:30%;top:5%;width:2px;height:90%;background:${INK}"></div><div style="position:absolute;left:32%;top:5%;width:0;height:0;border-top:${s * 0.22}px solid transparent;border-bottom:${s * 0.22}px solid transparent;border-left:${s * 0.55}px solid ${ZHU}"></div>`;
+    else if (t === "dot") w.innerHTML = `<div style="width:${s * 0.55}px;height:${s * 0.55}px;border-radius:50%;background:${INK};margin:${s * 0.22}px auto"></div>`;
+    if (sub) w.insertAdjacentHTML("beforeend", `<span class="sub2" style="color:${subc};font-size:${Math.max(9, s * 0.55)}px">${sub}</span>`);
+    return w;
+  }
+  if (st && st.over) w.insertAdjacentHTML("beforeend", `<img class="ia over" src="${URL[st.over]}" style="opacity:${1 / st.alpha}">`);
+  return w;
+}
+// 大地图上的同一批标记（底图坐标）
+const PTS = [["player", 106, 340], ["gate", 270, 342], ["ruin", 330, 60], ["ruin_true", 70, 70], ["ruin_fake", 340, 250], ["boss_exit", 310, 150], ["mob", 130, 230], ["mob_c", 230, 300], ["elite", 60, 200], ["boss", 260, 70],
+  ["chest", 330, 300], ["chest_o", 150, 300], ["chest_e", 40, 290], ["herb", 140, 330], ["herb_d", 70, 360], ["ore", 350, 390], ["glow", 200, 230], ["den", 225, 150], ["flag", 300, 220], ["yuan", 40, 400], ["lostbag", 190, 400], ["tide", 30, 250], ["pin", 160, 370]];
+for (const [mode, id] of [["a", "A"], ["b", "B"], ["c", "C"]]) {
+  const map = document.getElementById("map" + id);
+  for (const [k, x, y] of PTS) { const m = make(k, mode, 22); m.classList.add("mk"); m.style.position = "absolute"; m.style.left = x + "px"; m.style.top = y + "px"; map.appendChild(m); }
+  const mir = document.getElementById("mir" + id);
+  for (const [k, x, y] of [["player", 75, 80], ["gate", 110, 90], ["mob", 55, 45], ["elite", 35, 95], ["chest_glow", 95, 45], ["herb", 72, 112], ["ruin", 120, 60], ["tide", 30, 60]]) { const m = make(k, mode, 15); m.classList.add("mk"); m.style.position = "absolute"; m.style.left = x + "px"; m.style.top = y + "px"; mir.appendChild(m); }
+  const leg = document.getElementById("leg" + id);
+  for (const k of Object.keys(D)) {
+    const L = document.createElement("div");
+    L.className = "lg";
+    const a = document.createElement("span"); a.className = "ic2"; a.appendChild(make(k, mode, 20));
+    const b = document.createElement("span"); b.className = "ic3"; b.appendChild(make(k, mode, 14));
+    L.append(a, b, Object.assign(document.createElement("span"), { textContent: D[k].n }));
+    leg.appendChild(L);
+  }
+}
+window.__ready = true;
+</script>
+</body></html>

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>功法指引 v2 · 方向 A · 功法匣 · 来源签</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<link rel="stylesheet" href="../loadout_v2/common.css"><link rel="stylesheet" href="common.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script><script src="icons.js"></script><script src="data.js"></script>
+<style>
+/* 方向 A：出行准备（现状版式，src/ui/screens/prep.js + src/ui/loadout.js）只改功法匣三处：
+   ① 顶部一行「本去处缺：水（火盾 4 成）→ 2 门可得」；② 未领悟条目副标题 = 来源短句 + 残页进度点；③ 悬停卡下半「来源」段。 */
+.hd { left: 52px; top: 26px; display: flex; align-items: center; gap: 16px; }
+.hd .ink-title { font-size: 40px; }
+.hd .ink-rule { width: 130px; }
+.hd .sub { font: 12px var(--f-ui); color: var(--ink-dan); }
+.fan { left: 34px; top: 84px; width: 360px; height: 176px; background: var(--ink-tex-cloud), radial-gradient(ellipse at 50% 85%, var(--fan-c), transparent 72%), var(--paper-lo); background-blend-mode: multiply; display: flex; align-items: center; justify-content: center; }
+.fan .nm { font: 50px var(--f-splash); color: var(--ink); text-shadow: 0 0 14px rgba(245,240,227,.9); margin-top: -34px; letter-spacing: .04em; }
+.fan-seal { left: 318px; top: 112px; }
+.regs { left: 52px; top: 270px; width: 342px; }
+.regs .ink-row { cursor: pointer; align-items: center; padding: 4px 2px; }
+.regs .nm { font: 20px var(--f-display); letter-spacing: .1em; color: var(--ink-zhong); }
+.regs .on .nm { color: var(--ink); }
+.regs .note { font: 12px var(--f-ui); color: var(--ink-dan); margin-left: 10px; }
+.regs .lv { margin-left: auto; font: 15px var(--f-display); color: var(--ink-zhong); }
+.regs .on .lv { color: var(--zhu); }
+.regs .lock .nm { color: var(--ink-dan); }
+.facts { left: 52px; top: 386px; width: 342px; }
+.facts .ink-row { font-size: 13px; padding: 3px 2px; align-items: center; }
+.facts .ink-row .k { min-width: 3em; font-size: 13px; }
+.facts .ink-row .v { font-size: 14px; letter-spacing: .04em; }
+.facts .sl { display: flex; gap: 8px; font: 12.5px/1.65 var(--f-kai); color: var(--ink-zhong); padding: 2px 2px; }
+.facts .sl .k { min-width: 3em; flex: none; color: var(--ink-zhong); }
+.facts .sl b { font-weight: 400; font-family: var(--f-display); }
+.facts .sl .no { color: var(--zhu); }
+.stats { left: 52px; top: 668px; font: 12px var(--f-ui); color: var(--ink-zhong); }
+.por { left: 404px; top: 42px; width: 300px; height: 520px; background: url(../../../../src/ui/ink/portrait_linmo.svg) center top / contain no-repeat; mix-blend-mode: multiply; }
+.who { left: 420px; top: 90px; writing-mode: vertical-rl; font: 22px var(--f-display); letter-spacing: .2em; display: flex; align-items: center; gap: 8px; }
+.bar-t { left: 418px; top: 548px; font: 13px var(--f-display); color: var(--ink-zhong); letter-spacing: .2em; }
+.bar { left: 418px; top: 572px; display: flex; gap: 12px; align-items: flex-start; }
+.bar .slot { display: flex; flex-direction: column; align-items: center; width: 58px; }
+.bar .slot .key { font: 11px var(--f-ui); color: var(--ink-dan); height: 15px; }
+.bar .slot .cap { margin-top: 4px; font: 12px var(--f-kai); color: var(--ink-nong); white-space: nowrap; text-align: center; line-height: 1.3; }
+.bar .slot.lk .cap { font: 10.5px/1.3 var(--f-ui); color: var(--ink-dan); }
+.bar .sep { width: 8px; height: 50px; margin-top: 18px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; }
+
+/* 功法匣 */
+.box { left: 662px; top: 50px; width: 320px; height: 506px; padding: 16px 18px 12px 20px; }
+.box .bh { display: flex; align-items: baseline; gap: 10px; }
+.box .bh .ink-title { font-size: 26px; }
+.box .bh small { font: 11px var(--f-ui); color: var(--ink-dan); }
+.box .ink-tabs { margin: 2px 0 2px -10px; }
+.box .ink-tab { font-size: 16px; padding: 3px 8px 7px; cursor: pointer; }
+.box .ink-tab small { font: 10px var(--f-ui); color: var(--ink-dan); margin-left: 2px; letter-spacing: 0; }
+.gapline { position: relative; display: flex; align-items: baseline; gap: 6px; margin: 2px 0 6px; padding: 5px 8px 6px 10px; font: 13.5px/1.4 var(--f-kai); color: var(--ink-nong); cursor: pointer; isolation: isolate; }
+.gapline::before { content: ""; position: absolute; inset: 0 -4px; z-index: -1; background: var(--zhu-wash); -webkit-mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; }
+.gapline.ok::before { background: var(--nijin-wash); }
+.gapline .lb { font: 400 14px var(--f-display); color: var(--zhu); letter-spacing: .06em; white-space: nowrap; }
+.gapline.ok .lb { color: #7c5d1a; }
+.gapline b { font: 400 15px var(--f-display); }
+.gapline .go { margin-left: auto; font: 11.5px var(--f-ui); color: var(--ink-zhong); white-space: nowrap; }
+.gapline:hover .go { color: var(--zhu); }
+.box .list { height: 352px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(21,24,27,.22) transparent; margin-right: -8px; padding-right: 6px; }
+.box .it { display: flex; align-items: center; gap: 10px; padding: 4px 2px; position: relative; cursor: pointer; border-radius: 4px; }
+.box .it + .it::before { content: ""; position: absolute; left: 48px; right: 18%; top: 0; height: 5px; background: var(--ink-mist); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.box .it:hover { background: rgba(21,24,27,.035); }
+.box .it.pin { background: rgba(184,41,26,.05); }
+.box .it.hl { background: rgba(184,41,26,.07); }
+.box .it .tx { flex: 1; min-width: 0; }
+.box .it .n { font: 17px/1.2 var(--f-display); color: var(--ink-nong); letter-spacing: .06em; display: flex; align-items: center; gap: 6px; }
+.box .it.ghost .n { color: var(--ink-zhong); }
+.box .it .n .fill { font: 10.5px var(--f-ui); letter-spacing: 0; padding: 0 4px; border-radius: 2px; color: var(--paper-hi); background: var(--c); }
+.box .it .l { font: 11.5px/1.45 var(--f-ui); color: var(--ink-dan); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.box .it .l .here { color: #2c7d57; }
+.box .it .l .gold { color: #7c5d1a; }
+.box .it .rt { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex: none; }
+.box .it .rt .at { font: 13px var(--f-display); color: var(--ink); white-space: nowrap; }
+.box .it .rt .at::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--zhu); margin-right: 5px; vertical-align: 2px; }
+.box .it .rt .bk { font: 11px var(--f-ui); color: var(--ink-zhong); }
+.box .it .rt .cn { font: 10.5px var(--f-ui); color: var(--ink-dan); }
+.box .it .rt .rd { font: 400 12px var(--f-display); color: #7c5d1a; }
+.box .sep2 { font: 11px var(--f-ui); color: var(--ink-dan); padding: 6px 0 2px 2px; letter-spacing: .1em; }
+.box .foot { position: absolute; left: 20px; right: 18px; bottom: 10px; font: 11px/1.5 var(--f-ui); color: var(--ink-dan); }
+
+/* 悬停卡（钉住时由 hash 指定） */
+.tip { left: 0; top: 0; width: 272px; box-sizing: border-box; padding: 16px 16px 14px; z-index: 90; font: 13px/1.6 var(--f-kai); color: var(--ink-zhong); pointer-events: none; display: none; transform: rotate(-.5deg); }
+.tip.on { display: block; }
+.tip .hd2 { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+.tip .tn { font: 400 22px/1.15 var(--f-display); color: var(--ink); letter-spacing: .06em; }
+.tip .ts { font: 12px var(--f-kai); color: var(--ink-zhong); }
+.tip .st { font: 12.5px/1.55 var(--f-kai); color: var(--ink-nong); margin: 2px 0 3px; }
+.tip .gf-h { margin: 8px 0 4px; }
+.tip .pgl { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; margin-top: 6px; font: 12.5px var(--f-kai); color: var(--ink-nong); }
+.tip .wxl { font: 11px/1.5 var(--f-ui); color: var(--ink-dan); margin-top: 2px; }
+.tip .gf-src .row { grid-template-columns: 20px 1fr auto auto; }
+.tip .gf-src .row .hw { display: none; }
+.tip .gf-any { margin-top: 5px; padding-top: 4px; border-top: 1px solid var(--ink-mist); }
+
+.pack { left: 1004px; top: 58px; width: 236px; padding: 16px 18px 14px; box-sizing: border-box; }
+.pack .ink-title { font-size: 22px; }
+.pack .ink-title small { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 8px; letter-spacing: 0; }
+.pack .slots { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 6px; }
+.pack .pi { display: flex; flex-direction: column; align-items: center; width: 46px; font: 10.5px var(--f-ui); color: var(--ink-zhong); white-space: nowrap; }
+.pack .pi .sk { --el: rgba(21,24,27,.45); }
+.quest { left: 1004px; top: 292px; width: 236px; padding: 16px 18px 14px; box-sizing: border-box; }
+.quest .ink-title { font-size: 22px; }
+.quest .q { margin-top: 6px; font: 13px/1.5 var(--f-kai); color: var(--ink-nong); }
+.quest .q small { display: block; font: 11px/1.45 var(--f-ui); color: var(--ink-dan); }
+.quest .q .rw { color: #7c5d1a; font: 11.5px var(--f-ui); margin-left: 4px; }
+.back { left: 1004px; top: 664px; font-size: 20px; }
+.go { left: 1130px; top: 584px; }
+</style></head>
+<body class="ink-stage">
+<div class="abs hd"><span class="ink-title">出行</span><span class="ink-rule"></span><span class="sub" id="sub"></span></div>
+<div class="abs fan ink-fan" id="fan"><span class="nm" id="fanName"></span></div>
+<div class="abs fan-seal" id="fanSeal"></div>
+<div class="abs regs ink-list" id="regs"></div>
+<div class="abs facts ink-list" id="facts"></div>
+<div class="abs stats" id="stats"></div>
+<div class="abs por"></div>
+<div class="abs who">林墨<span class="ink-seal" style="--s:24px">剑</span></div>
+<div class="abs bar-t">随身功法</div>
+<div class="abs bar" id="bar"></div>
+<section class="abs box ink-paper alt tilt-r" id="box"></section>
+<section class="abs tip ink-paper slip" id="tip"></section>
+<section class="abs pack ink-paper" id="pack"></section>
+<section class="abs quest ink-paper alt" id="quest"></section>
+<span class="abs ink-btn back">回洞府 <span class="key">Esc</span></span>
+<button class="abs ink-seal-btn go">启程</button>
+<div id="anno"></div>
+<div class="ld-mock" id="mock"></div>
+<script>
+const { EL, REGIONS, SPELLS, S } = GF;
+const $ = (id) => document.getElementById(id);
+const FACT = {
+  r1: { beast: "狼妖 · 灰狼 · 石傀", out: "青灵草 · 凝露花 · 铁精", ex: "古传送阵 · 残阵", t: "晨起 · 第九分钟入暮", fan: "rgba(63,154,110,.35)", note: "推荐 练气 1–4" },
+  r2: { beast: "狼妖 · 蝠妖 · 藤妖 · 碧鳞", out: "寒露草 · 千年竹心 · 紫藤", ex: "三处 · 其一需阵钥", t: "晨起 · 午时巡游 · 入夜妖潮", fan: "rgba(47,127,168,.32)", note: "推荐 练气 5–9" },
+};
+let hover = "";
+
+function shieldLines(r) {
+  const R = REGIONS[r];
+  const sh = Object.entries(R.share).sort((a, b) => b[1] - a[1]).map(([e, s]) => `<b style="color:${EL[e].c}">${EL[e].n}盾</b> ${Math.round(s * 10)}成`);
+  sh.push(`${R.boss.name} ${R.boss.els.map((e) => `<b style="color:${EL[e].c}">${EL[e].n}</b>`).join("→")}`);
+  const cov = GF.gapOf(r).map((g) => `<span class="${g.ok ? "" : "no"}"><b style="color:${EL[g.shield].c}">${EL[g.shield].n}盾</b> ${g.ok ? "✓ " + g.by.map((id) => SPELLS[id].name).join("、") : "✗ 缺" + EL[g.need].n}</span>`);
+  return { shield: sh.join(" · "), have: cov.join(" · ") };
+}
+
+function render() {
+  const P = GF.P(), R = REGIONS[S.r], F = FACT[S.r];
+  $("sub").textContent = `第 10 局 · ${P.name} · 储物袋已清空`;
+  $("fan").style.setProperty("--fan-c", F.fan);
+  $("fanName").textContent = R.name;
+  $("fanSeal").innerHTML = `<span class="ink-seal two" style="--s:38px">${R.jing}</span>`;
+  $("regs").innerHTML = Object.values(REGIONS).map((r) => {
+    const lock = P.layer < r.need;
+    return `<div class="ink-row ${r.id === S.r ? "on" : ""} ${lock ? "lock" : ""}" data-r="${r.id}"><span class="nm">${r.name}</span><span class="note">${lock ? "需练气五层" : FACT[r.id].note}</span><span class="lv">${r.jing}</span></div>`;
+  }).join("") + `<div class="ink-row lock"><span class="nm">黑风岭</span><span class="note">需练气七层 · 未开</span><span class="lv" style="color:var(--ink-dan)">三境</span></div>`;
+  const sl = shieldLines(S.r);
+  $("facts").innerHTML = `
+    <div class="ink-row"><span class="k">妖谱</span><span class="v">${F.beast}</span></div>
+    <div class="ink-row"><span class="k">出产</span><span class="v">${F.out}</span></div>
+    <div class="ink-row"><span class="k">撤离</span><span class="v">${F.ex}</span></div>
+    <div class="ink-row"><span class="k">天时</span><span class="v">${F.t}</span></div>
+    <div class="sl"><span class="k">护盾</span><span>${sl.shield}</span></div>
+    <div class="sl"><span class="k">已带</span><span>${sl.have}</span></div>`;
+  $("stats").textContent = `气血 ${200 + 30 * (P.layer - 1)} · 真气 ${100 + 15 * (P.layer - 1)} · 攻击 ${20 + 4 * (P.layer - 1)} · 法力 ${20 + 4 * (P.layer - 1)}`;
+  renderBar(); renderBox(); renderPack(); renderTip(); renderAnno();
+  window.inkui && inkui.decorate();
+}
+
+function renderBar() {
+  const P = GF.P();
+  const sp = (i) => {
+    const id = P.build[i], ok = i < P.slots;
+    if (!ok) return `<div class="slot lk"><span class="key">${"QER"[i]}</span><span class="sk e1 is-empty" style="--s:46px"><b>锁</b></span><span class="cap">练气七层<br>解锁</span></div>`;
+    return `<div class="slot"><span class="key">${"QER"[i]}</span>${id ? GF.tok(id, { size: 46, rub: !1 }) : `<span class="sk e2 is-empty" style="--s:46px"></span>`}<span class="cap">${id ? SPELLS[id].name : "空"}</span></div>`;
+  };
+  const lk = (k, t) => `<div class="slot lk"><span class="key">${k}</span><span class="sk e3 is-empty" style="--s:46px"><b>锁</b></span><span class="cap">${t}</span></div>`;
+  $("bar").innerHTML = sp(0) + sp(1) + sp(2) + `<i class="sep"></i>` + lk("T", "练气七层<br>解锁") + lk("V", "练气七层<br>解锁") + `<i class="sep"></i>` +
+    (P.layer >= 4 ? `<div class="slot"><span class="key">心法</span><span class="sk e1" style="--s:46px;--el:rgba(21,24,27,.72)"><span class="ico" style="${GF.iconStyle("sk:mom_gather")}"></span></span><span class="cap">《蓄势》</span></div>` : lk("心法", "练气四层<br>解锁"));
+}
+
+// 功法匣列表：已领悟在前；未领悟按「可参悟 → 补本去处缺口 → 本去处可得 → 其他」
+function order() {
+  const P = GF.P(), gaps = GF.gapOf(S.r).filter((g) => !g.ok), gapIds = new Set(gaps.flatMap((g) => g.cands.map((c) => c.id)));
+  const learned = Object.keys(SPELLS).filter((id) => P.learned.includes(id));
+  const rest = Object.keys(SPELLS).filter((id) => !P.learned.includes(id));
+  const rank = (id) => { const st = GF.state(id); return st.k === "ready" ? 0 : gapIds.has(id) && GF.hereOf(id, S.r) ? 1 : gapIds.has(id) ? 2 : GF.hereOf(id, S.r) ? 3 : st.k === "grant" ? 5 : 4; };
+  rest.sort((a, b) => rank(a) - rank(b));
+  return { learned, rest, gapIds, gaps };
+}
+function gapLine(o) {
+  if (o.gaps.length) {
+    const g = o.gaps;
+    const els = [...new Set(g.map((x) => x.need))];
+    const n = new Set(g.flatMap((x) => x.cands.map((c) => c.id))).size;
+    const why = els.map((e) => { const sh = g.find((x) => x.need === e); return `${GF.elB(e)}（${EL[sh.shield].n}盾${sh.share ? " " + Math.round(sh.share * 10) + " 成" : " · " + REGIONS[S.r].boss.name}）`; }).join("、");
+    return `<div class="gapline" data-gap="1"><span class="lb">本去处缺</span><span>${why} → ${n} 门可得</span><span class="go">看 ›</span></div>`;
+  }
+  const pk = GF.pickups(S.r);
+  return `<div class="gapline ok" data-gap="1"><span class="lb">护盾都克得住</span><span>顺路可收 ${pk.length} 门</span><span class="go">看 ›</span></div>`;
+}
+function row(id, o) {
+  const d = SPELLS[id], st = GF.state(id), P = GF.P();
+  const ghost = st.k !== "learned";
+  let rt = "";
+  if (st.k === "learned") rt = st.slot >= 0 ? `<span class="at">${"QER"[st.slot]} 栏</span>` : `<span class="cn">未装</span>`;
+  else if (st.k === "pages" || st.k === "ready") rt = GF.dots(id) + (st.k === "ready" ? `<span class="rd">可参悟</span>` : `<span class="cn">${st.have}/${st.need}${st.fill ? ` <span class="gold">+${st.fill}</span>` : ""}</span>`);
+  else if (st.k === "book") rt = `<span class="bk">名门 · 一本</span>`;
+  else rt = `<span class="cn">赠予</span>`;
+  let sub = GF.short(id, S.r);
+  if (ghost) sub = sub.replace(/^本去处/, `<span class="here">本去处</span>`).replace(/^已集齐 · 回洞府仓库参悟/, `<span class="gold">已集齐 · 回洞府仓库参悟</span>`);
+  const fill = o.gapIds.has(id) ? `<span class="fill" style="--c:${EL[d.el].c}">补${EL[d.el].n}</span>` : "";
+  return `<div class="it ${ghost ? "ghost" : ""} ${S.s === id ? "pin" : ""}" data-id="${id}">${GF.tok(id, { size: 38 })}<div class="tx"><div class="n">${d.name}${fill}</div><div class="l">${sub}</div></div><div class="rt">${rt}</div></div>`;
+}
+let lastScrollKey = "";
+function renderBox() {
+  const o = order();
+  const box = $("box");
+  const keep = box.querySelector(".list") ? box.querySelector(".list").scrollTop : 0;
+  box.innerHTML = `<div class="bh"><span class="ink-title">功法匣</span><small>领悟与所得</small></div>
+    <div class="ink-tabs"><span class="ink-tab on">法术<small>${o.learned.length}/12</small></span><span class="ink-tab">心法<small>1</small></span><span class="ink-tab">法宝<small>0</small></span><span class="ink-tab">阵盘<small>0</small></span></div>
+    ${gapLine(o)}
+    <div class="list">${o.learned.map((id) => row(id, o)).join("")}<div class="sep2">未领悟 ${o.rest.length}</div>${o.rest.map((id) => row(id, o)).join("")}</div>
+    <div class="foot">出门前定好，局内不能换；带对五行比带满要紧。</div>`;
+  const list = box.querySelector(".list");
+  // 只在钉选 / 去处变化时滚动一次（打开时构建，不每帧读布局）
+  const key = S.r + S.s + S.p;
+  if (key !== lastScrollKey) {
+    lastScrollKey = key;
+    const t = S.s ? list.querySelector(`[data-id="${S.s}"]`) : null;
+    list.scrollTop = t ? Math.max(0, t.offsetTop - list.offsetTop - 120) : 0;
+  } else list.scrollTop = keep;
+}
+function tipHTML(id) {
+  const d = SPELLS[id], st = GF.state(id), P = GF.P();
+  let h = `<div class="hd2">${GF.tok(id, { size: 46 })}<div><div class="tn">${d.name}</div><div class="ts">${GF.els(d.el)} ${EL[d.el].n}行 · ${d.role}</div></div></div>
+    <div class="st">${st.k === "pages" ? `未领悟 · 残页功法，${d.pages} 页成一本` : GF.stLine(id)}</div>${GF.shieldHere(id, S.r)}`;
+  if (st.k === "learned") {
+    h += `<div class="gf-h">来源</div>${GF.srcRows(id, S.r)}<div class="wxl">重复残页参悟时化为悟性（现有 ${P.wux}）· 悟性可给已学法术升「重」</div>`;
+    return h;
+  }
+  h += `<div class="gf-h">来源</div>${GF.srcRows(id, S.r)}`;
+  if (st.k === "pages") {
+    h += `<div class="pgl">${GF.dots(id, { big: !0 })}<span>${GF.pagesLine(id)}</span></div>`;
+    h += `<div class="wxl">悟性 ${P.wux} · 每 3 点补 1 页（至少要有 1 页实物）${st.fill ? ` · <span class="gold">此门可补 ${st.fill} 页</span>` : ""}</div>`;
+  }
+  if (st.k !== "grant") h += `<div class="gf-any">另：${GF.ANY}</div>`;
+  return h;
+}
+function renderTip() {
+  const id = hover || S.s, tip = $("tip");
+  if (!id) { tip.classList.remove("on"); return; }
+  tip.innerHTML = tipHTML(id);
+  tip.classList.add("on");
+  window.inkui && inkui.decorate(tip.parentNode);
+  // 贴在功法匣左侧，与条目同高（只在换条目时算一次位置）
+  const r = $("box").querySelector(`[data-id="${id}"]`);
+  let y = 120;
+  if (r) { const b = r.getBoundingClientRect(); y = b.top - 40; }
+  const hgt = tip.offsetHeight;
+  y = Math.max(16, Math.min(720 - hgt - 16, y));
+  tip.style.left = "392px"; tip.style.top = y + "px";
+}
+function renderPack() {
+  const pi = (key, n, c) => `<div class="pi"><span class="sk e${(n % 3) + 1}" style="--s:40px"><span class="ico" style="${GF.iconStyle(key)}"></span><i class="lv">×${n}</i></span>${c}</div>`;
+  $("pack").innerHTML = `<div class="ink-title">行囊<small>丹药 2 种 · 每种 3 枚</small></div><div class="slots">${pi("huichun_dan", 3, "回春丹")}${pi("huiqi_dan", 3, "回气丹")}${S.r === "r2" ? pi("fu_water", 1, "水符 · 破火") : pi("fu_metal", 2, "金符 · 破木")}</div>`;
+  $("quest").innerHTML = `<div class="ink-title">委托</div>
+    <div class="q">不假外物<span class="rw">灵石 30 · 丹方残页 ×2</span><small>不服丹药，击败本区域首领</small></div>
+    <div class="q">踏勘山川<span class="rw">修为 40</span><small>本局让天机镜再着墨 14%</small></div>`;
+}
+// 草图标注
+function renderAnno() {
+  $("anno").innerHTML = `<i class="gf-anno" style="left:652px;top:132px">1</i><i class="gf-anno" style="left:652px;top:214px">2</i><i class="gf-anno" style="left:${$("tip").classList.contains("on") ? 638 : -99}px;top:${parseInt($("tip").style.top || 0) + 6}px">3</i>
+    <div class="gf-annolist" style="left:418px;top:690px"><b>1</b>本去处缺口一行 <b>2</b>副标题 = 来源 + 残页点 <b>3</b>悬停卡加「来源」段</div>`;
+}
+function mock() {
+  const P = GF.P();
+  $("mock").innerHTML = `<span>示意开关</span>${[["qi6", "练气六层"], ["qi3", "练气三层"]].map(([k, n]) => `<a data-p="${k}" class="${S.p === k ? "on" : ""}">${n}</a>`).join("")}<i>|</i>${["r1", "r2"].map((r) => `<a data-mr="${r}" class="${S.r === r ? "on" : ""}">${REGIONS[r].name}</a>`).join("")}<i>|</i><a data-unpin="1">取消钉选</a>`;
+}
+
+document.addEventListener("click", (ev) => {
+  const t = ev.target.closest("[data-r],[data-mr],[data-p],[data-id],[data-gap],[data-unpin]");
+  if (!t) return;
+  if (t.dataset.r || t.dataset.mr) return GF.set({ r: t.dataset.r || t.dataset.mr });
+  if (t.dataset.p) return GF.set({ p: t.dataset.p });
+  if (t.dataset.unpin) return GF.set({ s: "" });
+  if (t.dataset.id) return GF.set({ s: S.s === t.dataset.id ? "" : t.dataset.id });
+  if (t.dataset.gap) {
+    const o = order();
+    const first = o.gaps.length ? o.gaps[0].cands[0].id : GF.pickups(S.r)[0];
+    if (first) GF.set({ s: first });
+  }
+});
+document.addEventListener("mouseover", (ev) => {
+  const t = ev.target.closest("#box [data-id]");
+  const id = t ? t.dataset.id : "";
+  if (id === hover) return; // 只在换条目时写 DOM
+  hover = id; renderTip(); renderAnno();
+});
+GF.on(() => { render(); mock(); });
+render(); mock(); GF.ready();
+</script>
+</body></html>

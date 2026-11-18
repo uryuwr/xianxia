@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>搜取 v2 草图 · 物品签 + 先露形后显色</title>
+<!-- 草图：需要经 Vite 开发服务器打开（直接引用真实的物品签组件与图标图集）：
+     node docs/ui/v2/loot_v2/shoot.mjs   → 截图；或 npx vite 后打开 /docs/ui/v2/loot_v2/index.html
+     参数：?sense=0|100（神识）  ?auto=0（不自动播放） -->
+<style>
+  body { margin: 0; background: #ece6d6; font-family: "KaiTi", "STKaiti", serif; color: #15181b; }
+  .view { position: relative; width: 1280px; height: 720px; overflow: hidden; background: url("./bg.png") 0 0 / 1280px 720px; }
+  .bar { position: absolute; left: 20px; bottom: 16px; display: flex; gap: 10px; z-index: 50; font: 13px "Microsoft YaHei", sans-serif; }
+  .bar button { font: inherit; padding: 3px 10px; background: rgba(245, 240, 227, 0.9); border: 0; border-bottom: 2px solid rgba(21, 24, 27, 0.4); cursor: pointer; }
+  .bar .on { border-bottom-color: #b8291a; }
+
+  /* ---------- 宣纸小幅（v2：52px 物品签，最多 4 列，多行） ---------- */
+  .lw2 { position: absolute; z-index: 30; }
+  .lw2 .sheet { position: relative; isolation: isolate; padding: 12px 16px 9px 16px; }
+  .lw2 .sheet::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--ink-tex-paper), rgba(243, 238, 226, 0.84); background-blend-mode: multiply; -webkit-mask: var(--ink-deckle-slip) 0 0 / 100% 100% no-repeat; mask: var(--ink-deckle-slip) 0 0 / 100% 100% no-repeat; }
+  .lw2 .sheet::after { content: ""; position: absolute; inset: -3px -4px; z-index: -2; background: rgba(21, 24, 27, 0.16); -webkit-mask: var(--ink-deckle-2) 0 0 / 100% 100% no-repeat; mask: var(--ink-deckle-2) 0 0 / 100% 100% no-repeat; }
+  .lw2 .hd { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+  .lw2 .hd .t { font: 18px/1.1 var(--f-display); letter-spacing: 0.08em; color: var(--ink-nong); }
+  .lw2 .hd .t small { font-size: 15px; color: var(--ink-zhong); margin: 0 3px; }
+  .lw2 .hd .sense { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; }
+  .lw2 .hd .sense i { width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font: 12px var(--f-display); font-style: normal; color: var(--paper-hi); background: #a8862f; transform: rotate(-6deg); -webkit-mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat; }
+  .lw2 .hd .sense b { font: 400 16px var(--f-splash); color: #8a6a22; }
+  .lw2 .rule { height: 7px; margin: 3px -4px 9px; background: var(--ink-dan); opacity: 0.7; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+  .lw2 .grid { display: grid; grid-template-columns: repeat(var(--cols, 4), 52px); grid-auto-rows: 52px; gap: 6px; grid-auto-flow: dense; }
+  /* 名称行：悬停 / 选中 / 刚揭示时显示"名称 · 品质 · ×数量"，否则是状态小字 */
+  .lw2 .nm { height: 20px; margin-top: 7px; font: 15px/20px var(--f-display); letter-spacing: 0.04em; color: var(--ink-nong); white-space: nowrap; text-align: center; transition: opacity 0.2s; }
+  .lw2 .nm small { font: 12px var(--f-ui); color: var(--ink-zhong); }
+  .lw2 .nm.st { font: 11px/20px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+  .lw2 .ft { display: flex; justify-content: space-between; gap: 14px; margin-top: 2px; font: 13px var(--f-kai); color: var(--ink-zhong); white-space: nowrap; }
+  .lw2 .ft u { text-decoration: none; font: 700 11px var(--f-ui); border-bottom: 1px solid var(--ink-dan); padding: 0 2px; margin-left: 3px; }
+
+  /* ---------- 格：物品签 + 外面一笔神识 ---------- */
+  .cell { position: relative; }
+  .cell.w2 { grid-column: span 2; } .cell.big { grid-column: span 2; grid-row: span 2; }
+  .cell > .mk-tok { position: absolute; left: 0; top: 0; }
+  .cell > .sense { position: absolute; inset: -3px; z-index: 5; opacity: 0; pointer-events: none; background: conic-gradient(from -90deg, rgba(217, 180, 94, 0.95) calc(var(--v, 0) * 360deg), transparent 0); -webkit-mask: var(--ink-enso-full) 0 0 / 100% 100% no-repeat; mask: var(--ink-enso-full) 0 0 / 100% 100% no-repeat; }
+  .cell > .tip { position: absolute; left: 50%; top: 50%; width: 0; height: 0; z-index: 6; opacity: 0; pointer-events: none; transform: rotate(calc(var(--v, 0) * 360deg)); }
+  .cell > .tip::after { content: ""; position: absolute; left: -5px; top: calc(var(--rr, 28px) * -1 - 2px); width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 246, 214, var(--tipA, 0.85)) 0 30%, rgba(232, 196, 110, calc(var(--tipA, 0.85) * 0.6)) 55%, transparent 72%); transform: scale(var(--tipS, 1)); }
+  .cell.search > .sense, .cell.search > .tip { opacity: 1; }
+  /* 第一段"露形"：墨封化开（opacity + transform），剪影出来；第二段"显色"：物品签自己的 tagReveal */
+  .cell .mk-tok > .seal { transition: opacity 0.3s ease, transform 0.36s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .cell.form .mk-tok > .seal, .cell.shown .mk-tok > .seal { display: block; opacity: 0; transform: scale(1.35); }
+  .cell.form .mk-tok > .mk-ico { opacity: 0.9 !important; }
+  .cell.form .mk-tok > .ring { background: rgba(21, 24, 27, 0.45); }
+  /* 预感（神识 ≥ 40）：墨封下隐约浮现剪影轮廓（剪影反相成淡光，随神识更明显） */
+  .cell.omen .mk-tok.is-sealed > .mk-ico { opacity: calc(var(--omen, 0) * 0.55) !important; filter: invert(1) brightness(1.15); animation: omen 2.4s ease-in-out infinite; z-index: 5; }
+  .cell.omen .mk-tok > .seal::after { opacity: 0.8; }
+  @keyframes omen { 0%, 100% { transform: translate(-50%, -50%) scale(0.94); } 50% { transform: translate(-50%, -50%) scale(1.02); } }
+  /* 显色后外圈晕开品质淡彩；仙品泛金、极品朱金迸开（颜色取物品签的 --qc / --qw，即 RARITY） */
+  .cell.shown .mk-tok > .halo { animation: bloom 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  @keyframes bloom { 0% { opacity: 0; transform: scale(0.6); } 40% { opacity: 1; transform: scale(1.3); } 100% { transform: scale(1); } }
+  .cell.flash::after { content: ""; position: absolute; inset: -14px; z-index: 0; border-radius: 50%; background: radial-gradient(closest-side, var(--fx, rgba(240, 205, 110, 0.7)), transparent); animation: flash 0.9s ease forwards; pointer-events: none; }
+  @keyframes flash { 0% { opacity: 0; transform: scale(0.6); } 30% { opacity: 1; } 100% { opacity: 0; transform: scale(1.6); } }
+  .cell > .burst { position: absolute; left: 50%; top: 50%; width: 0; height: 0; z-index: 7; pointer-events: none; }
+  .cell > .burst > s { position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%; background: var(--bc); opacity: 0; text-decoration: none; transform: rotate(var(--a)); }
+  .cell.spark > .burst > s { animation: spark 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) forwards; }
+  @keyframes spark { 0% { opacity: 1; transform: rotate(var(--a)) translateY(-10px) scale(1.2); } 100% { opacity: 0; transform: rotate(var(--a)) translateY(-50px) scale(0.5); } }
+  /* 未鉴定：揭示后保持墨拓剪影 + "？" */
+  .cell > .unk { position: absolute; right: 3px; top: 1px; z-index: 6; font: 400 17px var(--f-display); color: var(--ink-nong); text-shadow: 0 0 3px var(--paper-hi), 0 0 2px var(--paper-hi); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .cell.shown.unid > .unk { opacity: 1; }
+  .cell.taken .mk-tok { opacity: 0.22; }
+  .cell.shown .mk-tok { cursor: pointer; }
+
+  /* ---------- 草图说明区 ---------- */
+  .legend { width: 1280px; box-sizing: border-box; padding: 18px 28px 22px; }
+  .legend h2 { margin: 0 0 4px; font: 400 26px "KaiTi", serif; letter-spacing: 0.1em; }
+  .legend p { margin: 4px 0 12px; font: 14px/1.7 "KaiTi", serif; color: #444; }
+  .states { display: flex; gap: 22px; align-items: flex-end; flex-wrap: wrap; }
+  .st-item { display: flex; flex-direction: column; align-items: center; gap: 8px; font: 13px "KaiTi", serif; color: #333; }
+  .st-item .cell { width: 52px; height: 52px; }
+  .st-item.w .cell { width: 110px; }
+  .st-item small { font: 11px "Microsoft YaHei", sans-serif; color: #777; text-align: center; line-height: 1.5; }
+  .fly { position: absolute; z-index: 40; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="view" id="view">
+  <div class="bar"><button id="replay">重播</button><button id="s0">神识 0</button><button id="s100">神识 100</button></div>
+</div>
+<div class="legend">
+  <h2>搜取 v2 · 物品签格子与"先露形、后显色"</h2>
+  <p>格子改用储物袋同一种物品签（52px，一笔圆相 + 图标 + 品质晕 + 数量 + 仙 / 极角印），最多 4 列、多行。每格的探查时长不变（凡 0.35 / 灵 0.5 / 宝 0.8 / 仙 1.2 / 极 1.8 秒 × 100/(100+神识)），
+    只把过程分成两段：神识一笔走到 62% 时墨封化开、露出墨拓剪影（"探得其形"）；走满一圈换成本色、外圈晕开品质色（"辨得其色"），名称在宣纸底部浮出 1.2 秒。仙品最后顿一下泛金，极品朱金迸开。
+    神识 ≥ 40：墨封下隐约浮现剪影轮廓（预感）。未鉴定：揭示后保持剪影 + "？"。悬停 / 选中显示"名称 · 品质 · ×数量"。取物时飞向储物袋的就是这张物品签。</p>
+  <div class="states" id="states"></div>
+</div>
+<script type="module">
+  import "/src/ui/kit.js"; // 水墨套件（笔触、字体、组件样式）
+  import "/src/data/items_db.js"; // 注册物品
+  import { makeItem, RARITY, defOf } from "/src/core/items.js";
+  import { itemTag, setTagState, tagReveal } from "/src/ui/icons.js";
+
+  const qs = new URLSearchParams(location.search);
+  let SENSE = +(qs.get("sense") || 0);
+  const BASE = [0.35, 0.5, 0.8, 1.2, 1.8], GAP = 0.12, DELAY = 0.18, FORM = 0.62;
+  const TIP = [0.55, 0.7, 0.85, 1, 1], TIPS = [0.8, 0.9, 1.05, 1.25, 1.4];
+  const foresee = (s) => (s < 40 ? 0 : Math.min(1, 0.25 + (0.75 * (s - 40)) / 80));
+  const shape = (v, q) => { if (q < 3) return v; const a = q >= 4 ? 0.72 : 0.78, h = q >= 4 ? 0.2 : 0.14, top = 0.93; return v < a ? (v / a) * top : v < a + h ? top : top + ((v - a - h) / (1 - a - h)) * (1 - top); };
+
+  const mk = (id, o = {}) => makeItem(id, o);
+  const rgba = (h, a) => `rgba(${[1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)).join(",")},${a})`;
+  const LOOT = () => [mk("spirit_stone", { n: 14 }), mk("wolf_fang", { n: 2 }), mk("ninglu_hua", { n: 3, rarity: 1 }), mk("lingbang_zhu", { rarity: 2 }), mk("sword_qingfeng", { rarity: 3, identified: !0 }), mk("jade_qing", { rarity: 2, identified: !1 }), mk("wolf_core", { rarity: 1 }), mk("art_chixiao", { rarity: 4, identified: !0 })];
+
+  function cellFor(inst, state = "sealed") {
+    const q = inst.rarity || 0, sz = defOf(inst).size || 1;
+    const c = document.createElement("div");
+    c.className = "cell" + (sz >= 4 ? " big" : sz >= 2 ? " w2" : "") + (inst.identified === !1 ? " unid" : "");
+    const t = itemTag(inst, { size: 52, gap: 6, sealed: !0, sil: !0 });
+    c.appendChild(t);
+    c.insertAdjacentHTML("beforeend", `<i class="sense"></i><i class="tip"></i><span class="unk">？</span>` + (q >= 4 ? `<i class="burst">${[0, 45, 90, 135, 180, 225, 270, 315].map((a, k) => `<s style="--a:${a}deg;--bc:${k % 2 ? RARITY[3].color : RARITY[4].color}"></s>`).join("")}</i>` : ""));
+    c.style.setProperty("--tipA", TIP[q]);
+    c.style.setProperty("--tipS", TIPS[q]);
+    c._t = t;
+    c._inst = inst;
+    return c;
+  }
+  const nameOf = (inst) => { const d = defOf(inst), q = inst.rarity || 0; return `<span style="color:${q ? RARITY[q].color : "inherit"}">${inst.identified === !1 ? "未鉴定的" + d.name : d.name}</span> <small>· ${RARITY[q].name}${inst.n > 1 ? " · ×" + inst.n : ""}</small>`; };
+
+  // ---------------- 窗口 ----------------
+  let W = null;
+  function build() {
+    if (W) W.root.remove();
+    const items = LOOT(), view = document.getElementById("view");
+    const root = document.createElement("div");
+    root.className = "lw2";
+    root.innerHTML = `<div class="sheet"><div class="hd"><span class="t">竹林狼妖<small>·</small>遗骸</span><span class="sense"><i>识</i><b>${SENSE}</b></span></div><div class="rule"></div><div class="grid" style="--cols:4"></div><div class="nm st"></div><div class="ft"><span>全取<u>F</u></span><span>收起<u>Esc</u></span></div></div>`;
+    view.appendChild(root);
+    root.style.left = "712px";
+    root.style.top = "236px";
+    const grid = root.querySelector(".grid"), nm = root.querySelector(".nm");
+    const cells = items.map((it) => grid.appendChild(cellFor(it)));
+    const om = foresee(SENSE);
+    cells.forEach((c, i) => {
+      if (om > 0) c.classList.add("omen"), c.style.setProperty("--omen", om);
+      c.style.setProperty("--rr", c.offsetHeight / 2 + "px");
+      c.addEventListener("mouseenter", () => c.classList.contains("shown") && show(nameOf(c._inst)));
+      c.addEventListener("mouseleave", () => status());
+      c.addEventListener("click", () => c.classList.contains("shown") && take(c));
+    });
+    const need = items.map((it) => (BASE[it.rarity || 0] * 100) / (100 + SENSE));
+    W = { root, cells, need, nm, t: 0, i: 0, local: 0, wait: DELAY, done: !1, nameT: 0 };
+    status();
+  }
+  function show(html) { W.nm.classList.remove("st"); W.nm.innerHTML = html; }
+  function status() { const left = W.cells.filter((c) => !c.classList.contains("shown") && !c.classList.contains("taken")).length; W.nm.classList.add("st"); W.nm.textContent = left ? `余 ${left} 格未明` : "全部探明 · 点选取物"; }
+  function take(c) {
+    c.classList.add("taken");
+    const b = c.getBoundingClientRect(), f = c._t.cloneNode(!0);
+    f.className += " fly";
+    f.style.left = b.left + "px"; f.style.top = b.top + "px";
+    document.body.appendChild(f);
+    f.animate([{ transform: "translate(0,0) scale(1)" }, { transform: `translate(${1040 - b.left}px, ${60 - b.top}px) scale(.5)`, opacity: 0.3 }], { duration: 650, easing: "cubic-bezier(.45,.05,.55,.95)" }).onfinish = () => f.remove();
+  }
+  // 逐帧推进（与 containers.js 的规则一致：一格一格探，格间停 0.12 秒）
+  function step(dt) {
+    if (!W || W.done) return;
+    if (W.nameT > 0 && (W.nameT -= dt) <= 0) status();
+    if ((W.wait -= dt) > 0) return;
+    const c = W.cells[W.i];
+    if (!c) return (W.done = !0);
+    const q = c._inst.rarity || 0;
+    c.classList.add("search");
+    W.local += dt;
+    const v = Math.min(1, W.local / W.need[W.i]);
+    c.style.setProperty("--v", shape(v, q).toFixed(3));
+    if (v >= FORM && !c.classList.contains("form")) { c.classList.add("form"); setTagState(c._t, { sealed: !1 }); } // 第一段：露形
+    if (v >= 1) {
+      c.classList.remove("search", "form");
+      c.classList.add("shown");
+      if (c._inst.identified !== !1) setTagState(c._t, { sil: !1 }), tagReveal(c._t); // 第二段：显色（未鉴定保持剪影）
+      if (q >= 3) c.style.setProperty("--fx", rgba(RARITY[q].color, q >= 4 ? 0.55 : 0.7)), c.classList.add("flash"); // 仙品泛金 / 极品朱：取 RARITY
+      if (q >= 4) c.classList.add("spark");
+      show(nameOf(c._inst));
+      W.nameT = 1.2;
+      W.i++;
+      W.local = 0;
+      W.wait = GAP;
+    }
+  }
+  let last = performance.now(), paused = qs.get("auto") === "0";
+  function loop(t) { const dt = Math.min(0.05, (t - last) / 1000); last = t; if (!paused) step(dt); requestAnimationFrame(loop); }
+  window.__lw2 = { build, get W() { return W; }, setSense(s) { SENSE = s; build(); }, step, pause(p) { paused = p; } };
+  document.getElementById("replay").onclick = () => build();
+  document.getElementById("s0").onclick = () => window.__lw2.setSense(0);
+  document.getElementById("s100").onclick = () => window.__lw2.setSense(100);
+
+  // ---------------- 说明区：各状态 ----------------
+  function legend() {
+    const box = document.getElementById("states");
+    const add = (label, note, inst, fn, wide) => {
+      const w = document.createElement("div");
+      w.className = "st-item" + (wide ? " w" : "");
+      const c = cellFor(inst);
+      w.appendChild(c);
+      w.insertAdjacentHTML("beforeend", `<span>${label}</span><small>${note}</small>`);
+      box.appendChild(w);
+      requestAnimationFrame(() => (c.style.setProperty("--rr", c.offsetHeight / 2 + "px"), fn(c)));
+    };
+    add("墨封", "未探查", mk("lingbang_zhu", { rarity: 2 }), () => {});
+    add("预感", "神识 ≥ 40<br>墨封下浮出轮廓", mk("lingbang_zhu", { rarity: 2 }), (c) => (c.classList.add("omen"), c.style.setProperty("--omen", 0.8)));
+    add("神识一笔", "笔尖带光<br>品质越高越亮", mk("lingbang_zhu", { rarity: 2 }), (c) => (c.classList.add("search"), c.style.setProperty("--v", 0.4)));
+    add("露形", "走到 62%<br>墨封化开、剪影", mk("lingbang_zhu", { rarity: 2 }), (c) => (c.classList.add("search", "form"), c.style.setProperty("--v", 0.75), setTagState(c._t, { sealed: !1 })));
+    add("显色 · 宝品", "本色 + 品质晕", mk("lingbang_zhu", { rarity: 2 }), (c) => (c.classList.add("shown"), setTagState(c._t, { sealed: !1, sil: !1 })));
+    add("仙品", "顿笔、泛金<br>角印", mk("sword_qingfeng", { rarity: 3, identified: !0 }), (c) => (c.classList.add("shown"), setTagState(c._t, { sealed: !1, sil: !1 })), !0);
+    add("未鉴定", "保持剪影 + ？", mk("jade_qing", { rarity: 2, identified: !1 }), (c) => (c.classList.add("shown"), setTagState(c._t, { sealed: !1 })), !0);
+    add("已取", "淡去", mk("spirit_stone", { n: 14 }), (c) => (c.classList.add("shown", "taken"), setTagState(c._t, { sealed: !1, sil: !1 })));
+  }
+  document.fonts.ready.then(() => { build(); legend(); window.__ready = !0; });
+  requestAnimationFrame(loop);
+</script>
+</body>
+</html>

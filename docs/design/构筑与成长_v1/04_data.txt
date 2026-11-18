@@ -1,0 +1,239 @@
+===== r1 =====
+-- 每局刷出（期望，按 类别@分区）
+  chest                      6.00
+  elite:wolf_elite           3.00
+  gather                    15.00
+  gchest                     2.00
+  glow:furnace_part          0.67
+  glow:lingbang              0.67
+  glow:wolfking_bone         0.66
+  mob:crow                   1.82
+  mob:golem                  2.72
+  mob:rat                    8.37
+  mob:spider                 2.33
+  mob:wolf                   6.89
+  mob:wolf_grey              7.68
+  pack:high                  2.00
+  pack:low                   3.69
+  pack:mid                   3.31
+  pav                        3.00
+  rare:chilang               0.37
+  stele                      1.53
+-- 局型 × 策略
+  普通/dusk                T p50   8.9 分  暮/夜 0.00/0.00  夜明 0.00  chest=5.62 elite:wolf_elite=2.19 gather=8.06 gchest=1.01 glow:furnace_part=0.65 glow:lingbang=0.65 glow:wolfking_bone=0.15 pack:high=0.73 pack:low=3.41 pack:mid=2.94 pav=2.45 rare:chilang=0.23 stele:beiling=0.22 stele:donglu=0.3 stele:luanshi=0.34 stele:miao=0.38
+  普通/night               T p50  11.5 分  暮/夜 1.00/0.00  夜明 0.00  chest=5.96 elite:wolf_elite=2.97 gather=8.93 gchest=1.96 glow:furnace_part=0.66 glow:lingbang=0.69 glow:wolfking_bone=0.6 pack:high=1.94 pack:low=3.75 pack:mid=3.16 pav=3.01 rare:chilang=0.33 stele:beiling=0.38 stele:donglu=0.33 stele:luanshi=0.39 stele:miao=0.38
+  普通/greedy              T p50  11.5 分  暮/夜 0.82/0.18  夜明 0.18  chest=6.0 elite:wolf_elite=3.0 gather=9.0 gchest=2.0 glow:furnace_part=0.66 glow:lingbang=0.69 glow:wolfking_bone=0.65 pack:high=2.0 pack:low=3.81 pack:mid=3.19 pav=3.02 rare:chilang=0.34 stele:beiling=0.38 stele:donglu=0.34 stele:luanshi=0.39 stele:miao=0.38
+  遗府(山神庙)/dusk           T p50   8.9 分  暮/夜 0.00/0.00  夜明 0.00  chest=4.22 den=1.0 elite:wolf_elite=1.16 gather=5.47 gchest=0.24 glow:furnace_part=0.3 glow:lingbang=0.47 glow:wolfking_bone=0.01 pack:high=0.09 pack:low=2.6 pack:mid=2.16 pav=1.55 rare:chilang=0.1 stele:beiling=0.03 stele:donglu=0.2 stele:luanshi=0.19 stele:miao=0.25
+  遗府(山神庙)/night          T p50  11.9 分  暮/夜 1.00/0.00  夜明 0.00  chest=5.55 den=1.0 elite:wolf_elite=2.11 gather=7.14 gchest=0.89 glow:furnace_part=0.63 glow:lingbang=0.66 glow:wolfking_bone=0.13 pack:high=0.57 pack:low=3.38 pack:mid=2.92 pav=2.35 rare:chilang=0.21 stele:beiling=0.18 stele:donglu=0.29 stele:luanshi=0.32 stele:miao=0.38
+  遗府(山神庙)/greedy         T p50  14.9 分  暮/夜 0.00/1.00  夜明 1.00  chest=6.0 den=1.0 elite:wolf_elite=3.0 gather=8.0 gchest=2.0 glow:furnace_part=0.66 glow:lingbang=0.69 glow:wolfking_bone=0.65 pack:high=2.0 pack:low=3.81 pack:mid=3.19 pav=3.02 rare:chilang=0.34 stele:beiling=0.38 stele:donglu=0.34 stele:luanshi=0.39 stele:miao=0.38
+  首领(青牙)/dusk            T p50   9.1 分  暮/夜 0.00/0.00  夜明 0.00  boss=1.0 chest=4.63 elite:wolf_elite=1.36 gather=4.46 gchest=0.61 glow:furnace_part=0.39 glow:lingbang=0.51 glow:wolfking_bone=0.06 pack:high=0.25 pack:low=2.71 pack:mid=2.33 pav=1.8 rare:chilang=0.12 stele:beiling=0.08 stele:donglu=0.21 stele:luanshi=0.24 stele:miao=0.29
+  首领(青牙)/night           T p50  12.1 分  暮/夜 1.00/0.00  夜明 0.00  boss=1.0 chest=5.66 elite:wolf_elite=2.4 gather=5.62 gchest=1.58 glow:furnace_part=0.66 glow:lingbang=0.66 glow:wolfking_bone=0.3 pack:high=1.24 pack:low=3.47 pack:mid=2.96 pav=2.73 rare:chilang=0.23 stele:beiling=0.33 stele:donglu=0.29 stele:luanshi=0.34 stele:miao=0.38
+  首领(青牙)/greedy          T p50  14.1 分  暮/夜 0.00/1.00  夜明 1.00  boss=1.0 chest=6.0 elite:wolf_elite=3.0 gather=6.0 gchest=2.0 glow:furnace_part=0.66 glow:lingbang=0.69 glow:wolfking_bone=0.65 pack:high=2.0 pack:low=3.81 pack:mid=3.19 pav=3.02 rare:chilang=0.34 stele:beiling=0.38 stele:donglu=0.34 stele:luanshi=0.39 stele:miao=0.38
+-- 定向刷（dusk 策略，先走完目标再顺手拿）
+  石傀+山神庙残碑         目标段 p50  2.3 分（含撤离）  全局 p50  8.9  命中 {'mob:golem': 0.93, 'mob:wolf_grey': 0.41, 'stele:miao': 0.38}  怪 {'mob:golem': 2.67, 'mob:wolf_grey': 2.67}  落空 0.092  被迫组 2.17
+  狼妖头目×全部          目标段 p50  4.4 分（含撤离）  全局 p50  8.9  命中 {'elite:wolf_elite': 3.0}  怪 {}  落空 0.0  被迫组 3.79
+  残碑×全部            目标段 p50  2.1 分（含撤离）  全局 p50  8.9  命中 {'stele:beiling': 0.38, 'stele:donglu': 0.34, 'stele:luanshi': 0.39, 'stele:miao': 0.38}  怪 {}  落空 0.0  被迫组 2.55
+  灵光宝箱+亭           目标段 p50  4.1 分（含撤离）  全局 p50  8.9  命中 {'gchest': 2.0, 'pav': 3.02}  怪 {}  落空 0.0  被迫组 4.88
+  异种(赤狼)           目标段 p50  0.5 分（含撤离）  全局 p50  8.9  命中 {'rare:chilang': 0.34}  怪 {}  落空 0.655  被迫组 0.78
+  灵光点×全部           目标段 p50  3.6 分（含撤离）  全局 p50  8.9  命中 {'glow:furnace_part': 0.66, 'glow:lingbang': 0.69, 'glow:wolfking_bone': 0.65}  怪 {}  落空 0.0  被迫组 2.91
+  流派:剑势            目标段 p50  5.4 分（含撤离）  全局 p50  8.9  命中 {'chest': 1.48, 'elite:wolf_elite': 1.66, 'gchest': 1.31, 'glow:wolfking_bone': 0.34, 'pav': 1.72, 'rare:chilang': 0.19, 'stele:beiling': 0.38, 'stele:donglu': 0.34}  怪 {}  落空 0.0  被迫组 5.29
+  流派:五行            目标段 p50  3.8 分（含撤离）  全局 p50  8.9  命中 {'chest': 2.75, 'elite:wolf_elite': 1.03, 'glow:furnace_part': 0.66, 'glow:lingbang': 0.69, 'pav': 0.42, 'rare:chilang': 0.08, 'stele:miao': 0.38}  怪 {}  落空 0.0  被迫组 2.18
+  流派:身法            目标段 p50  4.1 分（含撤离）  全局 p50  8.9  命中 {'chest': 1.21, 'elite:wolf_elite': 1.3, 'gchest': 1.31, 'glow:lingbang': 0.32, 'glow:wolfking_bone': 0.34, 'pav': 0.87, 'rare:chilang': 0.17, 'stele:beiling': 0.38}  怪 {}  落空 0.0  被迫组 3.6
+  流派:雷暴            目标段 p50  3.2 分（含撤离）  全局 p50  8.9  命中 {'chest': 2.39, 'elite:wolf_elite': 0.99, 'gchest': 0.37, 'pav': 0.85, 'rare:chilang': 0.17, 'stele:donglu': 0.34, 'stele:luanshi': 0.39}  怪 {}  落空 0.0  被迫组 2.85
+  流派:守御            目标段 p50  4.0 分（含撤离）  全局 p50  8.9  命中 {'chest': 2.45, 'elite:wolf_elite': 1.02, 'gchest': 0.37, 'glow:furnace_part': 0.66, 'glow:lingbang': 0.37, 'pav': 0.42, 'rare:chilang': 0.07, 'stele:luanshi': 0.39, 'stele:miao': 0.38}  怪 {}  落空 0.0  被迫组 2.87
+  分区:竹林 · 狼踪       目标段 p50  1.7 分（含撤离）  全局 p50  8.9  命中 {'chest': 1.21, 'elite:wolf_elite': 0.32, 'glow:lingbang': 0.32, 'rare:chilang': 0.08}  怪 {}  落空 0.098  被迫组 1.36
+  分区:东麓            目标段 p50  2.4 分（含撤离）  全局 p50  8.9  命中 {'chest': 1.48, 'elite:wolf_elite': 0.69, 'pav': 0.85, 'rare:chilang': 0.1, 'stele:donglu': 0.34}  怪 {}  落空 0.007  被迫组 2.27
+  分区:山神庙           目标段 p50  3.0 分（含撤离）  全局 p50  8.9  命中 {'chest': 1.54, 'elite:wolf_elite': 0.71, 'glow:furnace_part': 0.66, 'glow:lingbang': 0.37, 'pav': 0.42, 'stele:miao': 0.38}  怪 {}  落空 0.002  被迫组 2.18
+  分区:乱石岗           目标段 p50  2.2 分（含撤离）  全局 p50  8.9  命中 {'chest': 0.91, 'elite:wolf_elite': 0.31, 'gchest': 0.37, 'rare:chilang': 0.07, 'stele:luanshi': 0.39}  怪 {}  落空 0.09  被迫组 2.42
+  分区:北岭            目标段 p50  3.4 分（含撤离）  全局 p50  8.9  命中 {'elite:wolf_elite': 0.97, 'gchest': 1.31, 'glow:wolfking_bone': 0.34, 'pav': 0.87, 'rare:chilang': 0.09, 'stele:beiling': 0.38}  怪 {}  落空 0.0  被迫组 3.54
+-- 点位（入口均值 / 最近入口 / 最近常驻古阵 秒；暴露 = 入口均值 + 古阵）
+  stele                  山神庙残碑              (-24, -26)   miao      险3  入 20.4/ 20.0  阵 16.7  暴露  37.1  ok
+  stele                  乱石岗石刻              (66, -2)     luanshi   险3  入 28.2/ 23.8  阵 19.4  暴露  47.6  ok
+  stele                  北岭断碑               (-56, -60)   beiling   险4  入 31.5/ 31.0  阵 16.0  暴露  47.5  ok
+  stele                  东麓石刻               (72, 44)     donglu    险2  入 24.8/ 19.8  阵 16.0  暴露  40.8  ok
+  pav                    东麓凉亭               (36, 32)     donglu    险2  入 19.6/ 14.6  阵 10.6  暴露  30.1  ok
+  pav                    溪畔望亭               (-34, 48)    xipan     险1  入  7.5/  3.8  阵  2.2  暴露   9.7  ok
+  pav                    竹径亭                (-72, -8)    miao      险3  入 16.4/ 15.8  阵 13.1  暴露  29.5  ok
+  pav                    松岭亭                (-68, -40)   beiling   险4  入 28.2/ 27.6  阵 18.2  暴露  46.3  ok
+  pav                    瀑上亭                (4, -48)     beiling   险4  入 41.1/ 40.5  阵  5.6  暴露  46.7  ok
+  pav                    溪口亭                (-78, 64)    xipan     险1  入  4.4/  2.6  阵 10.6  暴露  15.0  ok
+  pav                    东麓南亭               (96, 44)     donglu    险2  入 28.8/ 23.8  阵 20.0  暴露  48.8  ok
+  glow                   狼王遗骨               (36, -30)    langgu    险5  入 55.5/ 54.9  阵  9.6  暴露  65.0  ok
+  glow                   狼王遗骨               (-10, -60)   beiling   险4  入 39.2/ 38.6  阵  8.3  暴露  47.5  ok
+  glow                   灵蚌                 (-17, 30)    zhulin    险2  入 11.6/  8.0  阵  2.8  暴露  14.4  ok
+  glow                   灵蚌                 (4, -36)     miao      险3  入 24.7/ 22.3  阵 18.0  暴露  42.7  ok
+  glow                   炼器鼎残件              (-46, -26)   miao      险3  入 18.1/ 17.7  阵 14.6  暴露  32.7  ok
+  glow                   炼器鼎残件              (-26, -32)   miao      险3  入 20.5/ 20.1  阵 17.0  暴露  37.5  ok
+  gchest                 灵光宝箱位              (60, -20)    langgu    险5  入 54.3/ 53.8  阵  8.3  暴露  62.6  ok
+  gchest                 灵光宝箱位              (30, -58)    beiling   险4  入 45.7/ 45.2  阵  1.4  暴露  47.1  ok
+  gchest                 灵光宝箱位              (-66, -40)   beiling   险4  入 28.5/ 27.9  阵 17.8  暴露  46.3  ok
+  gchest                 灵光宝箱位              (56, -56)    beiling   险4  入 49.9/ 49.4  阵  3.6  暴露  53.5  ok
+  gchest                 灵光宝箱位              (92, -14)    luanshi   险3  入 33.3/ 28.8  阵 24.5  暴露  57.8  ok
+  gchest                 灵光宝箱位              (-80, -58)   beiling   险4  入 28.7/ 28.1  阵 19.8  暴露  48.5  ok
+  elite                  精英位                (-80, 20)    zhulin    险2  入  9.9/  8.8  阵 11.4  暴露  21.3  ok
+  elite                  精英位                (60, 48)     donglu    险2  入 22.6/ 17.5  阵 14.3  暴露  36.9  ok
+  elite                  精英位                (-48, -8)    miao      险3  入 15.2/ 14.8  阵 11.5  暴露  26.7  ok
+  elite                  精英位                (-20, -38)   miao      险3  入 21.9/ 21.5  阵 18.4  暴露  40.3  ok
+  elite                  精英位                (88, -10)    luanshi   险3  入 32.4/ 27.8  阵 23.5  暴露  55.9  ok
+  elite                  精英位                (-60, -58)   beiling   险4  入 30.7/ 30.2  阵 16.5  暴露  47.2  ok
+  elite                  精英位                (10, -60)    beiling   险4  入 42.5/ 42.0  阵  5.5  暴露  48.1  ok
+  elite                  精英位                (80, -46)    beiling   险4  入 53.9/ 53.4  阵  7.7  暴露  61.7  ok
+  elite                  精英位                (30, 30)     donglu    险2  入 18.7/ 13.8  阵  9.7  暴露  28.4  ok
+  rare                   异种 乱石岗焦土           (84, -16)    luanshi   险3  入 32.2/ 27.7  阵 23.3  暴露  55.5  ok
+  rare                   异种 北岭白霜            (-30, -62)   beiling   险4  入 36.0/ 35.4  阵 11.8  暴露  47.8  ok
+  rare                   异种 竹林火烧迹           (-86, 12)    zhulin    险2  入 11.4/  9.7  阵 12.9  暴露  24.3  ok
+  rare                   异种 东麓狼骨堆           (70, 58)     donglu    险2  入 23.5/ 18.5  阵 16.6  暴露  40.2  ok
+  den                    山神庙地窖              (-29, -24)   miao      险3  入 19.4/ 19.0  阵 15.8  暴露  35.2  ok
+  boss                   青牙                 (50, -22)    langgu    险5  入 54.1/ 53.6  阵  8.1  暴露  62.2  ok
+  enc                    奇遇 e_temple_path   (-44, -6)    miao      险3  入 15.7/ 15.3  阵 12.0  暴露  27.7  ok
+  enc                    奇遇 e_falls         (-2, -30)    miao      险3  入 23.6/ 21.9  阵 17.6  暴露  41.2  ok
+  enc                    奇遇 e_songling      (-72, -48)   beiling   险4  入 28.0/ 27.5  阵 18.3  暴露  46.3  ok
+  enc                    奇遇 e_east_grove    (34, 22)     donglu    险2  入 20.0/ 15.1  阵 10.9  暴露  30.9  ok
+  enc                    奇遇 e_pool_meadow   (-32, 30)    zhulin    险2  入  9.8/  6.9  阵  3.2  暴露  13.0  ok
+  enc                    奇遇 e_ridge         (46, -58)    beiling   险4  入 48.4/ 47.8  阵  2.1  暴露  50.5  ok
+  enc                    奇遇 e_east_rim      (74, -14)    luanshi   险3  入 30.4/ 25.9  阵 21.5  暴露  51.9  ok
+  enc                    奇遇 e_west_reed     (-92, 40)    zhulin    险2  入  7.7/  4.6  阵 12.0  暴露  19.7  ok
+  enc                    奇遇 e_donglu_s      (64, 66)     donglu    险2  入 22.0/ 16.9  阵 16.2  暴露  38.2  ok
+  relic                  遗物 西岭断碑            (-70, -34)   beiling   险4  入 27.4/ 26.8  阵 18.9  暴露  46.3  ok
+  relic                  遗物 瀑下石龛            (-24, -46)   miao      险3  入 23.0/ 22.6  阵 19.4  暴露  42.4  ok
+  relic                  遗物 狼谷北崖            (66, -44)    beiling   险4  入 51.7/ 51.1  阵  5.6  暴露  57.2  ok
+  relic                  遗物 台地木桥下           (-8, -16)    miao      险3  入 21.9/ 20.6  阵 16.3  暴露  38.1  ok
+  spawn:golem+wolf_grey  刷怪点                (-36, -10)   miao      险3  入 17.3/ 16.9  阵 13.6  暴露  30.9  ok
+  spawn:golem+wolf_grey  刷怪点                (84, -8)     luanshi   险3  入 31.6/ 27.2  阵 22.8  暴露  54.4  ok
+  spawn:golem+wolf_grey  刷怪点                (-80, -50)   beiling   险4  入 27.3/ 26.8  阵 19.5  暴露  46.8  ok
+  spawn:golem+wolf_grey  刷怪点                (30, -62)    beiling   险4  入 46.0/ 45.4  阵  2.1  暴露  48.1  ok
+  proposal               法宝匣·狼王石后           (50, -28)    langgu    险5  入 53.3/ 52.7  阵  7.4  暴露  60.6  ok
+  proposal               雷击木·乱石岗南           (92, -26)    luanshi   险3  入 34.2/ 29.8  阵 25.4  暴露  59.5  ok
+  proposal               雷击木·乱石岗西           (72, -24)    luanshi   险3  入 31.0/ 26.6  阵 22.2  暴露  53.2  ok
+  proposal               雷击木·北岭东            (44, -54)    beiling   险4  入 47.8/ 47.2  阵  1.5  暴露  49.3  ok
+  proposal               雷击木·北岭西            (-40, -58)   beiling   险4  入 34.1/ 33.5  阵 13.1  暴露  47.2  ok
+  proposal               雷击木·东麓丘            (80, 40)     donglu    险2  入 26.4/ 21.4  阵 17.3  暴露  43.7  ok
+===== r2 =====
+-- 每局刷出（期望，按 类别@分区）
+  chest                      8.00
+  elite:vine_elite           1.99
+  elite:wolf_elite_r2        2.01
+  gather                    16.00
+  gchest                     2.00
+  glow:water_jade            0.67
+  glow:zhenpan               0.69
+  glow:zhuxin                0.64
+  mob:bat                   13.48
+  mob:snake                  6.76
+  mob:toad                   7.47
+  mob:vine                   5.85
+  mob:wolf                   7.04
+  pack:high                  5.12
+  pack:low                   3.31
+  pack:mid                   2.56
+  pav                        3.06
+  rare:xuanlin_bat           0.40
+  stele                      1.49
+-- 局型 × 策略
+  普通/dusk                T p50   8.9 分  暮/夜 0.00/0.00  夜明 0.00  chest=5.17 elite:vine_elite=1.02 elite:wolf_elite_r2=1.1 gather=6.37 gchest=0.83 glow:water_jade=0.23 glow:zhenpan=0.43 glow:zhuxin=0.13 pack:high=1.47 pack:low=2.09 pack:mid=1.58 pav=1.67 rare:xuanlin_bat=0.19 stele:beiji=0.03 stele:dongtai=0.24 stele:duanjian=0.19 stele:xigu=0.15 stele:zhuhai_n=0.08
+  普通/night               T p50  12.0 分  暮/夜 1.00/0.00  夜明 0.00  chest=6.49 elite:vine_elite=1.38 elite:wolf_elite_r2=1.44 gather=7.78 gchest=1.18 glow:water_jade=0.36 glow:zhenpan=0.55 glow:zhuxin=0.29 pack:high=2.0 pack:low=2.84 pack:mid=1.96 pav=2.17 rare:xuanlin_bat=0.25 stele:beiji=0.06 stele:dongtai=0.26 stele:duanjian=0.23 stele:xigu=0.28 stele:zhuhai_n=0.18
+  普通/greedy              T p50  17.9 分  暮/夜 0.00/1.00  夜明 1.00  chest=8.0 elite:vine_elite=1.93 elite:wolf_elite_r2=2.07 gather=10.0 gchest=2.0 glow:water_jade=0.64 glow:zhenpan=0.68 glow:zhuxin=0.69 pack:high=5.13 pack:low=3.35 pack:mid=2.52 pav=2.99 rare:xuanlin_bat=0.4 stele:beiji=0.31 stele:dongtai=0.28 stele:duanjian=0.29 stele:xigu=0.3 stele:zhuhai_n=0.31
+  遗府(剑修)/dusk            T p50   9.0 分  暮/夜 0.00/0.00  夜明 0.00  chest=2.74 den=1.0 elite:vine_elite=0.25 elite:wolf_elite_r2=0.23 gather=2.42 gchest=0.2 glow:water_jade=0.08 glow:zhuxin=0.02 pack:high=0.14 pack:low=1.02 pack:mid=0.85 pav=0.69 rare:xuanlin_bat=0.01 stele:dongtai=0.12 stele:duanjian=0.02 stele:xigu=0.09 stele:zhuhai_n=0.05
+  遗府(剑修)/night           T p50  12.0 分  暮/夜 1.00/0.00  夜明 0.00  chest=4.07 den=1.0 elite:vine_elite=0.66 elite:wolf_elite_r2=0.7 gather=3.98 gchest=0.66 glow:water_jade=0.16 glow:zhenpan=0.2 glow:zhuxin=0.09 pack:high=0.91 pack:low=1.48 pack:mid=1.27 pav=1.24 rare:xuanlin_bat=0.1 stele:beiji=0.01 stele:dongtai=0.2 stele:duanjian=0.14 stele:xigu=0.12 stele:zhuhai_n=0.07
+  遗府(剑修)/greedy          T p50  22.7 分  暮/夜 0.00/1.00  夜明 1.00  chest=8.0 den=1.0 elite:vine_elite=1.93 elite:wolf_elite_r2=2.07 gather=8.0 gchest=2.0 glow:water_jade=0.64 glow:zhenpan=0.68 glow:zhuxin=0.69 pack:high=5.13 pack:low=3.35 pack:mid=2.52 pav=2.99 rare:xuanlin_bat=0.4 stele:beiji=0.31 stele:dongtai=0.28 stele:duanjian=0.29 stele:xigu=0.3 stele:zhuhai_n=0.31
+  首领(碧鳞)/dusk            T p50   9.1 分  暮/夜 0.00/0.00  夜明 0.00  boss=1.0 chest=3.49 elite:vine_elite=0.44 elite:wolf_elite_r2=0.45 gather=2.46 gchest=0.45 glow:water_jade=0.12 glow:zhenpan=0.07 glow:zhuxin=0.07 pack:high=0.55 pack:low=1.27 pack:mid=1.1 pav=0.98 rare:xuanlin_bat=0.06 stele:beiji=0.01 stele:dongtai=0.17 stele:duanjian=0.09 stele:xigu=0.1 stele:zhuhai_n=0.07
+  首领(碧鳞)/night           T p50  12.2 分  暮/夜 1.00/0.00  夜明 0.00  boss=1.0 chest=4.9 elite:vine_elite=0.88 elite:wolf_elite_r2=0.94 gather=3.61 gchest=0.84 glow:water_jade=0.19 glow:zhenpan=0.33 glow:zhuxin=0.13 pack:high=1.33 pack:low=1.74 pack:mid=1.45 pav=1.5 rare:xuanlin_bat=0.15 stele:beiji=0.03 stele:dongtai=0.23 stele:duanjian=0.17 stele:xigu=0.17 stele:zhuhai_n=0.1
+  首领(碧鳞)/greedy          T p50  21.7 分  暮/夜 0.00/1.00  夜明 1.00  boss=1.0 chest=8.0 elite:vine_elite=1.93 elite:wolf_elite_r2=2.07 gather=6.0 gchest=2.0 glow:water_jade=0.64 glow:zhenpan=0.68 glow:zhuxin=0.69 pack:high=5.13 pack:low=3.35 pack:mid=2.52 pav=2.99 rare:xuanlin_bat=0.4 stele:beiji=0.31 stele:dongtai=0.28 stele:duanjian=0.29 stele:xigu=0.3 stele:zhuhai_n=0.31
+-- 定向刷（night 策略，先走完目标再顺手拿）
+  藤妖(组+精英)         目标段 p50  6.1 分（含撤离）  全局 p50 12.0  命中 {'elite:vine_elite': 1.93, 'mob:bat': 0.89, 'mob:vine': 1.52, 'mob:wolf': 1.64}  怪 {'mob:bat': 4.26, 'mob:snake': 0.3, 'mob:vine': 5.87, 'mob:wolf': 6.07}  落空 0.002  被迫组 1.21
+  灰鬃头目             目标段 p50  4.1 分（含撤离）  全局 p50 12.0  命中 {'elite:wolf_elite_r2': 2.07}  怪 {}  落空 0.047  被迫组 2.47
+  残碑×全部            目标段 p50  2.4 分（含撤离）  全局 p50 12.0  命中 {'stele:beiji': 0.31, 'stele:dongtai': 0.28, 'stele:duanjian': 0.29, 'stele:xigu': 0.3, 'stele:zhuhai_n': 0.31}  怪 {}  落空 0.0  被迫组 2.23
+  灵光宝箱+亭           目标段 p50  4.8 分（含撤离）  全局 p50 12.0  命中 {'gchest': 2.0, 'pav': 2.99}  怪 {}  落空 0.0  被迫组 4.32
+  异种(玄鳞蝠)          目标段 p50  0.7 分（含撤离）  全局 p50 12.0  命中 {'rare:xuanlin_bat': 0.4}  怪 {}  落空 0.605  被迫组 0.7
+  灵光点×全部           目标段 p50  4.9 分（含撤离）  全局 p50 12.0  命中 {'glow:water_jade': 0.64, 'glow:zhenpan': 0.68, 'glow:zhuxin': 0.69}  怪 {}  落空 0.0  被迫组 3.38
+  精英×全部            目标段 p50  6.9 分（含撤离）  全局 p50 12.0  命中 {'elite:vine_elite': 1.93, 'elite:wolf_elite_r2': 2.07}  怪 {}  落空 0.0  被迫组 3.56
+  流派:剑势            目标段 p50  5.2 分（含撤离）  全局 p50 12.0  命中 {'chest': 1.52, 'elite:vine_elite': 0.58, 'elite:wolf_elite_r2': 0.62, 'gchest': 0.67, 'glow:zhuxin': 0.69, 'pav': 0.73, 'rare:xuanlin_bat': 0.17, 'stele:beiji': 0.31, 'stele:zhuhai_n': 0.31}  怪 {}  落空 0.002  被迫组 2.74
+  流派:五行            目标段 p50  6.4 分（含撤离）  全局 p50 12.0  命中 {'chest': 3.08, 'elite:vine_elite': 0.97, 'elite:wolf_elite_r2': 1.08, 'gchest': 0.67, 'glow:water_jade': 0.33, 'glow:zhuxin': 0.69, 'pav': 1.47, 'rare:xuanlin_bat': 0.18, 'stele:xigu': 0.3, 'stele:zhuhai_n': 0.31}  怪 {}  落空 0.0  被迫组 2.42
+  流派:身法            目标段 p50  6.7 分（含撤离）  全局 p50 11.9  命中 {'chest': 3.05, 'elite:vine_elite': 0.96, 'elite:wolf_elite_r2': 1.04, 'gchest': 0.66, 'glow:water_jade': 0.33, 'glow:zhenpan': 0.68, 'pav': 1.12, 'rare:xuanlin_bat': 0.15, 'stele:duanjian': 0.29, 'stele:xigu': 0.3}  怪 {}  落空 0.0  被迫组 3.02
+  流派:雷暴            目标段 p50  5.0 分（含撤离）  全局 p50 12.0  命中 {'chest': 1.53, 'elite:vine_elite': 0.58, 'elite:wolf_elite_r2': 0.6, 'gchest': 0.35, 'pav': 0.38, 'rare:xuanlin_bat': 0.15, 'stele:beiji': 0.31, 'stele:dongtai': 0.28}  怪 {}  落空 0.005  被迫组 3.36
+  流派:守御            目标段 p50  4.9 分（含撤离）  全局 p50 12.0  命中 {'chest': 1.57, 'elite:vine_elite': 0.77, 'elite:wolf_elite_r2': 0.81, 'gchest': 1.01, 'glow:zhenpan': 0.68, 'pav': 0.76, 'rare:xuanlin_bat': 0.14, 'stele:dongtai': 0.28, 'stele:duanjian': 0.29}  怪 {}  落空 0.0  被迫组 2.5
+  分区:竹海南 · 溪谷      目标段 p50  3.7 分（含撤离）  全局 p50 11.9  命中 {'chest': 2.28, 'elite:vine_elite': 0.58, 'elite:wolf_elite_r2': 0.65, 'glow:water_jade': 0.33, 'pav': 0.74, 'rare:xuanlin_bat': 0.09, 'stele:xigu': 0.3}  怪 {}  落空 0.003  被迫组 1.43
+  分区:竹海深处          目标段 p50  4.1 分（含撤离）  全局 p50 12.0  命中 {'chest': 0.8, 'elite:vine_elite': 0.39, 'elite:wolf_elite_r2': 0.44, 'gchest': 0.67, 'glow:zhuxin': 0.69, 'pav': 0.73, 'rare:xuanlin_bat': 0.09, 'stele:zhuhai_n': 0.31}  怪 {}  落空 0.005  被迫组 2.36
+  分区:东台            目标段 p50  2.7 分（含撤离）  全局 p50 12.0  命中 {'chest': 0.81, 'elite:vine_elite': 0.38, 'elite:wolf_elite_r2': 0.42, 'gchest': 0.35, 'pav': 0.38, 'rare:xuanlin_bat': 0.07, 'stele:dongtai': 0.28}  怪 {}  落空 0.037  被迫组 1.75
+  分区:断涧东           目标段 p50  3.6 分（含撤离）  全局 p50 12.0  命中 {'chest': 0.77, 'elite:vine_elite': 0.38, 'elite:wolf_elite_r2': 0.39, 'gchest': 0.66, 'glow:zhenpan': 0.68, 'pav': 0.38, 'rare:xuanlin_bat': 0.07, 'stele:duanjian': 0.29}  怪 {}  落空 0.01  被迫组 2.07
+  分区:北脊            目标段 p50  2.9 分（含撤离）  全局 p50 12.0  命中 {'chest': 0.72, 'elite:vine_elite': 0.2, 'elite:wolf_elite_r2': 0.18, 'rare:xuanlin_bat': 0.07, 'stele:beiji': 0.31}  怪 {}  落空 0.173  被迫组 1.91
+-- 点位（入口均值 / 最近入口 / 最近常驻古阵 秒；暴露 = 入口均值 + 古阵）
+  stele                  竹海南残碑              (-108, 10)   xigu      险2  入 33.4/ 20.5  阵 18.6  暴露  52.0  ok
+  stele                  东台石刻               (36, -12)    dongtai   险3  入 22.0/ 18.5  阵 11.9  暴露  33.9  ok
+  stele                  竹海深处残碑             (-92, -22)   zhuhai_n  险3  入 46.8/ 33.9  阵  9.4  暴露  56.3  ok
+  stele                  北脊断碑               (-24, -82)   beiji     险4  入 61.9/ 49.0  阵  9.7  暴露  71.6  ok
+  stele                  断涧东石刻              (100, 2)     duanjian  险4  入 30.8/ 28.2  阵  4.3  暴露  35.2  ok
+  pav                    东台亭                (46, 26)     xigu      险2  入 16.4/ 12.9  阵 14.4  暴露  30.8  ok
+  pav                    芦荡亭                (-86, 52)    xigu      险2  入 27.2/ 13.9  阵 14.0  暴露  41.2  ok
+  pav                    竹海亭                (-42, -52)   zhuhai_n  险3  入 54.1/ 41.2  阵  3.1  暴露  57.2  ok
+  pav                    东台北亭               (34, -62)    dongtai   险3  入 30.3/ 26.8  阵 17.3  暴露  47.5  ok
+  pav                    东台南亭               (88, 62)     ludang    险1  入 16.4/  5.2  阵 23.0  暴露  39.4  ok
+  pav                    东岭亭                (100, -46)   duanjian  险4  入 33.3/ 30.6  阵  3.7  暴露  37.0  ok
+  pav                    渡口亭                (12, 80)     ludang    险1  入 21.9/ 20.2  阵  8.5  暴露  30.5  ok
+  pav                    裂谷亭                (-110, -20)  zhuhai_n  险3  入 49.4/ 36.6  阵 12.3  暴露  61.8  ok
+  glow                   水灵玉                (-18, -57)   bilin     险5  入 59.9/ 47.0  阵 11.5  暴露  71.4  ok
+  glow                   水灵玉                (-73, 12)    xigu      险2  入 28.6/ 17.3  阵 14.7  暴露  43.3  ok
+  glow                   千年竹心               (-76, -8)    zhuhai_n  险3  入 45.2/ 32.3  阵  7.6  暴露  52.8  ok
+  glow                   千年竹心               (-86, -44)   zhuhai_n  险3  入 51.1/ 38.2  阵 13.3  暴露  64.5  ok
+  glow                   阵盘·剑阵              (90, -58)    duanjian  险4  入 35.2/ 32.5  阵  6.4  暴露  41.5  ok
+  glow                   阵盘·剑阵              (84, -20)    duanjian  险4  入 27.9/ 25.2  阵  2.9  暴露  30.8  ok
+  gchest                 灵光宝箱位              (-76, -46)   zhuhai_n  险3  入 50.7/ 37.9  阵  3.0  暴露  53.7  ok
+  gchest                 灵光宝箱位              (40, -60)    dongtai   险3  入 30.1/ 26.8  阵 16.5  暴露  46.6  ok
+  gchest                 灵光宝箱位              (68, -40)    duanjian  险4  入 28.7/ 26.0  阵 10.5  暴露  39.2  ok
+  gchest                 灵光宝箱位              (90, -60)    duanjian  险4  入 35.5/ 32.8  阵  6.7  暴露  42.2  ok
+  gchest                 灵光宝箱位              (-110, -40)  zhuhai_n  险3  入 51.1/ 38.2  阵 13.7  暴露  64.7  ok
+  gchest                 灵光宝箱位              (-14, -48)   bilin     险5  入 58.6/ 45.7  阵 10.1  暴露  68.7  ok
+  elite                  精英位                (-50, -12)   zhuhai_n  险3  入 49.8/ 36.9  阵  6.2  暴露  56.0  ok
+  elite                  精英位                (10, -14)    xigu      险2  入 22.1/ 20.2  阵 15.7  暴露  37.9  ok
+  elite                  精英位                (44, 0)      dongtai   险3  入 20.2/ 17.0  阵 11.0  暴露  31.2  ok
+  elite                  精英位                (-80, -40)   zhuhai_n  险3  入 49.5/ 36.6  阵  4.1  暴露  53.6  ok
+  elite                  精英位                (76, -40)    duanjian  险4  入 31.3/ 28.6  阵  5.1  暴露  36.4  ok
+  elite                  精英位                (0, 36)      xigu      险2  入 18.6/ 13.6  阵  6.7  暴露  25.3  ok
+  elite                  精英位                (-60, 50)    xigu      险2  入 23.0/ 10.1  阵  9.7  暴露  32.6  ok
+  elite                  精英位                (-110, 40)   xigu      险2  入 31.6/ 18.7  阵 18.7  暴露  50.3  ok
+  elite                  精英位                (40, -62)    dongtai   险3  入 30.4/ 27.2  阵 16.8  暴露  47.3  ok
+  elite                  精英位                (110, -10)   duanjian  险4  入 31.7/ 29.0  阵  3.0  暴露  34.7  ok
+  elite                  精英位                (-40, -84)   beiji     险4  入 59.6/ 46.7  阵  7.6  暴露  67.1  ok
+  rare                   异种 竹海墨雾            (-70, -30)   zhuhai_n  险3  入 48.5/ 35.6  阵  3.5  暴露  52.0  ok
+  rare                   异种 东台白骨            (40, -20)    dongtai   险3  入 23.4/ 20.1  阵 11.8  暴露  35.2  ok
+  rare                   异种 东岭白霜            (110, -40)   duanjian  险4  入 33.5/ 30.8  阵  3.4  暴露  36.8  ok
+  rare                   异种 北脊雾             (-20, -84)   beiji     险4  入 62.7/ 49.8  阵 10.5  暴露  73.2  ok
+  rare                   异种 竹海南骨堆           (-100, 20)   xigu      险2  入 31.3/ 18.4  阵 18.4  暴露  49.8  ok
+  den                    剑修遗府               (-10, -65)   bilin     险5  入 62.0/ 49.1  阵 13.5  暴露  75.5  ok
+  boss                   碧鳞水蟒               (14, -40)    bilin     险5  入 62.4/ 49.5  阵 13.4  暴露  75.9  ok
+  enc                    奇遇 e_bamboo_w      (-60, -24)   zhuhai_n  险3  入 49.0/ 36.1  阵  3.8  暴露  52.8  ok
+  enc                    奇遇 e_upper         (-96, -30)   zhuhai_n  险3  入 48.4/ 35.5  阵 11.0  暴露  59.4  ok
+  enc                    奇遇 e_pool          (-56, 8)     xigu      险2  入 27.4/ 16.8  阵 13.1  暴露  40.5  ok
+  enc                    奇遇 e_valley        (-14, 0)     xigu      险2  入 21.4/ 17.7  阵 11.7  暴露  33.2  ok
+  enc                    奇遇 e_pavilion      (40, 22)     xigu      险2  入 16.6/ 13.1  阵 13.7  暴露  30.3  ok
+  enc                    奇遇 e_gorge_e       (96, -8)     duanjian  险4  入 29.5/ 26.8  阵  2.9  暴露  32.4  ok
+  enc                    奇遇 e_bank          (-16, 34)    xigu      险2  入 19.0/ 11.9  阵  5.9  暴露  24.9  ok
+  enc                    奇遇 e_east_n        (36, -60)    dongtai   险3  入 30.0/ 26.6  阵 16.8  暴露  46.8  ok
+  enc                    奇遇 e_reed_w        (-110, 70)   ludang    险1  入 31.6/ 16.7  阵 19.3  暴露  50.9  ok
+  enc                    奇遇 e_reed_e        (90, 70)     ludang    险1  入 16.1/  3.7  阵 24.1  暴露  40.2  ok
+  relic                  遗物 竹海上台石龛          (-92, -60)   zhuhai_n  险3  入 53.4/ 40.5  阵 11.5  暴露  64.9  ok
+  relic                  遗物 剑碑北             (-30, -56)   zhuhai_n  险3  入 56.2/ 43.3  阵  5.4  暴露  61.5  ok
+  relic                  遗物 断涧北口            (62, -66)    duanjian  险4  入 32.6/ 29.9  阵 15.3  暴露  47.9  ok
+  relic                  遗物 东岭断崖            (102, 4)     duanjian  险4  入 31.3/ 28.6  阵  4.8  暴露  36.1  ok
+  spawn:snake+vine       刷怪点                (60, 80)     ludang    险1  入 14.4/  6.7  阵 21.4  暴露  35.8  ok
+  spawn:bat+vine         刷怪点                (-60, 40)    xigu      险2  入 23.7/ 11.8  阵 10.4  暴露  34.1  ok
+  spawn:bat+vine         刷怪点                (-84, 10)    xigu      险2  入 30.0/ 18.4  阵 16.4  暴露  46.5  ok
+  spawn:bat+vine         刷怪点                (-4, 30)     xigu      险2  入 18.2/ 13.5  阵  7.4  暴露  25.6  ok
+  spawn:bat+vine         刷怪点                (44, 44)     xigu      险2  入 14.7/  9.7  阵 14.6  暴露  29.3  ok
+  spawn:bat+vine         刷怪点                (-46, -12)   zhuhai_n  险3  入 50.5/ 37.6  阵  6.5  暴露  57.0  ok
+  spawn:vine+wolf        刷怪点                (-70, -40)   zhuhai_n  险3  入 50.2/ 37.3  阵  2.4  暴露  52.6  ok
+  spawn:bat+vine         刷怪点                (-36, -60)   zhuhai_n  险3  入 55.8/ 42.9  阵  4.6  暴露  60.5  ok
+  spawn:vine+wolf        刷怪点                (42, -6)     dongtai   险3  入 21.1/ 17.9  阵 10.9  暴露  32.1  ok
+  spawn:vine+wolf        刷怪点                (46, -50)    dongtai   险3  入 28.5/ 25.5  阵 14.4  暴露  43.0  ok
+  spawn:vine+wolf        刷怪点                (70, -20)    duanjian  险4  入 25.5/ 22.8  阵  7.1  暴露  32.5  ok
+  spawn:bat+vine         刷怪点                (110, 10)    duanjian  险4  入 33.1/ 30.4  阵  6.4  暴露  39.4  ok
+  proposal               雷击木·北脊西            (-64, -78)   beiji     险4  入 58.8/ 45.9  阵  6.8  暴露  65.6  ok
+  proposal               雷击木·北脊东            (30, -78)    beiji     险4  入 71.3/ 58.4  阵 19.1  暴露  90.4  ok
+  proposal               雷击木·东岭             (120, -30)   duanjian  险4  入 34.4/ 31.8  阵  3.7  暴露  38.2  ok
+  proposal               岩髓·孤峰脚             (88, -42)    duanjian  险4  入 31.8/ 29.1  阵  3.8  暴露  35.6  ok
+  proposal               岩髓·东岭北             (110, -64)   duanjian  险4  入 37.0/ 34.3  阵  7.4  暴露  44.3  ok
+  proposal               岩髓·断涧东南            (104, 16)    duanjian  险4  入 33.2/ 30.5  阵  6.9  暴露  40.1  ok
+  proposal               剑冢·剑碑西             (-50, -36)   zhuhai_n  险3  入 51.5/ 38.6  阵  2.2  暴露  53.7  ok
+  proposal               剑冢·剑碑北             (-38, -48)   zhuhai_n  险3  入 54.3/ 41.4  阵  3.5  暴露  57.8  ok
+  proposal               阵台·孤峰下（现阵盘点）       (90, -58)    duanjian  险4  入 35.2/ 32.5  阵  6.4  暴露  41.5  ok
+  proposal               阵台·东岭（现阵盘点）        (84, -20)    duanjian  险4  入 27.9/ 25.2  阵  2.9  暴露  30.8  ok

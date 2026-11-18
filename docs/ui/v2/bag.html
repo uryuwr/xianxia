@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 储物袋（v2）</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/strokes.css">
+<link rel="stylesheet" href="kit/ink-ui.css">
+<script src="kit/ink-ui.js"></script>
+<style>
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+body { position: relative; font-family: var(--f-kai); color: var(--ink); }
+.abs { position: absolute; }
+/* 局内打开：场景退成一层淡墨，像隔着一张薄宣纸 */
+.scene { inset: 0; background: url(img/play.jpg) center / cover; filter: blur(3px) grayscale(.5); transform: scale(1.02); }
+.veil { inset: 0; background: radial-gradient(ellipse 80% 75% at 50% 50%, rgba(236,230,214,.8), rgba(236,230,214,.94)); }
+.veil::after { content: ""; position: absolute; inset: 0; background: var(--ink-tex-paper), var(--ink-tex-fiber); opacity: .9; }
+/* 左：竖排大字 + 总灵值 */
+.side { left: 56px; top: 54px; display: flex; gap: 18px; }
+.side .t { writing-mode: vertical-rl; font-size: 64px; color: var(--ink); }
+.side .col { display: flex; flex-direction: column; gap: 16px; padding-top: 10px; }
+.worth .lbl { font-family: var(--f-kai); font-size: 14px; color: var(--ink-zhong); letter-spacing: .3em; }
+.worth .n { font-family: var(--f-display); font-size: 54px; line-height: 1.05; color: #7c5d1a; }
+.worth .s { font-family: var(--f-ui); font-size: 12px; color: var(--ink-dan); }
+.loss { left: 60px; top: 380px; width: 230px; }
+.loss .ink-h { font-size: 17px; display: flex; align-items: center; gap: 10px; }
+.loss .ink-row { font-size: 14px; padding: 5px 2px; }
+.loss .ink-row .v { font-size: 15px; }
+.keys { left: 60px; bottom: 34px; font-family: var(--f-ui); font-size: 12px; color: var(--ink-zhong); display: flex; gap: 16px; }
+.keys b { font-weight: 700; color: var(--ink-nong); border-bottom: 1px solid var(--ink-dan); padding: 0 3px; margin-right: 4px; }
+/* 中：米字格储物袋 */
+.bag { left: 312px; top: 40px; width: 490px; padding: 22px 26px 26px; }
+.bag .ink-tabs { margin: 0 0 12px -6px; }
+.bag .cap { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; font-family: var(--f-ui); font-size: 12px; color: var(--ink-zhong); }
+.bag .cap .ink-bar { width: 160px; display: inline-block; vertical-align: middle; margin-left: 8px; }
+.ink-grid { --cell: 70px; --cols: 6; }
+.ink-grid > .it { font-size: 32px; }
+.ink-grid > .it.big { font-size: 64px; }
+.ink-grid > .it.big small { font-size: 13px; margin-top: 8px; }
+/* 右：浮签详情 */
+.detail { left: 836px; top: 64px; width: 330px; padding: 26px 30px 28px; }
+.detail .top { display: flex; gap: 18px; align-items: center; }
+.detail .top .ink-slot { --z: 96px; font-size: 48px; }
+.detail .name { font-family: var(--f-display); font-size: 30px; letter-spacing: .1em; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+.detail .grade { font-family: var(--f-kai); font-size: 14px; color: var(--q-bao); margin-top: 4px; }
+.detail .desc { font-size: 15px; line-height: 1.85; color: var(--ink-nong); margin: 16px 0 10px; }
+.detail .ink-row { font-size: 14px; padding: 6px 2px; }
+.detail .ink-row .v { font-family: var(--f-kai); font-size: 15px; }
+.detail .ink-row .v.gold { font-family: var(--f-display); font-size: 20px; color: #7c5d1a; }
+.detail .acts { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+.toast { left: 880px; top: 560px; }
+.pouch { left: 330px; top: 488px; width: 470px; display: flex; gap: 34px; align-items: flex-start; }
+.pouch .grp { display: flex; flex-direction: column; gap: 10px; }
+.pouch .grp .ink-h { font-size: 17px; }
+.pouch .grp .ink-h small { font-family: var(--f-ui); font-size: 11px; color: var(--ink-dan); letter-spacing: 0; margin-left: 6px; }
+.pouch .row { display: flex; gap: 14px; }
+.pouch .ink-slot { --z: 52px; font-size: 22px; }
+</style>
+</head>
+<body>
+  <div class="abs scene"></div>
+  <div class="abs veil"></div>
+
+  <div class="abs side">
+    <div class="t ink-splash">储物袋</div>
+    <div class="col">
+      <div class="worth"><div class="lbl">袋中灵值</div><div class="n">1,284</div><div class="s">比上一回 +412</div></div>
+      <span class="ink-seal two gold" style="--s:42px">满载</span>
+    </div>
+  </div>
+  <div class="abs loss">
+    <div class="ink-h"><span class="ink-seal ink" style="--s:24px;font-size:12px">陨</span>若身陨此地</div>
+    <div class="ink-list">
+      <div class="ink-row"><span class="k">失去</span><span class="v ink-zhu">1,284 灵值</span></div>
+      <div class="ink-row"><span class="k">锦囊护住</span><span class="v">千年竹心</span></div>
+      <div class="ink-row"><span class="k">修为感悟</span><span class="v">折半 · 81</span></div>
+    </div>
+  </div>
+  <div class="abs keys"><span><b>R</b>整理</span><span><b>右键</b>丢弃</span><span><b>G</b>放入锦囊</span><span><b>Tab</b>合上</span></div>
+
+  <section class="abs bag ink-paper">
+    <div class="ink-tabs"><span class="ink-tab on">储物袋</span><span class="ink-tab">行囊</span><span class="ink-tab">随身</span></div>
+    <div class="ink-grid">
+      <div class="it w2 h2 big q-bao is-sel"><b>竹</b><small>千年竹心</small></div>
+      <div class="it h2 q-bao is-unid"><b>剑</b><small>未鉴定</small></div>
+      <div class="it"><b>灵</b><em>87</em><small>灵石</small></div>
+      <div class="it q-ling"><b>露</b><em>6</em><small>寒露草</small></div>
+      <div class="it"><b>翼</b><em>4</em><small>蝠翼</small></div>
+      <div class="it"><b>藤</b><em>3</em><small>紫藤</small></div>
+      <div class="it q-ling"><b>丹</b><em>2</em><small>狼妖内丹</small></div>
+      <div class="it q-ling"><b>果</b><em>2</em><small>赤炎果</small></div>
+      <div class="it q-ling"><b>春</b><em>2</em><small>回春丹</small></div>
+      <div class="it w2"><b>皮</b><em>3</em><small>狼皮</small></div>
+      <div class="it q-ling"><b>花</b><small>凝露花</small></div>
+      <div class="it"><b>铁</b><em>3</em><small>铁精石</small></div>
+      <div class="it"><b>符</b><small>遁地符</small></div>
+      <div class="it q-xian"><b>卷</b><small>功法残卷</small></div>
+      <div class="it"><b>骨</b><em>5</em><small>妖骨</small></div>
+    </div>
+    <div class="cap"><span>占格 21 / 24<span class="ink-bar thin" style="--v:.875"><i></i></span></span><span>负重 · 轻身</span></div>
+  </section>
+
+  <section class="abs detail ink-paper alt tilt-r">
+    <div class="top">
+      <span class="ink-slot q-bao"><b>竹</b></span>
+      <div><div class="name">千年竹心<span class="ink-seal blue" style="--s:26px;font-size:13px">宝</span></div><div class="grade">宝品 · 灵材 · 占 2×2</div></div>
+    </div>
+    <p class="desc">竹海深处百年一节，千年方得其心。中空而含青霭，近之耳畔有风。</p>
+    <div class="ink-list">
+      <div class="ink-row"><span class="k">灵值</span><span class="v gold">360</span></div>
+      <div class="ink-row"><span class="k">可用于</span><span class="v">炼器 · 青冥飞剑升阶</span></div>
+      <div class="ink-row"><span class="k">　</span><span class="v">炼丹 · 筑基丹辅药</span></div>
+      <div class="ink-row"><span class="k">首次发现</span><span class="v ink-zhu">记入卷宗</span></div>
+    </div>
+    <div class="acts"><span class="ink-btn">丢弃</span><span class="ink-btn primary">放入锦囊</span></div>
+  </section>
+
+  <div class="abs pouch">
+    <div class="grp"><div class="ink-h">锦囊<small>护一件 · 身陨不失</small></div><div class="row"><span class="ink-slot q-bao"><b>竹</b></span><span class="ink-note" style="align-self:center;line-height:1.6">千年竹心<br>已护住</span></div></div>
+    <div class="grp"><div class="ink-h">行囊<small>快捷 1 · 2 · 3</small></div><div class="row"><span class="ink-slot q-ling"><b>春</b><em>×3</em></span><span class="ink-slot q-bao"><b>气</b><em>×2</em></span><span class="ink-slot q-fan"><b>符</b><em>×1</em></span></div></div>
+  </div>
+  <div class="abs toast ink-toast gold">拾得 · 凝露花　+48</div>
+</body>
+</html>

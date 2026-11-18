@@ -1,0 +1,50 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 UI · alchemy</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:720px;overflow:hidden}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:#15181b;background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'300'%20height%3D'300'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.9'%20numOctaves%3D'3'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.35%20%200%200%200%200%20.32%20%200%200%200%200%20.26%20%200%200%200%20.09%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'300'%20height%3D'300'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E"),url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'600'%20height%3D'600'%3E%3Cfilter%20id%3D'f'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.012%20.2'%20numOctaves%3D'2'%20seed%3D'4'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.3%20%200%200%200%200%20.27%20%200%200%200%200%20.2%20%200%200%200%20.05%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'600'%20height%3D'600'%20filter%3D'url(%23f)'%2F%3E%3C%2Fsvg%3E"),#ece6d6;background-blend-mode:multiply;position:relative}
+.kai{font-family:"STKaiti","KaiTi","楷体","Kaiti SC",serif}
+.paper{background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'300'%20height%3D'300'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.9'%20numOctaves%3D'3'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.35%20%200%200%200%200%20.32%20%200%200%200%200%20.26%20%200%200%200%20.09%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'300'%20height%3D'300'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E"),rgba(244,239,226,.94);box-shadow:0 0 0 1px rgba(21,24,27,.28),0 8px 24px rgba(21,24,27,.18),inset 0 0 22px rgba(120,100,70,.18);border-radius:3px}
+.ink-line{height:2px;background:linear-gradient(90deg,transparent,#15181b 8%,#15181b 70%,transparent);opacity:.75;border-radius:2px}
+.seal{display:inline-flex;align-items:center;justify-content:center;background:#b8291a;color:#f4ece0;font-family:"STKaiti","KaiTi",serif;font-weight:900;border-radius:3px;box-shadow:inset 0 0 0 2px rgba(244,236,224,.55),0 1px 2px rgba(0,0,0,.3)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:"STKaiti","KaiTi",serif;font-weight:700;font-size:20px;padding:6px 22px;border:1.5px solid #15181b;border-radius:3px;background:rgba(244,239,226,.7)}
+.btn.primary{background:#15181b;color:#f1eadb}
+.q0{--q:#6a6760}.q1{--q:#3fae7a}.q2{--q:#2f7fa8}.q3{--q:#c9a040}.q4{--q:#c9a040}
+.tag{display:inline-block;font-size:12px;padding:1px 6px;border-radius:2px;border:1px solid currentColor;line-height:16px}
+.muted{color:#6a6760}
+h1,h2,h3{font-family:"STKaiti","KaiTi",serif}
+.bar{position:relative;height:10px;background:rgba(21,24,27,.18);border-radius:5px 2px 6px 2px;overflow:hidden}
+.bar i{position:absolute;inset:0;border-radius:inherit;transform-origin:left}
+</style></head><body>
+<style>
+.wrap{position:absolute;inset:30px 40px;display:grid;grid-template-columns:300px 1fr 300px;gap:20px}
+.col{padding:16px 18px}
+h2{font-size:26px}
+.rec{padding:9px 10px;border-radius:3px;margin:6px 0;font-size:15px;display:flex;justify-content:space-between;border:1px solid rgba(21,24,27,.15)}
+.rec.ok{border-color:#3fae7a;background:rgba(63,174,122,.08)}.rec.on{background:#15181b;color:#f1eadb}.rec.no{opacity:.45}
+.fur{position:relative;display:flex;flex-direction:column;align-items:center;padding-top:10px}
+.gauge{position:relative;width:560px;height:46px;border-radius:23px;background:linear-gradient(90deg,#2c3550,#5a6a8a 25%,#e6cf9a 50%,#d2621e 75%,#a8241a);box-shadow:inset 0 0 0 2px #15181b}
+.band{position:absolute;top:-6px;bottom:-6px;left:47%;width:15%;border:3px solid #15181b;border-radius:8px;background:rgba(244,236,224,.35)}
+.needle{position:absolute;top:-12px;bottom:-12px;left:53%;width:5px;background:#15181b;border-radius:3px}
+.curve{width:560px;height:150px;margin-top:20px}
+.ding{width:230px;height:200px;margin-top:4px}
+.res{display:flex;gap:10px;margin-top:8px}.res span{font-size:13px;padding:2px 8px;border-radius:2px;background:rgba(21,24,27,.08)}.res .on{background:#2f7fa8;color:#fff}
+.mat{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dashed rgba(21,24,27,.2);font-size:14px}
+.mat b{width:38px;height:38px;border-radius:3px;box-shadow:inset 0 0 0 2px var(--q);display:flex;align-items:center;justify-content:center;font:900 20px "STKaiti","KaiTi";color:var(--q)}
+</style>
+<div class="wrap">
+  <div class="col paper"><h2>丹方</h2><div class="muted" style="font-size:13px">炼丹炉 一级 · 材料已齐的会高亮</div>
+    <div class="rec ok on"><span>聚气丹</span><span>×2 可炼</span></div><div class="rec ok"><span>回春丹</span><span>×6</span></div><div class="rec ok"><span>回气丹</span><span>×4</span></div>
+    <div class="rec no"><span>护脉丹</span><span>炉需二级</span></div><div class="rec no"><span>筑基丹</span><span>丹方未得</span></div></div>
+  <div class="col paper fur"><h2>聚气丹 · 火候</h2><div class="muted" style="font-size:13px;margin:4px 0 12px">按住加火、松开降温，让炉温停在火候带内 · 剩余 9 秒</div>
+    <div class="gauge"><div class="band"></div><div class="needle"></div></div>
+    <svg class="curve" viewBox="0 0 560 150"><path d="M0 110 C80 105 120 60 200 70 S320 120 380 80 S500 30 560 50" stroke="#15181b" stroke-width="22" fill="none" opacity=".12"/><path d="M0 110 C80 105 120 60 200 70 S320 120 380 80 S500 30 560 50" stroke="#15181b" stroke-width="2" fill="none" stroke-dasharray="6 5"/><path d="M0 112 C70 108 130 68 200 74 S300 110 340 92" stroke="#b8291a" stroke-width="3" fill="none"/><circle cx="340" cy="92" r="6" fill="#b8291a"/><text x="4" y="146" font-size="12" fill="#6a6760">火候带随时间变化 · 红线为你的炉温</text></svg>
+    <svg class="ding" viewBox="0 0 230 200"><ellipse cx="115" cy="60" rx="80" ry="16" fill="#15181b" opacity=".85"/><path d="M40 62 Q40 150 115 160 Q190 150 190 62Z" fill="#2a2d30"/><path d="M60 158 L48 196 M170 158 L182 196 M115 162 L115 198" stroke="#15181b" stroke-width="9" stroke-linecap="round"/><path d="M95 40 Q100 10 115 20 T135 4" stroke="#6a6760" stroke-width="3" fill="none" opacity=".6"/><path d="M80 120 Q115 140 150 120" stroke="#d2621e" stroke-width="6" fill="none" opacity=".8"/></svg>
+    <div class="res"><span>废丹</span><span>下品</span><span>中品</span><span class="on">上品 · 带内 86%</span><span>极品</span></div></div>
+  <div class="col paper"><h2>投入</h2>
+    <div class="mat q1" style="--q:#3fae7a"><b>丹</b><div>主药 · 狼妖内丹 ×1<br><small class="muted">灵品 · 火候带 +5%</small></div></div>
+    <div class="mat" style="--q:#6a6760"><b>草</b><div>辅药 · 青灵草 ×3</div></div>
+    <div class="mat" style="--q:#3f8fa8"><b>泉</b><div>药引 · 灵泉水 ×1</div></div>
+    <div class="ink-line" style="margin:14px 0"></div>
+    <div style="font-size:14px;line-height:24px">一次炼制：<b>2 枚</b><br>预计效果：修为 +90 ～ +120 / 枚<br>本层已服：<b>1 / 3</b>（丹毒上限）</div>
+    <div style="margin-top:16px"><span class="btn primary">开炉</span></div></div>
+</div></body></html>

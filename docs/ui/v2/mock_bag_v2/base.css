@@ -1,0 +1,75 @@
+/* 储物袋 v2 示意图公用样式（只给 docs/ui/v2/mock_bag_v2/*.html 用，不是游戏代码）
+   依赖：../kit/strokes.css、../kit/ink-ui.css、./fonts.css */
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+body { position: relative; font-family: var(--f-kai); color: var(--ink); background: #ddd; }
+.abs { position: absolute; }
+/* 品级：严格按 src/core/items.js RARITY */
+:root {
+  --r0: #6a6760; --r1: #3fae7a; --r2: #2f7fa8; --r3: #c9a040; --r4: #d2321e;
+  --r0w: rgba(106, 103, 96, 0); --r1w: rgba(63, 174, 122, .26); --r2w: rgba(47, 127, 168, .26); --r3w: rgba(201, 160, 64, .34); --r4w: rgba(210, 50, 30, .26);
+}
+/* 局内画面：世界不暂停，所以只在面板一侧压一层薄纸 */
+.world { position: absolute; inset: 0; background: url(../../../../work/shots/loop_levels_r2_play_day.png) center / cover; }
+.veil { position: absolute; inset: 0; pointer-events: none; }
+
+/* ---------------- 物品"签"：圆相 + 图标 + 品质晕（与搜取窗口同一套视觉） ----------------
+   <div class="tok q2" style="--c:1;--r:1;--w:2;--h:1" data-icon="sword_qingfeng" data-box="2x1"><em>3</em></div> */
+.bgrid { position: relative; --cell: 60px; --gap: 4px; width: calc(var(--cols) * var(--cell) + (var(--cols) - 1) * var(--gap)); height: calc(var(--rows) * var(--cell) + (var(--rows) - 1) * var(--gap)); }
+/* 格位：不画格线，只在每格四角点四个淡墨"角点"（像棋盘星位 / 裁切记号），空格中央一点清墨 */
+.bgrid > .cellmark { position: absolute; width: var(--cell); height: var(--cell); left: calc((var(--c) - 1) * (var(--cell) + var(--gap))); top: calc((var(--r) - 1) * (var(--cell) + var(--gap)));
+  background:
+    radial-gradient(circle at 50% 50%, rgba(21,24,27,.10) 0 1.6px, transparent 2.2px),
+    linear-gradient(rgba(21,24,27,.22), rgba(21,24,27,.22)) 0 0 / 7px 1.5px no-repeat,
+    linear-gradient(rgba(21,24,27,.22), rgba(21,24,27,.22)) 0 0 / 1.5px 7px no-repeat,
+    linear-gradient(rgba(21,24,27,.22), rgba(21,24,27,.22)) 100% 0 / 7px 1.5px no-repeat,
+    linear-gradient(rgba(21,24,27,.22), rgba(21,24,27,.22)) 100% 0 / 1.5px 7px no-repeat,
+    linear-gradient(rgba(21,24,27,.22), rgba(21,24,27,.22)) 0 100% / 7px 1.5px no-repeat,
+    linear-gradient(rgba(21,24,27,.22), rgba(21,24,27,.22)) 0 100% / 1.5px 7px no-repeat,
+    linear-gradient(rgba(21,24,27,.22), rgba(21,24,27,.22)) 100% 100% / 7px 1.5px no-repeat,
+    linear-gradient(rgba(21,24,27,.22), rgba(21,24,27,.22)) 100% 100% / 1.5px 7px no-repeat; }
+.tok { position: absolute; display: flex; align-items: center; justify-content: center; isolation: isolate;
+  left: calc((var(--c) - 1) * (var(--cell) + var(--gap))); top: calc((var(--r) - 1) * (var(--cell) + var(--gap)));
+  width: calc(var(--w, 1) * var(--cell) + (var(--w, 1) - 1) * var(--gap)); height: calc(var(--h, 1) * var(--cell) + (var(--h, 1) - 1) * var(--gap)); --qc: var(--r0); --qw: var(--r0w); }
+.tok.q1 { --qc: var(--r1); --qw: var(--r1w); } .tok.q2 { --qc: var(--r2); --qw: var(--r2w); } .tok.q3 { --qc: var(--r3); --qw: var(--r3w); } .tok.q4 { --qc: var(--r4); --qw: var(--r4w); }
+/* 品质淡彩晕（凡品不晕） */
+.tok::before { content: ""; position: absolute; inset: 4%; z-index: -2; border-radius: 50%; background: radial-gradient(closest-side, var(--qw), transparent); }
+/* 圆相（多格物品：长圆 / 大圆） */
+.tok::after { content: ""; position: absolute; inset: 3px; z-index: 1; background: var(--qc); opacity: .55; -webkit-mask: var(--ink-enso-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-enso-1) 0 0 / 100% 100% no-repeat; pointer-events: none; }
+.tok.q0::after { opacity: .32; }
+.tok:nth-child(3n + 2)::after { -webkit-mask-image: var(--ink-enso-2); mask-image: var(--ink-enso-2); }
+.tok:nth-child(3n)::after { -webkit-mask-image: var(--ink-enso-3); mask-image: var(--ink-enso-3); }
+.tok > .ico { position: relative; z-index: 0; width: 84%; height: 84%; object-fit: contain; }
+.tok > em { position: absolute; right: 3px; bottom: 0; z-index: 3; font: 700 11px var(--f-ui); font-style: normal; color: var(--ink-nong); text-shadow: 0 0 3px var(--paper-hi), 0 0 3px var(--paper-hi), 0 0 2px var(--paper-hi); }
+/* 仙 / 极：右上角一方小印 */
+.tok > i.cs { position: absolute; right: 1px; top: 1px; z-index: 3; width: 15px; height: 15px; display: flex; align-items: center; justify-content: center; font: 10px/1 var(--f-display); font-style: normal; color: var(--paper-hi); background: var(--qc); -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; transform: rotate(-5deg); }
+/* 新得：左上一个朱点 */
+.tok.is-new > s { position: absolute; left: 3px; top: 3px; width: 7px; height: 7px; border-radius: 50%; background: var(--zhu); z-index: 3; }
+/* 选中：圆相换朱、加浓 */
+.tok.is-sel::after { background: var(--zhu); opacity: .95; }
+/* 未鉴定：墨封未全散（与搜取窗口的墨封同源），图标模糊 */
+.tok.is-unid > .ico { filter: blur(2px) grayscale(.6); opacity: .65; }
+.tok.is-unid > .unid { position: absolute; inset: 22%; z-index: 2; background: rgba(21,24,27,.55); -webkit-mask: var(--ink-splash-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-splash-1) 0 0 / 100% 100% no-repeat; opacity: .6; }
+/* 空槽（锦囊 / 护身 / 装备位）：清墨圆相 + 淡字 */
+.tok.empty::after { opacity: .18; background: var(--ink); }
+.tok.empty > b { font: 15px var(--f-display); color: var(--ink-qing); }
+/* 拖拽中：半透明残影 + 目标格朱色虚影 */
+.tok.ghost { opacity: .35; }
+.drop-hint { position: absolute; border-radius: 50%; background: radial-gradient(closest-side, rgba(184,41,26,.18), transparent); }
+/* 放不下：占格位置画一圈朱色淡墨虚圈 */
+.tok.nofit::after { background: var(--zhu); opacity: .5; }
+.tok.nofit > .ico { opacity: .55; }
+
+/* 小签：名称 + 品级（悬浮 / 列表里用） */
+.qname { font-family: var(--f-display); letter-spacing: .06em; }
+.qname.q0 { color: #3b3a36; } .qname.q1 { color: #2c7d57; } .qname.q2 { color: #245f7f; } .qname.q3 { color: #8a6a22; } .qname.q4 { color: #b8291a; }
+.qtag { display: inline-flex; align-items: center; gap: 4px; font: 12px var(--f-kai); color: var(--ink-zhong); }
+.qtag::before { content: ""; width: 14px; height: 6px; background: var(--qc, #6a6760); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.qtag.q1 { --qc: var(--r1); } .qtag.q2 { --qc: var(--r2); } .qtag.q3 { --qc: var(--r3); } .qtag.q4 { --qc: var(--r4); }
+
+/* 比较：升 / 降 */
+.up { color: #2c7d57; } .down { color: var(--zhu); }
+.up::before { content: "▲"; font-size: .7em; margin-right: 2px; vertical-align: 1px; }
+.down::before { content: "▼"; font-size: .7em; margin-right: 2px; vertical-align: 1px; }
+.keyhint { font: 11px var(--f-ui); color: var(--ink-dan); border-bottom: 1px solid var(--ink-qing); padding: 0 2px; margin-left: 4px; }
+/* 示意图角标：方向名 */
+.mocktag { position: absolute; right: 10px; bottom: 8px; font: 11px var(--f-ui); color: rgba(21,24,27,.45); z-index: 99; }

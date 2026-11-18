@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>丹器房器物重画 · 鼎与丹炉变体对比</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../../assets/fonts/MaShanZheng-Regular.ttf"), url("../../../../src/ui/ink/MaShanZheng.woff2") format("woff2"); }
+body { margin: 0; background: #23231f; color: #ece6d6; font: 14px/1.7 "Microsoft YaHei", sans-serif; width: 1960px; }
+header { padding: 18px 30px 4px; }
+header h1 { margin: 0; font: 400 32px "MaShanZheng", KaiTi, serif; letter-spacing: .1em; }
+header p { margin: 4px 0 0; color: rgba(236,230,214,.7); }
+section { padding: 8px 30px 18px; }
+section h2 { font: 400 26px "MaShanZheng", KaiTi, serif; margin: 10px 0 8px; letter-spacing: .1em; }
+section h2 small { font: 13px "Microsoft YaHei"; color: rgba(236,230,214,.6); margin-left: 12px; letter-spacing: 0; }
+.row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.c { background: #2e2d28; padding: 10px 12px 12px; border-radius: 2px; }
+.c.old { opacity: .82; }
+.c .t { display: flex; align-items: baseline; gap: 10px; font: 400 22px "MaShanZheng", KaiTi, serif; }
+.c .t small { font: 12px "Microsoft YaHei"; color: rgba(236,230,214,.6); }
+.c .t .pick { margin-left: auto; font: 13px "Microsoft YaHei"; color: #d9b45e; cursor: pointer; border-bottom: 1px dotted #d9b45e; }
+.c .t .pick.on { color: #f5f0e3; background: #b8291a; border: 0; padding: 0 8px; }
+.shot { position: relative; width: 100%; aspect-ratio: 16 / 9; cursor: zoom-in; background: #000 center / cover no-repeat; margin-top: 6px; }
+.shot .sw { position: absolute; right: 6px; top: 6px; font: 12px "Microsoft YaHei"; background: rgba(21,24,27,.75); color: #ece6d6; padding: 2px 8px; cursor: pointer; }
+.sub { display: grid; grid-template-columns: 150px 1fr; gap: 12px; margin-top: 8px; align-items: start; }
+.sub .art { width: 150px; height: 150px; background: #efe8d6 center / contain no-repeat; }
+.sub ul { margin: 0; padding-left: 18px; font-size: 13px; color: rgba(236,230,214,.85); }
+.box { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: none; align-items: center; justify-content: center; z-index: 9; cursor: zoom-out; }
+.box img { width: 1280px; height: 720px; }
+.box.on { display: flex; }
+.sel { font: 16px "Microsoft YaHei"; color: #d9b45e; padding: 0 30px 20px; }
+</style></head>
+<body>
+<header>
+  <h1>丹器房器物重画 · 鼎与丹炉变体对比</h1>
+  <p>每件两个变体，都用物品图标 / 立绘同一套笔路模型画成纸性位图（洇墨垫底、尾段飞白、没骨淡彩）。截图都是游戏里真实的丹器房页面，只把器物换掉。点截图看原尺寸；炼器鼎可切"三味 / 六味"，看材料位扩到 6 味的样子。第一列是现状（旧插画），作对照。</p>
+</header>
+<section>
+  <h2>炼器 · 青铜鼎<small>金石厚重：双立耳、饕餮纹、兽足、铭文带</small></h2>
+  <div class="row" id="ding"></div>
+</section>
+<section>
+  <h2>炼丹 · 丹炉<small>温润烟火：圆腹带盖、盖钮冒丹烟、炉门透火光；截图为火候进行中（炉门火光随火候变亮）</small></h2>
+  <div class="row" id="furnace"></div>
+</section>
+<div class="sel" id="sel">点每张卡右上的"选这个"标出偏好（只在本页记下，用于沟通）。</div>
+<div class="box" id="box"><img id="big" alt=""></div>
+<script>
+const V = {
+  ding: [
+    { id: "ding_old", t: "现状", sub: "旧插画（三足圆锅）", art: "../../../../src/ui/ink/art_ding.svg", six: null, old: !0, notes: ["与丹炉同一轮廓，分不出是鼎还是锅", "没有纹饰与铭文，看不出\"炼器\""] },
+    { id: "ding_square", t: "甲 · 青铜方鼎", sub: "四兽足 · 扉棱 · 铭文带", six: "ding_square_six", notes: ["方鼎轮廓与圆腹丹炉区别最大，一眼分得开", "饕餮纹带 + 一行铭文（泥金淡彩），金石味最重", "四足（前两足浓、后两足淡），稳；器身宽，鼎口两侧材料位留得开"] },
+    { id: "ding_round", t: "乙 · 青铜圆鼎", sub: "外撇高耳 · 乳钉 · 蹄足", six: "ding_round_six", notes: ["更接近传统\"鼎\"的印象（毛公鼎一类）", "深腹 + 高耳 + 蹄形兽足，比旧图挺拔", "仍是圆腹，与丹炉的区分主要靠耳和足"] },
+  ],
+  furnace: [
+    { id: "furnace_old", t: "现状", sub: "旧插画 art_danlu.svg", art: "../../../../src/ui/ink/art_danlu.svg", old: !0, notes: ["与旧鼎同属\"三足圆锅\"一类", "没有炉门，火光只能画在炉底"] },
+    { id: "furnace_bagua", t: "甲 · 八卦炉", sub: "穹顶炉盖 · 宝珠钮 · 八卦纹", notes: ["圆腹三足、穹顶盖、宝珠钮上一缕丹烟", "炉门在正中，门内火光与火候联动（越旺越亮）", "八卦纹一周，道家炼丹的意思最直白"] },
+    { id: "furnace_hulu", t: "乙 · 葫芦炉", sub: "莲座 · 上小下大 · 腰系朱绳", notes: ["葫芦形 + 莲座，轮廓与方鼎 / 圆鼎都不像", "腰间一道朱绳是画面里的\"一点朱\"", "拱形炉门透火；葫芦口吐丹烟，烟的位置最高"] },
+  ],
+};
+const pick = { ding: null, furnace: null };
+function render() {
+  for (const [kind, list] of Object.entries(V)) {
+    const row = document.getElementById(kind);
+    row.innerHTML = "";
+    for (const v of list) {
+      const c = document.createElement("div");
+      c.className = "c" + (v.old ? " old" : "");
+      const art = v.art || `vessels/${v.id}.png`;
+      c.innerHTML = `<div class="t">${v.t}<small>${v.sub}</small>${v.old ? "" : `<span class="pick ${pick[kind] === v.id ? "on" : ""}" data-k="${kind}" data-id="${v.id}">${pick[kind] === v.id ? "已选" : "选这个"}</span>`}</div>
+        <div class="shot" style="background-image:url('vessels/page_${v.id}.png')" data-src="vessels/page_${v.id}.png">${v.six ? `<span class="sw" data-six="vessels/page_${v.six}.png" data-three="vessels/page_${v.id}.png">看六味材料</span>` : ""}</div>
+        <div class="sub"><div class="art" style="background-image:url('${art}')"></div><ul>${v.notes.map((n) => `<li>${n}</li>`).join("")}</ul></div>`;
+      row.appendChild(c);
+    }
+  }
+  const s = [];
+  if (pick.ding) s.push("鼎：" + V.ding.find((v) => v.id === pick.ding).t);
+  if (pick.furnace) s.push("丹炉：" + V.furnace.find((v) => v.id === pick.furnace).t);
+  document.getElementById("sel").textContent = s.length ? "已选 —— " + s.join("　") : '点每张卡右上的"选这个"标出偏好（只在本页记下，用于沟通）。';
+}
+document.addEventListener("click", (e) => {
+  const t = e.target;
+  if (t.classList.contains("pick")) return (pick[t.dataset.k] = pick[t.dataset.k] === t.dataset.id ? null : t.dataset.id), render();
+  if (t.classList.contains("sw")) {
+    const sh = t.parentElement, six = sh.dataset.src !== t.dataset.six;
+    sh.dataset.src = six ? t.dataset.six : t.dataset.three;
+    sh.style.backgroundImage = `url('${sh.dataset.src}')`;
+    t.textContent = six ? "看三味材料" : "看六味材料";
+    return;
+  }
+  if (t.classList.contains("shot")) return (document.getElementById("big").src = t.dataset.src), document.getElementById("box").classList.add("on");
+  if (t.closest("#box")) document.getElementById("box").classList.remove("on");
+});
+render();
+window.__ready = true;
+</script>
+</body></html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>储物袋 v2 · 方向二 · 宣纸手卷</title>
+<link rel="stylesheet" href="../kit/strokes.css">
+<link rel="stylesheet" href="../kit/ink-ui.css">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="base.css">
+<style>
+/* 世界不暂停：整屏只压一层很淡的纸色，卷轴附近再加深一点 */
+.veil { background: linear-gradient(rgba(236,230,214,.18), rgba(236,230,214,.30) 32%, rgba(236,230,214,.55) 40%, rgba(236,230,214,.55)); }
+
+/* ---------- 手卷 ---------- */
+.scroll { left: 54px; top: 236px; width: 1172px; height: 474px; }
+.scroll .paper { position: absolute; inset: 0; background: var(--ink-tex-paper), var(--ink-tex-fiber), #efe8d6; background-blend-mode: multiply; box-shadow: 0 12px 26px rgba(30,24,14,.32), 0 2px 4px rgba(30,24,14,.2); }
+/* 上下青绫 + 一道细的"惊燕"淡线 */
+.scroll .silk { position: absolute; left: 0; right: 0; height: 18px; background: var(--ink-tex-fiber), #b4c0bb; background-blend-mode: multiply; }
+.scroll .silk.t { top: 0; } .scroll .silk.b { bottom: 0; }
+.scroll .silk.t::after, .scroll .silk.b::after { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: rgba(90,110,104,.35); }
+.scroll .silk.t::after { bottom: -4px; } .scroll .silk.b::after { top: -4px; }
+.scroll .silk.b { font: 11px var(--f-ui); color: rgba(30,40,38,.72); display: flex; align-items: center; justify-content: center; gap: 22px; letter-spacing: .02em; }
+.scroll .silk.b b { font-weight: 700; color: rgba(21,24,27,.82); margin-right: 3px; border-bottom: 1px solid rgba(21,24,27,.3); padding: 0 2px; }
+/* 段与段之间：一道竖向淡墨（隔水），不画框 */
+.scroll .sep { position: absolute; top: 40px; bottom: 40px; width: 10px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; opacity: .8; }
+.zone { position: absolute; top: 28px; bottom: 26px; }
+.zh { font: 19px var(--f-display); letter-spacing: .14em; color: var(--ink-nong); display: flex; align-items: baseline; gap: 8px; }
+.zh small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: .02em; }
+
+/* ① 立绘与装备 */
+.z1 { left: 26px; width: 262px; }
+.z1 .por { position: absolute; left: 54px; top: 16px; width: 184px; height: 250px; background: url(../kit/portrait_linmo_bust.svg) center / contain no-repeat; opacity: .92; }
+.z1 .aura { position: absolute; left: 40px; top: 30px; width: 196px; height: 210px; background: rgba(47,127,168,.10); -webkit-mask: var(--ink-wash-round) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-round) 0 0 / 100% 100% no-repeat; }
+.eq { position: absolute; width: 58px; height: 58px; --cell: 58px; --gap: 0px; }
+.eq .lab { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center; font: 12px/1.3 var(--f-kai); color: var(--ink-zhong); text-shadow: 0 0 3px #efe8d6, 0 0 3px #efe8d6, 0 0 2px #efe8d6; }
+.eq .lab b { font: 400 13px var(--f-display); color: var(--ink-nong); margin-right: 2px; }
+.eq .slotch { position: absolute; left: -16px; top: 18px; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font: 11px var(--f-display); color: var(--paper-hi); background: var(--ink-zhong); -webkit-mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat; }
+.eq.r .slotch { left: auto; right: -16px; }
+.eq.target::before { content: ""; position: absolute; inset: -10px; border-radius: 50%; background: radial-gradient(closest-side, rgba(184,41,26,.20), transparent); }
+.belt { position: absolute; left: 0; right: 0; bottom: 0; }
+.belt .row { display: flex; gap: 18px; justify-content: center; margin-top: 8px; }
+.belt .bs { position: relative; width: 44px; height: 44px; --cell: 44px; --gap: 0px; }
+.belt .bs .k { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font: 700 10px var(--f-ui); color: var(--ink-dan); }
+.belt .bs .nm { position: absolute; top: 46px; left: 50%; transform: translateX(-50%); white-space: nowrap; font: 11px var(--f-kai); color: var(--ink-zhong); }
+
+/* ② 储物袋 */
+.z2 { left: 312px; width: 372px; }
+.z2 .occ { display: flex; align-items: center; gap: 10px; margin: 4px 0 10px; font: 12px var(--f-ui); color: var(--ink-zhong); }
+.z2 .occ .ink-bar { width: 120px; }
+.z2 .occ .full { color: var(--zhu); font-weight: 700; }
+.z2 #bag { --cell: 54px; --gap: 5px; margin-left: 6px; }
+.groups { display: flex; gap: 30px; margin-top: 12px; align-items: flex-start; padding-left: 22px; }
+.grp { position: relative; padding: 24px 12px 4px; isolation: isolate; }
+.grp .gh { position: absolute; left: 10px; top: 0; font: 15px var(--f-display); letter-spacing: .1em; color: var(--ink-nong); white-space: nowrap; display: flex; align-items: baseline; gap: 6px; }
+.grp .gh small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+.grp .gn { margin-top: 8px; white-space: nowrap; font: 11.5px/1.45 var(--f-kai); color: var(--ink-zhong); }
+.grp .gn b { color: var(--zhu); font-weight: 400; }
+.grp .bgrid { --cell: 46px; --gap: 4px; }
+/* 锦囊：一只胭脂色锦袋的晕影 + 束口朱绳 */
+.grp.pouch::before { content: ""; position: absolute; left: -4px; right: -4px; top: 14px; bottom: -6px; z-index: -1; background: rgba(181,72,90,.13); -webkit-mask: var(--ink-wash-round) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-round) 0 0 / 100% 100% no-repeat; }
+.grp.pouch::after { content: ""; position: absolute; left: 16px; right: 22px; top: 18px; height: 7px; z-index: -1; background: var(--zhu); opacity: .75; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.grp.pouch .knot { position: absolute; right: 12px; top: 13px; width: 11px; height: 11px; border-radius: 50%; background: var(--zhu); }
+.grp.pouch .knot::after { content: ""; position: absolute; left: 4px; top: 9px; width: 3px; height: 18px; background: var(--zhu); opacity: .8; transform: rotate(14deg); -webkit-mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; }
+.grp.pouch .pic { position: absolute; left: -22px; top: -6px; width: 30px; height: 30px; }
+.grp.pouch .pic img { width: 100%; height: 100%; }
+/* 护身格：一面淡青玉牌（印形），上端挂一点朱 */
+.grp.key::before { content: ""; position: absolute; left: -2px; right: -2px; top: 16px; bottom: -4px; z-index: -1; background: rgba(95,158,134,.17); -webkit-mask: var(--ink-seal-sq2) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq2) 0 0 / 100% 100% no-repeat; }
+.grp.key .ring { position: absolute; left: 50%; top: 8px; width: 9px; height: 9px; margin-left: -4px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(184,41,26,.8) inset; }
+.grp.key .gh { left: 8px; }
+
+/* ③ 详情与比较 */
+.z3 { left: 708px; width: 300px; }
+.det .head { display: flex; gap: 12px; align-items: center; }
+.det .head .ic { position: relative; width: 116px; height: 56px; --cell: 56px; --gap: 4px; flex: none; }
+.det .nm { font: 26px var(--f-display); letter-spacing: .08em; color: #245f7f; line-height: 1.1; }
+.det .meta { margin-top: 4px; font: 12px var(--f-kai); color: var(--ink-zhong); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.det .desc { font: 13px/1.6 var(--f-kai); color: var(--ink-nong); margin: 6px 0 2px; }
+.cmp { width: 100%; border-collapse: collapse; font: 13px var(--f-kai); }
+.cmp th { font: 11px var(--f-ui); color: var(--ink-dan); font-weight: 400; text-align: right; padding: 2px 4px; }
+.cmp th:first-child, .cmp td:first-child { text-align: left; }
+.cmp td { padding: 2px 4px; text-align: right; color: var(--ink-nong); position: relative; }
+.cmp td.me { font: 15px var(--f-display); color: var(--ink); }
+.cmp td.old { color: var(--ink-dan); }
+.cmp td.d { font: 700 12px var(--f-ui); }
+.cmp tr + tr td { background: linear-gradient(90deg, rgba(21,24,27,.06), transparent 70%) 0 0 / 100% 1px no-repeat; }
+.affix { font: 12.5px/1.6 var(--f-kai); color: #245f7f; margin: 6px 0 2px; }
+.affix i { font-style: normal; color: var(--ink-dan); font: 11px var(--f-ui); }
+.det .val { display: flex; justify-content: space-between; align-items: baseline; font: 13px var(--f-kai); color: var(--ink-zhong); margin-top: 4px; }
+.det .val b { font: 400 20px var(--f-display); color: #8a6a22; }
+.acts { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+.acts .ink-btn { font-size: 16px; letter-spacing: .1em; padding: 4px 8px 8px; }
+.acts .ink-btn.primary { font-size: 17px; padding: 7px 18px 9px 16px; }
+.acts .dis { display: inline-flex; flex-direction: column; align-items: center; }
+.acts .dis .ink-btn { color: var(--ink-qing); }
+.acts .dis .ink-btn::after { transform: scaleX(.4); background: var(--ink-qing); }
+.acts .dis small { font: 10px var(--f-ui); color: var(--zhu); margin-top: -4px; }
+.die { margin-top: 6px; position: relative; padding-top: 6px; }
+.die::before { content: ""; position: absolute; left: 0; right: 20%; top: 0; height: 7px; background: var(--ink-dan); opacity: .5; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.die .dh { display: flex; align-items: center; gap: 8px; font: 15px var(--f-display); color: var(--ink-nong); letter-spacing: .08em; margin: 2px 0 2px; }
+.die .ink-row { font-size: 12.5px; padding: 2px 2px; }
+.die .ink-row .k { min-width: 4.5em; font-size: 12.5px; }
+.die .ink-row .v { font: 13px var(--f-kai); color: var(--ink-nong); }
+.die .ink-row .v.zhu { color: var(--zhu); font-family: var(--f-display); font-size: 14px; }
+
+/* ④ 引首（卷的右端）：竖排题名 + 估价 + 满载 */
+.z4 { left: 1030px; width: 112px; }
+.z4 .ti { position: absolute; right: 2px; top: 0; writing-mode: vertical-rl; font: 52px/1 var(--f-splash); color: var(--ink); letter-spacing: .04em; }
+.z4 .info { position: absolute; left: 0; top: 2px; width: 58px; display: flex; flex-direction: column; gap: 2px; }
+.z4 .lbl { font: 11px var(--f-kai); color: var(--ink-zhong); letter-spacing: .12em; writing-mode: vertical-rl; height: 58px; }
+.z4 .worth { position: absolute; left: 0; top: 178px; width: 112px; }
+.z4 .worth .l { font: 12px var(--f-kai); color: var(--ink-zhong); letter-spacing: .2em; }
+.z4 .worth .n { font: 400 34px/1.05 var(--f-splash); color: #7c5d1a; }
+.z4 .worth .s { font: 11px var(--f-ui); color: var(--ink-dan); }
+.z4 .full { position: absolute; left: 0; top: 266px; width: 112px; }
+.z4 .full .seal { position: absolute; right: 4px; top: -8px; }
+.z4 .full .lines { font: 11.5px/1.5 var(--f-kai); color: var(--ink-zhong); padding-right: 40px; }
+.z4 .ground { position: absolute; left: 0; top: 326px; width: 120px; }
+.z4 .ground .gt { font: 12px var(--f-kai); color: var(--zhu); line-height: 1.45; }
+.z4 .ground .gt b { font: 400 14px var(--f-display); color: #245f7f; }
+.z4 .ground .gi { position: relative; width: 92px; height: 44px; --cell: 44px; --gap: 4px; margin-bottom: 2px; }
+
+/* 拖拽示意 */
+#drag { position: absolute; inset: 0; pointer-events: none; z-index: 20; overflow: visible; }
+.dragcap { position: absolute; font: 12px var(--f-kai); color: var(--zhu); z-index: 21; white-space: nowrap; text-shadow: 0 0 3px #efe8d6, 0 0 3px #efe8d6, 0 0 2px #efe8d6; }
+
+/* 战场上方：妖近 → 卷轴自动半收 */
+.near { left: 820px; top: 160px; display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 12px; isolation: isolate; }
+.near::before { content: ""; position: absolute; inset: -6px -10px; z-index: -1; background: rgba(240,234,220,.88); -webkit-mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat; }
+.near .t { font: 13px/1.5 var(--f-kai); color: var(--ink-nong); }
+.near .t b { color: var(--zhu); font-weight: 400; font-family: var(--f-display); font-size: 14px; }
+body > .mocktag { top: 8px; bottom: auto; right: 14px; color: rgba(21,24,27,.7); text-shadow: 0 0 3px #efe8d6, 0 0 3px #efe8d6; }
+</style>
+</head>
+<body>
+<div class="world"></div>
+<div class="veil"></div>
+
+<div class="abs near"><span class="ink-seal frame two" style="--s:36px;--seal-rot:-6deg">妖近</span><div class="t"><b>妖物逼近</b> · 卷轴自动收起一半<br>只留储物袋一段，按 Tab 全收</div></div>
+
+<div class="abs scroll ink-scroll h">
+  <div class="paper"></div>
+  <span class="rod l"></span><span class="rod r"></span>
+  <div class="silk t"></div>
+  <div class="silk b"><span><b>Tab</b>合上</span><span><b>拖拽</b>移动 / 换装</span><span><b>右键</b>丢弃</span><span><b>G</b>放入锦囊</span><span><b>E</b>装备</span><span><b>Shift+点</b>放进行囊</span></div>
+
+  <!-- ① 立绘与随身 -->
+  <div class="zone z1">
+    <div class="aura"></div>
+    <div class="por"></div>
+    <div id="eq"></div>
+    <div class="belt">
+      <div class="zh" style="justify-content:center">行囊<small>丹药符箓 · 快捷 1 2 3</small></div>
+      <div class="row" id="belt"></div>
+    </div>
+  </div>
+  <i class="sep" style="left:296px"></i>
+
+  <!-- ② 储物袋 -->
+  <div class="zone z2">
+    <div class="zh">储物袋<small>袋中物 · 身陨按区域规则失去</small></div>
+    <div class="occ"><span>占格 <b class="full">24 / 24</b></span><div class="ink-bar thin hp" style="--v:1"><i></i></div><span>估价 2,612 · 灵石 22</span></div>
+    <div id="bag"></div>
+    <div class="groups">
+      <div class="grp pouch"><span class="pic"><i data-icon="jinnang" data-box="1x1" style="display:block;width:30px;height:30px"></i></span><div class="gh">贴身锦囊<small>2/2</small></div><i class="knot"></i><div id="pouch"></div><div class="gn"><b>身陨不失</b> · 放入需 1 秒</div></div>
+      <div class="grp key"><i class="ring"></i><div class="gh">护身格</div><div id="key"></div><div class="gn">关键物品 · 不占格 · <b>不失</b></div></div>
+    </div>
+  </div>
+  <i class="sep" style="left:692px"></i>
+
+  <!-- ③ 详情与比较 -->
+  <div class="zone z3 det">
+    <div class="head"><div class="ic" id="selic"></div><div><div class="nm">青锋剑</div><div class="meta"><span class="qtag q2">宝品</span>法剑 · 占 2 格 · Lv3</div></div></div>
+    <div class="desc">青岚山外剑冢所出，剑身一线青芒。</div>
+    <table class="cmp">
+      <tr><th></th><th>此剑</th><th>身上 · 锈剑</th><th>相较</th></tr>
+      <tr><td>攻击</td><td class="me">+13</td><td class="old">+4</td><td class="d up">9</td></tr>
+      <tr><td>会心</td><td class="me">+3%</td><td class="old">—</td><td class="d up">3%</td></tr>
+      <tr><td>出剑</td><td class="me">0.42 秒</td><td class="old">0.40 秒</td><td class="d down">0.02</td></tr>
+    </table>
+    <div class="affix">· 剑气斩伤害 +8% <i>宝品词条</i></div>
+    <div class="val"><span>估价</span><b>180</b></div>
+    <div class="acts">
+      <button class="ink-btn primary">装备<span class="key" style="color:rgba(245,240,227,.7);border-color:rgba(245,240,227,.4)">E</span></button>
+      <span class="dis"><button class="ink-btn">放入锦囊</button><small>锦囊已满</small></span>
+      <button class="ink-btn">丢弃</button>
+    </div>
+    <div class="die">
+      <div class="dh"><span class="ink-seal ink" style="--s:22px;font-size:11px">陨</span>若身陨此地</div>
+      <div class="ink-list">
+        <div class="ink-row"><span class="k">失去</span><span class="v zhu">约 2,090 估价</span></div>
+        <div class="ink-row"><span class="k">法器</span><span class="v">随机 1 件未认主的遗落</span></div>
+        <div class="ink-row"><span class="k">护住</span><span class="v">锦囊 <span style="color:#b8291a">乾坤镜</span> · 护身格 2 件</span></div>
+        <div class="ink-row"><span class="k">斩妖感悟</span><span class="v">已入体，不失</span></div>
+      </div>
+    </div>
+  </div>
+  <i class="sep" style="left:1016px"></i>
+
+  <!-- ④ 引首 -->
+  <div class="zone z4">
+    <div class="ti">储物袋</div>
+    <div class="worth"><div class="l">袋中估价</div><div class="n">2,612</div><div class="s">灵石 22 · 比上回 +412</div></div>
+    <div class="full"><span class="ink-seal two gold seal" style="--s:36px">满载</span><div class="lines">占格<br>24 / 24</div></div>
+    <div class="ground"><div class="gi" id="ground"></div><div class="gt">脚下 <b>狼王内丹</b><br>放不下 · 还差 2 格</div></div>
+  </div>
+</div>
+
+<div class="mocktag">方向二 · 宣纸手卷</div>
+<svg id="drag"></svg>
+
+<script type="module">
+import { BAG, POUCH, KEY, WORN, BELT, GROUND, grid, tok, done } from "./data.js";
+const $ = (id) => document.getElementById(id);
+grid($("bag"), BAG, 6, 4);
+grid($("pouch"), POUCH.items, 2, 1);
+grid($("key"), KEY, 3, 1);
+// 装备位：立绘左右各二
+const pos = { sword: [0, 26, "l"], robe: [0, 160, "l"], jade: [214, 26, "r"], artifact: [214, 160, "r"] };
+const lv = { sword: "Lv1", robe: "Lv2", jade: "Lv2", artifact: "Lv2" };
+let eh = "";
+for (const k of ["sword", "robe", "jade", "artifact"]) {
+  const it = WORN[k], [x, y, side] = pos[k];
+  eh += `<div class="eq ${side}${k === "sword" ? " target" : ""}" id="eq-${k}" style="left:${x + 16}px;top:${y}px"><i class="slotch">${it.slot}</i>${tok(it, { w: 1, h: 1 })}<div class="lab"><b class="qname q${it.q}">${it.name}</b>${lv[k]}</div></div>`;
+}
+$("eq").innerHTML = eh;
+$("belt").innerHTML = BELT.map((b) => `<div class="bs"><span class="k">${b.key}</span>${tok(b, { w: 1, h: 1 })}<span class="nm">${b.name}</span></div>`).join("");
+$("selic").innerHTML = tok({ id: "sword_qingfeng", name: "青锋剑", q: 2, sz: 2 }, { w: 2, h: 1 });
+$("ground").innerHTML = tok(GROUND[0], { w: 2, h: 1, cls: "nofit" });
+done();
+// 拖拽示意：从格子里的青锋剑拖向"剑"位
+requestAnimationFrame(() => {
+  const a = document.querySelector("#bag .tok.is-sel").getBoundingClientRect();
+  const b = $("eq-sword").getBoundingClientRect();
+  const x0 = a.left + 18, y0 = a.top + a.height / 2, x1 = b.right + 6, y1 = b.top + b.height / 2;
+  const cx = (x0 + x1) / 2, cy = Math.min(y0, y1) - 46;
+  $("drag").innerHTML = `<defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1L9 5L0 9" fill="none" stroke="#b8291a" stroke-width="1.6" stroke-linecap="round"/></marker></defs>
+    <path d="M${x0} ${y0} Q${cx} ${cy} ${x1} ${y1}" fill="none" stroke="#b8291a" stroke-opacity=".7" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round" marker-end="url(#ah)"/>`;
+  const cap = document.createElement("div");
+  cap.className = "dragcap";
+  cap.style.left = x1 + 14 + "px";
+  cap.style.top = y1 - 50 + "px";
+  cap.textContent = "拖到剑位 · 即换装";
+  document.body.appendChild(cap);
+});
+</script>
+</body>
+</html>

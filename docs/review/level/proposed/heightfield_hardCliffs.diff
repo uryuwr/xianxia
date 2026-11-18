@@ -1,0 +1,13 @@
+diff --git a/src/world/heightfield.js b/src/world/heightfield.js
+index 890d277..5ef50e9 100644
+--- a/src/world/heightfield.js
++++ b/src/world/heightfield.js
+@@ -212,7 +212,7 @@ export class Heightfield {
+       en ??= (fbm(x * 0.06 + 3.1, z * 0.06 - 1.7, 3) - 0.5) * 2 + (vnoise(x * 0.3, z * 0.3) - 0.5) * 0.18;
+       const f = clamp(0.5 - (sd + en * t.rough) / t.w, 0, 1);
+       edgeLin = f;
+-      return f * f * (3 - 2 * f);
++      return this.def.hardCliffs ? (f < 0.5 ? 0 : 1) : f * f * (3 - 2 * f); // 评审：def.hardCliffs 时崖边取硬台阶（碰撞上没有中间高度，只有坡道 / 石阶能上下）
+     };
+     for (const t of this.T) {
+       const f = edge(t);

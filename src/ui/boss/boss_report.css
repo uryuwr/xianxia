@@ -1,0 +1,44 @@
+/* 天机镜"战报"应用（UI 设计，boss_青牙_v2）：镜中屏字号沿用 .mv2-screen 的 12.5px em 体系；类名 bxr- 前缀 */
+.mv2 .bxr { padding: .4em 1.1em 2.2em; }
+.mv2 .bxr-tabs { display: flex; justify-content: flex-end; gap: .35em; padding: .3em 1.1em 0; font: 1.05em var(--f-display); }
+.mv2 .bxr-tabs i { font-style: normal; color: var(--ink-qing); }
+.mv2 .bxr-tabs button { color: var(--ink-dan); }
+.mv2 .bxr-tabs button.on { color: var(--ink-jiao); }
+.mv2 .bxr-hero { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2em .6em; margin: .2em 0 .6em; }
+.mv2 .bxr-hero .nm { font: 400 2.5em/1 var(--f-splash); letter-spacing: .08em; color: var(--ink-jiao); }
+.mv2 .bxr-hero .tl { font: .95em var(--f-kai); color: var(--ink-zhong); }
+.mv2 .bxr-hero .st { flex-basis: 100%; display: flex; align-items: center; gap: .45em; font: .92em var(--f-kai); color: var(--ink-nong); }
+.mv2 .bxr-hero .st b { font: 400 1.2em var(--f-display); color: var(--zhu); }
+.mv2 .bxr-big { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; margin: .1em 0 .7em; }
+.mv2 .bxr-big span { font: .85em var(--f-kai); color: var(--ink-zhong); }
+.mv2 .bxr-big b { display: block; font: 400 2em/1.1 var(--f-display); color: var(--ink-jiao); }
+.mv2 .bxr-big b.zhu { color: var(--zhu); }
+.mv2 .bxr .mj-row .v small { display: block; font: .82em var(--f-ui); color: var(--ink-dan); }
+.mv2 .bxr-h { display: flex; align-items: baseline; justify-content: space-between; margin: 1em 0 .3em; font: 1.05em var(--f-display); color: var(--ink-nong); }
+.mv2 .bxr-h small { font: .72em var(--f-ui); color: var(--ink-dan); }
+.mv2 .bxr-row { display: grid; grid-template-columns: 1.6em 2.4em 1.6em 1fr 2.6em 2.8em; align-items: center; gap: .35em; padding: .22em 0; font: .9em var(--f-ui); color: var(--ink-zhong); font-variant-numeric: tabular-nums; }
+.mv2 .bxr-row .r { text-align: right; color: var(--ink-dan); }
+.mv2 .bxr-row .rl { font: 1.05em var(--f-kai); color: var(--ink-nong); white-space: nowrap; }
+.mv2 .bxr-row .p { text-align: right; color: var(--ink-nong); }
+.mv2 .bxr-row.kill .p { font: 1.15em var(--f-display); color: var(--zhu); }
+.mv2 .bxr-row .t { text-align: right; color: var(--ink-dan); }
+.mv2 .bxr-row .ink-seal { font-size: 10px; }
+.mv2 .bxr-row .ink-seal.dim { opacity: .55; }
+/* 一笔"削去几成"：墨 = 削去，朱细线 = 50%（转阶段） */
+.mv2 .bxr-bar { position: relative; height: 6px; background: rgba(21, 24, 27, .12); -webkit-mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; }
+.mv2 .bxr-bar i { position: absolute; inset: 0; background: var(--ink-nong); transform-origin: 0 50%; transform: scaleX(var(--b, 0)); }
+.mv2 .bxr-bar.kill i { background: var(--ink-jiao); }
+.mv2 .bxr-bar u { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--zhu); opacity: .8; }
+.mv2 .bxr-empty { padding: 2em 0; text-align: center; font: 1em/1.9 var(--f-kai); color: var(--ink-dan); }
+/* 镜外浮签：成长图 */
+.mv2 .bxr-slip .bxr-chart { position: relative; margin: 26px 0 30px; border-bottom: 1px solid rgba(21, 24, 27, .25); }
+.mv2 .bxr-chart .half { position: absolute; left: 0; right: 0; top: 50%; height: 0; border-top: 1.5px dashed rgba(184, 41, 26, .7); }
+.mv2 .bxr-chart .half-l { position: absolute; right: -18px; top: 50%; transform: translateY(-55%); font: 400 16px var(--f-display); color: var(--zhu); }
+.mv2 .bxr-chart .c { position: absolute; bottom: 0; width: 0; height: 100%; }
+.mv2 .bxr-chart .c i { position: absolute; left: -5px; bottom: 0; width: 10px; background: var(--ink-nong); border-radius: 4px 4px 0 0; -webkit-mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; }
+.mv2 .bxr-chart .c.kill i { background: var(--ink-jiao); }
+.mv2 .bxr-chart .c .ink-seal { position: absolute; left: -9px; top: -22px; font-size: 11px; }
+.mv2 .bxr-chart .c em { position: absolute; left: -14px; width: 28px; text-align: center; font: 11px var(--f-ui); font-style: normal; color: var(--ink-zhong); }
+.mv2 .bxr-chart .c small { position: absolute; left: -16px; width: 32px; top: calc(100% + 4px); text-align: center; font: 11px var(--f-kai); color: var(--ink-zhong); white-space: nowrap; }
+.mv2 .bxr-cap { font: 12px/1.7 var(--f-kai); color: var(--ink-zhong); }
+.mv2 .bxr-sum { margin: 10px 0 4px; font: 400 18px var(--f-display); color: var(--ink-jiao); letter-spacing: .04em; }

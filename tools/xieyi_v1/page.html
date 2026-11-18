@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 写意留白 v1 · 林墨的"不画脸"样张</title>
+<link rel="stylesheet" href="../../../src/ui/ink/strokes.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../assets/fonts/MaShanZheng-Regular.ttf"); }
+:root { --paper: #ece6d6; --paper2: #e4ddca; --ink: #15181b; --ink2: #3b3c38; --ink3: #6f6c63; --ink4: #a7a293; --zhu: #b8291a; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--ink); font: 13.5px/1.6 "Microsoft YaHei", "PingFang SC", sans-serif; }
+.kai { font-family: "MaShanZheng", KaiTi, STKaiti, serif; font-weight: 400; }
+header { padding: 14px 28px 4px; }
+header h1 { margin: 0; font-size: 30px; letter-spacing: .1em; display: inline-block; }
+.lede { margin: 4px 0 0; color: var(--ink2); font-size: 14px; max-width: 1320px; }
+.lede b { font-weight: 600; color: var(--ink); }
+main { display: flex; gap: 22px; padding: 10px 28px 22px; align-items: flex-start; }
+#stage { position: relative; flex: none; width: 1280px; height: 720px; background: #ddd6c4; border-radius: 2px 5px 3px 4px; box-shadow: 0 0 0 1px rgba(60,55,45,.18); overflow: hidden; }
+#stage canvas { display: block; width: 100%; height: 100%; }
+#stage .tag { position: absolute; left: 14px; top: 10px; font: 22px "MaShanZheng", KaiTi, serif; color: var(--ink); text-shadow: 0 0 6px var(--paper), 0 0 2px var(--paper); pointer-events: none; letter-spacing: .06em; }
+#stage .tag small { font: 12px "Microsoft YaHei", sans-serif; color: var(--ink2); margin-left: 8px; letter-spacing: 0; }
+#loading { position: absolute; inset: 0; display: grid; place-items: center; background: var(--paper); font: 26px "MaShanZheng", KaiTi, serif; color: var(--ink2); z-index: 5; }
+.side { flex: 1; min-width: 340px; max-width: 460px; }
+.row { display: flex; align-items: baseline; gap: 6px; margin: 0 0 8px; flex-wrap: wrap; }
+.row > label { width: 44px; flex: none; font: 17px "MaShanZheng", KaiTi, serif; color: var(--ink2); }
+.seg { display: flex; gap: 2px; flex-wrap: wrap; }
+.seg a { font-size: 13.5px; color: var(--ink3); padding: 1px 9px 6px; cursor: pointer; position: relative; user-select: none; white-space: nowrap; }
+.seg a:hover { color: var(--ink); }
+.seg a.on { color: var(--ink); font-weight: 600; }
+.seg a.on::after { content: ""; position: absolute; left: 5px; right: 4px; bottom: 0; height: 6px; background: var(--zhu); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.note { font-size: 13px; color: var(--ink2); margin: 6px 0 0; min-height: 5em; }
+.note .kai { font-size: 18px; color: var(--ink); margin-right: 6px; display: block; }
+.sep { height: 9px; margin: 10px 0; background: var(--ink4); opacity: .7; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+ul.vs { margin: 0; padding-left: 1.2em; font-size: 12.5px; color: var(--ink2); }
+ul.vs li { margin: 2px 0; }
+.files { font-size: 12px; color: var(--ink3); margin-top: 10px; }
+.files code { font-family: Consolas, monospace; color: var(--ink2); background: var(--paper2); padding: 0 4px; border-radius: 2px; }
+</style></head>
+<body>
+<header><h1 class="kai">墨途 · 写意留白 v1</h1>
+<p class="lede"><b>写意留白 = 减笔人物画：形不全而神全。</b>不追求把五官画精细，而是只留最少的笔（或一笔不画），靠剪影、衣纹、姿态与一两处朱色传神——梁楷《泼墨仙人图》、减笔人物一路。游戏 45° 镜头下脸只有十几像素，本来就是"看形不看脸"。下面五个变体身体与动作都相同，只换脸 / 衣袍的表现。</p></header>
+<main>
+  <div id="stage"><canvas id="view"></canvas><div class="tag" id="tag"></div><div id="loading">研墨中……</div></div>
+  <div class="side">
+    <div class="row"><label>变体</label><div class="seg" data-k="v"><a data-v="V0">V0 现状 v2</a><a data-v="V1">V1 两笔眉眼</a><a data-v="V2">V2 无五官</a><a data-v="V3">V3 泼墨写意</a><a data-v="V4">V4 斗笠幂篱</a></div></div>
+    <div class="row"><label>镜头</label><div class="seg" data-k="view"><a data-v="bust">近景 · 头肩</a><a data-v="full">近景 · 全身</a><a data-v="game">游戏 45°</a></div></div>
+    <div class="row"><label>动作</label><div class="seg" data-k="anim"><a data-v="idle">待机</a><a data-v="slash">挥砍</a></div></div>
+    <div class="row"><label>后期</label><div class="seg" data-k="post"><a data-v="ink">水墨后期</a><a data-v="raw">关</a></div></div>
+    <p class="note" id="note"></p>
+    <div class="sep"></div>
+    <ul class="vs">
+      <li><b>V0 现状 v2</b>：对照组，画上去的五官。</li>
+      <li><b>V1 两笔眉眼</b>：两道眉 + 两点眼，无鼻无嘴，脸纸白淡赭。</li>
+      <li><b>V2 无五官留白</b>：脸一笔不画，靠发髻、朱砂发带、剑、衣形认人。</li>
+      <li><b>V3 泼墨写意</b>：V2 + 衣袍大块水墨晕染、飞白、积墨、毛边。</li>
+      <li><b>V4 斗笠幂篱</b>：用道具遮面，另一种"不画脸"。</li>
+    </ul>
+    <div class="files">身体 / 衣服 / 动作 = <code>hero_v2.glb</code>（未改），只换材质 · 生成器 <code>tools/xieyi_v1/src/</code> · 打包 <code>node tools/xieyi_v1/build.mjs</code></div>
+  </div>
+</main>
+<script>/*__BUNDLE__*/</script>
+</body></html>

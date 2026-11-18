@@ -1,0 +1,142 @@
+[
+ {
+  "size": "720p×1",
+  "state": "现状",
+  "gpu": 10.402875,
+  "calls": 93,
+  "cpu": 1.4916666348775227,
+  "tris": "59.8k",
+  "vram": "7.4 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "720p×1",
+  "state": "A",
+  "gpu": 15.156272,
+  "calls": 124,
+  "cpu": 1.9100000858306885,
+  "tris": "486.9k",
+  "vram": "24.5 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "720p×1",
+  "state": "B",
+  "gpu": 22.054328,
+  "calls": 124,
+  "cpu": 1.9272727099331943,
+  "tris": "486.9k",
+  "vram": "118.5 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "720p×1",
+  "state": "C",
+  "gpu": 24.456235,
+  "calls": 124,
+  "cpu": 2.4272727099331943,
+  "tris": "486.9k",
+  "vram": "134.5 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "720p×1",
+  "state": "B 预算",
+  "gpu": 20.425918,
+  "calls": 114,
+  "cpu": 1.9090909524397417,
+  "tris": "390.6k",
+  "vram": "118.5 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "1536×864",
+  "state": "现状",
+  "gpu": 14.716857,
+  "calls": 93,
+  "cpu": 2.2076922930203953,
+  "tris": "59.8k",
+  "vram": "7.4 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1536,
+   864
+  ]
+ },
+ {
+  "size": "1536×864",
+  "state": "A",
+  "gpu": 20.281002,
+  "calls": 124,
+  "cpu": 2.5777776506212025,
+  "tris": "486.9k",
+  "vram": "24.5 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1536,
+   864
+  ]
+ },
+ {
+  "size": "1536×864",
+  "state": "B",
+  "gpu": 28.283886,
+  "calls": 124,
+  "cpu": 2.387499988079071,
+  "tris": "486.9k",
+  "vram": "118.5 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1536,
+   864
+  ]
+ },
+ {
+  "size": "1536×864",
+  "state": "C",
+  "gpu": 31.127542,
+  "calls": 124,
+  "cpu": 3.8666666878594294,
+  "tris": "486.9k",
+  "vram": "134.5 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1536,
+   864
+  ]
+ },
+ {
+  "size": "1536×864",
+  "state": "B 预算",
+  "gpu": 26.45556,
+  "calls": 114,
+  "cpu": 1.9299999713897704,
+  "tris": "390.6k",
+  "vram": "118.5 MB",
+  "gpuName": "显卡：Intel, Intel(R) UHD Graphics 630 (0x00009BC5) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1536,
+   864
+  ]
+ }
+]

@@ -1,0 +1,48 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 UI · realm</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:720px;overflow:hidden}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:#15181b;background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'300'%20height%3D'300'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.9'%20numOctaves%3D'3'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.35%20%200%200%200%200%20.32%20%200%200%200%200%20.26%20%200%200%200%20.09%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'300'%20height%3D'300'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E"),url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'600'%20height%3D'600'%3E%3Cfilter%20id%3D'f'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.012%20.2'%20numOctaves%3D'2'%20seed%3D'4'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.3%20%200%200%200%200%20.27%20%200%200%200%200%20.2%20%200%200%200%20.05%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'600'%20height%3D'600'%20filter%3D'url(%23f)'%2F%3E%3C%2Fsvg%3E"),#ece6d6;background-blend-mode:multiply;position:relative}
+.kai{font-family:"STKaiti","KaiTi","楷体","Kaiti SC",serif}
+.paper{background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'300'%20height%3D'300'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.9'%20numOctaves%3D'3'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.35%20%200%200%200%200%20.32%20%200%200%200%200%20.26%20%200%200%200%20.09%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'300'%20height%3D'300'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E"),rgba(244,239,226,.94);box-shadow:0 0 0 1px rgba(21,24,27,.28),0 8px 24px rgba(21,24,27,.18),inset 0 0 22px rgba(120,100,70,.18);border-radius:3px}
+.ink-line{height:2px;background:linear-gradient(90deg,transparent,#15181b 8%,#15181b 70%,transparent);opacity:.75;border-radius:2px}
+.seal{display:inline-flex;align-items:center;justify-content:center;background:#b8291a;color:#f4ece0;font-family:"STKaiti","KaiTi",serif;font-weight:900;border-radius:3px;box-shadow:inset 0 0 0 2px rgba(244,236,224,.55),0 1px 2px rgba(0,0,0,.3)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:"STKaiti","KaiTi",serif;font-weight:700;font-size:20px;padding:6px 22px;border:1.5px solid #15181b;border-radius:3px;background:rgba(244,239,226,.7)}
+.btn.primary{background:#15181b;color:#f1eadb}
+.q0{--q:#6a6760}.q1{--q:#3fae7a}.q2{--q:#2f7fa8}.q3{--q:#c9a040}.q4{--q:#c9a040}
+.tag{display:inline-block;font-size:12px;padding:1px 6px;border-radius:2px;border:1px solid currentColor;line-height:16px}
+.muted{color:#6a6760}
+h1,h2,h3{font-family:"STKaiti","KaiTi",serif}
+.bar{position:relative;height:10px;background:rgba(21,24,27,.18);border-radius:5px 2px 6px 2px;overflow:hidden}
+.bar i{position:absolute;inset:0;border-radius:inherit;transform-origin:left}
+</style></head><body>
+<style>
+.left{position:absolute;left:30px;top:30px;bottom:30px;width:520px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 55%,rgba(63,143,168,.18),transparent 60%)}
+.right{position:absolute;right:30px;top:30px;bottom:30px;width:660px;padding:22px 26px}
+.realm{font-size:64px;font-weight:900;letter-spacing:8px;line-height:1}
+.kv{display:grid;grid-template-columns:90px 1fr 90px;align-items:center;font-size:15px;padding:6px 0;border-bottom:1px dashed rgba(21,24,27,.2)}
+.kv .up{color:#3fae7a;font-weight:700;text-align:right}
+.unl{display:flex;gap:10px;margin-top:10px}
+.unl div{flex:1;padding:10px;border-radius:4px;border:1.5px solid #c9a040;background:rgba(201,160,64,.08);font-size:13px}
+.unl b{display:block;font:900 20px "STKaiti","KaiTi"}
+.feed{display:flex;align-items:center;gap:12px;margin-top:14px;font-size:14px}
+.slider{flex:1;height:8px;border-radius:4px;background:rgba(21,24,27,.15);position:relative}.slider i{position:absolute;left:0;top:0;bottom:0;width:62%;background:#15181b;border-radius:4px}.slider u{position:absolute;left:62%;top:-6px;width:20px;height:20px;border-radius:50%;background:#b8291a;transform:translateX(-50%)}
+</style>
+<div class="left"><svg viewBox="0 0 400 460" width="430"><circle cx="200" cy="230" r="190" fill="none" stroke="#15181b" stroke-width="2" opacity=".15"/><circle cx="200" cy="230" r="150" fill="none" stroke="#3f8fa8" stroke-width="10" opacity=".18" stroke-dasharray="40 20"/>
+  <path d="M200 120 a28 28 0 1 1 0.1 0" fill="#15181b"/><circle cx="200" cy="96" r="9" fill="#15181b"/><path d="M196 92 C 170 120 150 150 160 190" stroke="#b8291a" stroke-width="5" fill="none"/>
+  <path d="M200 175 C150 185 140 240 150 290 C120 300 90 320 95 345 C150 360 250 360 305 345 C310 320 280 300 250 290 C260 240 250 185 200 175Z" fill="#f4efe2" stroke="#15181b" stroke-width="4"/>
+  <path d="M150 290 C175 300 225 300 250 290" stroke="#15181b" stroke-width="3" fill="none"/><path d="M170 250 C185 268 215 268 230 250" stroke="#15181b" stroke-width="3" fill="none"/>
+  <text x="200" y="420" font-size="22" text-anchor="middle" font-family="KaiTi" fill="#3a3a36">灵泉 · 打坐炼化</text></svg></div>
+<div class="right paper"><div class="muted kai" style="font-size:18px">境界</div><div class="realm kai">练气五层</div>
+  <div style="display:flex;justify-content:space-between;margin-top:14px;font-size:14px"><span>修为</span><b>268 / 400</b></div>
+  <div class="bar" style="height:14px;margin-top:4px"><i style="background:linear-gradient(90deg,#c9a040,#e6cf9a);transform:scaleX(.67)"></i><i style="background:rgba(63,174,122,.55);transform:scaleX(1);left:67%;width:33%"></i></div>
+  <div class="feed"><span class="kai" style="font-size:17px">投入灵石</span><div class="slider"><i></i><u></u></div><b>120</b><span class="muted">→ +360 修为</span></div>
+  <div class="feed"><span class="kai" style="font-size:17px">炼化灵物</span><span>千年竹心 ×1（+360）</span><span class="btn" style="font-size:15px;padding:2px 12px">投入</span></div>
+  <div class="ink-line" style="margin:16px 0 6px"></div>
+  <div class="kai" style="font-size:19px">突破至练气六层</div>
+  <div class="kv"><span>气血</span><span class="muted">320 → 350</span><span class="up">+30</span></div>
+  <div class="kv"><span>真气</span><span class="muted">160 → 175</span><span class="up">+15</span></div>
+  <div class="kv"><span>攻击 / 法力</span><span class="muted">36 → 40</span><span class="up">+4</span></div>
+  <div class="kv"><span>防御</span><span class="muted">13 → 15</span><span class="up">+2</span></div>
+  <div class="kai" style="font-size:17px;margin-top:12px">下一个大关</div>
+  <div class="unl"><div><b>练气七层</b>法宝栏（本命）· 阵法栏 · 鹿皮乾坤袋</div><div><b>筑基</b>筑基丹 · 心魔考验 → 法术栏 3 · 御剑</div></div>
+  <div style="margin-top:16px;text-align:right"><span class="btn primary" style="font-size:22px">突破</span></div></div></body></html>

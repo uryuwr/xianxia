@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>图标路线 (b)：3D 离屏渲染 + 水墨后期 → 图集</title>
+<style>
+  body { margin: 0; background: #ece6d6; font: 12px sans-serif; }
+  #out { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 8px; }
+  canvas { image-rendering: auto; }
+</style>
+<script type="importmap">{ "imports": { "three": "../../../../../node_modules/three/build/three.module.js" } }</script>
+</head>
+<body>
+<div id="out"></div>
+<script type="module">
+// 路线 (b) 样例：three.js 程序化建模 8 件物品 → 卡通材质（三阶明暗，同 src/render/materials.js）→
+// 简化版水墨后期（同 src/render/ink.js 思路：深度轮廓/折角出墨线，线宽随噪声起伏 + 飞白；亮度映射到墨—宣纸色阶；高饱和点色保留）→
+// 透明底 readPixels → 512 内部分辨率下采样到 256 / 128 → 横条图集。
+import * as THREE from "three";
+
+const T0 = performance.now();
+const INTERNAL = 512; // 内部超采样分辨率（4× of 128）
+const timing = { internal: INTERNAL, items: {} };
+
+// ---------- 渲染器与渲染目标 ----------
+const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, preserveDrawingBuffer: true });
+renderer.setSize(INTERNAL, INTERNAL, false);
+renderer.setPixelRatio(1);
+renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+const rt = new THREE.WebGLRenderTarget(INTERNAL, INTERNAL, { samples: 0 });
+rt.depthTexture = new THREE.DepthTexture(INTERNAL, INTERNAL);
+rt.depthTexture.type = THREE.FloatType;
+const outRT = new THREE.WebGLRenderTarget(INTERNAL, INTERNAL, { depthBuffer: false });
+
+const gradient = new THREE.DataTexture(new Uint8Array([70, 165, 255]), 3, 1, THREE.RedFormat);
+gradient.minFilter = gradient.magFilter = THREE.NearestFilter;
+gradient.needsUpdate = true;
+const toon = (color, o = {}) => new THREE.MeshToonMaterial({ color, gradientMap: gradient, ...o });
+
+// ---------- 水墨后期 ----------
+const NOISE = `
+float hash12(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+float vnoise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), f.x), mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), f.x), f.y); }
+`;
+const post = new THREE.ShaderMaterial({
+  uniforms: { tColor: { value: rt.texture }, tDepth: { value: rt.depthTexture }, uRes: { value: new THREE.Vector2(INTERNAL, INTERNAL) }, uSeed: { value: 0 }, uLine: { value: 4.2 }, uTint: { value: 0.9 } },
+  vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+  fragmentShader: `precision highp float;
+uniform sampler2D tColor, tDepth; uniform vec2 uRes; uniform float uSeed, uLine, uTint; varying vec2 vUv;
+${NOISE}
+const vec3 INK = vec3(0.075, 0.085, 0.095);
+const vec3 PAPER = vec3(0.925, 0.9, 0.835);
+vec3 toSRGB(vec3 c){ return pow(max(c, 0.0), vec3(1.0 / 2.2)); }
+float D(vec2 uv){ return texture2D(tDepth, uv).r; }
+float A(vec2 uv){ return texture2D(tColor, uv).a; }
+void main(){
+  vec2 fc = gl_FragCoord.xy, px = 1.0 / uRes;
+  vec4 s = texture2D(tColor, vUv);
+  float cov = s.a;
+  vec3 col = toSRGB(s.rgb / max(s.a, 1e-3));
+  float l = dot(col, vec3(0.299, 0.587, 0.114));
+  float mx = max(col.r, max(col.g, col.b)), mn = min(col.r, min(col.g, col.b));
+  float sat = (mx - mn) / max(mx, 1e-3);
+  // 设色：亮度 → 墨—宣纸色阶；点色保留色相，其余按淡彩强度
+  float keep = max(smoothstep(0.32, 0.6, sat), mix(0.22, 0.85, uTint * smoothstep(0.14, 0.3, sat))) * smoothstep(0.05, 0.3, mx);
+  float tl = smoothstep(0.03, 0.86, l);
+  tl = mix(tl, floor(tl * 4.0 + 0.5) / 4.0, 0.25);
+  float layer = vnoise(fc * 0.02 + uSeed) * 0.6 + vnoise(fc * 0.07) * 0.4;
+  tl = clamp(tl + (layer - 0.5) * 0.2 * (1.0 - tl) * smoothstep(0.0, 0.25, tl), 0.0, 1.0);
+  vec3 tone = mix(INK, PAPER, tl);
+  vec3 hue = col / max(mx, 1e-3);
+  vec3 c = mix(tone, tone * mix(vec3(1.0), hue * 1.15, 0.85) + (col - l) * 0.35, keep);
+  // 墨线：线宽随低频噪声起伏（笔锋），飞白断续
+  float w = uLine * (0.65 + 0.9 * vnoise(fc * 0.012 + uSeed * 3.1));
+  vec2 jit = (vec2(vnoise(fc * 0.03 + 5.0), vnoise(fc * 0.03 + 9.0)) - 0.5) * 2.0 * px;
+  vec2 uv = vUv + jit;
+  float zc = D(uv), ac = A(uv);
+  float sil = 0.0, zs = 0.0, outer = 0.0;
+  for (int k = 0; k < 8; k++){
+    float a = float(k) * 0.785398;
+    vec2 o = vec2(cos(a), sin(a)) * w * px;
+    float zn = D(uv + o);
+    sil = max(sil, abs(zn - zc));
+    outer = max(outer, abs(A(uv + o) - ac));
+    if (k == 0 || k == 2 || k == 4 || k == 6) zs += D(uv + o * 0.5);
+  }
+  float crease = abs(zs - 4.0 * zc);
+  float edge = max(smoothstep(0.02, 0.07, sil), smoothstep(0.3, 0.7, outer)) + 0.7 * smoothstep(0.006, 0.02, crease);
+  float dry = smoothstep(0.15, 0.55, vnoise(fc * vec2(0.05, 0.03) + uSeed * 7.0));
+  edge = clamp(edge, 0.0, 1.0) * (0.5 + 0.5 * dry);
+  c = mix(c, INK, edge * 0.9);
+  // 纸纹
+  float pn = vnoise(fc * 0.04) * 0.6 + vnoise(fc * 0.17) * 0.4;
+  c *= 0.93 + 0.1 * pn;
+  float alpha = max(cov, edge * 0.92);
+  gl_FragColor = vec4(c, alpha);
+}`,
+  depthTest: false, depthWrite: false, transparent: false,
+});
+post.blending = THREE.NoBlending;
+const quadGeo = new THREE.BufferGeometry();
+quadGeo.setAttribute("position", new THREE.Float32BufferAttribute([-1, -1, 0, 3, -1, 0, -1, 3, 0], 3));
+quadGeo.setAttribute("uv", new THREE.Float32BufferAttribute([0, 0, 2, 0, 0, 2], 2));
+const quad = new THREE.Mesh(quadGeo, post);
+quad.frustumCulled = false;
+const quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+// ---------- 小工具 ----------
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const tube = (pts, r, mat, seg = 32, rs = 6) => new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), seg, r, rs, false), mat);
+const lathe = (prof, mat, seg = 32) => new THREE.Mesh(new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), seg), mat);
+function canvasTex(w, h, draw) {
+  const cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+  draw(cv.getContext("2d"), w, h);
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
+}
+// 毛笔一笔（canvas 2D）：按笔路逐点画圆，半径随 t 起伏
+function brush(g, pts, w, color) {
+  g.fillStyle = color;
+  const N = 60;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [x0, y0] = pts[i], [x1, y1] = pts[i + 1];
+    for (let k = 0; k < N; k++) {
+      const t = (i + k / N) / (pts.length - 1);
+      const r = w * (t < 0.1 ? 0.6 + 4 * t : 1 - 0.65 * Math.pow(Math.max(0, t - 0.6) / 0.4, 1.3));
+      g.beginPath(); g.arc(x0 + (x1 - x0) * k / N, y0 + (y1 - y0) * k / N, Math.max(0.6, r), 0, 7); g.fill();
+    }
+  }
+}
+
+// ---------- 8 件物品 ----------
+const MODELS = {
+  sword() { // 青锋剑：剑身（挤出 + 倒角起脊）、剑格、缠柄、剑首、朱色剑穗
+    const g = new THREE.Group();
+    const sh = new THREE.Shape();
+    sh.moveTo(-0.11, 0); sh.lineTo(-0.1, 2.3); sh.lineTo(0, 2.62); sh.lineTo(0.1, 2.3); sh.lineTo(0.11, 0); sh.lineTo(-0.11, 0);
+    const blade = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: 0.01, bevelEnabled: true, bevelThickness: 0.035, bevelSize: 0.05, bevelSegments: 1 }), toon(0xc9d6d8));
+    g.add(blade);
+    const guard = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.12, 0.16), toon(0x6b7d6a)); guard.position.y = -0.04; g.add(guard);
+    const grip = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.075, 0.62, 10), toon(0x3a2f2a)); grip.position.y = -0.41; g.add(grip);
+    for (let i = 0; i < 5; i++) { const r = new THREE.Mesh(new THREE.TorusGeometry(0.075, 0.018, 4, 12), toon(0x5a4a40)); r.rotation.x = Math.PI / 2; r.position.y = -0.18 - i * 0.11; g.add(r); }
+    const pommel = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 8), toon(0x6b7d6a)); pommel.position.y = -0.76; g.add(pommel);
+    const red = toon(0xc0301c);
+    g.add(tube([V(0, -0.8, 0), V(0.08, -1.0, 0.05), V(0.05, -1.18, 0.1)], 0.028, red));
+    const knot = new THREE.Mesh(new THREE.SphereGeometry(0.07, 10, 8), red); knot.position.set(0.05, -1.2, 0.1); g.add(knot);
+    for (let i = 0; i < 5; i++) g.add(tube([V(0.05, -1.22, 0.1), V(0.03 + i * 0.03, -1.45, 0.12), V(-0.02 + i * 0.05, -1.66 - (i % 2) * 0.06, 0.15)], 0.016, red, 12, 4));
+    g.rotation.z = -Math.PI / 4.2;
+    g.rotation.y = 0.35;
+    return g;
+  },
+  robe() { // 布法衣：袍身（压扁的 Lathe）+ 两袖（斜圆柱）+ 交领（两道深色带）+ 腰带
+    const g = new THREE.Group();
+    const cloth = toon(0xe4e0d2), trim = toon(0x4a5a66);
+    const body = lathe([[0.0, 1.05], [0.32, 1.02], [0.42, 0.7], [0.4, 0.2], [0.48, -0.4], [0.62, -1.0], [0.64, -1.1], [0, -1.1]], cloth, 28);
+    body.scale.z = 0.45; g.add(body);
+    for (const s of [-1, 1]) {
+      const sl = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.36, 0.95, 16, 1, false), cloth);
+      sl.scale.z = 0.55; sl.position.set(s * 0.68, 0.48, 0); sl.rotation.z = s * 1.0; g.add(sl);
+      const cuff = new THREE.Mesh(new THREE.CylinderGeometry(0.365, 0.365, 0.08, 16), trim);
+      cuff.scale.z = 0.55; cuff.position.set(s * 1.07, 0.21, 0); cuff.rotation.z = s * 1.0; g.add(cuff);
+    }
+    // 交领：左襟压右襟
+    g.add(tube([V(-0.3, 1.04, 0.07), V(-0.05, 0.75, 0.17), V(0.2, 0.42, 0.19)], 0.05, trim, 16, 5));
+    g.add(tube([V(0.3, 1.04, 0.07), V(0.12, 0.82, 0.16), V(-0.04, 0.62, 0.18)], 0.04, trim, 16, 5));
+    g.add(tube([V(0.2, 0.42, 0.19), V(0.24, -0.3, 0.24), V(0.32, -1.08, 0.3)], 0.025, toon(0xb8b4a6), 16, 4));
+    const belt = new THREE.Mesh(new THREE.TorusGeometry(0.43, 0.06, 6, 28), trim); belt.rotation.x = Math.PI / 2; belt.scale.y = 0.46; belt.position.y = 0.22; g.add(belt);
+    g.add(tube([V(0.1, 0.2, 0.22), V(0.14, -0.15, 0.26), V(0.12, -0.5, 0.3)], 0.03, toon(0xc0301c), 12, 4));
+    g.rotation.x = 0.35; g.rotation.y = -0.3; g.rotation.z = 0.06;
+    return g;
+  },
+  jade() { // 青玉佩：玉璧（环形截面 Lathe）+ 红绳结 + 流苏
+    const g = new THREE.Group();
+    const jade = toon(0x86c0a0);
+    const bi = lathe([[0.32, 0.06], [0.82, 0.06], [0.86, 0], [0.82, -0.06], [0.32, -0.06], [0.29, 0], [0.32, 0.06]], jade, 40);
+    bi.rotation.x = Math.PI / 2; g.add(bi);
+    // 谷纹：一圈小凸点
+    for (let i = 0; i < 14; i++) { const a = (i / 14) * Math.PI * 2; const d = new THREE.Mesh(new THREE.SphereGeometry(0.05, 6, 4), toon(0x6aa587)); d.position.set(Math.cos(a) * 0.57, Math.sin(a) * 0.57, 0.06); d.scale.z = 0.5; g.add(d); }
+    const red = toon(0xc0301c);
+    g.add(tube([V(0, 0.8, 0), V(0, 1.1, 0.02), V(-0.04, 1.4, 0)], 0.03, red, 10, 5));
+    const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(0.1, 0.03, 40, 5, 2, 3), red); knot.position.set(0, 1.42, 0); g.add(knot);
+    const bead = new THREE.Mesh(new THREE.SphereGeometry(0.08, 10, 8), jade); bead.position.set(0, -0.98, 0); g.add(bead);
+    g.add(tube([V(0, -0.84, 0), V(0, -0.92, 0)], 0.025, red, 4, 4));
+    for (let i = 0; i < 6; i++) g.add(tube([V(0, -1.05, 0), V(-0.05 + i * 0.02, -1.3, 0.02), V(-0.12 + i * 0.05, -1.55 - (i % 2) * 0.05, 0.03)], 0.014, red, 10, 4));
+    g.rotation.x = -0.55; g.rotation.y = 0.35; g.rotation.z = 0.15;
+    return g;
+  },
+  herb() { // 青灵草：茎（细管）+ 叶片（Shape 后按中脉弯折）+ 根须
+    const g = new THREE.Group();
+    const green = toon(0x4f9e64, { side: THREE.DoubleSide }), stemM = toon(0x5f8a4a);
+    g.add(tube([V(0, -1.1, 0), V(0.05, -0.4, 0.02), V(-0.02, 0.4, 0), V(0.08, 1.1, 0.04)], 0.035, stemM, 24, 5));
+    const leaf = (len, wid) => {
+      const s = new THREE.Shape();
+      s.moveTo(0, 0); s.bezierCurveTo(wid, len * 0.25, wid * 0.8, len * 0.7, 0, len); s.bezierCurveTo(-wid * 0.8, len * 0.7, -wid, len * 0.25, 0, 0);
+      const geo = new THREE.ShapeGeometry(s, 12);
+      const p = geo.attributes.position;
+      for (let i = 0; i < p.count; i++) { const x = p.getX(i), y = p.getY(i); p.setZ(i, Math.abs(x) * 0.9 + (y / len) * (y / len) * 0.25); }
+      geo.computeVertexNormals();
+      return new THREE.Mesh(geo, green);
+    };
+    const L = [[-0.6, 0.95, 0.24, 0.35, -0.25], [-0.25, -0.9, 0.22, -0.3, -0.2], [0.2, 0.85, 0.2, 0.3, 0.3], [0.55, -0.8, 0.18, -0.25, 0.25], [0.95, 0.25, 0.14, 0.1, 0.2]];
+    for (const [y, rz, wid, ry, rx] of L) { const l = leaf(0.85 - Math.abs(y) * 0.12, wid * 1.3); l.position.set(0.02, y, 0.02); l.rotation.set(rx, ry, rz); g.add(l); }
+    const root = toon(0x8a6a4a);
+    for (let i = 0; i < 4; i++) g.add(tube([V(0, -1.1, 0), V(-0.15 + i * 0.1, -1.3, 0.05), V(-0.25 + i * 0.17, -1.45, 0.1)], 0.015, root, 8, 4));
+    g.rotation.z = -0.4; g.rotation.x = 0.1;
+    return g;
+  },
+  core() { // 狼妖内丹：球体（旋纹贴图）+ 半透明光晕球
+    const g = new THREE.Group();
+    const tex = canvasTex(256, 128, (c, w, h) => {
+      c.fillStyle = "#8f4a2a"; c.fillRect(0, 0, w, h);
+      for (let i = 0; i < 9; i++) { c.strokeStyle = i % 2 ? "rgba(90,30,20,.55)" : "rgba(226,160,90,.55)"; c.lineWidth = 6 + i; c.beginPath(); for (let x = 0; x <= w; x += 4) c.lineTo(x, h * 0.15 + i * 11 + Math.sin(x / 26 + i) * 12); c.stroke(); }
+    });
+    const ball = new THREE.Mesh(new THREE.SphereGeometry(0.75, 32, 20), toon(0xffffff, { map: tex }));
+    ball.rotation.set(0.5, 0.3, 0.6); g.add(ball);
+    const hl = new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffe8c0 })); hl.position.set(-0.32, 0.38, 0.55); hl.scale.set(1, 0.6, 0.4); g.add(hl);
+    return g;
+  },
+  ore() { // 铁精石：底座乱石（压扁的十二面体）+ 5 根六棱晶柱
+    const g = new THREE.Group();
+    const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(0.85, 0), toon(0x6c6a62, { flatShading: true }));
+    rock.scale.set(1.25, 0.5, 0.9); rock.position.y = -0.45; g.add(rock);
+    const cry = toon(0x5d7280, { flatShading: true });
+    const X = [[0, 0.25, 0, 0.2, 1.3, 0, 0], [-0.4, 0.05, 0.1, 0.15, 0.95, 0.4, 0.1], [0.42, 0.05, -0.05, 0.16, 1.0, -0.45, 0], [0.18, -0.05, 0.35, 0.12, 0.7, -0.2, 0.5], [-0.2, -0.05, -0.35, 0.12, 0.65, 0.3, -0.5]];
+    for (const [x, y, z, r, h, rz, rx] of X) {
+      const c = new THREE.Group();
+      const body = new THREE.Mesh(new THREE.CylinderGeometry(r, r * 1.05, h, 6), cry); c.add(body);
+      const tip = new THREE.Mesh(new THREE.ConeGeometry(r, r * 1.6, 6), toon(0x8aa2b0, { flatShading: true })); tip.position.y = h / 2 + r * 0.8; c.add(tip);
+      c.position.set(x, y + h / 2 - 0.1, z); c.rotation.set(rx, 0, rz); g.add(c);
+    }
+    g.rotation.y = 0.4;
+    return g;
+  },
+  pill() { // 回春丹：青瓷葫芦（Lathe）+ 红布塞 + 两粒丹丸
+    const g = new THREE.Group();
+    const prof = [];
+    for (let i = 0; i <= 40; i++) { const t = i / 40, y = -1 + t * 2; const r = t < 0.55 ? Math.sin((t / 0.55) * Math.PI) * 0.62 : t < 0.62 ? 0.16 : t < 0.92 ? 0.16 + Math.sin(((t - 0.62) / 0.3) * Math.PI) * 0.26 : 0.12; prof.push([Math.max(0.001, i === 0 ? 0.001 : r), y]); }
+    const gourd = lathe(prof, toon(0x9fc4b4), 28); g.add(gourd);
+    const plug = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.1, 0.2, 10), toon(0xc0301c)); plug.position.y = 1.08; g.add(plug);
+    g.add(tube([V(0, 0.28, 0.12), V(0.25, 0.3, 0.18), V(0.35, 0.05, 0.22)], 0.025, toon(0xc0301c), 10, 4));
+    const pillM = toon(0xa0522d);
+    for (const [x, z, s] of [[0.78, 0.35, 0.2], [1.08, 0.1, 0.17]]) { const p = new THREE.Mesh(new THREE.SphereGeometry(s, 16, 12), pillM); p.position.set(x, -0.86 + s - 0.2, z); g.add(p); }
+    g.position.x = -0.2;
+    g.rotation.z = 0.12; g.rotation.x = 0.15;
+    return g;
+  },
+  fu() { // 遁地符：黄纸长条（弯曲平面）+ 朱砂符文（CanvasTexture）
+    const tex = canvasTex(128, 384, (c, w, h) => {
+      c.fillStyle = "#e2cd8a"; c.fillRect(0, 0, w, h);
+      c.strokeStyle = "rgba(160,110,30,.35)"; c.lineWidth = 3; c.strokeRect(8, 8, w - 16, h - 16);
+      const Z = "#b8291a";
+      brush(c, [[40, 40], [64, 30], [90, 42]], 5, Z);
+      brush(c, [[64, 50], [62, 110], [70, 150]], 6, Z);
+      brush(c, [[36, 120], [92, 112]], 4.5, Z);
+      brush(c, [[46, 160], [80, 175], [48, 200], [84, 215], [50, 240]], 4, Z);
+      brush(c, [[64, 250], [60, 300], [72, 345]], 5.5, Z);
+      brush(c, [[38, 300], [90, 296]], 4, Z);
+      c.fillStyle = Z; c.beginPath(); c.arc(64, 82, 9, 0, 7); c.fill();
+    });
+    const geo = new THREE.PlaneGeometry(0.75, 2.25, 8, 24);
+    const p = geo.attributes.position;
+    for (let i = 0; i < p.count; i++) { const x = p.getX(i), y = p.getY(i); p.setZ(i, Math.sin(y * 1.3) * 0.12 + x * x * 0.25); }
+    geo.computeVertexNormals();
+    const m = new THREE.Mesh(geo, toon(0xffffff, { map: tex, side: THREE.DoubleSide }));
+    const g = new THREE.Group(); g.add(m);
+    g.rotation.z = -0.55; g.rotation.x = -0.45; g.rotation.y = 0.2;
+    return g;
+  },
+};
+
+// ---------- 场景：45° 俯视正交相机 + 左上主光 ----------
+function shoot(name, seed) {
+  const t0 = performance.now();
+  const scene = new THREE.Scene();
+  scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+  const sun = new THREE.DirectionalLight(0xffffff, 2.2); sun.position.set(-2, 4, 3); scene.add(sun);
+  const obj = MODELS[name]();
+  const pivot = new THREE.Group(); pivot.add(obj); scene.add(pivot);
+  const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 20);
+  cam.position.set(0, 4.2, 4.2); cam.lookAt(0, 0, 0);
+  // 物品自身朝向已经按图标构图摆好；这里把物体整体朝相机转 45°（俯视），再按投影后的包围盒取景，占格 ~80%
+  pivot.quaternion.copy(cam.quaternion);
+  pivot.updateMatrixWorld(true);
+  const box = new THREE.Box3();
+  const tmp = new THREE.Vector3();
+  cam.updateMatrixWorld(); cam.updateProjectionMatrix();
+  const inv = cam.matrixWorldInverse;
+  obj.traverse((m) => { if (m.isMesh) { const pos = m.geometry.attributes.position; for (let i = 0; i < pos.count; i += 1) { tmp.fromBufferAttribute(pos, i).applyMatrix4(m.matrixWorld).applyMatrix4(inv); box.expandByPoint(tmp); } } });
+  const cx = (box.min.x + box.max.x) / 2, cy = (box.min.y + box.max.y) / 2;
+  const half = Math.max(box.max.x - box.min.x, box.max.y - box.min.y) / 2 / 0.82;
+  cam.left = cx - half; cam.right = cx + half; cam.top = cy + half; cam.bottom = cy - half;
+  cam.near = -box.max.z - 2; cam.far = -box.min.z + 2;
+  cam.updateProjectionMatrix();
+  const tBuild = performance.now();
+  renderer.setRenderTarget(rt);
+  renderer.setClearColor(0x000000, 0);
+  renderer.clear();
+  renderer.render(scene, cam);
+  post.uniforms.uSeed.value = seed;
+  renderer.setRenderTarget(outRT);
+  renderer.render(quad, quadCam);
+  const buf = new Uint8Array(INTERNAL * INTERNAL * 4);
+  renderer.readRenderTargetPixels(outRT, 0, 0, INTERNAL, INTERNAL, buf);
+  const tRead = performance.now();
+  // 翻转 Y → 512 画布 → 下采样
+  const big = document.createElement("canvas"); big.width = big.height = INTERNAL;
+  const bg = big.getContext("2d");
+  const img = bg.createImageData(INTERNAL, INTERNAL);
+  for (let y = 0; y < INTERNAL; y++) img.data.set(buf.subarray((INTERNAL - 1 - y) * INTERNAL * 4, (INTERNAL - y) * INTERNAL * 4), y * INTERNAL * 4);
+  bg.putImageData(img, 0, 0);
+  const down = (s) => { const c = document.createElement("canvas"); c.width = c.height = s; const g = c.getContext("2d"); g.imageSmoothingQuality = "high"; let src = big; let cur = INTERNAL; while (cur / 2 >= s) { const h = document.createElement("canvas"); h.width = h.height = cur / 2; const hg = h.getContext("2d"); hg.imageSmoothingQuality = "high"; hg.drawImage(src, 0, 0, cur / 2, cur / 2); src = h; cur /= 2; } g.drawImage(src, 0, 0, s, s); return c; };
+  const c256 = down(256), c128 = down(128);
+  const tEnd = performance.now();
+  // 释放
+  scene.traverse((m) => { if (m.geometry) m.geometry.dispose(); if (m.material) { if (m.material.map) m.material.map.dispose(); m.material.dispose(); } });
+  timing.items[name] = { build_ms: +(tBuild - t0).toFixed(2), render_read_ms: +(tRead - tBuild).toFixed(2), downsample_ms: +(tEnd - tRead).toFixed(2), total_ms: +(tEnd - t0).toFixed(2) };
+  return { c256, c128 };
+}
+
+const NAMES = ["sword", "robe", "jade", "herb", "core", "ore", "pill", "fu"];
+// 首次：着色器编译（用第一件物品做一次预热渲染并计时）
+const tw0 = performance.now();
+shoot("sword", 1);
+timing.first_build_compile_ms = +(performance.now() - tw0).toFixed(2);
+
+const ta0 = performance.now();
+const res = {};
+NAMES.forEach((n, i) => (res[n] = shoot(n, i * 1.7 + 1)));
+const atlas = document.createElement("canvas"); atlas.width = 128 * NAMES.length; atlas.height = 128;
+const ag = atlas.getContext("2d");
+NAMES.forEach((n, i) => ag.drawImage(res[n].c128, i * 128, 0));
+const atlas2 = document.createElement("canvas"); atlas2.width = 256 * NAMES.length; atlas2.height = 256;
+NAMES.forEach((n, i) => atlas2.getContext("2d").drawImage(res[n].c256, i * 256, 0));
+timing.atlas_bake_ms = +(performance.now() - ta0).toFixed(2);
+timing.page_total_ms = +(performance.now() - T0).toFixed(2);
+timing.gpu = (() => { const gl = renderer.getContext(); const ext = gl.getExtension("WEBGL_debug_renderer_info"); return ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER); })();
+
+// 预览（纸色底 + 实际尺寸 48/64）
+const out = document.getElementById("out");
+out.appendChild(atlas2); out.appendChild(atlas);
+const row = document.createElement("div"); row.style.cssText = "display:flex;gap:10px;align-items:center";
+for (const n of NAMES) for (const s of [40, 48, 64]) { const c = document.createElement("canvas"); c.width = c.height = s; c.getContext("2d").drawImage(res[n].c128, 0, 0, s, s); row.appendChild(c); }
+out.appendChild(row);
+
+window.__RESULT = { timing, atlas: atlas.toDataURL("image/png"), atlas256: atlas2.toDataURL("image/png"), icons: Object.fromEntries(NAMES.map((n) => [n, res[n].c128.toDataURL("image/png")])), icons256: Object.fromEntries(NAMES.map((n) => [n, res[n].c256.toDataURL("image/png")])) };
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "墨途 · 数值评审 v1 —— 可直接落地的数值改动",
+    "date": "2026-11-16",
+    "report": "docs/review/numeric/数值评审_v1.md",
+    "sim": "docs/review/numeric/sim/params.py（PROPOSED 与本文件一一对应）",
+    "assumes_approved": ["第2法术栏练气三层 / 第3栏练气七层 / 法宝栏练气七层", "G3 关键物品不丢", "G4 可见机缘刻度", "G5 局间≤90秒", "G6 八局节奏", "G9 灵潮 晨1.0/午1.2/暮1.5/夜2.0，区域一暮=第9分钟", "G7 出行委托", "G8 四个奇遇", "G10 五行符 / 附灵"],
+    "format": "changes[i] = { priority, file, path, current, proposed, why }；path 用 JS 取值写法；new 表示新增字段 / 条目"
+  },
+  "changes": [
+    { "priority": "P0", "file": "src/data/loot.js", "path": "RUINS.jianxiu.first", "current": "[art_flying_sword, scroll_frost, danfang_humai]", "proposed": "[art_flying_sword, scroll_frost, danfang_humai, { item: \"heshouwu\" }]", "why": "千年何首乌是筑基硬门槛，当前只来自 45% 左右的随机灵草：p90 玩家多耗 1–2 局，九层圆满后修为白白溢出。改为剑修遗府首通必得（key 物品）。GATHER.heshouwu 保留，作为重复获得来源。" },
+    { "priority": "P0", "file": "流程 / 关卡（Boss 碧鳞入口判定）", "path": "碧鳞挑战境界门槛", "current": "练气九层（文档 §9.2）", "proposed": "练气八层（1:8）", "why": "九层圆满后还要等 Boss 与何首乌，平均卡 1.2–1.7 局、浪费 1300–1900 修为（c9）。八层可挑战，打赢再冲九层。" },
+    { "priority": "P0", "file": "src/game/shields.js", "path": "SHIELD_TUNE", "current": { "frac": 0.45, "counter": 3, "other": 0.25, "physical": 0.15 }, "proposed": { "frac": 0.40, "counter": 2, "other": 0.20, "physical": 0.25 }, "why": "当前护盾是二元的：有克制法术 0–3 秒，没有就 12–18 秒硬磨（c6）。改后有克制 0–5 秒、无克制 10–11 秒、带符 / 附灵 1–4 秒。" },
+    { "priority": "P0", "file": "src/data/enemies.js + src/game/shields.js", "path": "qingya.shieldFrac / bilin.shieldFrac（new，shields.js 读 def.shieldFrac ?? SHIELD_TUNE.frac）", "current": "每段 0.45 × 最大气血", "proposed": 0.25, "why": "碧鳞三段护盾当前合计 96 秒、全程 130 秒（土盾段 42 秒只能靠缠藤诀磨）。每段 25% 后总 76 秒、每段 12–16 秒。" },
+    { "priority": "P0", "file": "src/data/enemies.js", "path": "qingya.stats.hp", "current": 1800, "proposed": 2400, "why": "护盾变薄后保住约 30 秒的首领战（当前 37 秒 → 改后 33 秒）。" },
+    { "priority": "P0", "file": "src/data/skills.js", "path": "SPELLS.vine.effect", "current": { "base": 6, "scale": { "spell": 0.4 } }, "proposed": { "base": 10, "scale": { "spell": 0.7 } }, "why": "缠藤诀是土盾唯一的克制法术，但 8 跳总伤太低：区域二 L9 藤妖土盾要 12 秒、碧鳞土盾段 42 秒。改后 5 秒 / 14 秒；群控定位不变。" },
+    { "priority": "P1", "file": "src/data/items_db.js", "path": "fu_*.use.shieldMul", "current": 2, "proposed": 1, "why": "五行符按克制结算再 ×2 = 对护盾 ×6：1 张就破区域一精英盾。改后 1 组 3 张 ≈ 1 面同级精英盾。" },
+    { "priority": "P1", "file": "src/game/shields.js（附灵结算处）", "path": "SHIELD_TUNE.imbue（new）", "current": "普攻按克制的 50%", "proposed": 0.35, "why": "50% 时附灵剑普攻破盾比克制法术还快（2.4 秒），会让换法术失去意义。35% 时 1–4 秒，仍是快捷方案。" },
+    { "priority": "P1", "file": "src/data/loot.js", "path": "INSIGHT.eliteMul", "current": 8, "proposed": 5, "why": "区域一单局修为是目标的 1.6 倍，第 4 局就进区域二（G6 计划第 6 局）。精英感悟是最大单项。" },
+    { "priority": "P1", "file": "src/data/loot.js", "path": "REGION_LOOT.r1.insight", "current": 3, "proposed": 2, "why": "同上；区域一每局斩妖约 30 只，灵潮另 ×1.1。" },
+    { "priority": "P1", "file": "src/data/loot.js", "path": "REGION_LOOT.r2.insight", "current": 8, "proposed": 6, "why": "区域二感悟占比过高（贪心玩家 45%），让炼化（满载带回）重新成为主收入。" },
+    { "priority": "P1", "file": "src/data/items_db.js + src/data/recipes.js REFINE.named", "path": "xp", "current": { "wolf_core": 40, "golem_core": 45, "bat_core": 90, "vine_core": 90, "wolfking_bone": 150, "lingbang_zhu": 70, "ling_yu": 30, "water_jade": 300, "zhuxin": 360, "wolfking_core": 180 }, "proposed": { "wolf_core": 25, "golem_core": 28, "bat_core": 60, "vine_core": 60, "wolfking_bone": 80, "lingbang_zhu": 35, "ling_yu": 20, "water_jade": 240, "zhuxin": 300, "wolfking_core": 180 }, "why": "单件灵物顶一整层（狼王遗骨 150 ≈ 练气 2→3 全部）会压扁节奏；妖丹降低后与聚气丹形成取舍。" },
+    { "priority": "P1", "file": "src/data/recipes.js", "path": "ALCHEMY.juqi.inputs", "current": { "wolf_core": 1, "qingling_cao": 3 }, "proposed": { "wolf_core": 2, "qingling_cao": 3 }, "why": "1 枚狼妖内丹（40）换平均 100 修为，永远选炼丹；改为 2 枚后丹药占比约 7%（目标 ≤10%），火候好的玩家更赚。" },
+    { "priority": "P1", "file": "src/data/recipes.js", "path": "ALCHEMY（new 两条）", "current": "区域二的蝠妖 / 藤妖内丹不能炼聚气丹", "proposed": [{ "id": "juqi_vine", "name": "聚气丹（藤心方）", "out": "juqi_dan", "n": 1, "inputs": { "vine_core": 2, "hanlu_cao": 3 }, "water": 1, "furnace": 1, "time": 18, "band": 0.2, "batchMax": 3, "recipe": "danfang_juqi" }, { "id": "juqi_bat", "name": "聚气丹（蝠丹方）", "out": "juqi_dan", "n": 1, "inputs": { "bat_core": 2, "hanlu_cao": 3 }, "water": 1, "furnace": 1, "time": 18, "band": 0.2, "batchMax": 3, "recipe": "danfang_juqi" }], "why": "搬家后聚气丹断供（区域二精英只掉蝠妖 / 藤妖内丹），文档 §10.3 第 7 局的 3 枚聚气丹做不出来。" },
+    { "priority": "P1", "file": "src/data/loot.js", "path": "FORTUNE.payout", "current": ["boss_first", "boss_repeat", "chest_night"], "proposed": ["elite", "chest_glow", "chest_night", "boss_first", "boss_repeat"], "why": "刻度满了只在 Boss / 夜明宝箱兑现：谨慎玩家打完青牙后不贪夜，下一次兑现就是碧鳞首杀（v1 最后一战），极品出来已经没用。只有 15% 的玩家能在碧鳞前拿到极品；改后 87%（c7）。" },
+    { "priority": "P1", "file": "src/data/loot.js + src/game/loot.js", "path": "FORTUNE.payoutKey（new）", "current": "刻度兑现的极品是普通物品，区域二身陨会遗落", "proposed": true, "why": "兑现的极品加 tags:[\"key\"]，身陨不丢；保底大奖不能被风险吃掉。" },
+    { "priority": "P1", "file": "src/data/loot.js", "path": "FORTUNE.add（new 两项，供委托 / 奇遇模块调用）", "current": "无", "proposed": { "quest": 12, "encounter": 5 }, "why": "G7/G8 的机缘奖励；其余增量 elite 6 / chest_glow 5 / chest_night 10 / boss_first 15 / boss_repeat 10 / ruin_first 8 保持不变，首个极品中位在第 5–6 局，平均每周目 1.1 件。" },
+    { "priority": "P1", "file": "src/data/loot.js", "path": "SOURCES.chest_normal[0].stones", "current": [4, 9], "proposed": [6, 12], "why": "区域一灵石入不敷出：每局约 80 灵石，必需设施 490 + 符箓，灵泉炼化灵石几乎为 0（c4）。" },
+    { "priority": "P1", "file": "src/data/recipes.js", "path": "FORGE 石费", "current": { "dundi": 20, "fu_*": 15, "huqi": 40 }, "proposed": { "dundi": 10, "fu_*": 10, "huqi": 25 }, "why": "每局固定消耗（遁地符 / 五行符 / 护器符）区域一 25→15、区域二 65→40，让灵石有余量去炼化。" },
+    { "priority": "P1", "file": "src/data/recipes.js", "path": "FACILITIES.forge.cost[1].stones / FACILITIES.garden.cost[1].stones / FORGE.bag32.stones", "current": { "forge_lv2": 300, "garden_lv2": 200, "bag32": 200 }, "proposed": { "forge_lv2": 180, "garden_lv2": 100, "bag32": 150 }, "why": "当前 v1 内 91% 的玩家买不起炼器鼎 Lv2、87% 买不起药园 Lv2、69% 买不起 32 格储物袋——内容闲置。改后分别 62% / 22% / 54%。" },
+    { "priority": "P2", "file": "src/data/loot.js", "path": "SOURCES.mob[2]", "current": { "gear": [80, 17, 3, 0, 0], "chance": 0.04 }, "proposed": { "gear": [70, 25, 5, 0, 0], "chance": 0.06 }, "why": "小怪掉装备从每 25 只 1 件提到每 17 只 1 件、灵品以上 30%；与保底放宽配合，让「有东西可捡」的频率稳定在每局 2 件左右。" },
+    { "priority": "P2", "file": "src/data/loot.js", "path": "PITY.mobGear", "current": 25, "proposed": 40, "why": "掉率提高后 25 只的保底几乎每局都触发，失去「保底」的意义。" },
+    { "priority": "P2", "file": "src/data/loot.js", "path": "SOURCES.boss_first[3].chance / SOURCES.boss_repeat[3].chance", "current": { "boss_first": 0.01, "boss_repeat": 0.005 }, "proposed": { "boss_first": 0.03, "boss_repeat": 0.01 }, "why": "自然极品仍然稀有，但不再是 1% 的摆设；真正的保底靠机缘刻度。" },
+    { "priority": "P2", "file": "src/data/loot.js", "path": "SOURCES.chest_night[5].gear", "current": [0, 20, 52, 27.5, 0.5], "proposed": [0, 20, 52, 27, 1.5], "why": "夜明宝箱的极品概率 0.35%→1%（×0.7 开出装备），配合灵潮 ×2 给「贪到入夜」一个看得见的大奖期待。" },
+    { "priority": "P2", "file": "src/game/run/regions.js", "path": "REGIONS.r2.keepBag", "current": 0, "proposed": 0.25, "why": "区域二身陨清零 + 60% 取回，新手一周目平均损失 811 灵值（约 0.5 倍全部带回的灵石）。保留 25% 后损失降到 352，仍然痛（装备风险不变）。" },
+    { "priority": "P2", "file": "src/game/progression.js（addXp）", "path": "overflowBank（new 规则）", "current": "练气九层圆满后的修为直接丢弃", "proposed": { "rule": "九层圆满后溢出的修为存入 profile.stats.xpBank，筑基突破后一次性返还", "cap": 600 }, "why": "即使按本方案调整，仍有约 400–500 修为在九层圆满后溢出；存起来既不改变筑基时间，也不会让玩家觉得白打。" },
+    { "priority": "G7", "file": "src/game/quests（模块 E，新）", "path": "委托奖励", "current": "未定", "proposed": { "from_run": 5, "offer": 3, "take": [1, 2], "reward_mix": { "xp": 0.5, "fortune": 0.25, "stones": 0.25 }, "xp": { "r1": 40, "r2": 100 }, "fortune": 12, "stones": { "r1": 30, "r2": 60 }, "settle": "撤离成功才发奖" }, "why": "委托约占修为 4–6%：够成为出门的理由，又不会盖过搜打撤本身。" },
+    { "priority": "G8", "file": "src/game/quests（模块 E，新）", "path": "奇遇奖励（每个）", "current": "未定", "proposed": { "from_run": 6, "per_run": [0, 2], "xp": { "r1": 20, "r2": 40 }, "fortune": 5, "baopin_chance": 0.25 }, "why": "前辈遗蜕的 50% 宝品 / 尸傀精英等具体分支按这个期望值设计。" }
+  ],
+  "unchanged_confirmed": {
+    "src/data/progression.js": "xp 表（合计 4370）、growth、unlocks 不改：按建议数值，八局节奏与 G6 计划吻合",
+    "src/data/enemies.js": "普通怪气血 / 攻击与 ENCOUNTER.scale（0.27 / 0.12 / 0.08）不改：同级普通怪 2–4 刀，敌人一击 7–16% 气血，均在目标内（c5）",
+    "src/game/run/regions.js": "PHASES.tide 1 / 1.2 / 1.5 / 2 与 phases 不改；REGION_LOOT.r2.stoneMul 2.5 不改",
+    "src/data/recipes.js": "REFINE.stone [0,2,3,4]、聚气丹每层 3 枚、灵泉 Lv2 120、炼丹炉 30 / 200 不改",
+    "src/data/loot.js": "FORTUNE.max 100 及原有增量不改"
+  },
+  "expected_results": {
+    "到筑基 局数 p50 / p90": { "谨慎": [8, 9], "贪心": [7, 8], "新手": [8, 10] },
+    "到筑基 分钟 p50 / p90": { "谨慎": [89, 99], "贪心": [84, 98], "新手": [96, 116] },
+    "修为来源": { "感悟": "27–32%", "炼化": "38–41%", "丹药": "7%", "首杀/遗府": "19–21%", "委托/奇遇": "5%" },
+    "碧鳞前拿到极品的概率": 0.87,
+    "九层圆满后浪费的修为": "406–514（当前 1309–1887）"
+  }
+}

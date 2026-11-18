@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 功法指引 v2 · 三个方向（可交互草图）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../../assets/fonts/MaShanZheng-Regular.ttf"), url("../../../../src/ui/ink/MaShanZheng.woff2") format("woff2"); }
+html, body { margin: 0; background: #23231f; color: #ece6d6; font: 13px/1.65 "Microsoft YaHei", sans-serif; }
+header { display: flex; align-items: baseline; gap: 22px; padding: 14px 24px 4px; flex-wrap: wrap; }
+header h1 { margin: 0; font: 400 28px "MaShanZheng", KaiTi, serif; letter-spacing: .1em; }
+header small { color: rgba(236,230,214,.6); }
+header a { color: #d9b45e; }
+.ctl { display: flex; gap: 18px; padding: 4px 24px 8px; flex-wrap: wrap; align-items: baseline; }
+.ctl .g { display: flex; gap: 4px; align-items: baseline; }
+.ctl .g > span { color: rgba(236,230,214,.55); margin-right: 4px; }
+.ctl button { font: 400 16px "MaShanZheng", KaiTi, serif; color: rgba(236,230,214,.55); background: none; border: 0; padding: 2px 8px 6px; cursor: pointer; position: relative; letter-spacing: .06em; }
+.ctl button.on { color: #f5f0e3; }
+.ctl button.on::after { content: ""; position: absolute; left: 4px; right: 4px; bottom: 0; height: 7px; background: #b8291a; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+main { display: flex; gap: 16px; padding: 4px 24px 24px; }
+figure { margin: 0; width: 614px; flex: none; }
+.fr { width: 614px; height: 346px; overflow: hidden; position: relative; box-shadow: 0 6px 22px rgba(0,0,0,.5); background: #000; }
+.fr iframe { width: 1280px; height: 720px; border: 0; transform: scale(.4797); transform-origin: 0 0; }
+figcaption { padding: 8px 2px 0; }
+figcaption b { display: block; font: 400 20px "MaShanZheng", KaiTi, serif; letter-spacing: .06em; color: #f5f0e3; font-weight: 400; }
+figcaption b a { font: 12px "Microsoft YaHei", sans-serif; color: #d9b45e; margin-left: 10px; letter-spacing: 0; }
+figcaption p { margin: 2px 0; color: rgba(236,230,214,.78); }
+figcaption .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; margin-top: 4px; font-size: 12.5px; }
+figcaption .pc i { font-style: normal; color: #9cc4a8; } figcaption .pc i.c { color: #e09080; }
+figcaption .rec { color: #e8c76a; }
+</style></head>
+<body>
+<header><h1>功法指引 v2 · 「我知道下一门去哪打」</h1>
+  <small>三个方向并排（每格是一张 1280×720 草图缩小，点「单独打开」可交互：点法术、切去处、悬停看卡）· 说明与选择题见 <a href="../功法指引_v2_方案.md">docs/ui/v2/功法指引_v2_方案.md</a></small></header>
+<div class="ctl">
+  <div class="g"><span>去处</span><button data-r="r1">青岚山外</button><button data-r="r2" class="on">竹海·溪谷</button></div>
+  <div class="g"><span>钉选法术</span><button data-s="frost">寒冰锥</button><button data-s="still_water" class="on">止水诀</button><button data-s="thunder">掌心雷</button><button data-s="rock">落石诀</button><button data-s="vine">缠藤诀</button><button data-s="none">不钉</button></div>
+  <div class="g"><span>示意进度</span><button data-p="qi6" class="on">练气六层</button><button data-p="qi3">练气三层</button></div>
+</div>
+<main>
+  <figure><div class="fr"><iframe id="fa" src="a_laiyuan.html#s=r2-still_water"></iframe></div><figcaption><b>A · 功法匣 · 来源签<a href="a_laiyuan.html" target="_blank">单独打开 ›</a></b>
+    <p>现有功法匣只改三处：顶部「本去处缺：水（火盾 4 成）→ 2 门可得」；未领悟条目副标题 = 来源短句 + 残页点；悬停卡下半「来源」段（地点 · 敌人 / 容器 · 常见 / 偶得 / 罕见）。</p>
+    <div class="pc"><div><i>好</i>改动最小，三四天能落地；信息就在装配的地方</div><div><i class="c">差</i>出行页才看得到；12 门要滚动；缺口与来源要悬停才全</div></div></figcaption></figure>
+  <figure><div class="fr"><iframe id="fb" src="b_gongfapu.html#s=r2-still_water"></iframe></div><figcaption><b>B · 天机镜 · 功法谱<a href="b_gongfapu.html" target="_blank">单独打开 ›</a></b>
+    <p>镜中屏新应用：去处护盾一笔 + 缺口一行 + 五行（相克顺）× 12 门的谱，未得是墨拓剪影；点一门，镜外浮签写来源、残页、悟性、「标在舆图上」。</p>
+    <div class="pc"><div><i>好</i>12 门一屏看全，收集感最强；洞府里随时翻；能挂「追踪」</div><div><i class="c">差</i>和出门决策分在两处；字小（12.5px 屏）；多一个应用要做</div></div></figcaption></figure>
+  <figure><div class="fr"><iframe id="fc" src="c_quekou.html#s=r2-still_water"></iframe></div><figcaption><b>C · 出行准备 · 缺口联动<a href="c_quekou.html" target="_blank">单独打开 ›</a></b>
+    <p>「护盾 / 已带」两行下长出缺口签「缺水 ▸」，点开纸条：可得法术 · 去处 · 残页 · 本局补救（水符）；同步示意局内 M 舆图上的来源小签。</p>
+    <div class="pc"><div><i>好</i>缺口 → 去处 → 局内地图一条线，最直接回答「去哪打」</div><div><i class="c">差</i>只看缺口相关的几门，不是全谱；舆图小签要动地图模块</div></div></figcaption></figure>
+</main>
+<p style="padding:0 24px 20px;color:#e8c76a;margin:0">推荐：<b style="font-weight:400">C 为主 + A 的来源签</b>（出门前那一刻回答「缺什么、去哪打」，功法匣副标题与悬停卡补全 12 门的来源）；B 的全谱留作以后天机镜扩展。详见方案文档。</p>
+<script>
+const st = { r: "r2", s: "still_water", p: "qi6" };
+function apply() {
+  const h = `s=${st.r}-${st.s}${st.p !== "qi6" ? "&p=" + st.p : ""}`;
+  for (const [id, f] of [["fa", "a_laiyuan.html"], ["fb", "b_gongfapu.html"], ["fc", "c_quekou.html"]]) document.getElementById(id).contentWindow.location.hash = h;
+  document.querySelectorAll(".ctl button").forEach((b) => b.classList.toggle("on", (b.dataset.r && b.dataset.r === st.r) || (b.dataset.s && b.dataset.s === st.s) || (b.dataset.p && b.dataset.p === st.p)));
+}
+document.querySelectorAll(".ctl button").forEach((b) => b.addEventListener("click", () => { Object.assign(st, b.dataset.r ? { r: b.dataset.r } : b.dataset.s ? { s: b.dataset.s } : { p: b.dataset.p }); apply(); }));
+Promise.all([...document.querySelectorAll("iframe")].map((f) => new Promise((ok) => { f.onload = ok; setTimeout(ok, 8000); }))).then(() => document.fonts.ready).then(() => setTimeout(() => (window.__ready = !0), 600));
+</script>
+</body></html>

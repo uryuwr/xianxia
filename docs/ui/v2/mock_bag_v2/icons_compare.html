@@ -1,0 +1,76 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>储物袋 v2 · 物品图标路线对比</title>
+<link rel="stylesheet" href="../kit/strokes.css"><link rel="stylesheet" href="../kit/ink-ui.css"><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="base.css">
+<style>
+html, body { height: auto; }
+body { background: var(--ink-tex-paper), var(--ink-tex-fiber), #ece6d6; background-blend-mode: multiply, multiply, normal; padding: 22px 26px 30px; box-sizing: border-box; width: 1280px; }
+h1 { margin: 0; font: 400 34px var(--f-splash); letter-spacing: .1em; }
+.sub { font: 13px var(--f-ui); color: var(--ink-zhong); margin: 4px 0 14px; }
+table { border-collapse: collapse; table-layout: fixed; width: 1228px; }
+col.l { width: 156px; }
+th { font: 400 18px var(--f-display); color: var(--ink-nong); padding: 0 0 6px; letter-spacing: .1em; }
+th small { display: block; font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+td { padding: 6px 4px; vertical-align: middle; text-align: center; position: relative; }
+tr.row + tr.row td { background: linear-gradient(rgba(21,24,27,.08), rgba(21,24,27,.08)) 0 0 / 100% 1px no-repeat; }
+td.lab { text-align: left; padding-right: 8px; }
+td.lab b { display: block; font: 400 19px var(--f-display); letter-spacing: .06em; }
+td.lab span { display: block; font: 11.5px/1.5 var(--f-kai); color: var(--ink-zhong); margin-top: 3px; }
+td.lab .sc { font: 11px/1.6 var(--f-ui); color: var(--ink-zhong); margin-top: 4px; }
+td.lab .sc i { font-style: normal; color: #8a6a22; letter-spacing: 1px; }
+.cell { display: flex; align-items: center; gap: 4px; justify-content: center; }
+.big { width: 74px; height: 74px; object-fit: contain; }
+.mini { position: relative; width: 52px; height: 52px; flex: none; }
+.mini .tok { --cell: 52px; --gap: 0px; }
+.mini .tok > img { position: relative; z-index: 0; width: 84%; height: 84%; object-fit: contain; }
+.glyph { width: 74px; height: 74px; display: flex; align-items: center; justify-content: center; font: 400 46px var(--f-display); }
+.mini .tok > b { font: 400 25px var(--f-display); position: relative; }
+tr.rec td { background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(201,160,64,.10), transparent 75%); }
+tr.rec td.lab b::after { content: "推荐"; margin-left: 8px; font: 12px var(--f-display); color: var(--paper-hi); background: var(--zhu); padding: 1px 5px 2px; -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; vertical-align: 3px; }
+.foot { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 30px; font: 13px/1.7 var(--f-kai); color: var(--ink-nong); }
+.foot b { font-family: var(--f-display); font-weight: 400; }
+.night { background: #2b2d2c; border-radius: 0; }
+</style></head><body>
+<h1>物品图标 · 路线对比</h1>
+<div class="sub">同一组 8 件物品；每格左为 74px 大图（详情页尺寸），右为 52px 实际格子（圆相 + 品级晕，品级只为展示五档：凡 / 灵 / 宝 / 仙 / 极，颜色取自 src/core/items.js RARITY）。</div>
+<table id="t"></table>
+<div class="foot">
+  <div><b>(a) 程序化水墨模板</b>：每类一个"笔路模板"（几笔中线 + 几块淡彩轮廓），按物品参数换色、换变体；同一套笔触模型已用于立绘 portrait_gen。a1 / a2 只是渲染器不同：a1 输出矢量 SVG，a2 在 Canvas 上逐笔分层，加洇墨、飞白、纸纹颗粒、湿边。</div>
+  <div><b>(b) 3D 离屏渲染</b>：three.js 程序建模 + 简化水墨后期（深度 / 折角墨线、墨—纸色阶），8 件烘焙 229 ms（RTX 3070）/ 580 ms（软渲染）。和世界同一笔性，但墨线没有起收笔，小尺寸下像"描边贴纸"。</div>
+  <div><b>(c) 墨拓剪影</b>：由 (a) 的同一份模板自动推出：全部形状并成一块墨，细笔反刻成白线，加拍墨斑驳，只留一点朱。零额外绘制成本，48px 以下最清楚；但没有淡彩，靠剪影区分同类物品较难（青灵草 / 寒露草）。</div>
+  <div><b>现状</b>：单字在圆相里；"青 / 苗 / 牙 / 玉"需要读字才能认物，同字物品（丹、玉、苗）无法区分 —— 这是"像文字游戏"的主因。单字可保留为图标右下的辅助角标或无障碍文字。</div>
+</div>
+<script type="module">
+import { renderSVG, renderCanvas, renderRubbing } from "./icons/inkicons.js";
+const COLS = [
+  ["法剑", "青锋剑", "sword_qingfeng", "sword", "剑", 2],
+  ["法衣", "布法衣", "robe_bu", "robe", "衣", 1],
+  ["玉佩", "青玉佩", "jade_qing", "jade", "佩", 1],
+  ["灵草", "青灵草", "qingling_cao", "herb", "青", 0],
+  ["妖丹", "狼妖内丹", "wolf_core", "core", "丹", 3],
+  ["矿石", "铁精石", "tiejing_shi", "ore", "铁", 0],
+  ["丹药", "回春丹", "huichun_dan", "pill", "春", 1],
+  ["符箓", "遁地符", "dundi_fu", "fu", "遁", 4],
+];
+const RN = ["凡", "灵", "宝", "仙", "极"];
+const ROWS = [
+  ["现状 · 单字", "楷书单字 + 圆相（src/ui/kit.js）", "", (c) => null],
+  ["(a1) 水墨模板 · 矢量", "毛笔笔触多边形 + 飞白遮罩 + SVG 滤镜晕染", "观感 <i>★★★☆</i> 成本 <i>★★★☆</i><br>一致 <i>★★★★</i> 性能 <i>★★★★</i>", (c) => "data:image/svg+xml;charset=utf-8," + encodeURIComponent(renderSVG(c[2], 128, 128))],
+  ["(a2) 水墨模板 · 纸性位图", "同一份模板；逐笔分层：洇墨、飞白、颗粒、湿边；构建期烘焙图集", "观感 <i>★★★★</i> 成本 <i>★★★☆</i><br>一致 <i>★★★★</i> 性能 <i>★★★★</i>", (c) => renderCanvas(c[2], 128, 128, 2).toDataURL(), "rec"],
+  ["(b) 3D 离屏 + 水墨后期", "three.js 程序建模 / glb，卡通三阶光 + 墨线后期", "观感 <i>★★☆☆</i> 成本 <i>★★☆☆</i><br>一致 <i>★★☆☆</i>(与世界 ★★★★) 性能 <i>★★★★</i>", (c) => `icons_b/b_${c[3]}_256.png`],
+  ["(c) 墨拓剪影", "同模板自动推出：并墨、反刻白线、拍墨斑驳、一点朱", "观感 <i>★★★☆</i> 成本 <i>★★★★</i><br>一致 <i>★★★☆</i> 性能 <i>★★★★</i>", (c) => renderRubbing(c[2], 128, 128, 2).toDataURL()],
+];
+let h = `<colgroup><col class="l">${COLS.map(() => "<col>").join("")}</colgroup><tr><th></th>${COLS.map((c) => `<th>${c[0]}<small>${c[1]} · ${RN[c[5]]}品</small></th>`).join("")}</tr>`;
+for (const [name, desc, sc, src, cls] of ROWS) {
+  h += `<tr class="row ${cls || ""}"><td class="lab"><b>${name}</b><span>${desc}</span>${sc ? `<div class="sc">${sc}</div>` : ""}</td>`;
+  for (const c of COLS) {
+    const s = src(c), q = c[5];
+    const big = s ? `<img class="big" src="${s}">` : `<div class="glyph qname q${q}">${c[4]}</div>`;
+    const inner = s ? `<img src="${s}">` : `<b class="qname q${q}">${c[4]}</b>`;
+    h += `<td><div class="cell">${big}<div class="mini"><div class="tok q${q}" style="--c:1;--r:1;--w:1;--h:1">${inner}${q >= 3 ? `<i class="cs">${RN[q]}</i>` : ""}</div></div></div></td>`;
+  }
+  h += "</tr>";
+}
+document.getElementById("t").innerHTML = h;
+await Promise.all([...document.images].map((i) => (i.complete ? 0 : new Promise((r) => (i.onload = i.onerror = r)))));
+window.__ready = true;
+</script>
+</body></html>

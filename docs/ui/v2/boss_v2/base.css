@@ -1,0 +1,81 @@
+/* 青牙 v2 首领界面草图公用样式（只给 docs/ui/v2/boss_v2/*.html 用，不是游戏代码）
+   依赖：src/ui/ink/strokes.css、ink-ui.css（相对 ../../../../src/ui/ink/）；字体用 assets/fonts 全字库 */
+@font-face { font-family: "MaShanZheng"; src: url("../../../../assets/fonts/MaShanZheng-Regular.ttf"); font-display: block; }
+@font-face { font-family: "ZhiMangXing"; src: url("../../../../assets/fonts/ZhiMangXing-Regular.ttf"); font-display: block; }
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+body { position: relative; font-family: var(--f-kai); color: var(--ink); background: #ddd; }
+.abs { position: absolute; }
+:root {
+  --wood: #3f9a6e; --earth: #9a6a32; --metal: #9a7d34; --water: #2f7fa8; --fire: #b8291a; /* 技能栏五行色（UI 约定） */
+  --jade: #6fd6b4; /* 青焰 */
+}
+/* ---------- 世界（游戏内狼谷实景截图） ---------- */
+.world { position: absolute; inset: 0; background: url(bg_valley.png) 0 0 / 1280px 720px; }
+.night { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 45%, rgba(60, 86, 96, .18), rgba(24, 38, 46, .62)); mix-blend-mode: multiply; }
+.night2 { position: absolute; inset: 0; pointer-events: none; background: rgba(40, 70, 80, .22); mix-blend-mode: multiply; }
+.moon { position: absolute; border-radius: 50%; pointer-events: none; mix-blend-mode: screen;
+  background: radial-gradient(ellipse, rgba(214, 236, 230, .55) 0 40%, rgba(214, 236, 230, .18) 62%, transparent 72%); }
+.crack { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; pointer-events: none; }
+.crack path { fill: none; stroke: var(--jade); stroke-linecap: round; filter: drop-shadow(0 0 4px var(--jade)) drop-shadow(0 0 10px rgba(111, 214, 180, .7)); }
+/* 天时条收起：首领战时用一团纸色盖住（方向 A） */
+.tidemask { position: absolute; left: 400px; top: -8px; width: 660px; height: 104px; background: radial-gradient(ellipse at 50% 40%, rgba(236, 230, 214, .96) 50%, rgba(236, 230, 214, .6) 62%, rgba(236, 230, 214, 0) 74%); }
+.note { position: absolute; left: 14px; bottom: 6px; font: 12px var(--f-ui); color: rgba(21, 24, 27, .55); background: rgba(236, 230, 214, .7); padding: 1px 6px; border-radius: 2px; }
+
+/* ---------- 墨笔条（气血 / 护盾 / 狼威） ---------- */
+.bar { position: relative; -webkit-mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; }
+.bar > i { position: absolute; top: 0; bottom: 0; left: 0; }
+.bar .bg { right: 0; background: rgba(21, 24, 27, .3); }
+.bar .lag { width: calc(var(--lag) * 100%); background: rgba(184, 41, 26, .38); }
+.bar .fill { width: calc(var(--v) * 100%); background: linear-gradient(#2a2d31, #121417); }
+.shbar .fill { background: var(--shc); opacity: .9; }
+.shbar .bg { background: rgba(21, 24, 27, .08); }
+/* 狼威：从中间向两端长（只狼式），越满越浓、越近朱 */
+.poise { position: relative; -webkit-mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; background: rgba(21, 24, 27, .2); }
+.poise i { position: absolute; top: 0; bottom: 0; left: calc(50% - var(--p) * 50%); width: calc(var(--p) * 100%);
+  background: linear-gradient(90deg, var(--pc) , #15181b 50%, var(--pc)); }
+.poise.fall i { opacity: .55; }
+.poise.broken i { background: var(--zhu); left: 0; width: 100%; -webkit-mask: linear-gradient(90deg, #000 46%, transparent 46% 54%, #000 54%); mask: linear-gradient(90deg, #000 46%, transparent 46% 54%, #000 54%); }
+.seal { display: inline-grid; place-items: center; color: #f4efe2; background: var(--zhu); -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; font-family: var(--f-display); }
+.eseal { display: inline-grid; place-items: center; border-radius: 50%; color: #f4efe2; background: var(--shc); font: 900 15px var(--f-display); box-shadow: 0 0 0 2px rgba(236, 230, 214, .9); }
+.tick { position: absolute; width: 3px; background: var(--zhu); border-radius: 2px; }
+.lbl { font: 13px var(--f-ui); color: var(--ink-nong); text-shadow: 0 0 3px #ece6d6, 0 0 6px #ece6d6; }
+.glyph { font-family: var(--f-display); text-shadow: 0 0 3px #ece6d6, 0 0 8px #ece6d6; }
+/* 读条：一笔圆相 + 字 */
+.chan { position: absolute; width: 40px; height: 40px; }
+.chan::before { content: ""; position: absolute; inset: 0; background: conic-gradient(var(--zhu) calc(var(--k) * 360deg), rgba(21, 24, 27, .15) 0); -webkit-mask: var(--ink-enso-full) 0 0 / 100% 100%; mask: var(--ink-enso-full) 0 0 / 100% 100%; }
+.chan b { position: absolute; inset: 0; display: grid; place-items: center; font: 20px var(--f-display); color: var(--ink); }
+.chan small { position: absolute; left: 46px; top: 10px; white-space: nowrap; font: 12px var(--f-ui); color: var(--zhu); }
+
+/* ---------- 处决提示（锚在青牙头顶） ---------- */
+.prompt { position: absolute; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.prompt .ring { position: relative; width: 64px; height: 64px; }
+.prompt .ring::before { content: ""; position: absolute; inset: 0; background: conic-gradient(#15181b calc(var(--k) * 360deg), rgba(21, 24, 27, .12) 0); -webkit-mask: var(--ink-enso-full) 0 0 / 100% 100%; mask: var(--ink-enso-full) 0 0 / 100% 100%; }
+.prompt .key { position: absolute; left: 14px; top: 14px; width: 36px; height: 36px; border-radius: 50%; background: #15181b; color: #ece6d6; display: grid; place-items: center; font: 700 18px var(--f-ui); box-shadow: 0 0 0 3px rgba(236, 230, 214, .9); }
+.prompt .verb { font: 34px var(--f-splash); color: var(--zhu); text-shadow: 0 0 3px #ece6d6, 0 0 10px #ece6d6; line-height: 1; }
+.prompt .why { font: 13px var(--f-ui); color: var(--ink-nong); background: rgba(236, 230, 214, .85); padding: 1px 8px; border-radius: 2px; }
+
+/* ---------- 阶段横幅 ---------- */
+.banner { position: absolute; right: 120px; top: 110px; width: 150px; height: 470px; }
+.banner::before { content: ""; position: absolute; inset: 0; background: var(--paper); opacity: .94; -webkit-mask: var(--ink-deckle-slip) 0 0 / 100% 100% no-repeat; mask: var(--ink-deckle-slip) 0 0 / 100% 100% no-repeat; }
+.banner .big { position: absolute; left: 0; right: 0; top: 18px; text-align: center; font: 120px var(--f-splash); color: var(--zhu); line-height: 1; }
+.banner .v { position: absolute; left: 0; right: 0; top: 160px; writing-mode: vertical-rl; margin: 0 auto; font: 64px var(--f-display); color: var(--ink); letter-spacing: .1em; height: 260px; text-align: center; }
+.banner .s { position: absolute; left: 6px; right: 6px; bottom: 16px; text-align: center; font: 12px var(--f-ui); color: var(--ink-zhong); }
+
+/* ---------- 入场题签 ---------- */
+.intro { position: absolute; left: 50%; top: 92px; transform: translateX(-50%); width: 520px; height: 150px; text-align: center; }
+.intro::before { content: ""; position: absolute; inset: -10px -40px; background: radial-gradient(ellipse, rgba(236, 230, 214, .95) 45%, rgba(236, 230, 214, 0) 70%); }
+.intro .n { position: relative; font: 78px var(--f-splash); line-height: 1; letter-spacing: .12em; }
+.intro .t { position: relative; font: 20px var(--f-display); color: var(--ink-nong); margin-top: 4px; letter-spacing: .2em; }
+.intro .t b { color: var(--zhu); font-weight: 400; }
+.intro .h { position: relative; font: 14px var(--f-ui); color: var(--ink-zhong); margin-top: 8px; display: inline-flex; gap: 10px; align-items: center; }
+.intro .h .bestbar { width: 140px; height: 7px; }
+
+/* ---------- 终结处决（留白 · 一笔 · 斩 · 朱印） ---------- */
+.final .paper { position: absolute; inset: 0; background: var(--ink-tex-paper), var(--ink-tex-fiber), rgba(236, 230, 214, .86); background-blend-mode: multiply; }
+.final .figs { position: absolute; inset: 0; background: url(bg_valley.png) 0 0 / 1280px 720px; filter: grayscale(1) contrast(1.6) brightness(1.15); opacity: .55; mix-blend-mode: multiply;
+  -webkit-mask: radial-gradient(ellipse 120px 210px at 645px 250px, #000 55%, transparent 80%); mask: radial-gradient(ellipse 120px 210px at 645px 250px, #000 55%, transparent 80%); }
+.final .stroke { position: absolute; left: -40px; top: 268px; width: 1360px; height: 120px; background: #121417; transform: rotate(-6deg);
+  -webkit-mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; }
+.final .zhan { position: absolute; left: 50%; top: 80px; transform: translateX(-50%); font: 300px var(--f-splash); color: #15181b; line-height: 1; opacity: .92; }
+.final .yin { position: absolute; right: 120px; bottom: 90px; width: 132px; height: 132px; font-size: 34px; line-height: 1.05; text-align: center; writing-mode: vertical-rl; transform: rotate(-4deg); }
+.final .cap { position: absolute; left: 0; right: 0; bottom: 36px; text-align: center; font: 13px var(--f-ui); color: var(--ink-zhong); }

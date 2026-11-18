@@ -1,0 +1,5 @@
+{
+  "_说明": "按键方案。detect = 自动识别（游戏里有 player.tryCharge 就按新方案：右键蓄势斩、V 法宝）。charge: auto = 气势满时三段之后自动接蓄势斩（v0 现行）；right = 三段后按鼠标右键主动释放。artifact: 法宝按键，right = 鼠标右键（v0 现行），或键码如 KeyV。",
+  "charge": "detect",
+  "artifact": "detect"
+}

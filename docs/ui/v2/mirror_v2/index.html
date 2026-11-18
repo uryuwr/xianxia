@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 天机镜 v2 · 三个方向</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css">
+<link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../../assets/fonts/MaShanZheng-Regular.ttf"), url("../../../../src/ui/ink/MaShanZheng.woff2") format("woff2"); }
+@font-face { font-family: "ZhiMangXing"; src: url("../../../../assets/fonts/ZhiMangXing-Regular.ttf"), url("../../../../src/ui/ink/ZhiMangXing.woff2") format("woff2"); }
+html, body { margin: 0; height: 100%; }
+body { font-family: var(--f-kai); color: var(--ink); background: var(--ink-tex-paper), var(--ink-tex-fiber), var(--paper); background-blend-mode: multiply; display: flex; flex-direction: column; overflow: hidden; }
+header { display: flex; align-items: baseline; gap: 22px; padding: 14px 26px 8px; flex-wrap: wrap; }
+header h1 { margin: 0; font: 400 34px var(--f-splash); letter-spacing: .08em; }
+header .sub { font: 13px var(--f-ui); color: var(--ink-zhong); }
+nav { display: flex; gap: 6px; align-items: baseline; font: 19px var(--f-display); }
+nav button, .pg button { font: inherit; background: none; border: 0; cursor: pointer; color: var(--ink-dan); padding: 2px 8px 6px; position: relative; letter-spacing: .06em; }
+nav button.on, .pg button.on { color: var(--ink-jiao); }
+nav button.on::after, .pg button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--zhu); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.pg { margin-left: auto; font: 13px var(--f-ui); color: var(--ink-zhong); display: flex; align-items: baseline; gap: 2px; }
+.pg button { font: 15px var(--f-display); }
+main { flex: 1; min-height: 0; position: relative; }
+.one { position: absolute; inset: 0 0 8px; display: flex; align-items: flex-start; justify-content: center; }
+.frame { width: 1280px; height: 720px; transform-origin: 50% 0; box-shadow: 0 8px 24px rgba(40, 32, 20, .3); flex: none; }
+.frame iframe { width: 1280px; height: 720px; border: 0; display: block; }
+.side { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 6px 22px 16px; overflow: auto; }
+.card { display: flex; flex-direction: column; gap: 8px; cursor: pointer; }
+.card .th { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; box-shadow: 0 4px 14px rgba(40, 32, 20, .28); }
+.card .th iframe { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; border: 0; transform-origin: 0 0; pointer-events: none; }
+.card h2 { margin: 4px 0 0; font: 400 24px var(--f-display); letter-spacing: .08em; }
+.card h2 small { font: 13px var(--f-kai); color: var(--ink-zhong); margin-left: 8px; letter-spacing: 0; }
+.card ul { margin: 0; padding-left: 18px; font: 13.5px/1.75 var(--f-kai); color: var(--ink-nong); }
+.card ul b { color: var(--zhu); font-weight: 400; }
+.card:hover h2 { color: var(--zhu); }
+.hint { font: 12px var(--f-ui); color: var(--ink-dan); }
+</style>
+</head>
+<body>
+<header>
+  <h1>天机镜 v2</h1>
+  <span class="sub">一部被水墨化的手机 · 三个方向 · 都可以点（应用、页签、条目、照片、进度切换都能动）　说明：docs/ui/v2/天机镜_v2_方案.md</span>
+  <nav id="nav"><button data-v="all" class="on">并排</button><button data-v="a">A 圆镜 · 镜中屏</button><button data-v="b">B 镜开为册</button><button data-v="c">C 方镜 · 修行圈</button></nav>
+  <span class="pg" id="pg">示意进度 <button data-p="qi7" class="on">练气七层</button><button data-p="zj">筑基一层</button></span>
+</header>
+<main id="main"></main>
+<script>
+const PAGES = {
+  a: { f: "a_yuanjing.html", n: "A 圆镜 · 镜中屏", s: "铜镜里嵌一块竖屏", pts: ["石案上那面<b>圆铜镜</b>直接放大，镜面里亮着一块竖屏", "屏里是列表，<b>详情放在镜外的浮签</b>上", "镜与手机两个意象都最完整；屏小，字要小"] },
+  b: { f: "b_ceye.html", n: "B 镜开为册", s: "左页手机，右页内容", pts: ["和灵泉 / 境界<b>同一种装裱册页</b>", "左页是画出来的手机（兼导航），<b>右页大、读得清</b>", "境界录条目在右页里<b>就地展开</b>，属性与所得分两栏"] },
+  c: { f: "c_fangjing.html", n: "C 方镜 · 修行圈", s: "手机形的方铜镜，境界录做成朋友圈", pts: ["铜框方镜，<b>镜钮就是前置镜头</b>，挂一根朱绳", "境界录 = <b>修行圈</b>：每次破境一条动态，配那段记忆当照片，<b>玄机子在下面评论</b>", "所有内容都在屏里，两边仍看得见洞府"] },
+};
+let view = "all", prog = "qi7";
+const hashFor = (k) => `#p=${prog}&app=${k === "b" ? "realm" : "realm"}&t=21:40`;
+function render() {
+  const M = document.getElementById("main");
+  if (view === "all") {
+    M.innerHTML = `<div class="side">${Object.entries(PAGES).map(([k, p]) => `<div class="card" data-k="${k}"><div class="th"><iframe src="${p.f}${hashFor(k)}" tabindex="-1"></iframe></div><h2>${p.n}<small>${p.s}</small></h2><ul>${p.pts.map((x) => `<li>${x}</li>`).join("")}</ul></div>`).join("")}<div class="hint" style="grid-column:1/-1">点卡片进入可交互的全尺寸草图。</div></div>`;
+    fit();
+  } else {
+    M.innerHTML = `<div class="one"><div class="frame"><iframe src="${PAGES[view].f}#p=${prog}&app=home"></iframe></div></div>`;
+    fit();
+  }
+}
+function fit() {
+  const M = document.getElementById("main");
+  const fr = M.querySelector(".frame");
+  if (fr) { const s = Math.min((M.clientWidth - 24) / 1280, (M.clientHeight - 12) / 720, 1); fr.style.transform = `scale(${s})`; fr.style.marginBottom = `${-720 * (1 - s)}px`; }
+  for (const th of M.querySelectorAll(".card .th")) th.querySelector("iframe").style.transform = `scale(${th.clientWidth / 1280})`;
+}
+document.getElementById("nav").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; view = b.dataset.v; document.querySelectorAll("#nav button").forEach((x) => x.classList.toggle("on", x === b)); render(); });
+document.getElementById("pg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; prog = b.dataset.p; document.querySelectorAll("#pg button").forEach((x) => x.classList.toggle("on", x === b)); render(); });
+document.getElementById("main").addEventListener("click", (e) => { const c = e.target.closest(".card"); if (!c) return; document.querySelector(`#nav button[data-v="${c.dataset.k}"]`).click(); });
+addEventListener("resize", fit);
+render();
+</script>
+</body>
+</html>

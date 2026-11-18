@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 天机镜 v2 · 方向 A 圆镜 · 镜中屏</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css">
+<link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<link rel="stylesheet" href="base.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script>
+<script src="data.js"></script>
+<script src="common.js"></script>
+<style>
+/* 洞府照常，压一层纸；镜子周围再暗一点，像在镜台前低头看镜 */
+.veil { background: radial-gradient(circle at 560px 360px, rgba(30, 26, 20, .38) 0 330px, rgba(236, 230, 214, .84) 420px, rgba(236, 230, 214, .93) 100%); }
+.veil::after { content: ""; position: absolute; inset: 0; background: var(--ink-tex-paper), var(--ink-tex-fiber); opacity: .45; }
+
+/* ---------- 左：竖排标题 + 题跋 ---------- */
+.ttl { left: 54px; top: 46px; display: flex; gap: 14px; }
+.ttl .big { writing-mode: vertical-rl; font: 400 76px/1 var(--f-splash); color: var(--ink-jiao); letter-spacing: .04em; }
+.ttl .tiba { writing-mode: vertical-rl; font: 14px/1.9 var(--f-kai); color: var(--ink-zhong); letter-spacing: .3em; margin-top: 10px; }
+.ttl .tiba .ink-seal { margin-top: 10px; }
+.keys { left: 50px; bottom: 34px; font: 12px/2 var(--f-ui); color: var(--ink-zhong); }
+.keys b { font: 15px var(--f-display); color: var(--ink-nong); font-weight: 400; margin-right: 4px; }
+
+/* ---------- 铜镜 ---------- */
+.mirror { left: 210px; top: 10px; width: 700px; height: 700px; border-radius: 50%; isolation: isolate; }
+.mirror .rim { position: absolute; inset: 0; border-radius: 50%; z-index: -1;
+  background: radial-gradient(circle, transparent 92.6%, #5b472b 92.8%, #8a6f45 95%, #6f5a37 97.4%, #4a3a24 99%, transparent 99.6%),
+              repeating-conic-gradient(from 2deg, rgba(48, 36, 20, .55) 0 2.2deg, transparent 2.2deg 7.5deg),
+              radial-gradient(circle, transparent 92%, #7a6240 92.4%, #7a6240 99.4%, transparent 99.6%);
+  -webkit-mask: radial-gradient(circle, transparent 92.5%, #000 92.7%, #000 99.5%, transparent 99.7%); mask: radial-gradient(circle, transparent 92.5%, #000 92.7%, #000 99.5%, transparent 99.7%);
+  filter: drop-shadow(0 8px 18px rgba(30, 24, 14, .45)); }
+.mirror .face { position: absolute; inset: 3.6%; border-radius: 50%; overflow: hidden;
+  background: radial-gradient(circle at 50% 46%, #47504f 0, #343a39 38%, #2a2722 70%, #211d17 100%); }
+.mirror .face::before { content: ""; position: absolute; inset: 0; background: var(--ink-tex-cloud); opacity: .35; mix-blend-mode: screen; }
+/* 镜背的一圈铭文（只在镜面边缘露出） */
+.mirror .ming { position: absolute; inset: 5.4%; border-radius: 50%; pointer-events: none; }
+.mirror .ming span { position: absolute; left: 50%; top: 0; height: 50%; transform-origin: 50% 100%; font: 15px var(--f-display); color: rgba(220, 200, 150, .28); margin-left: -8px; width: 16px; text-align: center; }
+.mirror .knob { position: absolute; left: 50%; top: -14px; width: 46px; height: 26px; margin-left: -23px; border-radius: 22px 22px 10px 10px; background: #6f5a37; box-shadow: inset 0 -5px 0 rgba(40, 30, 16, .5); }
+.mirror .knob::after { content: ""; position: absolute; left: 50%; top: 7px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #2a2016; }
+.mirror .cord { position: absolute; left: 50%; top: -48px; width: 3px; height: 40px; margin-left: -1.5px; background: var(--zhu); opacity: .8; border-radius: 2px; }
+
+/* 手机屏：一块被点亮的宣纸 */
+.screen { position: absolute; left: 190px; top: 70px; width: 320px; height: 560px; border-radius: 40px; overflow: hidden; font-size: 12.5px;
+  background: var(--ink-tex-paper), var(--ink-tex-fiber), var(--paper-hi); background-blend-mode: multiply;
+  box-shadow: 0 0 0 2px rgba(21, 24, 27, .7), 0 0 0 5px rgba(40, 34, 26, .9), 0 0 34px var(--glow), 0 0 80px rgba(127, 200, 220, .18);
+  animation: lit 5s ease-in-out infinite; }
+@keyframes lit { 0%, 100% { box-shadow: 0 0 0 2px rgba(21, 24, 27, .7), 0 0 0 5px rgba(40, 34, 26, .9), 0 0 30px var(--glow), 0 0 70px rgba(127, 200, 220, .14); } 50% { box-shadow: 0 0 0 2px rgba(21, 24, 27, .7), 0 0 0 5px rgba(40, 34, 26, .9), 0 0 40px var(--glow), 0 0 96px rgba(127, 200, 220, .24); } }
+.screen .mj-sb .knob { display: none; }
+.screen .mj-crack { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; opacity: .9; }
+.screen .view { position: absolute; inset: 0; display: flex; flex-direction: column; }
+.screen .body { flex: 1; min-height: 0; }
+.screen .mj-eh .when { flex-basis: 100%; margin-left: 0; order: 9; }
+.screen .mj-tr { grid-template-columns: 4.6em 2.9em 1em 3.6em 1fr 3.2em; }
+.screen .mj-total { padding: .6em .9em 1em; }
+.screen .mj-tr .x { display: none; }
+.screen .mj-hero .to { font-size: 1.8em; }
+.screen .homebar { position: absolute; left: 50%; bottom: 8px; width: 90px; height: 6px; margin-left: -45px; background: var(--ink-dan); z-index: 6; cursor: pointer; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+
+/* ---------- 右：浮签（详情） ---------- */
+.slip { left: 948px; top: 58px; width: 296px; max-height: 600px; }
+.slip.ink-paper { padding: 22px 24px 22px; transform: rotate(.6deg); font-size: 13.5px; }
+.slip .sh { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.slip .sh .t { font: 400 30px/1.1 var(--f-display); letter-spacing: .06em; }
+.slip .sh .s { font: 13px var(--f-kai); color: var(--ink-zhong); }
+.slip .sh .ink-seal { margin-left: auto; }
+.slip .when { font: 11.5px var(--f-ui); color: var(--ink-dan); margin: -2px 0 6px; }
+.slip .mj-eb { margin-top: 0; padding-top: 4px; background: none; }
+.slip .mj-sr { grid-template-columns: 4.4em 3.2em 1.1em 4.2em 1fr; }
+.empty-hint { left: 960px; top: 300px; width: 260px; font: 15px/1.9 var(--f-kai); color: var(--ink-zhong); }
+.empty-hint b { font: 400 22px var(--f-display); color: var(--ink-nong); display: block; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="world"></div>
+<div class="veil"></div>
+
+<div class="ttl abs"><div class="big">天机镜</div><div class="tiba">掌中一面镜　照见来处<br><span class="ink-seal two" style="--s:30px">林墨</span></div></div>
+<div class="keys abs"><div><b>M</b>合上</div><div><b>Esc</b>回主屏</div><div><b>F</b>镜台 · 也可点镜</div></div>
+
+<div class="mirror abs">
+  <i class="cord"></i><div class="rim"></div><div class="face"></div><div class="ming" id="ming"></div><i class="knob"></i>
+  <div class="screen" id="scr"></div>
+</div>
+<div id="side"></div>
+<div id="proto"></div>
+
+<script>
+window.MJ_KEEP_OPEN = !0;
+const D = MJD;
+// 镜面边缘的铭文：一圈淡金小字
+document.getElementById("ming").innerHTML = [..."见日之光天下大明长毋相忘"].map((c, i, a) => `<span style="transform:rotate(${-150 + (300 / (a.length - 1)) * i}deg)">${c}</span>`).join("");
+
+function sideFor(S) {
+  if (S.app === "realm" && S.tab === "list") {
+    const H = D.history(MV.prog());
+    const e = H.find((x) => x.to === S.open) || H[0];
+    return `<section class="slip abs ink-paper"><div class="sh"><span class="t">${e.toName}</span>${e.to === "2:1" ? '<span class="ink-seal gold two" style="--s:34px">筑基</span>' : ""}</div>
+      <div class="when">${e.fromName} → ${e.toName} · ${e.run ? `第 ${e.run} 次出行归来` : "序章"} · 入画第 ${e.day} 日 · ${e.hour}</div>${MV.entryBody(e)}</section>`;
+  }
+  if (S.app === "realm" && S.tab === "total") return `<section class="slip abs ink-paper"><div class="sh"><span class="t">所得</span><span class="s">自练气一层起</span></div>${MV.totals({ part: "gains" })}</section>`;
+  if (S.app === "album") {
+    const k = S.mem || MV.litKeys().slice(-1)[0];
+    return `<section class="slip abs ink-paper">${MV.memView(k)}</section>`;
+  }
+  if (S.app === "home") return `<div class="empty-hint abs"><b>镜中有屏</b>点一个应用。<br>境界录记着每一次破境；相册里是那边的日子。</div>`;
+  return "";
+}
+
+MV.start((S) => {
+  let body = "";
+  if (S.app === "home") body = MV.home();
+  else {
+    const T = { realm: "境界录", album: "相册", trail: "行迹", msg: S.mtab === "dial" ? "拨号" : "消息", map: "舆图" }[S.app];
+    const tabs = S.app === "realm" ? MV.tabs([["list", "历次"], ["total", "总览"]], S.tab, "tab") : S.app === "msg" ? MV.tabs([["msg", "消息"], ["dial", "拨号"]], S.mtab, "mtab") : "";
+    let c = "";
+    if (S.app === "realm") c = S.tab === "total" ? MV.totals({ part: "stats" }) : MV.realmList({ inline: !1, chips: 4 });
+    if (S.app === "album") c = MV.album();
+    if (S.app === "trail") c = MV.trail();
+    if (S.app === "msg") c = MV.msg();
+    if (S.app === "map") c = MV.mapApp();
+    body = `${MV.appHead(T, { tabs })}<div class="body ${S.app === "msg" ? "" : "mj-scroll"}">${c}</div>`;
+  }
+  document.getElementById("scr").innerHTML = `<div class="view">${MV.statusBar()}${S.app === "home" ? `<div class="body" style="position:relative">${body}</div>` : body}</div>${D.CRACK}<i class="homebar" data-close></i>`;
+  // 选中态：A 不在列表里展开，而是把详情放到右侧浮签
+  if (S.app === "realm" && S.tab === "list") {
+    const sel = S.open || D.history(MV.prog())[0].to;
+    const n = document.querySelector(`.mj-e[data-open="${sel}"]`);
+    n && n.classList.add("sel");
+  }
+  document.getElementById("side").innerHTML = sideFor(S);
+  document.getElementById("proto").innerHTML = MV.progSwitch("方向 A · 圆镜 · 镜中屏");
+});
+</script>
+</body>
+</html>

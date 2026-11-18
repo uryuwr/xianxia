@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 出行准备（v2）</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/strokes.css">
+<link rel="stylesheet" href="kit/ink-ui.css">
+<script src="kit/ink-ui.js"></script>
+<style>
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+.abs { position: absolute; }
+/* 页眉：左上标题 + 一笔 */
+.head { left: 54px; top: 30px; display: flex; align-items: center; gap: 16px; }
+.head .ink-title { font-size: 40px; }
+.head .ink-note { margin-left: 8px; font-size: 13px; }
+/* 左：去处——选中的区域画在扇面里，其它去处是一列字 */
+.fanbox { left: 40px; top: 100px; width: 410px; height: 248px; }
+.fanbox .ink-fan { position: absolute; inset: 0; background: url(img/bamboo.jpg) 50% 40% / cover; filter: sepia(.2) saturate(.9); }
+.fanbox .ink-fan-rim { position: absolute; inset: 0; }
+.fanbox .edge { position: absolute; inset: -3px; background: rgba(90, 70, 40, .55); -webkit-mask: var(--ink-fan) 0 0 / 100% 100% no-repeat; mask: var(--ink-fan) 0 0 / 100% 100% no-repeat; z-index: -1; }
+.fanbox .name { position: absolute; left: 50%; top: 34px; transform: translateX(-50%); white-space: nowrap; font-size: 44px; color: var(--ink); text-shadow: 0 0 12px rgba(245,240,227,.95), 0 0 24px rgba(245,240,227,.8); letter-spacing: .06em; }
+.fanbox .name + .ink-seal { position: absolute; left: 300px; top: 38px; }
+.where { left: 60px; top: 372px; width: 330px; }
+.where .ink-row { font-family: var(--f-display); font-size: 20px; letter-spacing: .1em; padding: 6px 2px; white-space: nowrap; }
+.where .ink-row small { font-family: var(--f-ui); font-size: 12px; letter-spacing: 0; color: var(--ink-dan); }
+.where .ink-row.locked { color: var(--ink-dan); }
+.info { left: 60px; top: 520px; width: 330px; }
+.info .ink-row { font-size: 14px; padding: 5px 2px; }
+.info .ink-row .v { font-family: var(--f-kai); font-size: 15px; }
+.info .chip { display: inline-block; font-family: var(--f-kai); font-size: 14px; margin-left: 6px; }
+/* 中：人物与随身之物（圆相环绕人物，像画中题注） */
+/* 立绘：写意水墨的 2D 主角（kit/portrait_linmo.svg，可替换为画师立绘，同尺寸 600×1000） */
+.hero { left: 516px; top: 34px; width: 336px; height: 560px; background: url(kit/portrait_linmo.svg) 0 0 / 100% 100% no-repeat; }
+.sign { left: 840px; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.sign .n { writing-mode: vertical-rl; font-family: var(--f-display); font-size: 22px; letter-spacing: .25em; color: var(--ink-nong); }
+.skills { left: 512px; top: 596px; display: flex; gap: 26px; }
+.skills .ink-slot { --z: 54px; font-size: 24px; }
+.skills .ink-slot .cap { bottom: -20px; }
+.skills .ink-slot .cap b { font-family: var(--f-ui); font-size: 10px; color: var(--ink-zhong); margin-left: 3px; }
+.gear { position: absolute; display: flex; align-items: center; gap: 10px; }
+.gear .t { display: flex; flex-direction: column; gap: 1px; }
+.gear .t b { font-family: var(--f-display); font-weight: 400; font-size: 16px; color: var(--ink-nong); letter-spacing: .06em; white-space: nowrap; }
+.gear .t span { font-family: var(--f-ui); font-size: 11px; color: var(--ink-dan); white-space: nowrap; }
+.gear.r { flex-direction: row-reverse; text-align: right; }
+.gear .k { font-family: var(--f-ui); font-size: 11px; font-weight: 700; color: var(--ink-zhong); }
+.lead { position: absolute; height: 1px; background: linear-gradient(90deg, var(--ink-qing), transparent); }
+.cap-h { position: absolute; font-family: var(--f-kai); font-size: 13px; color: var(--ink-dan); letter-spacing: .4em; }
+/* 右：行囊（纸面板） */
+.pack { left: 904px; top: 70px; width: 300px; }
+.pack .ink-h { display: flex; align-items: baseline; justify-content: space-between; }
+.pack .ink-h small { font-family: var(--f-ui); font-size: 12px; color: var(--ink-dan); letter-spacing: 0; }
+.pack .slots { display: grid; grid-template-columns: repeat(4, 62px); gap: 22px 12px; margin: 16px 0 18px; justify-content: space-between; }
+.pack .slots .ink-slot { --z: 58px; font-size: 24px; }
+.risk { display: flex; gap: 12px; align-items: flex-start; margin-top: 4px; }
+.risk p { margin: 0; font-size: 14px; line-height: 1.75; color: var(--ink-nong); }
+.risk p b { font-weight: 400; color: var(--zhu); }
+.go { right: 66px; bottom: 44px; display: flex; align-items: center; gap: 26px; }
+.go .ink-tiba { font-size: 13px; white-space: nowrap; height: 200px; }
+</style>
+</head>
+<body class="ink-stage">
+  <div class="abs head">
+    <span class="ink-title">出行</span>
+    <div class="ink-rule" style="width:150px"></div>
+    <span class="ink-note">第六次 · 洞府辰时 · 储物袋已清空</span>
+  </div>
+
+  <!-- 去处：扇面 -->
+  <div class="abs fanbox">
+    <div class="edge"></div>
+    <div class="ink-fan"></div>
+    <div class="ink-fan-rim"></div>
+    <div class="name ink-splash">竹海溪谷</div>
+    <span class="ink-seal two" style="--s:34px">二境</span>
+  </div>
+  <div class="abs where ink-list">
+    <div class="ink-row"><span>青岚山外</span><small>已探 · 平稳</small><span class="v" style="font-size:13px;color:var(--ink-dan)">一境</span></div>
+    <div class="ink-row on"><span style="color:var(--ink)">竹海 · 溪谷</span><small>探明四成 · 残阵未明</small><span class="v" style="font-size:13px;color:var(--zhu)">二境</span></div>
+    <div class="ink-row locked"><span>黑风岭</span><small>需 练气七层</small><span class="v"><span class="ink-seal ink" style="--s:22px;font-size:11px">锁</span></span></div>
+  </div>
+  <div class="abs info ink-list">
+    <div class="ink-row"><span class="k">妖兽</span><span class="v">狼妖 · 蝠妖 · 碧鳞水蟒</span></div>
+    <div class="ink-row"><span class="k">出产</span><span class="v"><span class="c-ling">寒露草</span> · <span class="c-bao">千年竹心</span> · 紫藤</span></div>
+    <div class="ink-row"><span class="k">撤离</span><span class="v">三处 · 其一需阵钥</span></div>
+    <div class="ink-row"><span class="k">天时</span><span class="v">晨起 · 入夜妖潮 · 约十五分</span></div>
+  </div>
+
+  <!-- 人物与装备 -->
+  <div class="abs hero" role="img" aria-label="林墨立绘"></div>
+  <div class="abs sign"><span class="n">林墨</span><span class="ink-seal" style="--s:24px;font-size:11px">剑</span></div>
+  <span class="cap-h" style="left:470px;top:96px">随身</span>
+
+  <div class="gear r" style="right:700px;top:130px"><span class="ink-slot q-bao"><b>剑</b></span><div class="t"><b>青锋剑</b><span>法剑 · 宝品</span></div></div>
+  <div class="gear r" style="right:716px;top:240px"><span class="ink-slot q-ling"><b>袍</b></span><div class="t"><b>灵丝道袍</b><span>法衣 · 灵品</span></div></div>
+  <div class="gear r" style="right:716px;top:350px"><span class="ink-slot q-ling"><b>佩</b></span><div class="t"><b>寒玉佩</b><span>真气 +20</span></div></div>
+  <div class="gear r" style="right:700px;top:460px"><span class="ink-slot q-bao"><b>冥</b></span><div class="t"><b>青冥飞剑</b><span>法宝 · 右键</span></div></div>
+
+  <div class="abs skills">
+    <span class="ink-slot q-ling"><b>斩</b><span class="cap">剑气斩<b>Q</b></span></span>
+    <span class="ink-slot q-bao"><b>冰</b><span class="cap">寒冰锥<b>E</b></span></span>
+    <span class="ink-slot is-locked"><b>锁</b><span class="cap">残卷 2/3<b>R</b></span></span>
+    <span class="ink-slot q-ling"><b>心</b><span class="cap">斩敌回气<b>心法</b></span></span>
+  </div>
+
+  <!-- 行囊 -->
+  <section class="abs pack ink-paper tilt-r">
+    <div class="ink-h">行囊<small>可带 8 · 已带 6</small></div>
+    <div class="slots">
+      <span class="ink-slot q-ling"><b>春</b><em>×3</em><span class="cap">回春丹</span></span>
+      <span class="ink-slot q-bao"><b>气</b><em>×2</em><span class="cap">回气丹</span></span>
+      <span class="ink-slot q-fan"><b>符</b><em>×1</em><span class="cap">遁地符</span></span>
+      <span class="ink-slot q-fan is-new"><s></s><b>囊</b><span class="cap">锦囊</span></span>
+      <span class="ink-slot is-empty"></span>
+      <span class="ink-slot is-empty"></span>
+      <span class="ink-slot is-empty"></span>
+      <span class="ink-slot is-empty"></span>
+    </div>
+    <div class="ink-rule" style="margin:6px 0 14px"></div>
+    <div class="risk">
+      <span class="ink-seal two" style="--s:40px">风险</span>
+      <p>身陨则<b>储物袋所拾尽失</b>，<br>随身之物与行囊余下者留存。<br><span class="ink-note">锦囊：可护一件物品不失</span></p>
+    </div>
+  </section>
+
+  <div class="abs go">
+    <span class="ink-btn">回洞府 <span class="key">Esc</span></span>
+    <div class="ink-tiba">竹深溪浅 · 量力而归</div>
+    <button class="ink-seal-btn is-hover">启程</button>
+  </div>
+</body>
+</html>

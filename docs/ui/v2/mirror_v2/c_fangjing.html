@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 天机镜 v2 · 方向 C 方镜 · 修行圈</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css">
+<link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<link rel="stylesheet" href="base.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script>
+<script src="data.js"></script>
+<script src="common.js"></script>
+<style>
+/* 洞府留得最多：只在镜子周围压一圈纸色，两边仍看得见院子 */
+.veil { background: radial-gradient(ellipse 360px 420px at 640px 360px, rgba(236, 230, 214, .82), rgba(236, 230, 214, .55) 70%, rgba(236, 230, 214, .38)); }
+.world { filter: blur(1.5px) saturate(.85); }
+
+/* ---------- 方镜：铜框 + 镜钮（= 前置镜头）+ 朱绳 ---------- */
+.fj { left: 452px; top: 16px; width: 376px; height: 690px; border-radius: 46px; background: #7a6240; isolation: isolate;
+  box-shadow: 0 12px 26px rgba(30, 24, 14, .45), inset 0 0 0 2px rgba(40, 30, 16, .55); transform: rotate(-1.2deg); }
+.fj::before { content: ""; position: absolute; inset: 4px; border-radius: 42px; z-index: -1;
+  background: repeating-linear-gradient(90deg, rgba(40, 30, 16, .35) 0 2px, transparent 2px 9px), repeating-linear-gradient(0deg, rgba(40, 30, 16, .35) 0 2px, transparent 2px 9px);
+  -webkit-mask: linear-gradient(#000, #000) content-box exclude, linear-gradient(#000, #000); mask: linear-gradient(#000, #000) content-box exclude, linear-gradient(#000, #000); padding: 6px; opacity: .8; }
+.fj .knob { position: absolute; left: 50%; top: -15px; width: 54px; height: 28px; margin-left: -27px; border-radius: 24px 24px 10px 10px; background: #6f5a37; box-shadow: inset 0 -5px 0 rgba(40, 30, 16, .5); }
+.fj .knob::after { content: ""; position: absolute; left: 50%; top: 8px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #2a2016; }
+.fj .cord { position: absolute; right: -54px; top: -6px; width: 90px; height: 160px; pointer-events: none; }
+.scr { position: absolute; inset: 14px; border-radius: 34px; overflow: hidden; font-size: 13px;
+  background: var(--ink-tex-paper), var(--ink-tex-fiber), var(--paper-hi); background-blend-mode: multiply;
+  box-shadow: 0 0 0 2px rgba(21, 24, 27, .75), 0 0 26px rgba(127, 200, 220, .45); }
+.scr .mj-sb .knob { display: none; }
+.scr .mj-crack { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 8; opacity: .85; }
+.scr .view { position: absolute; inset: 0; display: flex; flex-direction: column; }
+.scr .body { flex: 1; min-height: 0; position: relative; }
+.navbar { position: absolute; left: 0; right: 0; bottom: 0; height: 30px; display: flex; justify-content: center; align-items: center; gap: 46px; z-index: 9; }
+.navbar button { width: 9px; height: 9px; border-radius: 50%; background: var(--ink-dan); }
+.navbar button.home { width: 64px; height: 6px; border-radius: 0; background: var(--ink-zhong); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.scr .mj-home { padding-bottom: 20px; box-sizing: border-box; }
+
+/* ---------- 修行圈（境界录） ---------- */
+.feed { padding-bottom: 36px; }
+.cover { position: relative; height: 150px; overflow: visible; margin-bottom: 34px; }
+.cover .img { position: absolute; inset: 0; overflow: hidden; }
+.cover .img svg { width: 100%; height: 300px; transform: translateY(-120px); }
+.cover .who { position: absolute; right: 86px; bottom: -6px; font: 20px var(--f-display); color: var(--ink-jiao); letter-spacing: .1em; text-shadow: 0 0 4px var(--paper-hi), 0 0 8px var(--paper-hi); }
+.av { position: relative; display: inline-block; border-radius: 50%; overflow: hidden; background: var(--paper-hi); flex: none; }
+.av img { position: absolute; width: 180%; left: -40%; top: -6%; }
+.av::after { content: ""; position: absolute; inset: 0; background: var(--ink-nong); opacity: .7; -webkit-mask: var(--ink-enso-2) 0 0 / 100% 100% no-repeat; mask: var(--ink-enso-2) 0 0 / 100% 100% no-repeat; }
+.cover .av { position: absolute; right: 16px; bottom: -28px; width: 62px; height: 62px; box-shadow: 0 2px 6px rgba(40, 32, 20, .3); }
+.sig { padding: 0 16px 6px; text-align: right; font: 12px var(--f-kai); color: var(--ink-zhong); margin-top: -26px; margin-right: 70px; }
+.feed .mj-tabs { display: flex; justify-content: center; margin: 6px 0 4px; font-size: 16px; }
+.post { display: flex; gap: 10px; padding: 12px 14px 12px 12px; cursor: pointer; }
+.post + .post, .pend + .post { background-image: linear-gradient(90deg, transparent 50px, rgba(21, 24, 27, .1) 50px, rgba(21, 24, 27, .1) 85%, transparent); background-size: 100% 1px; background-repeat: no-repeat; }
+.post .av { width: 36px; height: 36px; }
+.post .pb { flex: 1; min-width: 0; }
+.post .nm { font: 14px var(--f-display); color: #245f7f; letter-spacing: .06em; }
+.post .tx { font: 14px/1.5 var(--f-kai); color: var(--ink-jiao); margin: 2px 0 6px; }
+.post .tx b { font: 400 17px var(--f-display); }
+.post.gold .tx b { color: #7c5d1a; }
+.post .pic { display: block; width: 62%; }
+.post .pic .mj-doodle { width: 100%; height: auto; aspect-ratio: 4 / 3; background: var(--paper-hi); box-shadow: 0 1px 3px rgba(40, 32, 20, .25); }
+.post .pic span { display: block; font: 11px var(--f-kai); color: var(--ink-dan); margin-top: 3px; }
+.post .mj-eh .r2 { font-size: 12px; }
+.post .gains, .post .mj-eh .r3 { font-size: 12px; }
+.post .tm { display: flex; justify-content: space-between; align-items: center; font: 10.5px var(--f-ui); color: var(--ink-dan); margin-top: 6px; }
+.post .tm .more { font: 13px var(--f-display); color: var(--ink-zhong); letter-spacing: .1em; }
+.post .cm { margin-top: 6px; padding: 6px 9px 7px; background: rgba(21, 24, 27, .05); font: 12.5px/1.6 var(--f-kai); color: var(--ink-nong); }
+.post .cm .lk { color: #245f7f; font-size: 12px; padding-bottom: 3px; margin-bottom: 3px; border-bottom: 1px solid rgba(21, 24, 27, .08); }
+.post .cm .lk i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--zhu); margin-right: 5px; vertical-align: 0; }
+.post .cm b { font-weight: 400; color: #245f7f; }
+.post.open { background-color: rgba(184, 41, 26, .035); }
+.post .mj-eb { margin-top: 8px; font-size: 12.5px; }
+.post .mj-sr { grid-template-columns: 4.5em 3.3em 1.1em 4.2em 1fr; }
+.pend { padding: 4px 16px 10px 62px; position: relative; }
+.pend .mj-pend { border: 0; margin: 0; }
+.pend .mj-pend::before { display: none; }
+.scr .mj-tr { grid-template-columns: 4.3em 3em 1em 3.8em 1fr 3.3em; }
+.scr .mj-tr .x { display: none; }
+
+/* ---------- 镜外 ---------- */
+.side-l { left: 70px; top: 52px; display: flex; gap: 14px; }
+.side-l .big { writing-mode: vertical-rl; font: 400 70px/1 var(--f-splash); color: var(--ink-jiao); }
+.side-l .tiba { writing-mode: vertical-rl; font: 14px/1.9 var(--f-kai); color: var(--ink-zhong); letter-spacing: .3em; margin-top: 8px; }
+.say { left: 896px; top: 520px; width: 300px; display: flex; gap: 10px; align-items: flex-start; }
+.say .nm { writing-mode: vertical-rl; font: 18px var(--f-display); color: var(--ink-nong); letter-spacing: .2em; }
+.say .ink-tip { flex: 1; padding: 12px 16px 14px; font: 15px/1.7 var(--f-kai); color: var(--ink-nong); }
+.keys { left: 70px; bottom: 30px; font: 12px/2 var(--f-ui); color: var(--ink-zhong); }
+.keys b { font: 15px var(--f-display); color: var(--ink-nong); font-weight: 400; margin-right: 4px; }
+</style>
+</head>
+<body>
+<div class="world"></div>
+<div class="veil"></div>
+<div class="side-l abs"><div class="big">天机镜</div><div class="tiba">镜中一方屏　屏里是那边</div></div>
+<div class="keys abs"><div><b>M</b>合上</div><div><b>Esc</b>返回</div><div><b>F</b>镜台拿起</div></div>
+<div class="say abs"><div class="nm">玄机子</div><div class="ink-tip" id="say"></div></div>
+
+<div class="fj abs">
+  <svg class="cord" viewBox="0 0 90 160" aria-hidden="true"><path d="M8 18 Q50 0 62 40 Q72 80 58 120" fill="none" stroke="#b8291a" stroke-width="3" stroke-linecap="round" opacity=".85"/><path d="M58 118 l-6 34 M58 118 l0 36 M58 118 l6 34" stroke="#b8291a" stroke-width="2" opacity=".75"/></svg>
+  <i class="knob"></i>
+  <div class="scr" id="scr"></div>
+</div>
+<div id="proto"></div>
+
+<script>
+const D = MJD;
+const AV = `<span class="av"><img src="../../../../src/ui/ink/portrait_linmo_bust.svg" alt=""></span>`;
+
+function feed(S) {
+  const H = D.history(MV.prog());
+  const lit = MV.litKeys();
+  const sig = lit.includes("1:9") ? "画中人欲归，须补全山河。" : "……想回家。";
+  const tabs = MV.tabs([["list", "动态"], ["total", "总览"]], S.tab, "tab");
+  const head = `<div class="cover"><div class="img">${D.WALL}</div><span class="who">林墨</span>${AV}</div><div class="sig">${sig}</div>${tabs}`;
+  if (S.tab === "total") return `<div class="feed">${head}${MV.totals()}</div>`;
+  const posts = H.map((e) => {
+    const open = S.open === e.to;
+    const reply = e.reply ? `<div><b>林墨</b> 回复 <b>玄机子</b>：${e.reply}</div>` : "";
+    return `<div class="post ${open ? "open" : ""} ${e.to === "2:1" ? "gold" : ""}" data-open="${e.to}">${AV}<div class="pb">
+      <div class="nm">林墨</div>
+      <div class="tx">${e.fromName}，破境 <b>${e.toName}</b>。${e.to === "2:1" ? "心魔劫，第二回才过。" : e.to === "1:1" ? "引气入体。" : ""}</div>
+      <span class="pic" data-mem="${e.memKey}">${D.doodle(e.memKey)}<span>镜里亮了一段 ·「${e.mem.title}」</span></span>
+      <div class="mj-eh"><div class="r2">${chips(e)}</div>${e.unlocks.length || e.grants.length ? `<div class="r3">${gains(e)}</div>` : ""}</div>
+      ${open ? MV.entryBody(e, { mem: !1, xjz: !1 }) : ""}
+      <div class="tm"><span>${e.run ? `第 ${e.run} 次出行归来` : "序章"} · 入画第 ${e.day} 日 · ${e.hour}</span><span class="more">${open ? "收起" : "详情"}</span></div>
+      <div class="cm"><div class="lk"><i></i>玄机子</div><div><b>玄机子</b>：${e.xjz}</div>${reply}</div>
+    </div></div>`;
+  }).join("");
+  return `<div class="feed">${head}<div class="pend">${pendHTML()}</div>${posts}</div>`;
+}
+// 复用公用渲染里的条目抬头，只取属性与所得两行
+function chips(e) { const t = document.createElement("div"); t.innerHTML = MV.entryHead(e, { chips: 9 }); return t.querySelector(".r2").innerHTML; }
+function gains(e) { const t = document.createElement("div"); t.innerHTML = MV.entryHead(e); const r = t.querySelector(".r3"); return r ? r.innerHTML : ""; }
+function pendHTML() { const t = document.createElement("div"); t.innerHTML = MV.realmList({ inline: !1 }); return t.querySelector(".mj-pend").outerHTML; }
+
+const SAY = {
+  home: "又对着镜子傻笑。",
+  realm: "一层一层记着，倒比老夫的功课簿还勤。",
+  album: "镜子里那些……便是你家乡？",
+  trail: "身陨这一栏，少记两笔也无妨。",
+  msg: MV.zhuji() ? "北边那个蓝点……画里还有别的外乡人？" : "没有回音？急什么，修为到了自然通。",
+  map: "舆图出了门再看，洞府里看它作甚。",
+};
+
+MV.start((S) => {
+  let body = "";
+  if (S.app === "home") body = MV.home();
+  else if (S.app === "album" && S.mem) body = `${MV.appHead("相册")}<div class="body mj-scroll" style="padding:0 18px">${MV.memView(S.mem)}</div>`;
+  else {
+    const T = { realm: "修行圈", album: "相册", trail: "行迹", msg: S.mtab === "dial" ? "拨号" : "消息", map: "舆图" }[S.app];
+    const tabs = S.app === "msg" ? MV.tabs([["msg", "消息"], ["dial", "拨号"]], S.mtab, "mtab") : "";
+    let c = "";
+    if (S.app === "realm") c = feed(S);
+    if (S.app === "album") c = MV.album();
+    if (S.app === "trail") c = MV.trail();
+    if (S.app === "msg") c = MV.msg();
+    if (S.app === "map") c = MV.mapApp();
+    body = `${S.app === "realm" ? "" : MV.appHead(T, { tabs })}<div class="body ${S.app === "msg" ? "" : "mj-scroll"}" style="${S.app === "msg" ? "padding-bottom:26px" : ""}">${c}</div>`;
+    if (S.app === "realm") body = `<div class="body mj-scroll">${c}</div>`;
+  }
+  const back = S.app === "album" && S.mem ? "data-app=\"album\"" : "data-close";
+  document.getElementById("scr").innerHTML = `<div class="view">${MV.statusBar()}${S.app === "home" ? `<div class="body">${body}</div>` : body}</div>${D.CRACK}
+    <div class="navbar"><button title="返回" ${back}></button><button class="home" title="主屏" data-close></button><button title="最近" data-app="realm"></button></div>`;
+  document.getElementById("say").textContent = SAY[S.app] || SAY.home;
+  document.getElementById("proto").innerHTML = MV.progSwitch("方向 C · 方镜 · 修行圈");
+});
+// 相册里点照片：C 在屏内全屏看；返回键回相册网格
+document.addEventListener("click", (e) => { const b = e.target.closest('.navbar [data-app="album"]'); if (b) { e.stopPropagation(); MV.set({ mem: null }); } }, !0);
+</script>
+</body>
+</html>

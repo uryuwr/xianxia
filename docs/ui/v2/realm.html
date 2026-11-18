@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 境界 / 突破（v2）</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/strokes.css">
+<link rel="stylesheet" href="kit/ink-ui.css">
+<script src="kit/ink-ui.js"></script>
+<style>
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+.abs { position: absolute; }
+/* 册页：左右两开，中间一道折痕 */
+.album { left: 46px; top: 34px; width: 1188px; height: 652px; padding: 16px; box-sizing: border-box; }
+.album .ink-mount-in { display: flex; }
+.album .fold { position: absolute; left: 50%; top: 16px; bottom: 16px; width: 18px; margin-left: -9px; background: linear-gradient(90deg, transparent, rgba(90,70,40,.16) 45%, rgba(255,255,255,.35) 55%, transparent); z-index: 2; }
+.page { position: relative; flex: 1; }
+/* 左页：立绘 + 周身灵气（石青墨晕 + 一笔圆相） */
+.qi { position: absolute; left: 90px; top: 40px; width: 400px; height: 400px; background: var(--shiqing); opacity: .2; -webkit-mask: var(--ink-wash-round) center / 100% 100% no-repeat; mask: var(--ink-wash-round) center / 100% 100% no-repeat; }
+.enso { position: absolute; left: 120px; top: 64px; width: 340px; height: 340px; background: var(--shiqing); opacity: .55; -webkit-mask: var(--ink-enso-3) center / 100% 100% no-repeat; mask: var(--ink-enso-3) center / 100% 100% no-repeat; }
+.fig { position: absolute; left: 186px; top: 46px; width: 300px; height: 500px; background: url(kit/portrait_linmo.svg) 0 0 / 100% 100% no-repeat; }
+.lp-title { position: absolute; left: 36px; top: 36px; display: flex; gap: 12px; }
+.lp-title .t { writing-mode: vertical-rl; font-size: 58px; color: var(--ink); }
+.lp-title .ink-tiba { margin-top: 10px; }
+.lp-foot { position: absolute; left: 40px; right: 40px; bottom: 30px; }
+.lp-foot .r { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--f-display); font-size: 18px; letter-spacing: .1em; }
+.lp-foot .r small { font-family: var(--f-ui); font-size: 12px; color: var(--ink-zhong); letter-spacing: 0; }
+.lp-foot .ink-bar { margin-top: 6px; }
+.lp-foot .ink-note { margin-top: 6px; }
+/* 右页：境界阶梯（竖排） + 突破 */
+.ladder { position: absolute; right: 36px; top: 34px; display: flex; flex-direction: row-reverse; gap: 2px; }
+.ladder .lv { writing-mode: vertical-rl; font-family: var(--f-display); font-size: 25px; letter-spacing: .3em; color: var(--ink-dan); padding: 12px 8px; position: relative; }
+.ladder .lv.done { color: var(--ink-zhong); }
+.ladder .lv.now { color: var(--ink); font-size: 32px; }
+.ladder .lv.now::after { content: ""; position: absolute; left: -3px; right: -3px; bottom: -14px; height: 10px; background: var(--zhu); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.ladder .lv.next { color: var(--ink-zhong); }
+.ladder .lv.big { font-size: 34px; color: var(--ink-qing); border-right: 1px dashed var(--ink-qing); margin-right: 8px; }
+.ladder .sep { width: 1px; background: var(--ink-qing); margin: 14px 4px; }
+.rp { position: absolute; left: 40px; right: 40px; top: 260px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 34px; }
+.rp .ink-h { font-size: 18px; margin-bottom: 6px; }
+.rp .ink-row { font-size: 14px; padding: 5px 2px; }
+.rp .ink-row .v { font-size: 17px; }
+.rp .ink-row .v .up { font-family: var(--f-ui); font-size: 12px; color: var(--shilv); margin-left: 6px; }
+.rp .ink-row .v.miss { color: var(--zhu); font-family: var(--f-kai); font-size: 14px; }
+.go { position: absolute; right: 40px; bottom: 28px; display: flex; align-items: center; gap: 18px; }
+.go .ink-tip { max-width: 220px; font-size: 13px; }
+</style>
+</head>
+<body class="ink-stage">
+  <div class="abs album ink-mount">
+    <div class="ink-mount-in">
+      <div class="fold"></div>
+      <!-- 左页 -->
+      <div class="page">
+        <div class="qi"></div><div class="enso"></div><div class="fig" role="img" aria-label="林墨"></div>
+        <div class="lp-title"><div class="t ink-splash">练气</div><div class="ink-tiba">吐纳天地 · 积气成海</div></div>
+        <div class="lp-foot">
+          <div class="r"><span>练气五层</span><small>修为 1,306 / 1,400</small></div>
+          <div class="ink-bar xp" style="--v:.933"><i></i></div>
+          <div class="ink-note">再出行一次或炼一炉聚气丹即可圆满</div>
+        </div>
+      </div>
+      <!-- 右页 -->
+      <div class="page">
+        <div class="ladder">
+          <span class="lv done">一层</span><span class="lv done">二层</span><span class="lv done">三层</span><span class="lv done">四层</span>
+          <span class="lv now">五层</span><span class="lv next">六层</span><span class="lv">七层</span><span class="lv">八层</span><span class="lv">九层</span>
+          <span class="sep"></span><span class="lv big">筑基</span>
+        </div>
+        <div class="ink-note" style="position:absolute;left:44px;top:44px;writing-mode:vertical-rl;letter-spacing:.2em;line-height:2">筑基 · 需筑基丹（丹炉三阶）</div>
+        <div class="rp">
+          <div>
+            <div class="ink-h">破境所得</div>
+            <div class="ink-list">
+              <div class="ink-row"><span class="k">气血</span><span class="v">330<span class="up">+30</span></span></div>
+              <div class="ink-row"><span class="k">真气</span><span class="v">165<span class="up">+15</span></span></div>
+              <div class="ink-row"><span class="k">攻击 · 法力</span><span class="v">42<span class="up">+4</span></span></div>
+              <div class="ink-row"><span class="k">防御</span><span class="v">18<span class="up">+2</span></span></div>
+            </div>
+          </div>
+          <div>
+            <div class="ink-h">破境之需</div>
+            <div class="ink-list">
+              <div class="ink-row"><span class="k">修为圆满</span><span class="v miss">尚缺 94</span></div>
+              <div class="ink-row"><span class="k">参悟蒲团</span><span class="v">一阶 <span class="c-ling" style="font-size:13px">已足</span></span></div>
+              <div class="ink-row"><span class="k">破障丹</span><span class="v" style="font-family:var(--f-kai);font-size:14px">可选 · 成功 +15%</span></div>
+              <div class="ink-row"><span class="k">失败</span><span class="v" style="font-family:var(--f-kai);font-size:14px">修为折一成</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="go">
+          <div class="ink-tip">修为未满，强行冲关<br>成功不足三成。</div>
+          <button class="ink-seal-btn is-disabled">突破</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

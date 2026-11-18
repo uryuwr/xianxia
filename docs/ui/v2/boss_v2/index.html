@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 青牙 v2 首领界面 · 三个方向</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css">
+<link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../../assets/fonts/MaShanZheng-Regular.ttf"); }
+@font-face { font-family: "ZhiMangXing"; src: url("../../../../assets/fonts/ZhiMangXing-Regular.ttf"); }
+html, body { margin: 0; }
+body { font-family: var(--f-kai); color: var(--ink); background: var(--ink-tex-paper), var(--ink-tex-fiber), var(--paper); background-blend-mode: multiply; min-height: 100vh; }
+header { display: flex; align-items: baseline; gap: 22px; padding: 14px 26px 6px; flex-wrap: wrap; }
+header h1 { margin: 0; font: 400 32px var(--f-splash); letter-spacing: .08em; }
+header .sub { font: 13px var(--f-ui); color: var(--ink-zhong); }
+nav { display: flex; gap: 4px; padding: 0 26px 8px; font: 18px var(--f-display); flex-wrap: wrap; }
+nav button { font: inherit; background: none; border: 0; cursor: pointer; color: var(--ink-dan); padding: 2px 8px 6px; position: relative; }
+nav button.on { color: var(--ink-jiao); }
+nav button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--zhu); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 0 26px; }
+.cell h2 { margin: 0 0 4px; font: 20px var(--f-display); }
+.cell h2 small { font: 12px var(--f-ui); color: var(--ink-zhong); margin-left: 8px; }
+.frame { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; box-shadow: 0 0 0 1px rgba(21,24,27,.25); }
+.frame iframe { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; border: 0; transform-origin: 0 0; }
+.cell p { font: 12.5px/1.6 var(--f-ui); color: var(--ink-nong); margin: 6px 0 0; }
+.cell a { font: 12px var(--f-ui); color: var(--zhu); }
+.qs { margin: 14px 26px 30px; font: 13.5px/1.8 var(--f-ui); color: var(--ink-nong); max-width: 1200px; }
+.qs b { color: var(--ink); }
+</style>
+</head>
+<body>
+<header>
+  <h1>青牙 v2 · 首领界面</h1>
+  <span class="sub">三个方向并排；状态在上方切换。设计说明：docs/design/boss_青牙_v2.md §8。底图为游戏内狼谷实景（凡人测试档，青牙用的还是旧的放大狼模型）。</span>
+</header>
+<nav id="nav"></nav>
+<div class="grid">
+  <div class="cell"><h2>A 卷首横轴<small>推荐</small></h2><div class="frame"><iframe data-src="a_juanshou.html"></iframe></div>
+    <p>屏幕顶部正中的长卷（首领战时天时条收起）。名牌在左、阶段字在右；护盾 = 气血上方一笔五行色；50% 处朱色"二"刻度；"威"一行从中间向两端长，越满越浓、近朱，满了断开盖"折"。生死信息最大最清楚，不挡战场。</p>
+    <a href="a_juanshou.html#s=p2" target="_blank">单独打开</a></div>
+  <div class="cell"><h2>B 题跋落款</h2><div class="frame"><iframe data-src="b_tiba.html"></iframe></div>
+    <p>屏幕底部、技能栏之上（魂系惯例）。名字竖写像落款，配一方"狼谷之主"朱印；眼睛在技能冷却和首领之间的距离最短，不挡上方的月与狼王石。缺点：和技能栏挤在一起，底部信息密。</p>
+    <a href="b_tiba.html#s=p2" target="_blank">单独打开</a></div>
+  <div class="cell"><h2>C 空间型</h2><div class="frame"><iframe data-src="c_kongjian.html"></iframe></div>
+    <p>气血是青牙头顶的一弯"月牙"笔（呼应啸月），狼威画在它脚下——一圈圆相，越满裂纹越多，满了碎开；屏幕右缘留一道细竖笔兜底。最"叙事内"，但青牙跑远或贴边时生死信息偏小。可以只取"脚下裂纹圆相"给 A 做补充。</p>
+    <a href="c_kongjian.html#s=p2" target="_blank">单独打开</a></div>
+</div>
+<div class="qs">
+  <b>请选：</b>① 方向 A / B / C（或 A + C 的脚下裂纹圆相）；② 狼威条显示出来（推荐，只狼式）还是藏起来只靠动作提示（Elden Ring 式）。<br>
+  共用元素（与方向无关）：处决提示"F 斩"锚在青牙头顶（圆相收拢 = 剩余窗口）；转阶段横幅"二 · 啸月"；入场题签"第 N 次 · 上回削至 X%"；终结处决定格（留白、一笔、斩、朱印）。
+</div>
+<script>
+const STATES = [["intro", "入场题签"], ["p1", "一阶段 · 木盾"], ["howl", "召狼读条"], ["banner", "转阶段横幅"], ["p2", "二阶段 · 弱点 · 月光"], ["exec", "威折 · F 处决"], ["final", "终结处决"]];
+const nav = document.getElementById("nav"), frames = [...document.querySelectorAll("iframe")];
+let cur = (/s=(\w+)/.exec(location.hash) || [])[1] || "p2";
+function fit() { for (const f of frames) f.style.transform = `scale(${f.parentElement.clientWidth / 1280})`; }
+function go(s) {
+  cur = s;
+  try { history.replaceState(null, "", "#s=" + s); } catch (e) {}
+  for (const f of frames) f.src = f.dataset.src + "#s=" + s;
+  [...nav.children].forEach((b) => b.classList.toggle("on", b.dataset.s === s));
+}
+for (const [s, t] of STATES) { const b = document.createElement("button"); b.textContent = t; b.dataset.s = s; b.onclick = () => go(s); nav.appendChild(b); }
+addEventListener("resize", fit);
+fit(); go(cur);
+document.fonts.ready.then(() => setTimeout(() => (window.__ready = true), 1200));
+</script>
+</body>
+</html>

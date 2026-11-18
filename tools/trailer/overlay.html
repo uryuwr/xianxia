@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<!-- 宣传片字幕 / 字卡 / 片尾：沿用游戏的水墨 UI 套件（src/ui/ink），透明底逐帧截图后叠到成片上 -->
+<link rel="stylesheet" href="/src/ui/ink/strokes.css">
+<link rel="stylesheet" href="/src/ui/ink/fonts.css">
+<link rel="stylesheet" href="/src/ui/ink/ink-ui.css">
+<style>
+  /* 完整字库（assets/fonts，SIL OFL）：字幕里的字不受游戏子集限制；没有就回退到子集 + 系统楷体 */
+  @font-face { font-family: "MSZFull"; src: url("/assets/fonts/MaShanZheng-Regular.ttf"); }
+  @font-face { font-family: "ZMXFull"; src: url("/assets/fonts/ZhiMangXing-Regular.ttf"); }
+  html, body { margin: 0; width: 100%; height: 100%; background: transparent !important; overflow: hidden; }
+  body { position: relative; }
+  :root { --sub-font: "MSZFull", "MaShanZheng", "KaiTi", serif; --big-font: "ZMXFull", "ZhiMangXing", "MSZFull", "KaiTi", serif; }
+  .stage { position: absolute; inset: 0; }
+
+  /* ---- 版式（1280×720 CSS 像素 = 1920×1080 成片）：实机画面缩到 90% 放在上方（宣纸画框），底部宣纸字幕带 ---- */
+  :root { --fx: 64px; --fy: 10.667px; --fw: 1152px; --fh: 648px; --band: 61.333px; }
+  .paper { position: absolute; inset: 0; background: var(--ink-tex-paper), var(--ink-tex-fiber), var(--paper); background-blend-mode: multiply; }
+  .paper::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(150, 125, 85, 0.14)); }
+  .border { position: absolute; left: var(--fx); top: var(--fy); width: var(--fw); height: var(--fh); }
+  .border i { position: absolute; inset: -2px; border: 1.6px solid rgba(21, 24, 27, 0.62); filter: url(#ink-rough); }
+  .border b { position: absolute; inset: -6px; border: 0.8px solid rgba(21, 24, 27, 0.22); filter: url(#ink-rough); }
+  /* ---- 字幕：只出现在底部宣纸带里，墨色楷书，单行 46px（1080p），两行缩到 40px ---- */
+  .sub { position: absolute; left: 0; right: 0; bottom: 0; height: var(--band); display: flex; align-items: center; justify-content: center; gap: 18px; }
+  .sub .tx { font-family: var(--sub-font); font-size: 30.67px; line-height: 1.05; text-align: center; letter-spacing: 0.1em; color: rgba(21, 24, 27, 0.9); white-space: nowrap; }
+  .sub.two .tx { font-size: 26.67px; }
+  .sub .dot { width: 46px; height: 7px; background: rgba(21, 24, 27, 0.3); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+  .sub .dot.r { transform: scaleX(-1); }
+  /* ---- 字卡：大字行书 + 纸色墨带 + 朱印 ---- */
+  .card { position: absolute; left: var(--fx); width: var(--fw); top: calc(var(--fy) + var(--fh) * 0.27); transform: translateY(-50%); display: flex; justify-content: center; align-items: center; gap: 22px; }
+  .card .band { position: absolute; left: 50%; top: 50%; width: 760px; height: 180px; transform: translate(-50%, -50%);
+         background: rgba(245, 240, 227, 0.86); -webkit-mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat;
+         animation: wipe .45s cubic-bezier(.3,.7,.2,1) both; }
+  .card .t { position: relative; font-family: var(--big-font); font-size: 100px; line-height: 1; color: rgba(21, 24, 27, 0.92); letter-spacing: 0.06em;
+         animation: ink-bleed-in .6s .12s cubic-bezier(.3,.7,.2,1) both; }
+  .card .t i { font-style: normal; color: #b8291a; }
+  .card .s { position: relative; font-family: var(--sub-font); font-size: 22px; color: rgba(21,24,27,.62); letter-spacing: .3em; writing-mode: vertical-rl; animation: ink-bleed-in .6s .35s both; }
+  .card .ink-seal { position: relative; animation: ink-stamp .42s .5s cubic-bezier(.3,.7,.2,1) both; }
+  .out { animation: fadeout .4s both; animation-delay: var(--out, 2s); }
+  @keyframes wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes fadeout { to { opacity: 0; filter: blur(4px); } }
+
+  /* ---- 片尾 ---- */
+  .end { position: absolute; inset: 0; }
+  .end .veil { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(236,230,214,.82) 0%, rgba(236,230,214,.9) 55%, rgba(225,216,194,.96) 100%); animation: fadein .9s both; }
+  /* 定位放在外层、动画放在内层（ink-bleed-in 结束时 transform: none，会冲掉居中用的 translate） */
+  .end .pos { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); }
+  .end .pos.w { top: 46%; }
+  .end .wash { width: 760px; height: 520px; background: rgba(21,24,27,.10);
+         -webkit-mask: var(--ink-wash-round) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-round) 0 0 / 100% 100% no-repeat; animation: ink-bleed-in 1.2s .3s both; }
+  .end .title { font-family: var(--big-font); font-size: 210px; line-height: 1; color: rgba(21,24,27,.94); letter-spacing: .08em;
+         animation: ink-bleed-in 1.1s .5s cubic-bezier(.3,.7,.2,1) both; white-space: nowrap; }
+  .end .seal { position: absolute; left: calc(50% + 250px); top: calc(40% - 40px); animation: ink-stamp .45s 1.4s cubic-bezier(.3,.7,.2,1) both; }
+  .end .slogan { position: absolute; left: 50%; top: 63%; transform: translateX(-50%); font-family: var(--sub-font); font-size: 34px; letter-spacing: .32em; color: rgba(21,24,27,.78);
+         animation: wipe .9s 1.6s cubic-bezier(.3,.7,.2,1) both; white-space: nowrap; }
+  .end .tag { position: absolute; left: 50%; top: 73%; transform: translateX(-50%); font-family: var(--sub-font); font-size: 20px; letter-spacing: .5em; color: rgba(21,24,27,.55); animation: fadein .8s 2.2s both; white-space: nowrap; }
+  .end .demo { position: absolute; right: 48px; bottom: 36px; display: flex; align-items: center; gap: 10px; font-family: var(--sub-font); font-size: 20px; letter-spacing: .2em; color: rgba(21,24,27,.7); animation: fadein .6s 2.4s both; }
+  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+  .fadeall { animation: fadein .6s both; }
+  /* ---- 2×2 分屏的格签与分隔墨线 ---- */
+  .glab { position: absolute; padding: 6px 14px 7px; background: rgba(245, 240, 227, 0.88); border-radius: 3px; box-shadow: 0 1px 6px rgba(21,24,27,.18); font-family: var(--sub-font); color: rgba(21,24,27,.9); line-height: 1.15; }
+  .glab b { display: block; font-weight: normal; font-size: 21px; letter-spacing: .12em; }
+  .glab em { display: block; font-style: normal; font-size: 17px; letter-spacing: .18em; color: #b8291a; }
+  .gx { position: absolute; left: var(--fx); width: var(--fw); top: calc(var(--fy) + 323px); height: 2px; background: rgba(236,230,214,.95); }
+  .gy { position: absolute; top: var(--fy); height: var(--fh); left: calc(var(--fx) + 575px); width: 2px; background: rgba(236,230,214,.95); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="ink-rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter></defs></svg>
+<div class="stage" id="stage"></div>
+<script>
+  // 录制脚本调用：__show({ kind: "sub" | "card" | "end", ... })
+  window.__show = (o) => {
+    const st = document.getElementById("stage");
+    const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+    if (o.kind === "paper") st.innerHTML = `<div class="paper"></div>`;
+    else if (o.kind === "border") st.innerHTML = `<div class="border"><b></b><i></i></div>`;
+    else if (o.kind === "sub") {
+      const L = String(o.text).split("/");
+      st.innerHTML = `<div class="sub ${L.length > 1 ? "two" : ""}"><i class="dot"></i><div class="tx">${L.map(esc).join("<br>")}</div><i class="dot r"></i></div>`;
+    }
+    else if (o.kind === "card")
+      st.innerHTML = `<div class="card out" style="--out:${o.out || 2}s"><div class="band"></div><div class="t">${o.html || esc(o.text)}</div>${o.side ? `<div class="s">${esc(o.side)}</div>` : ""}${o.seal ? `<span class="ink-seal two" style="--s:64px">${esc(o.seal)}</span>` : ""}</div>`;
+    else if (o.kind === "grid")
+      // 2×2 分屏（成长对比）：每格左上角一张纸签"第 N 次 · 境界"，下行朱色结局
+      st.innerHTML = (o.labels || []).map((l, i) => `<div class="glab" style="left:calc(var(--fx) + ${(i % 2) * 576 + 14}px);top:calc(var(--fy) + ${Math.floor(i / 2) * 324 + 12}px)"><b>${esc(l.t)}</b>${l.r ? `<em>${esc(l.r)}</em>` : ""}</div>`).join("") + `<i class="gx"></i><i class="gy"></i>`;
+    else if (o.kind === "end")
+      st.innerHTML = `<div class="end"><div class="veil"></div><div class="pos w"><div class="wash"></div></div><div class="pos"><div class="title">${esc(o.title)}</div></div><span class="seal ink-seal two" style="--s:78px">${esc(o.seal || "实机")}</span><div class="slogan">${esc(o.slogan)}</div><div class="tag">${esc(o.tag || "")}</div><div class="demo"><span class="ink-seal" style="--s:30px;font-size:15px">实</span>${esc(o.demo || "实机演示")}</div></div>`;
+    return document.fonts.ready.then(() => !0);
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 装配 v2 · 三个方向（可交互草图）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../../assets/fonts/MaShanZheng-Regular.ttf"), url("../../../../src/ui/ink/MaShanZheng.woff2") format("woff2"); }
+body { margin: 0; background: #23231f; color: #ece6d6; font: 14px/1.7 "Microsoft YaHei", sans-serif; }
+header { display: flex; align-items: baseline; gap: 26px; padding: 14px 28px 6px; flex-wrap: wrap; }
+header h1 { margin: 0; font: 400 28px "MaShanZheng", KaiTi, serif; letter-spacing: .1em; }
+header .tabs { display: flex; gap: 6px; }
+header .tabs a { font: 400 20px "MaShanZheng", KaiTi, serif; letter-spacing: .08em; color: rgba(236,230,214,.5); padding: 4px 12px 8px; cursor: pointer; position: relative; text-decoration: none; }
+header .tabs a.on { color: #f5f0e3; }
+header .tabs a.on::after { content: ""; position: absolute; left: 6px; right: 4px; bottom: 0; height: 8px; background: #b8291a; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+header small { color: rgba(236,230,214,.55); }
+main { display: flex; gap: 22px; padding: 6px 28px 28px; align-items: flex-start; }
+.stage { flex: none; width: 1280px; height: 720px; box-shadow: 0 8px 30px rgba(0,0,0,.5); background: #000; }
+.stage iframe { width: 1280px; height: 720px; border: 0; display: block; }
+aside { width: 380px; flex: none; }
+aside h2 { font: 400 22px "MaShanZheng", KaiTi, serif; margin: 0 0 4px; letter-spacing: .08em; }
+aside .entry { display: inline-block; font-size: 12px; color: #d9b45e; border-bottom: 1px dotted #d9b45e; margin-bottom: 6px; }
+aside ul { padding-left: 18px; margin: 6px 0 12px; }
+aside li { margin: 2px 0; }
+aside .st a { color: #d9b45e; margin-right: 10px; cursor: pointer; text-decoration: underline dotted; white-space: nowrap; }
+aside .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; }
+aside .pc b { display: block; color: #9cc4a8; font-weight: 400; } aside .pc b.c { color: #e09080; }
+aside .rec { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(236,230,214,.15); font-size: 13px; color: rgba(236,230,214,.8); }
+aside .rec b { color: #e8c76a; font-weight: 400; }
+.grid { display: none; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 6px 28px 28px; }
+.grid figure { margin: 0; cursor: pointer; } .grid img { width: 100%; display: block; box-shadow: 0 6px 20px rgba(0,0,0,.5); }
+.grid figcaption { font: 400 18px "MaShanZheng", KaiTi, serif; padding: 6px 2px; }
+body.ov main { display: none; } body.ov .grid { display: grid; }
+.doc { color: rgba(236,230,214,.7); }
+.doc a { color: #d9b45e; }
+</style></head>
+<body>
+<header>
+  <h1>装配 v2 · 可交互草图</h1>
+  <nav class="tabs" id="tabs">
+    <a data-k="a" class="on">方向一 · 出行·随身（推荐）</a>
+    <a data-k="b">方向二 · 静室·功法册页</a>
+    <a data-k="c">方向三 · 五行盘</a>
+    <a data-k="ov">并排总览</a>
+  </nav>
+  <small class="doc">说明与选择题见 <a href="../装配_v2_方案.md">docs/ui/v2/装配_v2_方案.md</a> · 每个方向左下角有"示意开关"（境界二 / 四 / 七 / 八层、去处、重置），用来看锁定栏与不同去处的护盾提示</small>
+</header>
+<main>
+  <div class="stage"><iframe id="fr" src="a_xingqian.html"></iframe></div>
+  <aside id="side"></aside>
+</main>
+<section class="grid">
+  <figure data-k="a"><img src="../png/loadout_v2_a_xingqian.png"><figcaption>方向一 · 出行·随身（入口 a，推荐）</figcaption></figure>
+  <figure data-k="b"><img src="../png/loadout_v2_b_jingshi.png"><figcaption>方向二 · 静室·功法册页（入口 b）</figcaption></figure>
+  <figure data-k="c"><img src="../png/loadout_v2_c_wuxing.png"><figcaption>方向三 · 五行盘（入口 c）</figcaption></figure>
+</section>
+<script>
+const COMMON = "共通：拖签入栏 / 栏间拖动换位 / 拖出栏外卸下；也可点选（先点签再点栏，或先点栏再点签）；悬停法术按 Q / E / R、阵盘按 T 直接装入；悬停看五行、真气、冷却、伤害（按当前境界算）、克哪种盾。";
+const D = {
+  a: {
+    url: "a_xingqian.html", t: "方向一 · 出行·随身", entry: "入口 (a)：出行准备里直接装配",
+    idea: "就在现有的出行准备页上装配：立绘下一排随身功法栏（Q / E / R · T 阵盘 · 右键法宝 · 心法二栏），旁边抽出一张「功法匣」纸笺按页签列出可装的法术 / 心法 / 法宝 / 阵盘；左侧去处信息多一行「护盾」与「已带」覆盖，建议里的法术可一键换上。",
+    pro: ["选去处、看护盾、换法术在同一屏，'带什么出门'就是出门前那一刻的决定", "不加新页面、不加新入口，玩家不会找不到", "所见即所带：出行页显示的就是局内的 Q / E / R"],
+    con: ["出行页更挤：行囊被压窄，委托区要另找位置", "没有地方'慢慢看'全部功法（只能在出门时看）", "洞府里的心魔试炼前想换法术，需要另给一个入口"],
+    st: [["默认（练气七层 · 溪谷）", ""], ["练气四层（看锁定栏）", "#layer=4"], ["练气八层 · 青岚山外", "#layer=8&region=r1"]],
+  },
+  b: {
+    url: "b_jingshi.html", t: "方向二 · 静室·功法册页", entry: "入口 (b)：洞府·灵泉静室的「功法」页签；出行准备只做快速调整",
+    idea: "与灵泉·静室同一套装裱册页，「境界 · 功法」两个页签。左页是周天图：立绘为中心，法术在臂、心法在丹田、法宝在手、阵盘在足；右页是功法目录与「预演去处」。出行准备里点一个法术栏，弹出一小张「换一个」纸条，只能换法术，细调回洞府。",
+    pro: ["全部功法有一个安静、完整的地方看，适合慢慢比较和以后的修炼变体", "册页和灵泉静室同构，洞府界面语言统一", "出行页保持清爽，只加一个快速换的纸条"],
+    con: ["规划被拆在两处：选去处在出行台，细调在静室，来回跑", "预演去处与真实选择可能不一致，提示会'说两遍'", "心法 / 阵盘不能在出发前改，临时想换要回洞府"],
+    st: [["默认（静室·功法）", ""], ["出行准备 · 快速调整", "#view=quick"], ["练气四层（看锁定栏）", "#layer=4"]],
+  },
+  c: {
+    url: "c_wuxing.html", t: "方向三 · 五行盘", entry: "入口 (c)：同一个装配组件，出行准备与洞府都能打开",
+    idea: "中央一张写意五行相克盘：已领悟的法术停在各自五行的节点上，本去处常见的护盾围在被克的节点外，克制箭头已装就是实笔、没装就是虚笔并写「缺水」。法宝、心法在侧边纸笺。出行准备里以浮层打开（去处跟随出行），洞府里整页打开（可预演去处）。",
+    pro: ["把'敌人逼你换手'的规则画成了图，新手一眼懂相克", "缺口（缺哪一行）最醒目，规划最直接", "一个组件两处复用，出行与洞府看到的一致"],
+    con: ["五行盘占地大，法宝 / 心法被挤到侧边，像两套界面", "技能池每行只有一个法术，盘的信息量偏少，以后加变体会挤", "组件做两个语境（浮层 / 整页），实现量最大"],
+    st: [["默认（从出行准备打开）", ""], ["从洞府打开", "#from=cave"], ["练气四层（看锁定栏）", "#layer=4"]],
+  },
+};
+const fr = document.getElementById("fr"), side = document.getElementById("side");
+function show(k) {
+  document.querySelectorAll("#tabs a").forEach((a) => a.classList.toggle("on", a.dataset.k === k));
+  document.body.classList.toggle("ov", k === "ov");
+  if (k === "ov") return;
+  const d = D[k];
+  fr.src = d.url;
+  side.innerHTML = `<h2>${d.t}</h2><span class="entry">${d.entry}</span><p>${d.idea}</p>
+    <div class="pc"><div><b>好处</b><ul>${d.pro.map((x) => `<li>${x}</li>`).join("")}</ul></div><div><b class="c">代价</b><ul>${d.con.map((x) => `<li>${x}</li>`).join("")}</ul></div></div>
+    <div class="st">状态：${d.st.map(([n, h]) => `<a data-h="${h}">${n}</a>`).join("")}</div>
+    <p class="doc" style="font-size:12px">${COMMON}</p>
+    <div class="rec"><b>推荐：</b>入口 (a)，以方向一的版式为主，把方向三的「缺哪一行」护盾覆盖提示并进去；洞府里只在「心魔试炼前」和「参悟新法术后」给出同一张功法匣的快捷入口，不另做一页。</div>`;
+  side.querySelectorAll(".st a").forEach((a) => a.addEventListener("click", () => {
+    fr.src = d.url + "?t=" + Date.now() + (a.dataset.h ? a.dataset.h : "");
+  }));
+}
+document.querySelectorAll("#tabs a").forEach((a) => a.addEventListener("click", () => show(a.dataset.k)));
+document.querySelectorAll(".grid figure").forEach((f) => f.addEventListener("click", () => show(f.dataset.k)));
+show("a");
+</script>
+</body></html>

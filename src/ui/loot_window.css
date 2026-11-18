@@ -1,0 +1,98 @@
+/* 搜取窗口 v2：墨封宣纸格 + 物品签（docs/ui/v2/搜取_v1.md §9）。容器旁浮起的一小幅宣纸；格子是一笔圆相，未探查的格子被一团浓墨封住；
+   一缕淡金神识沿圆相一笔绕行（笔尖带光），画满一圈墨封化开、字现，外圈晕开品质淡彩。
+   只动画 opacity / transform / clip-path / CSS 变量驱动的渐变；没有全屏 filter 与混合模式。 */
+.mk-layer-loot { pointer-events: none; }
+.mk-layer-loot > * { pointer-events: none; }
+.mk-loot { position: absolute; left: 0; top: 0; pointer-events: auto; transform-origin: 0 0; will-change: transform; user-select: none; }
+.mk-loot .sheet {
+  position: relative; isolation: isolate; padding: 12px 16px 10px 16px; min-width: 150px;
+  transform: scale(var(--mk-scale, 1)); transform-origin: 0 0;
+  animation: lw-in 0.32s var(--ease-ink) both;
+}
+/* 半透明宣纸：纸纹 + 毛边；外缘一圈很淡的墨边（飞白由毛边 mask 自带） */
+.mk-loot .sheet::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--ink-tex-paper), rgba(243, 238, 226, 0.82); background-blend-mode: multiply;
+  -webkit-mask: var(--ink-deckle-slip) 0 0 / 100% 100% no-repeat; mask: var(--ink-deckle-slip) 0 0 / 100% 100% no-repeat;
+}
+.mk-loot .sheet::after {
+  content: ""; position: absolute; inset: -3px -4px; z-index: -2; background: rgba(21, 24, 27, 0.16);
+  -webkit-mask: var(--ink-deckle-2) 0 0 / 100% 100% no-repeat; mask: var(--ink-deckle-2) 0 0 / 100% 100% no-repeat;
+}
+.mk-loot.out .sheet { animation: lw-out 0.22s ease forwards; }
+@keyframes lw-in { from { opacity: 0; transform: scale(var(--mk-scale, 1)) translateY(6px) rotate(-0.6deg); } to { opacity: 1; transform: scale(var(--mk-scale, 1)); } }
+@keyframes lw-out { to { opacity: 0; transform: scale(var(--mk-scale, 1)) translateY(5px); } }
+
+.mk-loot .hd { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; white-space: nowrap; }
+.mk-loot .hd .t { font: 18px/1.1 var(--f-display); letter-spacing: 0.08em; color: var(--ink-nong); }
+.mk-loot .hd .t small { font-size: 15px; color: var(--ink-zhong); margin: 0 3px; }
+/* 神识 ◎ 小印 */
+.mk-loot .hd .sense { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; font: 11px var(--f-ui); color: #7a6020; }
+.mk-loot .hd .sense i {
+  width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font: 12px var(--f-display); font-style: normal; color: var(--paper-hi);
+  background: #a8862f; transform: rotate(-6deg); -webkit-mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat;
+}
+.mk-loot .hd .sense b { font: 400 16px var(--f-splash); color: #8a6a22; }
+.mk-loot .rule { height: 7px; margin: 0 -4px 8px; background: var(--ink-dan); opacity: 0.7; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+
+/* ---------- 格子（v2）：储物袋同一种物品签（src/ui/icons.js itemTag，52px）+ 外面一笔神识 ---------- */
+.mk-loot .grid { display: grid; grid-template-columns: repeat(var(--cols, 4), 52px); grid-auto-rows: 52px; gap: 6px; grid-auto-flow: dense; }
+.lw-cell { position: relative; }
+.lw-cell.w2 { grid-column: span 2; }
+.lw-cell.big { grid-column: span 2; grid-row: span 2; }
+.lw-cell > .mk-tok { position: absolute; left: 0; top: 0; }
+.lw-cell > i, .lw-cell > span { position: absolute; pointer-events: none; font-style: normal; }
+/* 神识一笔：淡金沿圆相（长圆）绕行；笔尖一点光，位置由 JS 沿椭圆算（--v 只管描到哪） */
+.lw-cell > .sense { inset: -3px; z-index: 5; opacity: 0; background: conic-gradient(from -90deg, rgba(217, 180, 94, 0.95) calc(var(--v, 0) * 360deg), transparent 0); -webkit-mask: var(--ink-enso-full) 0 0 / 100% 100% no-repeat; mask: var(--ink-enso-full) 0 0 / 100% 100% no-repeat; }
+.lw-cell > .tip { left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; z-index: 6; opacity: 0; border-radius: 50%; background: radial-gradient(circle, rgba(255, 246, 214, var(--tipA, 0.85)) 0 30%, rgba(232, 196, 110, calc(var(--tipA, 0.85) * 0.6)) 55%, transparent 72%); transform: translate(0, -26px); }
+.lw-cell.is-search > .sense, .lw-cell.is-search > .tip { opacity: 1; }
+/* 第一段"露形"：墨封化开（opacity + transform），剪影出来；第二段"显色"交给物品签自己的 tagReveal */
+.lw-cell .mk-tok > .seal { transition: opacity 0.3s ease, transform 0.36s var(--ease-ink); }
+.lw-cell.is-form .mk-tok > .seal, .lw-cell.is-shown .mk-tok > .seal { display: block; opacity: 0; transform: scale(1.35); }
+.lw-cell.is-form .mk-tok > .ring { background: rgba(21, 24, 27, 0.45); }
+/* 预感（神识 ≥ 40）：墨封下隐约浮现剪影轮廓（剪影反相成淡光） */
+.lw-cell.omen .mk-tok.is-sealed > .mk-ico { opacity: calc(var(--omen, 0) * 0.55) !important; filter: invert(1) brightness(1.15); animation: lw-omen 2.4s ease-in-out infinite; z-index: 5; }
+.lw-cell.omen .mk-tok > .seal::after { opacity: 0.8; }
+@keyframes lw-omen { 0%, 100% { transform: translate(-50%, -50%) scale(0.94); } 50% { transform: translate(-50%, -50%) scale(1.02); } }
+/* 显色：外圈品质晕开（颜色是物品签自己的 --qw，取 RARITY） */
+.lw-cell.rev .mk-tok > .halo { animation: lw-bloom 0.6s var(--ease-ink); }
+@keyframes lw-bloom { 0% { opacity: 0; transform: scale(0.6); } 40% { opacity: 1; transform: scale(1.3); } 100% { transform: scale(1); } }
+/* 仙品泛金 / 极品朱金（--flash3 / --flash4 / --spark3 / --spark4 由 gather_ui.js 从 RARITY 生成） */
+.lw-cell.rev-3::after, .lw-cell.rev-4::after { content: ""; position: absolute; inset: -14px; z-index: 0; border-radius: 50%; background: radial-gradient(closest-side, var(--flash3), transparent); animation: lw-flash 0.9s ease forwards; pointer-events: none; }
+.lw-cell.rev-4::after { background: radial-gradient(closest-side, var(--flash4), var(--flash3) 55%, transparent); }
+@keyframes lw-flash { 0% { opacity: 0; transform: scale(0.6); } 30% { opacity: 1; } 100% { opacity: 0; transform: scale(1.6); } }
+.lw-cell > .burst { left: 50%; top: 50%; width: 0; height: 0; z-index: 7; }
+.lw-cell > .burst > s { position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%; background: var(--bc); text-decoration: none; opacity: 0; transform: rotate(var(--a)); }
+.lw-cell.rev-4 > .burst > s { animation: lw-spark 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) forwards; }
+@keyframes lw-spark { 0% { opacity: 1; transform: rotate(var(--a)) translateY(-10px) scale(1.2); } 100% { opacity: 0; transform: rotate(var(--a)) translateY(-50px) scale(0.5); } }
+/* 未鉴定：揭示后保持墨拓剪影 + "？" */
+.lw-cell > .unk { right: 2px; top: 0; z-index: 6; font: 400 17px var(--f-display); color: var(--ink-nong); text-shadow: 0 0 3px var(--paper-hi), 0 0 2px var(--paper-hi); opacity: 0; transition: opacity 0.3s; }
+.lw-cell.unid.is-shown > .unk, .lw-cell.unid.is-taken > .unk { opacity: 1; }
+/* 可取 / 已取 / 放不下 */
+.lw-cell.is-shown { cursor: pointer; }
+.lw-cell.is-shown:hover .mk-tok > .ring { opacity: 1; }
+.lw-cell.is-shown:hover .mk-tok > .mk-ico { transform: translate(-50%, -50%) scale(1.06); }
+.lw-cell.is-taken .mk-tok { opacity: 0.22; }
+.lw-cell.is-taken > .unk { opacity: 0.25; }
+.lw-cell.nofit { animation: lw-nofit 0.36s ease; }
+@keyframes lw-nofit { 25% { translate: -3px 0; } 50% { translate: 3px 0; } 75% { translate: -2px 0; } }
+
+/* 名称行：悬停 / 揭示时"名称 · 品质 · ×数量"，平时是状态小字 */
+.mk-loot .nm { height: 20px; margin-top: 7px; font: 15px/20px var(--f-display); letter-spacing: 0.04em; color: var(--ink-nong); white-space: nowrap; text-align: center; }
+.mk-loot .nm small { font: 12px var(--f-ui); color: var(--ink-zhong); letter-spacing: 0; }
+.mk-loot .nm.st { font: 11px/20px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+.mk-loot .nm .bad { font: 700 12px var(--f-ui); color: var(--zhu); }
+
+/* ---------- 底部：墨笔小字 ---------- */
+.mk-loot .ft { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; margin-top: 2px; font: 13px var(--f-kai); color: var(--ink-zhong); white-space: nowrap; }
+.mk-loot .ft .all { cursor: pointer; color: var(--ink-nong); }
+.mk-loot .ft .all:hover { color: var(--ink); }
+.mk-loot .ft u { text-decoration: none; font: 700 11px var(--f-ui); border-bottom: 1px solid var(--ink-dan); padding: 0 2px; margin-left: 3px; }
+.mk-loot .ft .st { font: 11px var(--f-ui); color: var(--ink-dan); }
+.mk-loot .ft .st.full { color: var(--zhu); font-weight: 700; }
+
+/* 收起原因（受击 / 走动）：容器旁一行小字 */
+.mk-loot-msg { position: absolute; left: 0; top: 0; transform: translate(-50%, -100%); white-space: nowrap; font: 15px var(--f-display); color: var(--zhu); text-shadow: 0 0 4px var(--paper-hi), 0 0 3px var(--paper-hi); animation: mk-glabel 1.3s var(--ease-ink) forwards; pointer-events: none; }
+.mk-loot-msg.ink { color: var(--ink-nong); }
+
+@media (prefers-reduced-motion: reduce) { .lw-cell.omen .mk-tok > .mk-ico, .lw-cell.rev .mk-tok > .halo, .lw-cell.rev-3::after, .lw-cell.rev-4::after, .lw-cell.rev-4 > .burst > s { animation: none; } }

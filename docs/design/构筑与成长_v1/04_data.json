@@ -1,0 +1,5241 @@
+{
+ "r1": {
+  "spawned_per_run": {
+   "chest@donglu": 1.472,
+   "chest@luanshi": 0.938,
+   "chest@miao": 1.487,
+   "chest@xipan": 0.838,
+   "chest@zhulin": 1.265,
+   "elite:wolf_elite@beiling": 0.983,
+   "elite:wolf_elite@donglu": 0.72,
+   "elite:wolf_elite@luanshi": 0.29,
+   "elite:wolf_elite@miao": 0.648,
+   "elite:wolf_elite@zhulin": 0.358,
+   "gather@beiling": 0.738,
+   "gather@donglu": 2.852,
+   "gather@langgu": 0.357,
+   "gather@luanshi": 1.057,
+   "gather@miao": 4.57,
+   "gather@xipan": 1.978,
+   "gather@zhulin": 3.448,
+   "gchest@beiling": 1.318,
+   "gchest@langgu": 0.352,
+   "gchest@luanshi": 0.33,
+   "glow:furnace_part@miao": 0.673,
+   "glow:lingbang@miao": 0.297,
+   "glow:lingbang@zhulin": 0.375,
+   "glow:wolfking_bone@beiling": 0.333,
+   "glow:wolfking_bone@langgu": 0.322,
+   "mob:crow@donglu": 0.935,
+   "mob:crow@zhulin": 0.885,
+   "mob:golem@beiling": 1.613,
+   "mob:golem@luanshi": 0.713,
+   "mob:golem@miao": 0.393,
+   "mob:rat@donglu": 1.805,
+   "mob:rat@xipan": 5.405,
+   "mob:rat@zhulin": 1.158,
+   "mob:spider@luanshi": 0.99,
+   "mob:spider@miao": 1.337,
+   "mob:wolf@beiling": 1.613,
+   "mob:wolf@donglu": 1.525,
+   "mob:wolf@luanshi": 0.94,
+   "mob:wolf@miao": 0.58,
+   "mob:wolf@xipan": 1.04,
+   "mob:wolf@zhulin": 1.192,
+   "mob:wolf_grey@beiling": 4.387,
+   "mob:wolf_grey@donglu": 0.315,
+   "mob:wolf_grey@luanshi": 0.713,
+   "mob:wolf_grey@miao": 1.083,
+   "mob:wolf_grey@zhulin": 1.185,
+   "pack:high@beiling": 2.0,
+   "pack:low@donglu": 0.913,
+   "pack:low@luanshi": 0.33,
+   "pack:low@miao": 0.38,
+   "pack:low@xipan": 1.48,
+   "pack:low@zhulin": 0.582,
+   "pack:mid@donglu": 0.613,
+   "pack:mid@luanshi": 0.67,
+   "pack:mid@miao": 0.62,
+   "pack:mid@xipan": 0.52,
+   "pack:mid@zhulin": 0.892,
+   "pav@beiling": 0.882,
+   "pav@donglu": 0.843,
+   "pav@miao": 0.41,
+   "pav@xipan": 0.867,
+   "rare:chilang@beiling": 0.098,
+   "rare:chilang@donglu": 0.088,
+   "rare:chilang@luanshi": 0.103,
+   "rare:chilang@zhulin": 0.08,
+   "stele@beiling": 0.355,
+   "stele@donglu": 0.395,
+   "stele@luanshi": 0.365,
+   "stele@miao": 0.413
+  },
+  "points": [
+   {
+    "cat": "stele",
+    "name": "山神庙残碑",
+    "pos": [
+     -24.0,
+     -26.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 20.4,
+    "tE_min": 20.0,
+    "tG": 16.7,
+    "expo": 37.1,
+    "ok": true
+   },
+   {
+    "cat": "stele",
+    "name": "乱石岗石刻",
+    "pos": [
+     66.0,
+     -2.0
+    ],
+    "zone": "luanshi",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 28.2,
+    "tE_min": 23.8,
+    "tG": 19.4,
+    "expo": 47.6,
+    "ok": true
+   },
+   {
+    "cat": "stele",
+    "name": "北岭断碑",
+    "pos": [
+     -56.0,
+     -60.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 31.5,
+    "tE_min": 31.0,
+    "tG": 16.0,
+    "expo": 47.5,
+    "ok": true
+   },
+   {
+    "cat": "stele",
+    "name": "东麓石刻",
+    "pos": [
+     72.0,
+     44.0
+    ],
+    "zone": "donglu",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 24.8,
+    "tE_min": 19.8,
+    "tG": 16.0,
+    "expo": 40.8,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "东麓凉亭",
+    "pos": [
+     36.0,
+     32.0
+    ],
+    "zone": "donglu",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 19.6,
+    "tE_min": 14.6,
+    "tG": 10.6,
+    "expo": 30.1,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "溪畔望亭",
+    "pos": [
+     -34.0,
+     48.0
+    ],
+    "zone": "xipan",
+    "danger": 1,
+    "realm": [
+     1,
+     2
+    ],
+    "tE_mean": 7.5,
+    "tE_min": 3.8,
+    "tG": 2.2,
+    "expo": 9.7,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "竹径亭",
+    "pos": [
+     -72.0,
+     -8.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 16.4,
+    "tE_min": 15.8,
+    "tG": 13.1,
+    "expo": 29.5,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "松岭亭",
+    "pos": [
+     -68.0,
+     -40.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 28.2,
+    "tE_min": 27.6,
+    "tG": 18.2,
+    "expo": 46.3,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "瀑上亭",
+    "pos": [
+     4.0,
+     -48.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 41.1,
+    "tE_min": 40.5,
+    "tG": 5.6,
+    "expo": 46.7,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "溪口亭",
+    "pos": [
+     -78.0,
+     64.0
+    ],
+    "zone": "xipan",
+    "danger": 1,
+    "realm": [
+     1,
+     2
+    ],
+    "tE_mean": 4.4,
+    "tE_min": 2.6,
+    "tG": 10.6,
+    "expo": 15.0,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "东麓南亭",
+    "pos": [
+     96.0,
+     44.0
+    ],
+    "zone": "donglu",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 28.8,
+    "tE_min": 23.8,
+    "tG": 20.0,
+    "expo": 48.8,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "狼王遗骨",
+    "pos": [
+     36.0,
+     -30.0
+    ],
+    "zone": "langgu",
+    "danger": 5,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 55.5,
+    "tE_min": 54.9,
+    "tG": 9.6,
+    "expo": 65.0,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "狼王遗骨",
+    "pos": [
+     -10.0,
+     -60.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 39.2,
+    "tE_min": 38.6,
+    "tG": 8.3,
+    "expo": 47.5,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "灵蚌",
+    "pos": [
+     -17.0,
+     30.0
+    ],
+    "zone": "zhulin",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 11.6,
+    "tE_min": 8.0,
+    "tG": 2.8,
+    "expo": 14.4,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "灵蚌",
+    "pos": [
+     4.0,
+     -36.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 24.7,
+    "tE_min": 22.3,
+    "tG": 18.0,
+    "expo": 42.7,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "炼器鼎残件",
+    "pos": [
+     -46.0,
+     -26.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 18.1,
+    "tE_min": 17.7,
+    "tG": 14.6,
+    "expo": 32.7,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "炼器鼎残件",
+    "pos": [
+     -26.0,
+     -32.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 20.5,
+    "tE_min": 20.1,
+    "tG": 17.0,
+    "expo": 37.5,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     60.0,
+     -20.0
+    ],
+    "zone": "langgu",
+    "danger": 5,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 54.3,
+    "tE_min": 53.8,
+    "tG": 8.3,
+    "expo": 62.6,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     30.0,
+     -58.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 45.7,
+    "tE_min": 45.2,
+    "tG": 1.4,
+    "expo": 47.1,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     -66.0,
+     -40.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 28.5,
+    "tE_min": 27.9,
+    "tG": 17.8,
+    "expo": 46.3,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     56.0,
+     -56.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 49.9,
+    "tE_min": 49.4,
+    "tG": 3.6,
+    "expo": 53.5,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     92.0,
+     -14.0
+    ],
+    "zone": "luanshi",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 33.3,
+    "tE_min": 28.8,
+    "tG": 24.5,
+    "expo": 57.8,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     -80.0,
+     -58.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 28.7,
+    "tE_min": 28.1,
+    "tG": 19.8,
+    "expo": 48.5,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     -80.0,
+     20.0
+    ],
+    "zone": "zhulin",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 9.9,
+    "tE_min": 8.8,
+    "tG": 11.4,
+    "expo": 21.3,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     60.0,
+     48.0
+    ],
+    "zone": "donglu",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 22.6,
+    "tE_min": 17.5,
+    "tG": 14.3,
+    "expo": 36.9,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     -48.0,
+     -8.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 15.2,
+    "tE_min": 14.8,
+    "tG": 11.5,
+    "expo": 26.7,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     -20.0,
+     -38.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 21.9,
+    "tE_min": 21.5,
+    "tG": 18.4,
+    "expo": 40.3,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     88.0,
+     -10.0
+    ],
+    "zone": "luanshi",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 32.4,
+    "tE_min": 27.8,
+    "tG": 23.5,
+    "expo": 55.9,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     -60.0,
+     -58.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 30.7,
+    "tE_min": 30.2,
+    "tG": 16.5,
+    "expo": 47.2,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     10.0,
+     -60.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 42.5,
+    "tE_min": 42.0,
+    "tG": 5.5,
+    "expo": 48.1,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     80.0,
+     -46.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 53.9,
+    "tE_min": 53.4,
+    "tG": 7.7,
+    "expo": 61.7,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     30.0,
+     30.0
+    ],
+    "zone": "donglu",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 18.7,
+    "tE_min": 13.8,
+    "tG": 9.7,
+    "expo": 28.4,
+    "ok": true
+   },
+   {
+    "cat": "rare",
+    "name": "异种 乱石岗焦土",
+    "pos": [
+     84.0,
+     -16.0
+    ],
+    "zone": "luanshi",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 32.2,
+    "tE_min": 27.7,
+    "tG": 23.3,
+    "expo": 55.5,
+    "ok": true
+   },
+   {
+    "cat": "rare",
+    "name": "异种 北岭白霜",
+    "pos": [
+     -30.0,
+     -62.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 36.0,
+    "tE_min": 35.4,
+    "tG": 11.8,
+    "expo": 47.8,
+    "ok": true
+   },
+   {
+    "cat": "rare",
+    "name": "异种 竹林火烧迹",
+    "pos": [
+     -86.0,
+     12.0
+    ],
+    "zone": "zhulin",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 11.4,
+    "tE_min": 9.7,
+    "tG": 12.9,
+    "expo": 24.3,
+    "ok": true
+   },
+   {
+    "cat": "rare",
+    "name": "异种 东麓狼骨堆",
+    "pos": [
+     70.0,
+     58.0
+    ],
+    "zone": "donglu",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 23.5,
+    "tE_min": 18.5,
+    "tG": 16.6,
+    "expo": 40.2,
+    "ok": true
+   },
+   {
+    "cat": "den",
+    "name": "山神庙地窖",
+    "pos": [
+     -29.0,
+     -24.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 19.4,
+    "tE_min": 19.0,
+    "tG": 15.8,
+    "expo": 35.2,
+    "ok": true
+   },
+   {
+    "cat": "boss",
+    "name": "青牙",
+    "pos": [
+     50.0,
+     -22.0
+    ],
+    "zone": "langgu",
+    "danger": 5,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 54.1,
+    "tE_min": 53.6,
+    "tG": 8.1,
+    "expo": 62.2,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_temple_path",
+    "pos": [
+     -44.0,
+     -6.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 15.7,
+    "tE_min": 15.3,
+    "tG": 12.0,
+    "expo": 27.7,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_falls",
+    "pos": [
+     -2.0,
+     -30.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 23.6,
+    "tE_min": 21.9,
+    "tG": 17.6,
+    "expo": 41.2,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_songling",
+    "pos": [
+     -72.0,
+     -48.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 28.0,
+    "tE_min": 27.5,
+    "tG": 18.3,
+    "expo": 46.3,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_east_grove",
+    "pos": [
+     34.0,
+     22.0
+    ],
+    "zone": "donglu",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 20.0,
+    "tE_min": 15.1,
+    "tG": 10.9,
+    "expo": 30.9,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_pool_meadow",
+    "pos": [
+     -32.0,
+     30.0
+    ],
+    "zone": "zhulin",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 9.8,
+    "tE_min": 6.9,
+    "tG": 3.2,
+    "expo": 13.0,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_ridge",
+    "pos": [
+     46.0,
+     -58.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 48.4,
+    "tE_min": 47.8,
+    "tG": 2.1,
+    "expo": 50.5,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_east_rim",
+    "pos": [
+     74.0,
+     -14.0
+    ],
+    "zone": "luanshi",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 30.4,
+    "tE_min": 25.9,
+    "tG": 21.5,
+    "expo": 51.9,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_west_reed",
+    "pos": [
+     -92.0,
+     40.0
+    ],
+    "zone": "zhulin",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 7.7,
+    "tE_min": 4.6,
+    "tG": 12.0,
+    "expo": 19.7,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_donglu_s",
+    "pos": [
+     64.0,
+     66.0
+    ],
+    "zone": "donglu",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 22.0,
+    "tE_min": 16.9,
+    "tG": 16.2,
+    "expo": 38.2,
+    "ok": true
+   },
+   {
+    "cat": "relic",
+    "name": "遗物 西岭断碑",
+    "pos": [
+     -70.0,
+     -34.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 27.4,
+    "tE_min": 26.8,
+    "tG": 18.9,
+    "expo": 46.3,
+    "ok": true
+   },
+   {
+    "cat": "relic",
+    "name": "遗物 瀑下石龛",
+    "pos": [
+     -24.0,
+     -46.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 23.0,
+    "tE_min": 22.6,
+    "tG": 19.4,
+    "expo": 42.4,
+    "ok": true
+   },
+   {
+    "cat": "relic",
+    "name": "遗物 狼谷北崖",
+    "pos": [
+     66.0,
+     -44.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 51.7,
+    "tE_min": 51.1,
+    "tG": 5.6,
+    "expo": 57.2,
+    "ok": true
+   },
+   {
+    "cat": "relic",
+    "name": "遗物 台地木桥下",
+    "pos": [
+     -8.0,
+     -16.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 21.9,
+    "tE_min": 20.6,
+    "tG": 16.3,
+    "expo": 38.1,
+    "ok": true
+   },
+   {
+    "cat": "spawn:golem+wolf_grey",
+    "name": "刷怪点",
+    "pos": [
+     -36.0,
+     -10.0
+    ],
+    "zone": "miao",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 17.3,
+    "tE_min": 16.9,
+    "tG": 13.6,
+    "expo": 30.9,
+    "ok": true
+   },
+   {
+    "cat": "spawn:golem+wolf_grey",
+    "name": "刷怪点",
+    "pos": [
+     84.0,
+     -8.0
+    ],
+    "zone": "luanshi",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 31.6,
+    "tE_min": 27.2,
+    "tG": 22.8,
+    "expo": 54.4,
+    "ok": true
+   },
+   {
+    "cat": "spawn:golem+wolf_grey",
+    "name": "刷怪点",
+    "pos": [
+     -80.0,
+     -50.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 27.3,
+    "tE_min": 26.8,
+    "tG": 19.5,
+    "expo": 46.8,
+    "ok": true
+   },
+   {
+    "cat": "spawn:golem+wolf_grey",
+    "name": "刷怪点",
+    "pos": [
+     30.0,
+     -62.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 46.0,
+    "tE_min": 45.4,
+    "tG": 2.1,
+    "expo": 48.1,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "法宝匣·狼王石后",
+    "pos": [
+     50.0,
+     -28.2
+    ],
+    "zone": "langgu",
+    "danger": 5,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 53.3,
+    "tE_min": 52.7,
+    "tG": 7.4,
+    "expo": 60.6,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "雷击木·乱石岗南",
+    "pos": [
+     92.0,
+     -26.0
+    ],
+    "zone": "luanshi",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 34.2,
+    "tE_min": 29.8,
+    "tG": 25.4,
+    "expo": 59.5,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "雷击木·乱石岗西",
+    "pos": [
+     72.0,
+     -24.0
+    ],
+    "zone": "luanshi",
+    "danger": 3,
+    "realm": [
+     3,
+     4
+    ],
+    "tE_mean": 31.0,
+    "tE_min": 26.6,
+    "tG": 22.2,
+    "expo": 53.2,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "雷击木·北岭东",
+    "pos": [
+     44.0,
+     -54.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 47.8,
+    "tE_min": 47.2,
+    "tG": 1.5,
+    "expo": 49.3,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "雷击木·北岭西",
+    "pos": [
+     -40.0,
+     -58.0
+    ],
+    "zone": "beiling",
+    "danger": 4,
+    "realm": [
+     4,
+     4
+    ],
+    "tE_mean": 34.1,
+    "tE_min": 33.5,
+    "tG": 13.1,
+    "expo": 47.2,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "雷击木·东麓丘",
+    "pos": [
+     80.0,
+     40.0
+    ],
+    "zone": "donglu",
+    "danger": 2,
+    "realm": [
+     2,
+     3
+    ],
+    "tE_mean": 26.4,
+    "tE_min": 21.4,
+    "tG": 17.3,
+    "expo": 43.7,
+    "ok": true
+   }
+  ],
+  "runs": {
+   "普通/dusk": {
+    "T_min": {
+     "p10": 8.6,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.85
+    },
+    "phase_share": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "chest": 5.62,
+     "elite:wolf_elite": 2.19,
+     "gather": 8.06,
+     "gchest": 1.01,
+     "glow:furnace_part": 0.65,
+     "glow:lingbang": 0.65,
+     "glow:wolfking_bone": 0.15,
+     "mob:crow": 1.58,
+     "mob:golem": 1.66,
+     "mob:rat": 8.03,
+     "mob:spider": 2.02,
+     "mob:wolf": 5.23,
+     "mob:wolf_grey": 4.36,
+     "pack:high": 0.73,
+     "pack:low": 3.41,
+     "pack:mid": 2.94,
+     "pav": 2.45,
+     "rare:chilang": 0.23,
+     "stele:beiling": 0.22,
+     "stele:donglu": 0.3,
+     "stele:luanshi": 0.34,
+     "stele:miao": 0.38
+    }
+   },
+   "普通/night": {
+    "T_min": {
+     "p10": 10.8,
+     "p50": 11.5,
+     "p90": 12.0,
+     "mean": 11.42
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "chest": 5.96,
+     "elite:wolf_elite": 2.97,
+     "gather": 8.93,
+     "gchest": 1.96,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.69,
+     "glow:wolfking_bone": 0.6,
+     "mob:crow": 1.8,
+     "mob:golem": 2.63,
+     "mob:rat": 8.56,
+     "mob:spider": 2.33,
+     "mob:wolf": 6.6,
+     "mob:wolf_grey": 7.3,
+     "pack:high": 1.94,
+     "pack:low": 3.75,
+     "pack:mid": 3.16,
+     "pav": 3.01,
+     "rare:chilang": 0.33,
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.33,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.38
+    }
+   },
+   "普通/greedy": {
+    "T_min": {
+     "p10": 10.8,
+     "p50": 11.5,
+     "p90": 12.8,
+     "mean": 11.67
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     0.822,
+     0.178
+    ],
+    "night_chest": 0.178,
+    "contact": {
+     "chest": 6.0,
+     "elite:wolf_elite": 3.0,
+     "gather": 9.0,
+     "gchest": 2.0,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.69,
+     "glow:wolfking_bone": 0.65,
+     "mob:crow": 1.81,
+     "mob:golem": 2.67,
+     "mob:rat": 8.67,
+     "mob:spider": 2.4,
+     "mob:wolf": 6.74,
+     "mob:wolf_grey": 7.49,
+     "pack:high": 2.0,
+     "pack:low": 3.81,
+     "pack:mid": 3.19,
+     "pav": 3.02,
+     "rare:chilang": 0.34,
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.34,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.38
+    }
+   },
+   "遗府(山神庙)/dusk": {
+    "T_min": {
+     "p10": 8.8,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.92
+    },
+    "phase_share": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "chest": 4.22,
+     "den": 1.0,
+     "elite:wolf_elite": 1.16,
+     "gather": 5.47,
+     "gchest": 0.24,
+     "glow:furnace_part": 0.3,
+     "glow:lingbang": 0.47,
+     "glow:wolfking_bone": 0.01,
+     "mob:crow": 1.1,
+     "mob:golem": 0.64,
+     "mob:rat": 7.06,
+     "mob:spider": 0.91,
+     "mob:wolf": 3.73,
+     "mob:wolf_grey": 1.95,
+     "pack:high": 0.09,
+     "pack:low": 2.6,
+     "pack:mid": 2.16,
+     "pav": 1.55,
+     "rare:chilang": 0.1,
+     "stele:beiling": 0.03,
+     "stele:donglu": 0.2,
+     "stele:luanshi": 0.19,
+     "stele:miao": 0.25
+    }
+   },
+   "遗府(山神庙)/night": {
+    "T_min": {
+     "p10": 11.7,
+     "p50": 11.9,
+     "p90": 12.0,
+     "mean": 11.9
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "chest": 5.55,
+     "den": 1.0,
+     "elite:wolf_elite": 2.11,
+     "gather": 7.14,
+     "gchest": 0.89,
+     "glow:furnace_part": 0.63,
+     "glow:lingbang": 0.66,
+     "glow:wolfking_bone": 0.13,
+     "mob:crow": 1.56,
+     "mob:golem": 1.53,
+     "mob:rat": 8.05,
+     "mob:spider": 1.93,
+     "mob:wolf": 5.14,
+     "mob:wolf_grey": 3.94,
+     "pack:high": 0.57,
+     "pack:low": 3.38,
+     "pack:mid": 2.92,
+     "pav": 2.35,
+     "rare:chilang": 0.21,
+     "stele:beiling": 0.18,
+     "stele:donglu": 0.29,
+     "stele:luanshi": 0.32,
+     "stele:miao": 0.38
+    }
+   },
+   "遗府(山神庙)/greedy": {
+    "T_min": {
+     "p10": 14.2,
+     "p50": 14.9,
+     "p90": 16.0,
+     "mean": 15.02
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "night_chest": 1.0,
+    "contact": {
+     "chest": 6.0,
+     "den": 1.0,
+     "elite:wolf_elite": 3.0,
+     "gather": 8.0,
+     "gchest": 2.0,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.69,
+     "glow:wolfking_bone": 0.65,
+     "mob:crow": 1.81,
+     "mob:golem": 2.67,
+     "mob:rat": 8.67,
+     "mob:spider": 2.4,
+     "mob:wolf": 6.74,
+     "mob:wolf_grey": 7.49,
+     "pack:high": 2.0,
+     "pack:low": 3.81,
+     "pack:mid": 3.19,
+     "pav": 3.02,
+     "rare:chilang": 0.34,
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.34,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.38
+    }
+   },
+   "首领(青牙)/dusk": {
+    "T_min": {
+     "p10": 9.1,
+     "p50": 9.1,
+     "p90": 9.2,
+     "mean": 9.1
+    },
+    "phase_share": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "boss": 1.0,
+     "chest": 4.63,
+     "elite:wolf_elite": 1.36,
+     "gather": 4.46,
+     "gchest": 0.61,
+     "glow:furnace_part": 0.39,
+     "glow:lingbang": 0.51,
+     "glow:wolfking_bone": 0.06,
+     "mob:crow": 1.17,
+     "mob:golem": 0.91,
+     "mob:rat": 6.95,
+     "mob:spider": 1.31,
+     "mob:wolf": 4.06,
+     "mob:wolf_grey": 2.55,
+     "pack:high": 0.25,
+     "pack:low": 2.71,
+     "pack:mid": 2.33,
+     "pav": 1.8,
+     "rare:chilang": 0.12,
+     "stele:beiling": 0.08,
+     "stele:donglu": 0.21,
+     "stele:luanshi": 0.24,
+     "stele:miao": 0.29
+    }
+   },
+   "首领(青牙)/night": {
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.1,
+     "p90": 12.2,
+     "mean": 12.03
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "boss": 1.0,
+     "chest": 5.66,
+     "elite:wolf_elite": 2.4,
+     "gather": 5.62,
+     "gchest": 1.58,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.66,
+     "glow:wolfking_bone": 0.3,
+     "mob:crow": 1.59,
+     "mob:golem": 2.07,
+     "mob:rat": 8.1,
+     "mob:spider": 2.12,
+     "mob:wolf": 5.63,
+     "mob:wolf_grey": 5.54,
+     "pack:high": 1.24,
+     "pack:low": 3.47,
+     "pack:mid": 2.96,
+     "pav": 2.73,
+     "rare:chilang": 0.23,
+     "stele:beiling": 0.33,
+     "stele:donglu": 0.29,
+     "stele:luanshi": 0.34,
+     "stele:miao": 0.38
+    }
+   },
+   "首领(青牙)/greedy": {
+    "T_min": {
+     "p10": 12.9,
+     "p50": 14.1,
+     "p90": 15.3,
+     "mean": 14.0
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "night_chest": 1.0,
+    "contact": {
+     "boss": 1.0,
+     "chest": 6.0,
+     "elite:wolf_elite": 3.0,
+     "gather": 6.0,
+     "gchest": 2.0,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.69,
+     "glow:wolfking_bone": 0.65,
+     "mob:crow": 1.81,
+     "mob:golem": 2.67,
+     "mob:rat": 8.67,
+     "mob:spider": 2.4,
+     "mob:wolf": 6.74,
+     "mob:wolf_grey": 7.49,
+     "pack:high": 2.0,
+     "pack:low": 3.81,
+     "pack:mid": 3.19,
+     "pav": 3.02,
+     "rare:chilang": 0.34,
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.34,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.38
+    }
+   }
+  },
+  "targets": {
+   "石傀+山神庙残碑": {
+    "t_target_min": {
+     "p10": 1.2,
+     "p50": 2.3,
+     "p90": 3.5,
+     "mean": 2.3
+    },
+    "T_min": {
+     "p10": 8.7,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.88
+    },
+    "target_hits": {
+     "mob:golem": 0.93,
+     "mob:wolf_grey": 0.41,
+     "stele:miao": 0.38
+    },
+    "target_mobs": {
+     "mob:golem": 2.67,
+     "mob:wolf_grey": 2.67
+    },
+    "p_zero": 0.092,
+    "forced_packs": 2.17,
+    "contact": {
+     "_forced": 2.17,
+     "_target": 1.72,
+     "chest": 4.51,
+     "elite:wolf_elite": 2.12,
+     "gather": 6.68,
+     "gchest": 1.31,
+     "glow:furnace_part": 0.56,
+     "glow:lingbang": 0.5,
+     "glow:wolfking_bone": 0.36,
+     "mob:crow": 1.31,
+     "mob:golem": 2.67,
+     "mob:rat": 6.55,
+     "mob:spider": 1.68,
+     "mob:wolf": 4.82,
+     "mob:wolf_grey": 5.66,
+     "pack:high": 1.42,
+     "pack:low": 2.8,
+     "pack:mid": 2.61,
+     "pav": 2.19,
+     "rare:chilang": 0.18,
+     "stele:beiling": 0.28,
+     "stele:donglu": 0.23,
+     "stele:luanshi": 0.3,
+     "stele:miao": 0.38
+    }
+   },
+   "狼妖头目×全部": {
+    "t_target_min": {
+     "p10": 3.6,
+     "p50": 4.4,
+     "p90": 5.4,
+     "mean": 4.46
+    },
+    "T_min": {
+     "p10": 8.8,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.89
+    },
+    "target_hits": {
+     "elite:wolf_elite": 3.0
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 3.79,
+    "contact": {
+     "_forced": 3.79,
+     "_target": 3.0,
+     "chest": 3.61,
+     "elite:wolf_elite": 3.0,
+     "gather": 5.78,
+     "gchest": 1.3,
+     "glow:furnace_part": 0.55,
+     "glow:lingbang": 0.41,
+     "glow:wolfking_bone": 0.42,
+     "mob:crow": 1.02,
+     "mob:golem": 2.02,
+     "mob:rat": 5.96,
+     "mob:spider": 1.55,
+     "mob:wolf": 4.7,
+     "mob:wolf_grey": 5.14,
+     "pack:high": 1.41,
+     "pack:low": 2.49,
+     "pack:mid": 2.25,
+     "pav": 1.8,
+     "rare:chilang": 0.14,
+     "stele:beiling": 0.27,
+     "stele:donglu": 0.12,
+     "stele:luanshi": 0.21,
+     "stele:miao": 0.3
+    }
+   },
+   "残碑×全部": {
+    "t_target_min": {
+     "p10": 1.3,
+     "p50": 2.1,
+     "p90": 2.8,
+     "mean": 2.06
+    },
+    "T_min": {
+     "p10": 8.6,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.85
+    },
+    "target_hits": {
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.34,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.38
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 2.55,
+    "contact": {
+     "_forced": 2.55,
+     "_target": 1.48,
+     "chest": 4.92,
+     "elite:wolf_elite": 2.06,
+     "gather": 7.1,
+     "gchest": 1.09,
+     "glow:furnace_part": 0.6,
+     "glow:lingbang": 0.54,
+     "glow:wolfking_bone": 0.27,
+     "mob:crow": 1.47,
+     "mob:golem": 1.8,
+     "mob:rat": 7.29,
+     "mob:spider": 1.82,
+     "mob:wolf": 5.05,
+     "mob:wolf_grey": 4.67,
+     "pack:high": 0.99,
+     "pack:low": 3.11,
+     "pack:mid": 2.68,
+     "pav": 2.25,
+     "rare:chilang": 0.2,
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.34,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.38
+    }
+   },
+   "灵光宝箱+亭": {
+    "t_target_min": {
+     "p10": 2.9,
+     "p50": 4.1,
+     "p90": 4.9,
+     "mean": 3.96
+    },
+    "T_min": {
+     "p10": 8.8,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.9
+    },
+    "target_hits": {
+     "gchest": 2.0,
+     "pav": 3.02
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 4.88,
+    "contact": {
+     "_forced": 4.88,
+     "_target": 5.02,
+     "chest": 3.59,
+     "elite:wolf_elite": 1.77,
+     "gather": 5.71,
+     "gchest": 2.0,
+     "glow:furnace_part": 0.54,
+     "glow:lingbang": 0.38,
+     "glow:wolfking_bone": 0.45,
+     "mob:crow": 1.08,
+     "mob:golem": 2.32,
+     "mob:rat": 6.4,
+     "mob:spider": 1.48,
+     "mob:wolf": 5.25,
+     "mob:wolf_grey": 6.03,
+     "pack:high": 1.76,
+     "pack:low": 2.61,
+     "pack:mid": 2.41,
+     "pav": 3.02,
+     "rare:chilang": 0.15,
+     "stele:beiling": 0.28,
+     "stele:donglu": 0.19,
+     "stele:luanshi": 0.19,
+     "stele:miao": 0.31
+    }
+   },
+   "异种(赤狼)": {
+    "t_target_min": {
+     "p10": 0.4,
+     "p50": 0.5,
+     "p90": 3.1,
+     "mean": 1.26
+    },
+    "T_min": {
+     "p10": 8.7,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.86
+    },
+    "target_hits": {
+     "rare:chilang": 0.34
+    },
+    "target_mobs": {},
+    "p_zero": 0.655,
+    "forced_packs": 0.78,
+    "contact": {
+     "_forced": 0.78,
+     "_target": 0.34,
+     "chest": 5.32,
+     "elite:wolf_elite": 2.14,
+     "gather": 7.58,
+     "gchest": 1.05,
+     "glow:furnace_part": 0.62,
+     "glow:lingbang": 0.61,
+     "glow:wolfking_bone": 0.18,
+     "mob:crow": 1.53,
+     "mob:golem": 1.7,
+     "mob:rat": 7.72,
+     "mob:spider": 1.94,
+     "mob:wolf": 5.11,
+     "mob:wolf_grey": 4.45,
+     "pack:high": 0.82,
+     "pack:low": 3.29,
+     "pack:mid": 2.81,
+     "pav": 2.38,
+     "rare:chilang": 0.34,
+     "stele:beiling": 0.24,
+     "stele:donglu": 0.27,
+     "stele:luanshi": 0.33,
+     "stele:miao": 0.36
+    }
+   },
+   "灵光点×全部": {
+    "t_target_min": {
+     "p10": 2.8,
+     "p50": 3.6,
+     "p90": 4.5,
+     "mean": 3.61
+    },
+    "T_min": {
+     "p10": 8.7,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.88
+    },
+    "target_hits": {
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.69,
+     "glow:wolfking_bone": 0.65
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 2.91,
+    "contact": {
+     "_forced": 2.91,
+     "_target": 2.0,
+     "chest": 4.15,
+     "elite:wolf_elite": 2.03,
+     "gather": 6.44,
+     "gchest": 1.35,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.69,
+     "glow:wolfking_bone": 0.65,
+     "mob:crow": 1.18,
+     "mob:golem": 1.87,
+     "mob:rat": 6.29,
+     "mob:spider": 1.46,
+     "mob:wolf": 4.69,
+     "mob:wolf_grey": 5.25,
+     "pack:high": 1.41,
+     "pack:low": 2.59,
+     "pack:mid": 2.27,
+     "pav": 2.06,
+     "rare:chilang": 0.14,
+     "stele:beiling": 0.29,
+     "stele:donglu": 0.18,
+     "stele:luanshi": 0.22,
+     "stele:miao": 0.31
+    }
+   },
+   "流派:剑势": {
+    "t_target_min": {
+     "p10": 4.2,
+     "p50": 5.4,
+     "p90": 6.7,
+     "mean": 5.46
+    },
+    "T_min": {
+     "p10": 8.8,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.91
+    },
+    "target_hits": {
+     "chest": 1.48,
+     "elite:wolf_elite": 1.66,
+     "gchest": 1.31,
+     "glow:wolfking_bone": 0.34,
+     "pav": 1.72,
+     "rare:chilang": 0.19,
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.34
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 5.29,
+    "contact": {
+     "_forced": 5.29,
+     "_target": 7.41,
+     "chest": 3.64,
+     "elite:wolf_elite": 2.33,
+     "gather": 4.41,
+     "gchest": 1.7,
+     "glow:furnace_part": 0.51,
+     "glow:lingbang": 0.25,
+     "glow:wolfking_bone": 0.64,
+     "mob:crow": 0.85,
+     "mob:golem": 2.28,
+     "mob:rat": 6.05,
+     "mob:spider": 1.1,
+     "mob:wolf": 5.22,
+     "mob:wolf_grey": 6.23,
+     "pack:high": 1.97,
+     "pack:low": 2.33,
+     "pack:mid": 2.2,
+     "pav": 2.31,
+     "rare:chilang": 0.19,
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.34,
+     "stele:luanshi": 0.1,
+     "stele:miao": 0.29
+    }
+   },
+   "流派:五行": {
+    "t_target_min": {
+     "p10": 2.8,
+     "p50": 3.8,
+     "p90": 4.9,
+     "mean": 3.81
+    },
+    "T_min": {
+     "p10": 8.6,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.84
+    },
+    "target_hits": {
+     "chest": 2.75,
+     "elite:wolf_elite": 1.03,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.69,
+     "pav": 0.42,
+     "rare:chilang": 0.08,
+     "stele:miao": 0.38
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 2.18,
+    "contact": {
+     "_forced": 2.18,
+     "_target": 6.01,
+     "chest": 5.55,
+     "elite:wolf_elite": 2.15,
+     "gather": 7.56,
+     "gchest": 0.85,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.69,
+     "glow:wolfking_bone": 0.11,
+     "mob:crow": 1.61,
+     "mob:golem": 1.42,
+     "mob:rat": 7.74,
+     "mob:spider": 1.93,
+     "mob:wolf": 5.0,
+     "mob:wolf_grey": 3.78,
+     "pack:high": 0.51,
+     "pack:low": 3.31,
+     "pack:mid": 2.85,
+     "pav": 2.22,
+     "rare:chilang": 0.23,
+     "stele:beiling": 0.15,
+     "stele:donglu": 0.29,
+     "stele:luanshi": 0.33,
+     "stele:miao": 0.38
+    }
+   },
+   "流派:身法": {
+    "t_target_min": {
+     "p10": 3.0,
+     "p50": 4.1,
+     "p90": 5.6,
+     "mean": 4.23
+    },
+    "T_min": {
+     "p10": 8.8,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.91
+    },
+    "target_hits": {
+     "chest": 1.21,
+     "elite:wolf_elite": 1.3,
+     "gchest": 1.31,
+     "glow:lingbang": 0.32,
+     "glow:wolfking_bone": 0.34,
+     "pav": 0.87,
+     "rare:chilang": 0.17,
+     "stele:beiling": 0.38
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 3.6,
+    "contact": {
+     "_forced": 3.6,
+     "_target": 5.9,
+     "chest": 4.15,
+     "elite:wolf_elite": 2.31,
+     "gather": 5.61,
+     "gchest": 1.77,
+     "glow:furnace_part": 0.62,
+     "glow:lingbang": 0.61,
+     "glow:wolfking_bone": 0.64,
+     "mob:crow": 0.98,
+     "mob:golem": 2.24,
+     "mob:rat": 4.44,
+     "mob:spider": 1.52,
+     "mob:wolf": 4.72,
+     "mob:wolf_grey": 6.19,
+     "pack:high": 1.97,
+     "pack:low": 1.99,
+     "pack:mid": 1.97,
+     "pav": 1.89,
+     "rare:chilang": 0.19,
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.13,
+     "stele:luanshi": 0.23,
+     "stele:miao": 0.34
+    }
+   },
+   "流派:雷暴": {
+    "t_target_min": {
+     "p10": 2.3,
+     "p50": 3.2,
+     "p90": 4.3,
+     "mean": 3.27
+    },
+    "T_min": {
+     "p10": 8.5,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.8
+    },
+    "target_hits": {
+     "chest": 2.39,
+     "elite:wolf_elite": 0.99,
+     "gchest": 0.37,
+     "pav": 0.85,
+     "rare:chilang": 0.17,
+     "stele:donglu": 0.34,
+     "stele:luanshi": 0.39
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 2.85,
+    "contact": {
+     "_forced": 2.85,
+     "_target": 5.5,
+     "chest": 5.48,
+     "elite:wolf_elite": 2.22,
+     "gather": 7.16,
+     "gchest": 1.03,
+     "glow:furnace_part": 0.62,
+     "glow:lingbang": 0.54,
+     "glow:wolfking_bone": 0.14,
+     "mob:crow": 1.58,
+     "mob:golem": 1.71,
+     "mob:rat": 7.65,
+     "mob:spider": 1.98,
+     "mob:wolf": 5.15,
+     "mob:wolf_grey": 4.2,
+     "pack:high": 0.65,
+     "pack:low": 3.31,
+     "pack:mid": 2.92,
+     "pav": 2.33,
+     "rare:chilang": 0.25,
+     "stele:beiling": 0.19,
+     "stele:donglu": 0.34,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.36
+    }
+   },
+   "流派:守御": {
+    "t_target_min": {
+     "p10": 2.8,
+     "p50": 4.0,
+     "p90": 5.2,
+     "mean": 4.04
+    },
+    "T_min": {
+     "p10": 8.6,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.84
+    },
+    "target_hits": {
+     "chest": 2.45,
+     "elite:wolf_elite": 1.02,
+     "gchest": 0.37,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.37,
+     "pav": 0.42,
+     "rare:chilang": 0.07,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.38
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 2.87,
+    "contact": {
+     "_forced": 2.87,
+     "_target": 6.12,
+     "chest": 5.78,
+     "elite:wolf_elite": 2.09,
+     "gather": 7.22,
+     "gchest": 0.76,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.67,
+     "glow:wolfking_bone": 0.07,
+     "mob:crow": 1.68,
+     "mob:golem": 1.42,
+     "mob:rat": 7.95,
+     "mob:spider": 2.06,
+     "mob:wolf": 5.12,
+     "mob:wolf_grey": 3.61,
+     "pack:high": 0.35,
+     "pack:low": 3.45,
+     "pack:mid": 3.02,
+     "pav": 2.27,
+     "rare:chilang": 0.21,
+     "stele:beiling": 0.13,
+     "stele:donglu": 0.31,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.38
+    }
+   },
+   "分区:竹林 · 狼踪": {
+    "t_target_min": {
+     "p10": 0.5,
+     "p50": 1.7,
+     "p90": 2.7,
+     "mean": 1.67
+    },
+    "T_min": {
+     "p10": 8.6,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.84
+    },
+    "target_hits": {
+     "chest": 1.21,
+     "elite:wolf_elite": 0.32,
+     "glow:lingbang": 0.32,
+     "rare:chilang": 0.08
+    },
+    "target_mobs": {},
+    "p_zero": 0.098,
+    "forced_packs": 1.36,
+    "contact": {
+     "_forced": 1.36,
+     "_target": 1.94,
+     "chest": 5.52,
+     "elite:wolf_elite": 2.19,
+     "gather": 7.89,
+     "gchest": 1.01,
+     "glow:furnace_part": 0.63,
+     "glow:lingbang": 0.67,
+     "glow:wolfking_bone": 0.14,
+     "mob:crow": 1.59,
+     "mob:golem": 1.62,
+     "mob:rat": 7.86,
+     "mob:spider": 2.07,
+     "mob:wolf": 5.25,
+     "mob:wolf_grey": 4.27,
+     "pack:high": 0.72,
+     "pack:low": 3.39,
+     "pack:mid": 2.91,
+     "pav": 2.4,
+     "rare:chilang": 0.23,
+     "stele:beiling": 0.21,
+     "stele:donglu": 0.28,
+     "stele:luanshi": 0.33,
+     "stele:miao": 0.38
+    }
+   },
+   "分区:东麓": {
+    "t_target_min": {
+     "p10": 1.5,
+     "p50": 2.4,
+     "p90": 3.4,
+     "mean": 2.46
+    },
+    "T_min": {
+     "p10": 8.5,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.81
+    },
+    "target_hits": {
+     "chest": 1.48,
+     "elite:wolf_elite": 0.69,
+     "pav": 0.85,
+     "rare:chilang": 0.1,
+     "stele:donglu": 0.34
+    },
+    "target_mobs": {},
+    "p_zero": 0.007,
+    "forced_packs": 2.27,
+    "contact": {
+     "_forced": 2.27,
+     "_target": 3.45,
+     "chest": 5.4,
+     "elite:wolf_elite": 2.2,
+     "gather": 7.4,
+     "gchest": 0.98,
+     "glow:furnace_part": 0.63,
+     "glow:lingbang": 0.56,
+     "glow:wolfking_bone": 0.14,
+     "mob:crow": 1.57,
+     "mob:golem": 1.67,
+     "mob:rat": 7.79,
+     "mob:spider": 2.07,
+     "mob:wolf": 5.19,
+     "mob:wolf_grey": 4.29,
+     "pack:high": 0.71,
+     "pack:low": 3.38,
+     "pack:mid": 2.89,
+     "pav": 2.35,
+     "rare:chilang": 0.23,
+     "stele:beiling": 0.18,
+     "stele:donglu": 0.34,
+     "stele:luanshi": 0.34,
+     "stele:miao": 0.37
+    }
+   },
+   "分区:山神庙": {
+    "t_target_min": {
+     "p10": 2.1,
+     "p50": 3.0,
+     "p90": 4.1,
+     "mean": 3.07
+    },
+    "T_min": {
+     "p10": 8.6,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.85
+    },
+    "target_hits": {
+     "chest": 1.54,
+     "elite:wolf_elite": 0.71,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.37,
+     "pav": 0.42,
+     "stele:miao": 0.38
+    },
+    "target_mobs": {},
+    "p_zero": 0.002,
+    "forced_packs": 2.18,
+    "contact": {
+     "_forced": 2.18,
+     "_target": 4.07,
+     "chest": 5.58,
+     "elite:wolf_elite": 2.1,
+     "gather": 7.79,
+     "gchest": 0.85,
+     "glow:furnace_part": 0.66,
+     "glow:lingbang": 0.67,
+     "glow:wolfking_bone": 0.11,
+     "mob:crow": 1.65,
+     "mob:golem": 1.47,
+     "mob:rat": 7.94,
+     "mob:spider": 1.91,
+     "mob:wolf": 5.06,
+     "mob:wolf_grey": 3.94,
+     "pack:high": 0.55,
+     "pack:low": 3.38,
+     "pack:mid": 2.9,
+     "pav": 2.3,
+     "rare:chilang": 0.19,
+     "stele:beiling": 0.17,
+     "stele:donglu": 0.29,
+     "stele:luanshi": 0.32,
+     "stele:miao": 0.38
+    }
+   },
+   "分区:乱石岗": {
+    "t_target_min": {
+     "p10": 1.0,
+     "p50": 2.2,
+     "p90": 3.2,
+     "mean": 2.17
+    },
+    "T_min": {
+     "p10": 8.6,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.82
+    },
+    "target_hits": {
+     "chest": 0.91,
+     "elite:wolf_elite": 0.31,
+     "gchest": 0.37,
+     "rare:chilang": 0.07,
+     "stele:luanshi": 0.39
+    },
+    "target_mobs": {},
+    "p_zero": 0.09,
+    "forced_packs": 2.42,
+    "contact": {
+     "_forced": 2.42,
+     "_target": 2.05,
+     "chest": 5.58,
+     "elite:wolf_elite": 2.13,
+     "gather": 7.59,
+     "gchest": 0.96,
+     "glow:furnace_part": 0.59,
+     "glow:lingbang": 0.56,
+     "glow:wolfking_bone": 0.1,
+     "mob:crow": 1.64,
+     "mob:golem": 1.6,
+     "mob:rat": 8.14,
+     "mob:spider": 2.16,
+     "mob:wolf": 5.22,
+     "mob:wolf_grey": 4.18,
+     "pack:high": 0.58,
+     "pack:low": 3.52,
+     "pack:mid": 3.03,
+     "pav": 2.37,
+     "rare:chilang": 0.23,
+     "stele:beiling": 0.18,
+     "stele:donglu": 0.31,
+     "stele:luanshi": 0.39,
+     "stele:miao": 0.34
+    }
+   },
+   "分区:北岭": {
+    "t_target_min": {
+     "p10": 2.4,
+     "p50": 3.4,
+     "p90": 4.6,
+     "mean": 3.46
+    },
+    "T_min": {
+     "p10": 8.8,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.91
+    },
+    "target_hits": {
+     "elite:wolf_elite": 0.97,
+     "gchest": 1.31,
+     "glow:wolfking_bone": 0.34,
+     "pav": 0.87,
+     "rare:chilang": 0.09,
+     "stele:beiling": 0.38
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 3.54,
+    "contact": {
+     "_forced": 3.54,
+     "_target": 3.96,
+     "chest": 3.84,
+     "elite:wolf_elite": 2.27,
+     "gather": 6.12,
+     "gchest": 1.82,
+     "glow:furnace_part": 0.59,
+     "glow:lingbang": 0.43,
+     "glow:wolfking_bone": 0.64,
+     "mob:crow": 1.15,
+     "mob:golem": 2.27,
+     "mob:rat": 5.11,
+     "mob:spider": 1.55,
+     "mob:wolf": 5.06,
+     "mob:wolf_grey": 6.27,
+     "pack:high": 1.97,
+     "pack:low": 2.29,
+     "pack:mid": 2.12,
+     "pav": 2.14,
+     "rare:chilang": 0.15,
+     "stele:beiling": 0.38,
+     "stele:donglu": 0.19,
+     "stele:luanshi": 0.23,
+     "stele:miao": 0.32
+    }
+   }
+  }
+ },
+ "r2": {
+  "spawned_per_run": {
+   "chest@beiji": 0.735,
+   "chest@dongtai": 0.723,
+   "chest@duanjian": 0.807,
+   "chest@ludang": 2.668,
+   "chest@xigu": 2.278,
+   "chest@zhuhai_n": 0.788,
+   "elite:vine_elite@beiji": 0.22,
+   "elite:vine_elite@dongtai": 0.38,
+   "elite:vine_elite@duanjian": 0.393,
+   "elite:vine_elite@xigu": 0.622,
+   "elite:vine_elite@zhuhai_n": 0.377,
+   "elite:wolf_elite_r2@beiji": 0.183,
+   "elite:wolf_elite_r2@dongtai": 0.427,
+   "elite:wolf_elite_r2@duanjian": 0.435,
+   "elite:wolf_elite_r2@xigu": 0.578,
+   "elite:wolf_elite_r2@zhuhai_n": 0.385,
+   "gather@bilin": 1.36,
+   "gather@dongtai": 0.987,
+   "gather@duanjian": 3.942,
+   "gather@ludang": 2.983,
+   "gather@xigu": 4.12,
+   "gather@zhuhai_n": 2.608,
+   "gchest@bilin": 0.335,
+   "gchest@dongtai": 0.332,
+   "gchest@duanjian": 0.668,
+   "gchest@zhuhai_n": 0.665,
+   "glow:water_jade@bilin": 0.347,
+   "glow:water_jade@xigu": 0.325,
+   "glow:zhenpan@duanjian": 0.69,
+   "glow:zhuxin@zhuhai_n": 0.638,
+   "mob:bat@beiji": 2.007,
+   "mob:bat@bilin": 5.0,
+   "mob:bat@duanjian": 2.653,
+   "mob:bat@xigu": 1.97,
+   "mob:bat@zhuhai_n": 1.847,
+   "mob:snake@ludang": 4.023,
+   "mob:snake@xigu": 1.705,
+   "mob:snake@zhuhai_n": 1.035,
+   "mob:toad@beiji": 0.997,
+   "mob:toad@bilin": 2.0,
+   "mob:toad@dongtai": 1.325,
+   "mob:toad@ludang": 1.638,
+   "mob:toad@xigu": 0.895,
+   "mob:toad@zhuhai_n": 0.617,
+   "mob:vine@dongtai": 0.962,
+   "mob:vine@duanjian": 0.663,
+   "mob:vine@ludang": 0.68,
+   "mob:vine@xigu": 1.987,
+   "mob:vine@zhuhai_n": 1.558,
+   "mob:wolf@beiji": 0.997,
+   "mob:wolf@dongtai": 3.368,
+   "mob:wolf@duanjian": 1.36,
+   "mob:wolf@zhuhai_n": 1.313,
+   "pack:high@beiji": 1.0,
+   "pack:high@bilin": 2.0,
+   "pack:high@dongtai": 0.483,
+   "pack:high@duanjian": 1.0,
+   "pack:high@zhuhai_n": 0.638,
+   "pack:low@dongtai": 0.442,
+   "pack:low@ludang": 1.66,
+   "pack:low@xigu": 0.867,
+   "pack:low@zhuhai_n": 0.345,
+   "pack:mid@dongtai": 0.478,
+   "pack:mid@ludang": 0.34,
+   "pack:mid@xigu": 1.133,
+   "pack:mid@zhuhai_n": 0.613,
+   "pav@dongtai": 0.387,
+   "pav@duanjian": 0.407,
+   "pav@ludang": 0.728,
+   "pav@xigu": 0.76,
+   "pav@zhuhai_n": 0.773,
+   "rare:xuanlin_bat@beiji": 0.098,
+   "rare:xuanlin_bat@dongtai": 0.075,
+   "rare:xuanlin_bat@duanjian": 0.072,
+   "rare:xuanlin_bat@xigu": 0.09,
+   "rare:xuanlin_bat@zhuhai_n": 0.062,
+   "stele@beiji": 0.338,
+   "stele@dongtai": 0.303,
+   "stele@duanjian": 0.283,
+   "stele@xigu": 0.293,
+   "stele@zhuhai_n": 0.278
+  },
+  "points": [
+   {
+    "cat": "stele",
+    "name": "竹海南残碑",
+    "pos": [
+     -108.0,
+     10.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 33.4,
+    "tE_min": 20.5,
+    "tG": 18.6,
+    "expo": 52.0,
+    "ok": true
+   },
+   {
+    "cat": "stele",
+    "name": "东台石刻",
+    "pos": [
+     36.0,
+     -12.0
+    ],
+    "zone": "dongtai",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 22.0,
+    "tE_min": 18.5,
+    "tG": 11.9,
+    "expo": 33.9,
+    "ok": true
+   },
+   {
+    "cat": "stele",
+    "name": "竹海深处残碑",
+    "pos": [
+     -92.0,
+     -22.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 46.8,
+    "tE_min": 33.9,
+    "tG": 9.4,
+    "expo": 56.3,
+    "ok": true
+   },
+   {
+    "cat": "stele",
+    "name": "北脊断碑",
+    "pos": [
+     -24.0,
+     -82.0
+    ],
+    "zone": "beiji",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 61.9,
+    "tE_min": 49.0,
+    "tG": 9.7,
+    "expo": 71.6,
+    "ok": true
+   },
+   {
+    "cat": "stele",
+    "name": "断涧东石刻",
+    "pos": [
+     100.0,
+     2.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 30.8,
+    "tE_min": 28.2,
+    "tG": 4.3,
+    "expo": 35.2,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "东台亭",
+    "pos": [
+     46.0,
+     26.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 16.4,
+    "tE_min": 12.9,
+    "tG": 14.4,
+    "expo": 30.8,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "芦荡亭",
+    "pos": [
+     -86.0,
+     52.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 27.2,
+    "tE_min": 13.9,
+    "tG": 14.0,
+    "expo": 41.2,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "竹海亭",
+    "pos": [
+     -42.0,
+     -52.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 54.1,
+    "tE_min": 41.2,
+    "tG": 3.1,
+    "expo": 57.2,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "东台北亭",
+    "pos": [
+     34.0,
+     -62.0
+    ],
+    "zone": "dongtai",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 30.3,
+    "tE_min": 26.8,
+    "tG": 17.3,
+    "expo": 47.5,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "东台南亭",
+    "pos": [
+     88.0,
+     62.0
+    ],
+    "zone": "ludang",
+    "danger": 1,
+    "realm": [
+     5,
+     6
+    ],
+    "tE_mean": 16.4,
+    "tE_min": 5.2,
+    "tG": 23.0,
+    "expo": 39.4,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "东岭亭",
+    "pos": [
+     100.0,
+     -46.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 33.3,
+    "tE_min": 30.6,
+    "tG": 3.7,
+    "expo": 37.0,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "渡口亭",
+    "pos": [
+     12.0,
+     80.0
+    ],
+    "zone": "ludang",
+    "danger": 1,
+    "realm": [
+     5,
+     6
+    ],
+    "tE_mean": 21.9,
+    "tE_min": 20.2,
+    "tG": 8.5,
+    "expo": 30.5,
+    "ok": true
+   },
+   {
+    "cat": "pav",
+    "name": "裂谷亭",
+    "pos": [
+     -110.0,
+     -20.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 49.4,
+    "tE_min": 36.6,
+    "tG": 12.3,
+    "expo": 61.8,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "水灵玉",
+    "pos": [
+     -18.0,
+     -57.0
+    ],
+    "zone": "bilin",
+    "danger": 5,
+    "realm": [
+     9,
+     9
+    ],
+    "tE_mean": 59.9,
+    "tE_min": 47.0,
+    "tG": 11.5,
+    "expo": 71.4,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "水灵玉",
+    "pos": [
+     -73.0,
+     12.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 28.6,
+    "tE_min": 17.3,
+    "tG": 14.7,
+    "expo": 43.3,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "千年竹心",
+    "pos": [
+     -76.0,
+     -8.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 45.2,
+    "tE_min": 32.3,
+    "tG": 7.6,
+    "expo": 52.8,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "千年竹心",
+    "pos": [
+     -86.0,
+     -44.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 51.1,
+    "tE_min": 38.2,
+    "tG": 13.3,
+    "expo": 64.5,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "阵盘·剑阵",
+    "pos": [
+     90.0,
+     -58.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 35.2,
+    "tE_min": 32.5,
+    "tG": 6.4,
+    "expo": 41.5,
+    "ok": true
+   },
+   {
+    "cat": "glow",
+    "name": "阵盘·剑阵",
+    "pos": [
+     84.0,
+     -20.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 27.9,
+    "tE_min": 25.2,
+    "tG": 2.9,
+    "expo": 30.8,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     -76.0,
+     -46.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 50.7,
+    "tE_min": 37.9,
+    "tG": 3.0,
+    "expo": 53.7,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     40.0,
+     -60.0
+    ],
+    "zone": "dongtai",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 30.1,
+    "tE_min": 26.8,
+    "tG": 16.5,
+    "expo": 46.6,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     68.0,
+     -40.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 28.7,
+    "tE_min": 26.0,
+    "tG": 10.5,
+    "expo": 39.2,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     90.0,
+     -60.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 35.5,
+    "tE_min": 32.8,
+    "tG": 6.7,
+    "expo": 42.2,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     -110.0,
+     -40.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 51.1,
+    "tE_min": 38.2,
+    "tG": 13.7,
+    "expo": 64.7,
+    "ok": true
+   },
+   {
+    "cat": "gchest",
+    "name": "灵光宝箱位",
+    "pos": [
+     -14.0,
+     -48.0
+    ],
+    "zone": "bilin",
+    "danger": 5,
+    "realm": [
+     9,
+     9
+    ],
+    "tE_mean": 58.6,
+    "tE_min": 45.7,
+    "tG": 10.1,
+    "expo": 68.7,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     -50.0,
+     -12.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 49.8,
+    "tE_min": 36.9,
+    "tG": 6.2,
+    "expo": 56.0,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     10.0,
+     -14.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 22.1,
+    "tE_min": 20.2,
+    "tG": 15.7,
+    "expo": 37.9,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     44.0,
+     0.0
+    ],
+    "zone": "dongtai",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 20.2,
+    "tE_min": 17.0,
+    "tG": 11.0,
+    "expo": 31.2,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     -80.0,
+     -40.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 49.5,
+    "tE_min": 36.6,
+    "tG": 4.1,
+    "expo": 53.6,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     76.0,
+     -40.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 31.3,
+    "tE_min": 28.6,
+    "tG": 5.1,
+    "expo": 36.4,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     0.0,
+     36.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 18.6,
+    "tE_min": 13.6,
+    "tG": 6.7,
+    "expo": 25.3,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     -60.0,
+     50.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 23.0,
+    "tE_min": 10.1,
+    "tG": 9.7,
+    "expo": 32.6,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     -110.0,
+     40.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 31.6,
+    "tE_min": 18.7,
+    "tG": 18.7,
+    "expo": 50.3,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     40.0,
+     -62.0
+    ],
+    "zone": "dongtai",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 30.4,
+    "tE_min": 27.2,
+    "tG": 16.8,
+    "expo": 47.3,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     110.0,
+     -10.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 31.7,
+    "tE_min": 29.0,
+    "tG": 3.0,
+    "expo": 34.7,
+    "ok": true
+   },
+   {
+    "cat": "elite",
+    "name": "精英位",
+    "pos": [
+     -40.0,
+     -84.0
+    ],
+    "zone": "beiji",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 59.6,
+    "tE_min": 46.7,
+    "tG": 7.6,
+    "expo": 67.1,
+    "ok": true
+   },
+   {
+    "cat": "rare",
+    "name": "异种 竹海墨雾",
+    "pos": [
+     -70.0,
+     -30.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 48.5,
+    "tE_min": 35.6,
+    "tG": 3.5,
+    "expo": 52.0,
+    "ok": true
+   },
+   {
+    "cat": "rare",
+    "name": "异种 东台白骨",
+    "pos": [
+     40.0,
+     -20.0
+    ],
+    "zone": "dongtai",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 23.4,
+    "tE_min": 20.1,
+    "tG": 11.8,
+    "expo": 35.2,
+    "ok": true
+   },
+   {
+    "cat": "rare",
+    "name": "异种 东岭白霜",
+    "pos": [
+     110.0,
+     -40.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 33.5,
+    "tE_min": 30.8,
+    "tG": 3.4,
+    "expo": 36.8,
+    "ok": true
+   },
+   {
+    "cat": "rare",
+    "name": "异种 北脊雾",
+    "pos": [
+     -20.0,
+     -84.0
+    ],
+    "zone": "beiji",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 62.7,
+    "tE_min": 49.8,
+    "tG": 10.5,
+    "expo": 73.2,
+    "ok": true
+   },
+   {
+    "cat": "rare",
+    "name": "异种 竹海南骨堆",
+    "pos": [
+     -100.0,
+     20.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 31.3,
+    "tE_min": 18.4,
+    "tG": 18.4,
+    "expo": 49.8,
+    "ok": true
+   },
+   {
+    "cat": "den",
+    "name": "剑修遗府",
+    "pos": [
+     -9.5,
+     -65.0
+    ],
+    "zone": "bilin",
+    "danger": 5,
+    "realm": [
+     9,
+     9
+    ],
+    "tE_mean": 62.0,
+    "tE_min": 49.1,
+    "tG": 13.5,
+    "expo": 75.5,
+    "ok": true
+   },
+   {
+    "cat": "boss",
+    "name": "碧鳞水蟒",
+    "pos": [
+     14.0,
+     -40.0
+    ],
+    "zone": "bilin",
+    "danger": 5,
+    "realm": [
+     9,
+     9
+    ],
+    "tE_mean": 62.4,
+    "tE_min": 49.5,
+    "tG": 13.4,
+    "expo": 75.9,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_bamboo_w",
+    "pos": [
+     -60.0,
+     -24.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 49.0,
+    "tE_min": 36.1,
+    "tG": 3.8,
+    "expo": 52.8,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_upper",
+    "pos": [
+     -96.0,
+     -30.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 48.4,
+    "tE_min": 35.5,
+    "tG": 11.0,
+    "expo": 59.4,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_pool",
+    "pos": [
+     -56.0,
+     8.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 27.4,
+    "tE_min": 16.8,
+    "tG": 13.1,
+    "expo": 40.5,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_valley",
+    "pos": [
+     -14.0,
+     0.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 21.4,
+    "tE_min": 17.7,
+    "tG": 11.7,
+    "expo": 33.2,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_pavilion",
+    "pos": [
+     40.0,
+     22.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 16.6,
+    "tE_min": 13.1,
+    "tG": 13.7,
+    "expo": 30.3,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_gorge_e",
+    "pos": [
+     96.0,
+     -8.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 29.5,
+    "tE_min": 26.8,
+    "tG": 2.9,
+    "expo": 32.4,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_bank",
+    "pos": [
+     -16.0,
+     34.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 19.0,
+    "tE_min": 11.9,
+    "tG": 5.9,
+    "expo": 24.9,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_east_n",
+    "pos": [
+     36.0,
+     -60.0
+    ],
+    "zone": "dongtai",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 30.0,
+    "tE_min": 26.6,
+    "tG": 16.8,
+    "expo": 46.8,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_reed_w",
+    "pos": [
+     -110.0,
+     70.0
+    ],
+    "zone": "ludang",
+    "danger": 1,
+    "realm": [
+     5,
+     6
+    ],
+    "tE_mean": 31.6,
+    "tE_min": 16.7,
+    "tG": 19.3,
+    "expo": 50.9,
+    "ok": true
+   },
+   {
+    "cat": "enc",
+    "name": "奇遇 e_reed_e",
+    "pos": [
+     90.0,
+     70.0
+    ],
+    "zone": "ludang",
+    "danger": 1,
+    "realm": [
+     5,
+     6
+    ],
+    "tE_mean": 16.1,
+    "tE_min": 3.7,
+    "tG": 24.1,
+    "expo": 40.2,
+    "ok": true
+   },
+   {
+    "cat": "relic",
+    "name": "遗物 竹海上台石龛",
+    "pos": [
+     -92.0,
+     -60.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 53.4,
+    "tE_min": 40.5,
+    "tG": 11.5,
+    "expo": 64.9,
+    "ok": true
+   },
+   {
+    "cat": "relic",
+    "name": "遗物 剑碑北",
+    "pos": [
+     -30.0,
+     -56.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 56.2,
+    "tE_min": 43.3,
+    "tG": 5.4,
+    "expo": 61.5,
+    "ok": true
+   },
+   {
+    "cat": "relic",
+    "name": "遗物 断涧北口",
+    "pos": [
+     62.0,
+     -66.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 32.6,
+    "tE_min": 29.9,
+    "tG": 15.3,
+    "expo": 47.9,
+    "ok": true
+   },
+   {
+    "cat": "relic",
+    "name": "遗物 东岭断崖",
+    "pos": [
+     102.0,
+     4.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 31.3,
+    "tE_min": 28.6,
+    "tG": 4.8,
+    "expo": 36.1,
+    "ok": true
+   },
+   {
+    "cat": "spawn:snake+vine",
+    "name": "刷怪点",
+    "pos": [
+     60.0,
+     80.0
+    ],
+    "zone": "ludang",
+    "danger": 1,
+    "realm": [
+     5,
+     6
+    ],
+    "tE_mean": 14.4,
+    "tE_min": 6.7,
+    "tG": 21.4,
+    "expo": 35.8,
+    "ok": true
+   },
+   {
+    "cat": "spawn:bat+vine",
+    "name": "刷怪点",
+    "pos": [
+     -60.0,
+     40.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 23.7,
+    "tE_min": 11.8,
+    "tG": 10.4,
+    "expo": 34.1,
+    "ok": true
+   },
+   {
+    "cat": "spawn:bat+vine",
+    "name": "刷怪点",
+    "pos": [
+     -84.0,
+     10.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 30.0,
+    "tE_min": 18.4,
+    "tG": 16.4,
+    "expo": 46.5,
+    "ok": true
+   },
+   {
+    "cat": "spawn:bat+vine",
+    "name": "刷怪点",
+    "pos": [
+     -4.0,
+     30.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 18.2,
+    "tE_min": 13.5,
+    "tG": 7.4,
+    "expo": 25.6,
+    "ok": true
+   },
+   {
+    "cat": "spawn:bat+vine",
+    "name": "刷怪点",
+    "pos": [
+     44.0,
+     44.0
+    ],
+    "zone": "xigu",
+    "danger": 2,
+    "realm": [
+     6,
+     7
+    ],
+    "tE_mean": 14.7,
+    "tE_min": 9.7,
+    "tG": 14.6,
+    "expo": 29.3,
+    "ok": true
+   },
+   {
+    "cat": "spawn:bat+vine",
+    "name": "刷怪点",
+    "pos": [
+     -46.0,
+     -12.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 50.5,
+    "tE_min": 37.6,
+    "tG": 6.5,
+    "expo": 57.0,
+    "ok": true
+   },
+   {
+    "cat": "spawn:vine+wolf",
+    "name": "刷怪点",
+    "pos": [
+     -70.0,
+     -40.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 50.2,
+    "tE_min": 37.3,
+    "tG": 2.4,
+    "expo": 52.6,
+    "ok": true
+   },
+   {
+    "cat": "spawn:bat+vine",
+    "name": "刷怪点",
+    "pos": [
+     -36.0,
+     -60.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 55.8,
+    "tE_min": 42.9,
+    "tG": 4.6,
+    "expo": 60.5,
+    "ok": true
+   },
+   {
+    "cat": "spawn:vine+wolf",
+    "name": "刷怪点",
+    "pos": [
+     42.0,
+     -6.0
+    ],
+    "zone": "dongtai",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 21.1,
+    "tE_min": 17.9,
+    "tG": 10.9,
+    "expo": 32.1,
+    "ok": true
+   },
+   {
+    "cat": "spawn:vine+wolf",
+    "name": "刷怪点",
+    "pos": [
+     46.0,
+     -50.0
+    ],
+    "zone": "dongtai",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 28.5,
+    "tE_min": 25.5,
+    "tG": 14.4,
+    "expo": 43.0,
+    "ok": true
+   },
+   {
+    "cat": "spawn:vine+wolf",
+    "name": "刷怪点",
+    "pos": [
+     70.0,
+     -20.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 25.5,
+    "tE_min": 22.8,
+    "tG": 7.1,
+    "expo": 32.5,
+    "ok": true
+   },
+   {
+    "cat": "spawn:bat+vine",
+    "name": "刷怪点",
+    "pos": [
+     110.0,
+     10.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 33.1,
+    "tE_min": 30.4,
+    "tG": 6.4,
+    "expo": 39.4,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "雷击木·北脊西",
+    "pos": [
+     -64.0,
+     -78.0
+    ],
+    "zone": "beiji",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 58.8,
+    "tE_min": 45.9,
+    "tG": 6.8,
+    "expo": 65.6,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "雷击木·北脊东",
+    "pos": [
+     30.0,
+     -78.0
+    ],
+    "zone": "beiji",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 71.3,
+    "tE_min": 58.4,
+    "tG": 19.1,
+    "expo": 90.4,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "雷击木·东岭",
+    "pos": [
+     120.0,
+     -30.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 34.4,
+    "tE_min": 31.8,
+    "tG": 3.7,
+    "expo": 38.2,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "岩髓·孤峰脚",
+    "pos": [
+     88.0,
+     -42.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 31.8,
+    "tE_min": 29.1,
+    "tG": 3.8,
+    "expo": 35.6,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "岩髓·东岭北",
+    "pos": [
+     110.0,
+     -64.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 37.0,
+    "tE_min": 34.3,
+    "tG": 7.4,
+    "expo": 44.3,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "岩髓·断涧东南",
+    "pos": [
+     104.0,
+     16.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 33.2,
+    "tE_min": 30.5,
+    "tG": 6.9,
+    "expo": 40.1,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "剑冢·剑碑西",
+    "pos": [
+     -50.0,
+     -36.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 51.5,
+    "tE_min": 38.6,
+    "tG": 2.2,
+    "expo": 53.7,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "剑冢·剑碑北",
+    "pos": [
+     -38.0,
+     -48.0
+    ],
+    "zone": "zhuhai_n",
+    "danger": 3,
+    "realm": [
+     7,
+     8
+    ],
+    "tE_mean": 54.3,
+    "tE_min": 41.4,
+    "tG": 3.5,
+    "expo": 57.8,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "阵台·孤峰下（现阵盘点）",
+    "pos": [
+     90.0,
+     -58.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 35.2,
+    "tE_min": 32.5,
+    "tG": 6.4,
+    "expo": 41.5,
+    "ok": true
+   },
+   {
+    "cat": "proposal",
+    "name": "阵台·东岭（现阵盘点）",
+    "pos": [
+     84.0,
+     -20.0
+    ],
+    "zone": "duanjian",
+    "danger": 4,
+    "realm": [
+     8,
+     9
+    ],
+    "tE_mean": 27.9,
+    "tE_min": 25.2,
+    "tG": 2.9,
+    "expo": 30.8,
+    "ok": true
+   }
+  ],
+  "runs": {
+   "普通/dusk": {
+    "T_min": {
+     "p10": 8.7,
+     "p50": 8.9,
+     "p90": 9.0,
+     "mean": 8.87
+    },
+    "phase_share": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "chest": 5.17,
+     "elite:vine_elite": 1.02,
+     "elite:wolf_elite_r2": 1.1,
+     "gather": 6.37,
+     "gchest": 0.83,
+     "glow:water_jade": 0.23,
+     "glow:zhenpan": 0.43,
+     "glow:zhuxin": 0.13,
+     "mob:bat": 4.25,
+     "mob:snake": 3.93,
+     "mob:toad": 3.12,
+     "mob:vine": 3.52,
+     "mob:wolf": 3.92,
+     "pack:high": 1.47,
+     "pack:low": 2.09,
+     "pack:mid": 1.58,
+     "pav": 1.67,
+     "rare:xuanlin_bat": 0.19,
+     "stele:beiji": 0.03,
+     "stele:dongtai": 0.24,
+     "stele:duanjian": 0.19,
+     "stele:xigu": 0.15,
+     "stele:zhuhai_n": 0.08
+    }
+   },
+   "普通/night": {
+    "T_min": {
+     "p10": 11.7,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.92
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "chest": 6.49,
+     "elite:vine_elite": 1.38,
+     "elite:wolf_elite_r2": 1.44,
+     "gather": 7.78,
+     "gchest": 1.18,
+     "glow:water_jade": 0.36,
+     "glow:zhenpan": 0.55,
+     "glow:zhuxin": 0.29,
+     "mob:bat": 5.89,
+     "mob:snake": 5.69,
+     "mob:toad": 4.09,
+     "mob:vine": 4.3,
+     "mob:wolf": 4.75,
+     "pack:high": 2.0,
+     "pack:low": 2.84,
+     "pack:mid": 1.96,
+     "pav": 2.17,
+     "rare:xuanlin_bat": 0.25,
+     "stele:beiji": 0.06,
+     "stele:dongtai": 0.26,
+     "stele:duanjian": 0.23,
+     "stele:xigu": 0.28,
+     "stele:zhuhai_n": 0.18
+    }
+   },
+   "普通/greedy": {
+    "T_min": {
+     "p10": 16.9,
+     "p50": 17.9,
+     "p90": 19.4,
+     "mean": 18.07
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "night_chest": 1.0,
+    "contact": {
+     "chest": 8.0,
+     "elite:vine_elite": 1.93,
+     "elite:wolf_elite_r2": 2.07,
+     "gather": 10.0,
+     "gchest": 2.0,
+     "glow:water_jade": 0.64,
+     "glow:zhenpan": 0.68,
+     "glow:zhuxin": 0.69,
+     "mob:bat": 13.46,
+     "mob:snake": 6.83,
+     "mob:toad": 7.39,
+     "mob:vine": 5.87,
+     "mob:wolf": 7.05,
+     "pack:high": 5.13,
+     "pack:low": 3.35,
+     "pack:mid": 2.52,
+     "pav": 2.99,
+     "rare:xuanlin_bat": 0.4,
+     "stele:beiji": 0.31,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.29,
+     "stele:xigu": 0.3,
+     "stele:zhuhai_n": 0.31
+    }
+   },
+   "遗府(剑修)/dusk": {
+    "T_min": {
+     "p10": 8.9,
+     "p50": 9.0,
+     "p90": 9.0,
+     "mean": 8.96
+    },
+    "phase_share": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "chest": 2.74,
+     "den": 1.0,
+     "elite:vine_elite": 0.25,
+     "elite:wolf_elite_r2": 0.23,
+     "gather": 2.42,
+     "gchest": 0.2,
+     "glow:water_jade": 0.08,
+     "glow:zhuxin": 0.02,
+     "mob:bat": 0.91,
+     "mob:snake": 2.13,
+     "mob:toad": 1.21,
+     "mob:vine": 1.54,
+     "mob:wolf": 0.95,
+     "pack:high": 0.14,
+     "pack:low": 1.02,
+     "pack:mid": 0.85,
+     "pav": 0.69,
+     "rare:xuanlin_bat": 0.01,
+     "stele:dongtai": 0.12,
+     "stele:duanjian": 0.02,
+     "stele:xigu": 0.09,
+     "stele:zhuhai_n": 0.05
+    }
+   },
+   "遗府(剑修)/night": {
+    "T_min": {
+     "p10": 11.9,
+     "p50": 12.0,
+     "p90": 12.1,
+     "mean": 12.02
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "chest": 4.07,
+     "den": 1.0,
+     "elite:vine_elite": 0.66,
+     "elite:wolf_elite_r2": 0.7,
+     "gather": 3.98,
+     "gchest": 0.66,
+     "glow:water_jade": 0.16,
+     "glow:zhenpan": 0.2,
+     "glow:zhuxin": 0.09,
+     "mob:bat": 2.87,
+     "mob:snake": 2.82,
+     "mob:toad": 2.12,
+     "mob:vine": 2.67,
+     "mob:wolf": 2.77,
+     "pack:high": 0.91,
+     "pack:low": 1.48,
+     "pack:mid": 1.27,
+     "pav": 1.24,
+     "rare:xuanlin_bat": 0.1,
+     "stele:beiji": 0.01,
+     "stele:dongtai": 0.2,
+     "stele:duanjian": 0.14,
+     "stele:xigu": 0.12,
+     "stele:zhuhai_n": 0.07
+    }
+   },
+   "遗府(剑修)/greedy": {
+    "T_min": {
+     "p10": 21.8,
+     "p50": 22.7,
+     "p90": 24.2,
+     "mean": 22.88
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "night_chest": 1.0,
+    "contact": {
+     "chest": 8.0,
+     "den": 1.0,
+     "elite:vine_elite": 1.93,
+     "elite:wolf_elite_r2": 2.07,
+     "gather": 8.0,
+     "gchest": 2.0,
+     "glow:water_jade": 0.64,
+     "glow:zhenpan": 0.68,
+     "glow:zhuxin": 0.69,
+     "mob:bat": 13.46,
+     "mob:snake": 6.83,
+     "mob:toad": 7.39,
+     "mob:vine": 5.87,
+     "mob:wolf": 7.05,
+     "pack:high": 5.13,
+     "pack:low": 3.35,
+     "pack:mid": 2.52,
+     "pav": 2.99,
+     "rare:xuanlin_bat": 0.4,
+     "stele:beiji": 0.31,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.29,
+     "stele:xigu": 0.3,
+     "stele:zhuhai_n": 0.31
+    }
+   },
+   "首领(碧鳞)/dusk": {
+    "T_min": {
+     "p10": 9.1,
+     "p50": 9.1,
+     "p90": 9.2,
+     "mean": 9.12
+    },
+    "phase_share": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "boss": 1.0,
+     "chest": 3.49,
+     "elite:vine_elite": 0.44,
+     "elite:wolf_elite_r2": 0.45,
+     "gather": 2.46,
+     "gchest": 0.45,
+     "glow:water_jade": 0.12,
+     "glow:zhenpan": 0.07,
+     "glow:zhuxin": 0.07,
+     "mob:bat": 1.84,
+     "mob:snake": 2.55,
+     "mob:toad": 1.63,
+     "mob:vine": 2.16,
+     "mob:wolf": 2.19,
+     "pack:high": 0.55,
+     "pack:low": 1.27,
+     "pack:mid": 1.1,
+     "pav": 0.98,
+     "rare:xuanlin_bat": 0.06,
+     "stele:beiji": 0.01,
+     "stele:dongtai": 0.17,
+     "stele:duanjian": 0.09,
+     "stele:xigu": 0.1,
+     "stele:zhuhai_n": 0.07
+    }
+   },
+   "首领(碧鳞)/night": {
+    "T_min": {
+     "p10": 12.0,
+     "p50": 12.2,
+     "p90": 12.2,
+     "mean": 12.11
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "night_chest": 0.0,
+    "contact": {
+     "boss": 1.0,
+     "chest": 4.9,
+     "elite:vine_elite": 0.88,
+     "elite:wolf_elite_r2": 0.94,
+     "gather": 3.61,
+     "gchest": 0.84,
+     "glow:water_jade": 0.19,
+     "glow:zhenpan": 0.33,
+     "glow:zhuxin": 0.13,
+     "mob:bat": 3.94,
+     "mob:snake": 3.22,
+     "mob:toad": 2.72,
+     "mob:vine": 3.14,
+     "mob:wolf": 3.42,
+     "pack:high": 1.33,
+     "pack:low": 1.74,
+     "pack:mid": 1.45,
+     "pav": 1.5,
+     "rare:xuanlin_bat": 0.15,
+     "stele:beiji": 0.03,
+     "stele:dongtai": 0.23,
+     "stele:duanjian": 0.17,
+     "stele:xigu": 0.17,
+     "stele:zhuhai_n": 0.1
+    }
+   },
+   "首领(碧鳞)/greedy": {
+    "T_min": {
+     "p10": 20.6,
+     "p50": 21.7,
+     "p90": 23.2,
+     "mean": 21.83
+    },
+    "phase_share": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "night_chest": 1.0,
+    "contact": {
+     "boss": 1.0,
+     "chest": 8.0,
+     "elite:vine_elite": 1.93,
+     "elite:wolf_elite_r2": 2.07,
+     "gather": 6.0,
+     "gchest": 2.0,
+     "glow:water_jade": 0.64,
+     "glow:zhenpan": 0.68,
+     "glow:zhuxin": 0.69,
+     "mob:bat": 13.46,
+     "mob:snake": 6.83,
+     "mob:toad": 7.39,
+     "mob:vine": 5.87,
+     "mob:wolf": 7.05,
+     "pack:high": 5.13,
+     "pack:low": 3.35,
+     "pack:mid": 2.52,
+     "pav": 2.99,
+     "rare:xuanlin_bat": 0.4,
+     "stele:beiji": 0.31,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.29,
+     "stele:xigu": 0.3,
+     "stele:zhuhai_n": 0.31
+    }
+   }
+  },
+  "targets": {
+   "藤妖(组+精英)": {
+    "t_target_min": {
+     "p10": 4.2,
+     "p50": 6.1,
+     "p90": 7.6,
+     "mean": 6.0
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.94
+    },
+    "target_hits": {
+     "elite:vine_elite": 1.93,
+     "mob:bat": 0.89,
+     "mob:vine": 1.52,
+     "mob:wolf": 1.64
+    },
+    "target_mobs": {
+     "mob:bat": 4.26,
+     "mob:snake": 0.3,
+     "mob:vine": 5.87,
+     "mob:wolf": 6.07
+    },
+    "p_zero": 0.002,
+    "forced_packs": 1.21,
+    "contact": {
+     "_forced": 1.21,
+     "_target": 5.98,
+     "chest": 4.15,
+     "elite:vine_elite": 1.93,
+     "elite:wolf_elite_r2": 0.99,
+     "gather": 5.42,
+     "gchest": 1.05,
+     "glow:water_jade": 0.28,
+     "glow:zhenpan": 0.2,
+     "glow:zhuxin": 0.39,
+     "mob:bat": 9.22,
+     "mob:snake": 3.63,
+     "mob:toad": 4.43,
+     "mob:vine": 5.87,
+     "mob:wolf": 6.58,
+     "pack:high": 3.64,
+     "pack:low": 1.89,
+     "pack:mid": 2.38,
+     "pav": 1.32,
+     "rare:xuanlin_bat": 0.15,
+     "stele:beiji": 0.15,
+     "stele:dongtai": 0.15,
+     "stele:duanjian": 0.14,
+     "stele:xigu": 0.14,
+     "stele:zhuhai_n": 0.19
+    }
+   },
+   "灰鬃头目": {
+    "t_target_min": {
+     "p10": 2.1,
+     "p50": 4.1,
+     "p90": 6.4,
+     "mean": 4.19
+    },
+    "T_min": {
+     "p10": 11.7,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.93
+    },
+    "target_hits": {
+     "elite:wolf_elite_r2": 2.07
+    },
+    "target_mobs": {},
+    "p_zero": 0.047,
+    "forced_packs": 2.47,
+    "contact": {
+     "_forced": 2.47,
+     "_target": 2.07,
+     "chest": 5.16,
+     "elite:vine_elite": 1.17,
+     "elite:wolf_elite_r2": 2.07,
+     "gather": 6.38,
+     "gchest": 1.1,
+     "glow:water_jade": 0.33,
+     "glow:zhenpan": 0.38,
+     "glow:zhuxin": 0.36,
+     "mob:bat": 7.32,
+     "mob:snake": 4.4,
+     "mob:toad": 4.27,
+     "mob:vine": 4.37,
+     "mob:wolf": 5.03,
+     "pack:high": 2.62,
+     "pack:low": 2.27,
+     "pack:mid": 2.0,
+     "pav": 1.71,
+     "rare:xuanlin_bat": 0.17,
+     "stele:beiji": 0.12,
+     "stele:dongtai": 0.21,
+     "stele:duanjian": 0.2,
+     "stele:xigu": 0.2,
+     "stele:zhuhai_n": 0.19
+    }
+   },
+   "残碑×全部": {
+    "t_target_min": {
+     "p10": 1.5,
+     "p50": 2.4,
+     "p90": 3.5,
+     "mean": 2.43
+    },
+    "T_min": {
+     "p10": 11.7,
+     "p50": 12.0,
+     "p90": 12.1,
+     "mean": 11.92
+    },
+    "target_hits": {
+     "stele:beiji": 0.31,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.29,
+     "stele:xigu": 0.3,
+     "stele:zhuhai_n": 0.31
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 2.23,
+    "contact": {
+     "_forced": 2.23,
+     "_target": 1.49,
+     "chest": 5.54,
+     "elite:vine_elite": 1.27,
+     "elite:wolf_elite_r2": 1.36,
+     "gather": 6.79,
+     "gchest": 1.14,
+     "glow:water_jade": 0.36,
+     "glow:zhenpan": 0.35,
+     "glow:zhuxin": 0.44,
+     "mob:bat": 8.03,
+     "mob:snake": 4.56,
+     "mob:toad": 4.5,
+     "mob:vine": 4.48,
+     "mob:wolf": 4.8,
+     "pack:high": 2.84,
+     "pack:low": 2.3,
+     "pack:mid": 2.04,
+     "pav": 1.78,
+     "rare:xuanlin_bat": 0.22,
+     "stele:beiji": 0.31,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.29,
+     "stele:xigu": 0.3,
+     "stele:zhuhai_n": 0.31
+    }
+   },
+   "灵光宝箱+亭": {
+    "t_target_min": {
+     "p10": 3.7,
+     "p50": 4.8,
+     "p90": 5.9,
+     "mean": 4.78
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.93
+    },
+    "target_hits": {
+     "gchest": 2.0,
+     "pav": 2.99
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 4.32,
+    "contact": {
+     "_forced": 4.32,
+     "_target": 4.99,
+     "chest": 4.49,
+     "elite:vine_elite": 1.0,
+     "elite:wolf_elite_r2": 0.99,
+     "gather": 5.69,
+     "gchest": 2.0,
+     "glow:water_jade": 0.33,
+     "glow:zhenpan": 0.22,
+     "glow:zhuxin": 0.47,
+     "mob:bat": 9.41,
+     "mob:snake": 3.81,
+     "mob:toad": 5.27,
+     "mob:vine": 4.74,
+     "mob:wolf": 5.79,
+     "pack:high": 3.53,
+     "pack:low": 2.14,
+     "pack:mid": 2.15,
+     "pav": 2.99,
+     "rare:xuanlin_bat": 0.17,
+     "stele:beiji": 0.17,
+     "stele:dongtai": 0.16,
+     "stele:duanjian": 0.11,
+     "stele:xigu": 0.11,
+     "stele:zhuhai_n": 0.25
+    }
+   },
+   "异种(玄鳞蝠)": {
+    "t_target_min": {
+     "p10": 0.5,
+     "p50": 0.7,
+     "p90": 3.8,
+     "mean": 1.76
+    },
+    "T_min": {
+     "p10": 11.7,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.91
+    },
+    "target_hits": {
+     "rare:xuanlin_bat": 0.4
+    },
+    "target_mobs": {},
+    "p_zero": 0.605,
+    "forced_packs": 0.7,
+    "contact": {
+     "_forced": 0.7,
+     "_target": 0.4,
+     "chest": 6.06,
+     "elite:vine_elite": 1.36,
+     "elite:wolf_elite_r2": 1.37,
+     "gather": 7.29,
+     "gchest": 1.16,
+     "glow:water_jade": 0.34,
+     "glow:zhenpan": 0.46,
+     "glow:zhuxin": 0.34,
+     "mob:bat": 6.5,
+     "mob:snake": 5.14,
+     "mob:toad": 4.08,
+     "mob:vine": 4.35,
+     "mob:wolf": 4.76,
+     "pack:high": 2.25,
+     "pack:low": 2.56,
+     "pack:mid": 1.97,
+     "pav": 2.02,
+     "rare:xuanlin_bat": 0.4,
+     "stele:beiji": 0.08,
+     "stele:dongtai": 0.25,
+     "stele:duanjian": 0.2,
+     "stele:xigu": 0.26,
+     "stele:zhuhai_n": 0.18
+    }
+   },
+   "灵光点×全部": {
+    "t_target_min": {
+     "p10": 3.7,
+     "p50": 4.9,
+     "p90": 6.2,
+     "mean": 4.92
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.93
+    },
+    "target_hits": {
+     "glow:water_jade": 0.64,
+     "glow:zhenpan": 0.68,
+     "glow:zhuxin": 0.69
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 3.38,
+    "contact": {
+     "_forced": 3.38,
+     "_target": 2.0,
+     "chest": 4.75,
+     "elite:vine_elite": 1.07,
+     "elite:wolf_elite_r2": 1.11,
+     "gather": 6.11,
+     "gchest": 1.11,
+     "glow:water_jade": 0.64,
+     "glow:zhenpan": 0.68,
+     "glow:zhuxin": 0.69,
+     "mob:bat": 8.86,
+     "mob:snake": 3.66,
+     "mob:toad": 4.7,
+     "mob:vine": 4.51,
+     "mob:wolf": 4.87,
+     "pack:high": 3.15,
+     "pack:low": 1.97,
+     "pack:mid": 2.08,
+     "pav": 1.46,
+     "rare:xuanlin_bat": 0.18,
+     "stele:beiji": 0.14,
+     "stele:dongtai": 0.19,
+     "stele:duanjian": 0.15,
+     "stele:xigu": 0.15,
+     "stele:zhuhai_n": 0.23
+    }
+   },
+   "精英×全部": {
+    "t_target_min": {
+     "p10": 5.8,
+     "p50": 6.9,
+     "p90": 7.7,
+     "mean": 6.84
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.1,
+     "mean": 11.93
+    },
+    "target_hits": {
+     "elite:vine_elite": 1.93,
+     "elite:wolf_elite_r2": 2.07
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 3.56,
+    "contact": {
+     "_forced": 3.56,
+     "_target": 4.0,
+     "chest": 3.99,
+     "elite:vine_elite": 1.93,
+     "elite:wolf_elite_r2": 2.07,
+     "gather": 5.15,
+     "gchest": 0.97,
+     "glow:water_jade": 0.25,
+     "glow:zhenpan": 0.24,
+     "glow:zhuxin": 0.32,
+     "mob:bat": 7.46,
+     "mob:snake": 3.61,
+     "mob:toad": 4.15,
+     "mob:vine": 4.51,
+     "mob:wolf": 5.44,
+     "pack:high": 2.83,
+     "pack:low": 1.92,
+     "pack:mid": 2.01,
+     "pav": 1.3,
+     "rare:xuanlin_bat": 0.14,
+     "stele:beiji": 0.13,
+     "stele:dongtai": 0.16,
+     "stele:duanjian": 0.14,
+     "stele:xigu": 0.12,
+     "stele:zhuhai_n": 0.2
+    }
+   },
+   "流派:剑势": {
+    "t_target_min": {
+     "p10": 3.5,
+     "p50": 5.2,
+     "p90": 6.9,
+     "mean": 5.18
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.94
+    },
+    "target_hits": {
+     "chest": 1.52,
+     "elite:vine_elite": 0.58,
+     "elite:wolf_elite_r2": 0.62,
+     "gchest": 0.67,
+     "glow:zhuxin": 0.69,
+     "pav": 0.73,
+     "rare:xuanlin_bat": 0.17,
+     "stele:beiji": 0.31,
+     "stele:zhuhai_n": 0.31
+    },
+    "target_mobs": {},
+    "p_zero": 0.002,
+    "forced_packs": 2.74,
+    "contact": {
+     "_forced": 2.74,
+     "_target": 5.6,
+     "chest": 5.05,
+     "elite:vine_elite": 1.21,
+     "elite:wolf_elite_r2": 1.26,
+     "gather": 6.09,
+     "gchest": 1.42,
+     "glow:water_jade": 0.39,
+     "glow:zhenpan": 0.19,
+     "glow:zhuxin": 0.69,
+     "mob:bat": 10.25,
+     "mob:snake": 3.42,
+     "mob:toad": 5.46,
+     "mob:vine": 4.64,
+     "mob:wolf": 4.87,
+     "pack:high": 3.82,
+     "pack:low": 1.83,
+     "pack:mid": 2.11,
+     "pav": 1.64,
+     "rare:xuanlin_bat": 0.25,
+     "stele:beiji": 0.31,
+     "stele:dongtai": 0.23,
+     "stele:duanjian": 0.14,
+     "stele:xigu": 0.13,
+     "stele:zhuhai_n": 0.31
+    }
+   },
+   "流派:五行": {
+    "t_target_min": {
+     "p10": 4.7,
+     "p50": 6.4,
+     "p90": 8.4,
+     "mean": 6.42
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.1,
+     "mean": 11.95
+    },
+    "target_hits": {
+     "chest": 3.08,
+     "elite:vine_elite": 0.97,
+     "elite:wolf_elite_r2": 1.08,
+     "gchest": 0.67,
+     "glow:water_jade": 0.33,
+     "glow:zhuxin": 0.69,
+     "pav": 1.47,
+     "rare:xuanlin_bat": 0.18,
+     "stele:xigu": 0.3,
+     "stele:zhuhai_n": 0.31
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 2.42,
+    "contact": {
+     "_forced": 2.42,
+     "_target": 9.07,
+     "chest": 5.2,
+     "elite:vine_elite": 1.35,
+     "elite:wolf_elite_r2": 1.48,
+     "gather": 5.55,
+     "gchest": 1.3,
+     "glow:water_jade": 0.55,
+     "glow:zhenpan": 0.17,
+     "glow:zhuxin": 0.69,
+     "mob:bat": 8.74,
+     "mob:snake": 3.15,
+     "mob:toad": 4.95,
+     "mob:vine": 4.25,
+     "mob:wolf": 4.21,
+     "pack:high": 3.17,
+     "pack:low": 1.75,
+     "pack:mid": 1.97,
+     "pav": 1.86,
+     "rare:xuanlin_bat": 0.27,
+     "stele:beiji": 0.19,
+     "stele:dongtai": 0.18,
+     "stele:duanjian": 0.11,
+     "stele:xigu": 0.3,
+     "stele:zhuhai_n": 0.31
+    }
+   },
+   "流派:身法": {
+    "t_target_min": {
+     "p10": 5.0,
+     "p50": 6.7,
+     "p90": 8.5,
+     "mean": 6.73
+    },
+    "T_min": {
+     "p10": 11.7,
+     "p50": 11.9,
+     "p90": 12.0,
+     "mean": 11.9
+    },
+    "target_hits": {
+     "chest": 3.05,
+     "elite:vine_elite": 0.96,
+     "elite:wolf_elite_r2": 1.04,
+     "gchest": 0.66,
+     "glow:water_jade": 0.33,
+     "glow:zhenpan": 0.68,
+     "pav": 1.12,
+     "rare:xuanlin_bat": 0.15,
+     "stele:duanjian": 0.29,
+     "stele:xigu": 0.3
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 3.02,
+    "contact": {
+     "_forced": 3.02,
+     "_target": 8.57,
+     "chest": 6.02,
+     "elite:vine_elite": 1.38,
+     "elite:wolf_elite_r2": 1.47,
+     "gather": 6.79,
+     "gchest": 1.16,
+     "glow:water_jade": 0.34,
+     "glow:zhenpan": 0.68,
+     "glow:zhuxin": 0.18,
+     "mob:bat": 5.02,
+     "mob:snake": 4.52,
+     "mob:toad": 3.52,
+     "mob:vine": 4.09,
+     "mob:wolf": 4.84,
+     "pack:high": 1.64,
+     "pack:low": 2.46,
+     "pack:mid": 1.86,
+     "pav": 1.99,
+     "rare:xuanlin_bat": 0.23,
+     "stele:beiji": 0.02,
+     "stele:dongtai": 0.27,
+     "stele:duanjian": 0.29,
+     "stele:xigu": 0.3,
+     "stele:zhuhai_n": 0.13
+    }
+   },
+   "流派:雷暴": {
+    "t_target_min": {
+     "p10": 2.8,
+     "p50": 5.0,
+     "p90": 6.7,
+     "mean": 4.87
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.94
+    },
+    "target_hits": {
+     "chest": 1.53,
+     "elite:vine_elite": 0.58,
+     "elite:wolf_elite_r2": 0.6,
+     "gchest": 0.35,
+     "pav": 0.38,
+     "rare:xuanlin_bat": 0.15,
+     "stele:beiji": 0.31,
+     "stele:dongtai": 0.28
+    },
+    "target_mobs": {},
+    "p_zero": 0.005,
+    "forced_packs": 3.36,
+    "contact": {
+     "_forced": 3.36,
+     "_target": 4.17,
+     "chest": 5.13,
+     "elite:vine_elite": 1.3,
+     "elite:wolf_elite_r2": 1.38,
+     "gather": 5.49,
+     "gchest": 1.26,
+     "glow:water_jade": 0.33,
+     "glow:zhenpan": 0.15,
+     "glow:zhuxin": 0.48,
+     "mob:bat": 9.1,
+     "mob:snake": 3.9,
+     "mob:toad": 5.01,
+     "mob:vine": 4.65,
+     "mob:wolf": 5.4,
+     "pack:high": 3.45,
+     "pack:low": 2.02,
+     "pack:mid": 2.14,
+     "pav": 1.64,
+     "rare:xuanlin_bat": 0.27,
+     "stele:beiji": 0.31,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.09,
+     "stele:xigu": 0.16,
+     "stele:zhuhai_n": 0.24
+    }
+   },
+   "流派:守御": {
+    "t_target_min": {
+     "p10": 3.5,
+     "p50": 4.9,
+     "p90": 6.7,
+     "mean": 5.0
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.1,
+     "mean": 11.94
+    },
+    "target_hits": {
+     "chest": 1.57,
+     "elite:vine_elite": 0.77,
+     "elite:wolf_elite_r2": 0.81,
+     "gchest": 1.01,
+     "glow:zhenpan": 0.68,
+     "pav": 0.76,
+     "rare:xuanlin_bat": 0.14,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.29
+    },
+    "target_mobs": {},
+    "p_zero": 0.0,
+    "forced_packs": 2.5,
+    "contact": {
+     "_forced": 2.5,
+     "_target": 6.31,
+     "chest": 6.28,
+     "elite:vine_elite": 1.43,
+     "elite:wolf_elite_r2": 1.52,
+     "gather": 7.52,
+     "gchest": 1.33,
+     "glow:water_jade": 0.3,
+     "glow:zhenpan": 0.68,
+     "glow:zhuxin": 0.24,
+     "mob:bat": 5.26,
+     "mob:snake": 5.09,
+     "mob:toad": 3.52,
+     "mob:vine": 4.24,
+     "mob:wolf": 5.19,
+     "pack:high": 1.75,
+     "pack:low": 2.64,
+     "pack:mid": 1.9,
+     "pav": 2.1,
+     "rare:xuanlin_bat": 0.23,
+     "stele:beiji": 0.03,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.29,
+     "stele:xigu": 0.27,
+     "stele:zhuhai_n": 0.17
+    }
+   },
+   "分区:竹海南 · 溪谷": {
+    "t_target_min": {
+     "p10": 2.3,
+     "p50": 3.7,
+     "p90": 5.3,
+     "mean": 3.76
+    },
+    "T_min": {
+     "p10": 11.6,
+     "p50": 11.9,
+     "p90": 12.0,
+     "mean": 11.88
+    },
+    "target_hits": {
+     "chest": 2.28,
+     "elite:vine_elite": 0.58,
+     "elite:wolf_elite_r2": 0.65,
+     "glow:water_jade": 0.33,
+     "pav": 0.74,
+     "rare:xuanlin_bat": 0.09,
+     "stele:xigu": 0.3
+    },
+    "target_mobs": {},
+    "p_zero": 0.003,
+    "forced_packs": 1.43,
+    "contact": {
+     "_forced": 1.43,
+     "_target": 4.96,
+     "chest": 6.17,
+     "elite:vine_elite": 1.35,
+     "elite:wolf_elite_r2": 1.44,
+     "gather": 7.17,
+     "gchest": 1.14,
+     "glow:water_jade": 0.4,
+     "glow:zhenpan": 0.5,
+     "glow:zhuxin": 0.21,
+     "mob:bat": 5.87,
+     "mob:snake": 5.21,
+     "mob:toad": 4.01,
+     "mob:vine": 4.17,
+     "mob:wolf": 4.65,
+     "pack:high": 2.0,
+     "pack:low": 2.67,
+     "pack:mid": 1.88,
+     "pav": 2.07,
+     "rare:xuanlin_bat": 0.23,
+     "stele:beiji": 0.07,
+     "stele:dongtai": 0.26,
+     "stele:duanjian": 0.24,
+     "stele:xigu": 0.3,
+     "stele:zhuhai_n": 0.13
+    }
+   },
+   "分区:竹海深处": {
+    "t_target_min": {
+     "p10": 2.8,
+     "p50": 4.1,
+     "p90": 5.8,
+     "mean": 4.23
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.93
+    },
+    "target_hits": {
+     "chest": 0.8,
+     "elite:vine_elite": 0.39,
+     "elite:wolf_elite_r2": 0.44,
+     "gchest": 0.67,
+     "glow:zhuxin": 0.69,
+     "pav": 0.73,
+     "rare:xuanlin_bat": 0.09,
+     "stele:zhuhai_n": 0.31
+    },
+    "target_mobs": {},
+    "p_zero": 0.005,
+    "forced_packs": 2.36,
+    "contact": {
+     "_forced": 2.36,
+     "_target": 4.12,
+     "chest": 4.94,
+     "elite:vine_elite": 1.2,
+     "elite:wolf_elite_r2": 1.27,
+     "gather": 6.41,
+     "gchest": 1.45,
+     "glow:water_jade": 0.37,
+     "glow:zhenpan": 0.23,
+     "glow:zhuxin": 0.69,
+     "mob:bat": 10.13,
+     "mob:snake": 3.53,
+     "mob:toad": 5.36,
+     "mob:vine": 4.64,
+     "mob:wolf": 4.76,
+     "pack:high": 3.7,
+     "pack:low": 1.89,
+     "pack:mid": 2.12,
+     "pav": 1.69,
+     "rare:xuanlin_bat": 0.22,
+     "stele:beiji": 0.2,
+     "stele:dongtai": 0.23,
+     "stele:duanjian": 0.15,
+     "stele:xigu": 0.13,
+     "stele:zhuhai_n": 0.31
+    }
+   },
+   "分区:东台": {
+    "t_target_min": {
+     "p10": 1.5,
+     "p50": 2.7,
+     "p90": 4.0,
+     "mean": 2.72
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.92
+    },
+    "target_hits": {
+     "chest": 0.81,
+     "elite:vine_elite": 0.38,
+     "elite:wolf_elite_r2": 0.42,
+     "gchest": 0.35,
+     "pav": 0.38,
+     "rare:xuanlin_bat": 0.07,
+     "stele:dongtai": 0.28
+    },
+    "target_mobs": {},
+    "p_zero": 0.037,
+    "forced_packs": 1.75,
+    "contact": {
+     "_forced": 1.75,
+     "_target": 2.69,
+     "chest": 6.31,
+     "elite:vine_elite": 1.43,
+     "elite:wolf_elite_r2": 1.52,
+     "gather": 7.67,
+     "gchest": 1.3,
+     "glow:water_jade": 0.32,
+     "glow:zhenpan": 0.61,
+     "glow:zhuxin": 0.27,
+     "mob:bat": 5.42,
+     "mob:snake": 5.26,
+     "mob:toad": 3.72,
+     "mob:vine": 4.31,
+     "mob:wolf": 5.16,
+     "pack:high": 1.84,
+     "pack:low": 2.71,
+     "pack:mid": 1.94,
+     "pav": 2.12,
+     "rare:xuanlin_bat": 0.23,
+     "stele:beiji": 0.03,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.26,
+     "stele:xigu": 0.28,
+     "stele:zhuhai_n": 0.19
+    }
+   },
+   "分区:断涧东": {
+    "t_target_min": {
+     "p10": 2.3,
+     "p50": 3.6,
+     "p90": 5.0,
+     "mean": 3.63
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.0,
+     "mean": 11.92
+    },
+    "target_hits": {
+     "chest": 0.77,
+     "elite:vine_elite": 0.38,
+     "elite:wolf_elite_r2": 0.39,
+     "gchest": 0.66,
+     "glow:zhenpan": 0.68,
+     "pav": 0.38,
+     "rare:xuanlin_bat": 0.07,
+     "stele:duanjian": 0.29
+    },
+    "target_mobs": {},
+    "p_zero": 0.01,
+    "forced_packs": 2.07,
+    "contact": {
+     "_forced": 2.07,
+     "_target": 3.62,
+     "chest": 6.29,
+     "elite:vine_elite": 1.41,
+     "elite:wolf_elite_r2": 1.49,
+     "gather": 7.5,
+     "gchest": 1.24,
+     "glow:water_jade": 0.32,
+     "glow:zhenpan": 0.68,
+     "glow:zhuxin": 0.27,
+     "mob:bat": 5.47,
+     "mob:snake": 5.19,
+     "mob:toad": 3.62,
+     "mob:vine": 4.21,
+     "mob:wolf": 4.87,
+     "pack:high": 1.74,
+     "pack:low": 2.68,
+     "pack:mid": 1.94,
+     "pav": 2.02,
+     "rare:xuanlin_bat": 0.24,
+     "stele:beiji": 0.03,
+     "stele:dongtai": 0.28,
+     "stele:duanjian": 0.29,
+     "stele:xigu": 0.27,
+     "stele:zhuhai_n": 0.18
+    }
+   },
+   "分区:北脊": {
+    "t_target_min": {
+     "p10": 0.7,
+     "p50": 2.9,
+     "p90": 4.1,
+     "mean": 2.72
+    },
+    "T_min": {
+     "p10": 11.8,
+     "p50": 12.0,
+     "p90": 12.1,
+     "mean": 11.94
+    },
+    "target_hits": {
+     "chest": 0.72,
+     "elite:vine_elite": 0.2,
+     "elite:wolf_elite_r2": 0.18,
+     "rare:xuanlin_bat": 0.07,
+     "stele:beiji": 0.31
+    },
+    "target_mobs": {},
+    "p_zero": 0.173,
+    "forced_packs": 1.91,
+    "contact": {
+     "_forced": 1.91,
+     "_target": 1.48,
+     "chest": 5.38,
+     "elite:vine_elite": 1.26,
+     "elite:wolf_elite_r2": 1.34,
+     "gather": 6.57,
+     "gchest": 1.22,
+     "glow:water_jade": 0.39,
+     "glow:zhenpan": 0.23,
+     "glow:zhuxin": 0.52,
+     "mob:bat": 9.74,
+     "mob:snake": 3.98,
+     "mob:toad": 5.07,
+     "mob:vine": 4.53,
+     "mob:wolf": 4.65,
+     "pack:high": 3.55,
+     "pack:low": 2.01,
+     "pack:mid": 2.04,
+     "pav": 1.65,
+     "rare:xuanlin_bat": 0.24,
+     "stele:beiji": 0.31,
+     "stele:dongtai": 0.21,
+     "stele:duanjian": 0.14,
+     "stele:xigu": 0.2,
+     "stele:zhuhai_n": 0.25
+    }
+   }
+  }
+ }
+}

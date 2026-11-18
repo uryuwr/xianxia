@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>物品图标烘焙</title></head>
+<body style="margin:0;background:#ece6d6">
+<!-- 构建期页面：由 tools/icons_gen.mjs 通过 Vite 打开；把全部已注册物品画成水墨图标并打包成图集。游戏运行时不加载本页。 -->
+<script type="module">
+import { ITEMS, registerItems } from "/src/core/items.js";
+import "/src/data/items_db.js";
+import { ensureFlowItems } from "/src/game/run/flow_items.js";
+import { ensureCaveItems } from "/src/game/cave/data.js";
+import { QUEST_ITEMS } from "/src/data/quests.js";
+import { renderCanvas, renderRubbing, specOf, CAT_DEFAULT, WIDE } from "./inkicons.js";
+import { SKILL_ICONS, skillSpec } from "./skillicons.js";
+import { MAP_ICONS, mapSpec } from "./mapicons.js";
+
+try {
+  ensureFlowItems();
+  ensureCaveItems();
+  registerItems(QUEST_ITEMS.filter((d) => !ITEMS[d.id]));
+  const CELL = 128, COLS = 16, Q = Number(new URLSearchParams(location.search).get("q") || 0.82);
+  // 条目：物品方图 + 横图（2×1 且模板支持横构图）+ 类别兜底 + 总兜底
+  const entries = [];
+  for (const d of Object.values(ITEMS)) {
+    const sp = specOf(d);
+    entries.push({ key: d.id, spec: sp, w: 1 });
+    if ((d.size || 1) === 2 && WIDE.has(sp[0])) entries.push({ key: d.id + "@w", spec: sp, w: 2 });
+  }
+  for (const [cat, sp] of Object.entries(CAT_DEFAULT)) entries.push({ key: "_cat_" + cat, spec: sp, w: 1 });
+  entries.push({ key: "_generic", spec: ["pouch", {}], w: 1 });
+  // 技能图标（意象写意）：只进主图集，键名 "sk:<模板>"
+  const skKeys = [...SKILL_ICONS.spell, ...Object.values(SKILL_ICONS.artifact), ...SKILL_ICONS.formation, ...SKILL_ICONS.move, ...SKILL_ICONS.xinfa];
+  const skEntries = skKeys.map((k) => ({ key: "sk:" + k, spec: skillSpec(k), w: 1, skill: !0 }));
+  // 地图图标（剪影意象）：单独一张 64px 小图集（只有天机镜用），键名 "map:<kind>"
+  const mapKeys = Object.keys(MAP_ICONS);
+  const mapEntries = mapKeys.map((k) => ({ key: "map:" + k, spec: mapSpec(k), w: 1, flat: !0 }));
+  // 简单行装箱：方图 1 格、横图 2 格
+  const pack = (list, CELL = 128, COLS = 16) => {
+    let x = 0, y = 0;
+    const out = {};
+    for (const e of list) {
+      if (x + e.w > COLS) (x = 0), y++;
+      out[e.key] = [x * CELL, y * CELL, e.w * CELL, CELL];
+      x += e.w;
+    }
+    return { map: out, W: COLS * CELL, H: (y + 1) * CELL };
+  };
+  const draw = (list, P, fn) => {
+    // （P 来自 pack：rects 已按各自格子尺寸给出）
+    const cv = document.createElement("canvas");
+    cv.width = P.W, cv.height = P.H;
+    const x = cv.getContext("2d");
+    for (const e of list) {
+      const [px, py, w, h] = P.map[e.key];
+      x.drawImage(fn(e.spec, w, h, 1, { grain: !e.flat }), px, py);
+    }
+    return cv;
+  };
+  const t0 = performance.now();
+  const wide = entries.filter((e) => e.w === 2), sq = entries.filter((e) => e.w === 1);
+  const mainList = [...wide, ...sq, ...skEntries]; // 横图先排，减少行尾空格
+  const PM = pack(mainList);
+  const main = draw(mainList, PM, renderCanvas);
+  const t1 = performance.now();
+  // 墨拓剪影：只出方图（未鉴定、搜取"先露形"用）
+  const PS = pack(sq);
+  const sil = draw(sq, PS, renderRubbing);
+  const t2 = performance.now();
+  const PMAP = pack(mapEntries, 64, 8);
+  const mapCv = draw(mapEntries, PMAP, renderCanvas);
+  const blob = (cv) => new Promise((r) => cv.toBlob((b) => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(b); }, "image/webp", Q));
+  const out = {
+    main: await blob(main), sil: await blob(sil), map: await blob(mapCv),
+    json: {
+      version: 1, cell: CELL,
+      main: { W: PM.W, H: PM.H, rects: PM.map },
+      sil: { W: PS.W, H: PS.H, rects: PS.map },
+      map: { W: PMAP.W, H: PMAP.H, rects: PMAP.map },
+      skills: skKeys,
+      spec: Object.fromEntries(Object.values(ITEMS).map((d) => [d.id, specOf(d)[0]])),
+      cat: Object.fromEntries(Object.values(ITEMS).map((d) => [d.id, d.cat])),
+    },
+    skills: skKeys.length,
+    stats: { items: Object.keys(ITEMS).length, entries: entries.length, renderMain: Math.round(t1 - t0), renderSil: Math.round(t2 - t1) },
+  };
+  window.__bake = out;
+} catch (e) {
+  window.__bakeErr = String(e.stack || e);
+}
+window.__ready = true;
+</script>
+</body></html>

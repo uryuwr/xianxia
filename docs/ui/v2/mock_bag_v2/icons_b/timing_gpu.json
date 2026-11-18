@@ -1,0 +1,58 @@
+{
+  "internal": 512,
+  "items": {
+    "sword": {
+      "build_ms": 4.8,
+      "render_read_ms": 63.9,
+      "downsample_ms": 2.7,
+      "total_ms": 71.4
+    },
+    "robe": {
+      "build_ms": 2.9,
+      "render_read_ms": 8.6,
+      "downsample_ms": 0.7,
+      "total_ms": 12.2
+    },
+    "jade": {
+      "build_ms": 3.1,
+      "render_read_ms": 12.7,
+      "downsample_ms": 0.8,
+      "total_ms": 16.6
+    },
+    "herb": {
+      "build_ms": 3.3,
+      "render_read_ms": 19.9,
+      "downsample_ms": 0.7,
+      "total_ms": 23.9
+    },
+    "core": {
+      "build_ms": 1.1,
+      "render_read_ms": 56.6,
+      "downsample_ms": 1,
+      "total_ms": 58.7
+    },
+    "ore": {
+      "build_ms": 4.1,
+      "render_read_ms": 7.5,
+      "downsample_ms": 1,
+      "total_ms": 12.6
+    },
+    "pill": {
+      "build_ms": 1.2,
+      "render_read_ms": 7.7,
+      "downsample_ms": 0.7,
+      "total_ms": 9.6
+    },
+    "fu": {
+      "build_ms": 1.2,
+      "render_read_ms": 20.5,
+      "downsample_ms": 0.7,
+      "total_ms": 22.4
+    }
+  },
+  "first_build_compile_ms": 192.4,
+  "atlas_bake_ms": 229.1,
+  "page_total_ms": 553.7,
+  "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "mode": "gpu"
+}

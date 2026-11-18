@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>功法指引 v2 · 方向 C · 出行准备 · 缺口联动</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<link rel="stylesheet" href="../loadout_v2/common.css"><link rel="stylesheet" href="common.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script><script src="icons.js"></script><script src="data.js"></script>
+<style>
+/* 方向 C：出行准备里「护盾 / 已带」两行旁边长出缺口签（朱：缺水；泥金：顺路可收），点开一张缺口纸条：
+   可得法术 · 去处 · 残页进度 · 本局补救（五行符）；同时示意局内 M 舆图上的来源小签。功法匣默认收起。 */
+.hd { left: 52px; top: 26px; display: flex; align-items: center; gap: 16px; }
+.hd .ink-title { font-size: 40px; }
+.hd .ink-rule { width: 130px; }
+.hd .sub { font: 12px var(--f-ui); color: var(--ink-dan); }
+.fan { left: 34px; top: 84px; width: 360px; height: 176px; background: var(--ink-tex-cloud), radial-gradient(ellipse at 50% 85%, var(--fan-c), transparent 72%), var(--paper-lo); background-blend-mode: multiply; display: flex; align-items: center; justify-content: center; }
+.fan .nm { font: 50px var(--f-splash); color: var(--ink); text-shadow: 0 0 14px rgba(245,240,227,.9); margin-top: -34px; letter-spacing: .04em; }
+.fan-seal { left: 318px; top: 112px; }
+.regs { left: 52px; top: 270px; width: 342px; }
+.regs .ink-row { cursor: pointer; align-items: center; padding: 4px 2px; }
+.regs .nm { font: 20px var(--f-display); letter-spacing: .1em; color: var(--ink-zhong); }
+.regs .on .nm { color: var(--ink); }
+.regs .note { font: 12px var(--f-ui); color: var(--ink-dan); margin-left: 10px; }
+.regs .lv { margin-left: auto; font: 15px var(--f-display); color: var(--ink-zhong); }
+.regs .on .lv { color: var(--zhu); }
+.regs .lock .nm { color: var(--ink-dan); }
+.facts { left: 52px; top: 380px; width: 342px; }
+.facts .ink-row { font-size: 13px; padding: 2px 2px; align-items: center; }
+.facts .ink-row .k { min-width: 3em; font-size: 13px; }
+.facts .ink-row .v { font-size: 14px; letter-spacing: .04em; }
+.facts .sl { display: flex; gap: 8px; font: 12.5px/1.65 var(--f-kai); color: var(--ink-zhong); padding: 2px 2px; align-items: baseline; }
+.facts .sl .k { min-width: 3em; flex: none; color: var(--ink-zhong); }
+.facts .sl b { font-weight: 400; font-family: var(--f-display); }
+.facts .sl .no { color: var(--zhu); }
+.facts .chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 4px 0 2px 3.7em; }
+.facts .rdy { margin-top: 2px; font: 12px/1.65 var(--f-kai); color: #7c5d1a; cursor: pointer; white-space: nowrap; }
+.facts .rdy:hover { color: var(--zhu); }
+.facts .rdy b { font: 400 13.5px var(--f-display); color: #7c5d1a; }
+.stats { left: 52px; top: 668px; font: 12px var(--f-ui); color: var(--ink-zhong); }
+.por { left: 404px; top: 42px; width: 300px; height: 520px; background: url(../../../../src/ui/ink/portrait_linmo.svg) center top / contain no-repeat; mix-blend-mode: multiply; }
+.who { left: 420px; top: 90px; writing-mode: vertical-rl; font: 22px var(--f-display); letter-spacing: .2em; display: flex; align-items: center; gap: 8px; }
+.bar-t { left: 418px; top: 548px; font: 13px var(--f-display); color: var(--ink-zhong); letter-spacing: .2em; display: flex; gap: 14px; align-items: baseline; }
+.bar-t .ink-btn { font-size: 13px; padding: 0 2px 5px; letter-spacing: .06em; }
+.bar { left: 418px; top: 572px; display: flex; gap: 12px; align-items: flex-start; }
+.bar .slot { display: flex; flex-direction: column; align-items: center; width: 58px; }
+.bar .slot .key { font: 11px var(--f-ui); color: var(--ink-dan); height: 15px; }
+.bar .slot .cap { margin-top: 4px; font: 12px var(--f-kai); color: var(--ink-nong); white-space: nowrap; text-align: center; line-height: 1.3; }
+.bar .slot.lk .cap { font: 10.5px/1.3 var(--f-ui); color: var(--ink-dan); }
+.bar .sep { width: 8px; height: 50px; margin-top: 18px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; }
+
+/* 缺口纸条 */
+.slip { left: 394px; top: 150px; width: 300px; box-sizing: border-box; padding: 16px 18px 14px; z-index: 40; display: none; transform: rotate(-.4deg); }
+.slip.on { display: block; }
+.slip .t1 { display: flex; align-items: baseline; gap: 8px; }
+.slip .t1 .big { font: 400 28px/1.1 var(--f-display); letter-spacing: .08em; }
+.slip .t1 .s { font: 13px var(--f-kai); color: var(--ink-zhong); }
+.slip .t1 .x { margin-left: auto; font: 16px var(--f-ui); color: var(--ink-dan); cursor: pointer; }
+.slip .why { font: 12px/1.5 var(--f-kai); color: var(--ink-zhong); margin: 2px 0 6px; }
+.slip .cd { display: grid; grid-template-columns: 40px 1fr; gap: 0 10px; padding: 6px 4px 7px; border-radius: 4px; cursor: pointer; position: relative; }
+.slip .cd + .cd::before { content: ""; position: absolute; left: 50px; right: 10%; top: 0; height: 5px; background: var(--ink-mist); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.slip .cd:hover { background: rgba(21,24,27,.035); }
+.slip .cd.pin { background: rgba(184,41,26,.05); }
+.slip .cd .n { font: 400 17px/1.2 var(--f-display); color: var(--ink); letter-spacing: .06em; display: flex; align-items: baseline; gap: 6px; }
+.slip .cd .n small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+.slip .cd .p { font: 12px/1.55 var(--f-kai); color: var(--ink-nong); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.slip .cd .w { font: 11.5px/1.5 var(--f-ui); color: var(--ink-zhong); }
+.slip .cd .w .here { color: #2c7d57; }
+.slip .cd .w .o { color: var(--ink-dan); }
+.slip .cd .w .o.bi { color: var(--zhu); }
+.slip .ft { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--ink-mist); font: 11.5px/1.6 var(--f-ui); color: var(--ink-dan); }
+.slip .ft b { font-weight: 400; color: var(--ink-nong); }
+.slip .ft .fu { display: flex; align-items: center; gap: 6px; color: var(--ink-zhong); font: 12px var(--f-kai); }
+.slip .acts { display: flex; gap: 14px; margin-top: 6px; }
+.slip .acts .ink-btn { font-size: 14px; padding: 0 2px 5px; cursor: pointer; }
+.slip .acts .ink-btn.on { color: var(--zhu); }
+
+/* 舆图小样：局内 M 手卷的一角（示意） */
+.mapw { left: 712px; top: 52px; width: 272px; }
+.mapw .cap { font: 11px var(--f-ui); color: var(--ink-dan); margin: 0 0 4px 4px; }
+.mapw .cap b { font: 400 15px var(--f-display); color: var(--ink-nong); margin-right: 6px; letter-spacing: .1em; }
+.scroll { position: relative; width: 272px; height: 300px; background: var(--ink-tex-paper), var(--ink-tex-fiber), var(--paper-hi); background-blend-mode: multiply; box-shadow: 0 4px 12px rgba(40,32,20,.18); }
+.scroll::before, .scroll::after { content: ""; position: absolute; top: -8px; bottom: -8px; width: 9px; border-radius: 4px; background: linear-gradient(90deg, #4a3624, #7a5a3a 45%, #3f2d1d); }
+.scroll::before { left: -9px; } .scroll::after { right: -9px; }
+.scroll svg.terrain { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scroll .nmv { position: absolute; right: 10px; top: 10px; writing-mode: vertical-rl; font: 400 20px var(--f-splash); color: var(--ink-nong); letter-spacing: .1em; }
+.mk { position: absolute; transform: translate(-50%, -50%); }
+.mk.dim { opacity: .45; }
+.tag { position: absolute; z-index: 2; display: flex; flex-direction: column; gap: 1px; padding: 3px 7px 4px 8px; font: 11px/1.3 var(--f-kai); color: var(--ink-nong); white-space: nowrap; cursor: pointer; isolation: isolate; }
+.tag::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--paper-hi); opacity: .94; -webkit-mask: var(--ink-deckle-slip) 0 0 / 100% 100% no-repeat; mask: var(--ink-deckle-slip) 0 0 / 100% 100% no-repeat; filter: drop-shadow(0 1px 2px rgba(40,32,20,.3)); }
+.tag i { font-style: normal; display: flex; align-items: center; gap: 4px; }
+.tag i::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c); flex: none; }
+.tag i.pin { color: var(--ink); font-weight: 700; }
+.tag i.dim { opacity: .5; }
+.tag .ln { position: absolute; z-index: -2; height: 1px; background: var(--ink-zhong); transform-origin: 0 50%; }
+.mapw .lg { margin: 6px 2px 0; font: 11px/1.55 var(--f-ui); color: var(--ink-dan); }
+
+.pack { left: 1004px; top: 58px; width: 236px; padding: 16px 18px 14px; box-sizing: border-box; }
+.pack .ink-title { font-size: 22px; }
+.pack .ink-title small { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 8px; letter-spacing: 0; }
+.pack .slots { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 6px; }
+.pack .pi { display: flex; flex-direction: column; align-items: center; width: 46px; font: 10.5px var(--f-ui); color: var(--ink-zhong); white-space: nowrap; }
+.pack .pi .sk { --el: rgba(21,24,27,.45); }
+.pack .pi.hint { color: #2c7d57; }
+.quest { left: 1004px; top: 292px; width: 236px; padding: 16px 18px 14px; box-sizing: border-box; }
+.quest .ink-title { font-size: 22px; }
+.quest .q { margin-top: 6px; font: 13px/1.5 var(--f-kai); color: var(--ink-nong); }
+.quest .q small { display: block; font: 11px/1.45 var(--f-ui); color: var(--ink-dan); }
+.quest .q .rw { color: #7c5d1a; font: 11.5px var(--f-ui); margin-left: 4px; }
+.back { left: 1004px; top: 664px; font-size: 20px; }
+.go { left: 1130px; top: 584px; }
+</style></head>
+<body class="ink-stage">
+<div class="abs hd"><span class="ink-title">出行</span><span class="ink-rule"></span><span class="sub" id="sub"></span></div>
+<div class="abs fan ink-fan" id="fan"><span class="nm" id="fanName"></span></div>
+<div class="abs fan-seal" id="fanSeal"></div>
+<div class="abs regs ink-list" id="regs"></div>
+<div class="abs facts ink-list" id="facts"></div>
+<div class="abs stats" id="stats"></div>
+<div class="abs por"></div>
+<div class="abs who">林墨<span class="ink-seal" style="--s:24px">剑</span></div>
+<div class="abs bar-t"><span>随身功法</span><span class="ink-btn">展开功法匣 ▸</span></div>
+<div class="abs bar" id="bar"></div>
+<section class="abs slip ink-paper slip" id="slip"></section>
+<div class="abs mapw" id="mapw"></div>
+<section class="abs pack ink-paper" id="pack"></section>
+<section class="abs quest ink-paper alt" id="quest"></section>
+<span class="abs ink-btn back">回洞府 <span class="key">Esc</span></span>
+<button class="abs ink-seal-btn go">启程</button>
+<div id="anno"></div>
+<div class="ld-mock" id="mock"></div>
+<script>
+const { EL, REGIONS, SPELLS, S } = GF;
+const $ = (id) => document.getElementById(id);
+const FACT = {
+  r1: { beast: "狼妖 · 灰狼 · 石傀", out: "青灵草 · 凝露花 · 铁精", ex: "古传送阵 · 残阵", t: "晨起 · 第九分钟入暮", fan: "rgba(63,154,110,.35)", note: "推荐 练气 1–4" },
+  r2: { beast: "狼妖 · 蝠妖 · 藤妖 · 碧鳞", out: "寒露草 · 千年竹心 · 紫藤", ex: "三处 · 其一需阵钥", t: "晨起 · 午时巡游 · 入夜妖潮", fan: "rgba(47,127,168,.32)", note: "推荐 练气 5–9" },
+};
+let showMap = !0;
+
+// 当前展开的缺口：open = 五行（water…）| "road"（顺路可收）| "0"（收起）；没指定时跟着钉选的法术走
+function openKey() {
+  const gaps = GF.gapOf(S.r).filter((g) => !g.ok);
+  if (S.open === "0") return "";
+  if (S.open && (S.open === "road" || gaps.some((g) => g.need === S.open))) return S.open;
+  if (S.s && gaps.some((g) => g.need === SPELLS[S.s].el && g.cands.some((c) => c.id === S.s))) return SPELLS[S.s].el;
+  return gaps.length ? gaps[0].need : "road";
+}
+function gapGroups() {
+  // 同一个「缺 X」可能对应几种盾（如竹海缺水 = 火盾精英 + 碧鳞首段）：按五行合并
+  const m = new Map();
+  for (const g of GF.gapOf(S.r)) if (!g.ok) {
+    const e = m.get(g.need) || { need: g.need, shields: [], cands: g.cands };
+    e.shields.push(g);
+    m.set(g.need, e);
+  }
+  return [...m.values()];
+}
+
+function render() {
+  const P = GF.P(), R = REGIONS[S.r], F = FACT[S.r];
+  $("sub").textContent = `第 10 局 · ${P.name} · 储物袋已清空`;
+  $("fan").style.setProperty("--fan-c", F.fan);
+  $("fanName").textContent = R.name;
+  $("fanSeal").innerHTML = `<span class="ink-seal two" style="--s:38px">${R.jing}</span>`;
+  $("regs").innerHTML = Object.values(REGIONS).map((r) => {
+    const lock = P.layer < r.need;
+    return `<div class="ink-row ${r.id === S.r ? "on" : ""} ${lock ? "lock" : ""}" data-r="${r.id}"><span class="nm">${r.name}</span><span class="note">${lock ? "需练气五层" : FACT[r.id].note}</span><span class="lv">${r.jing}</span></div>`;
+  }).join("") + `<div class="ink-row lock"><span class="nm">黑风岭</span><span class="note">需练气七层 · 未开</span><span class="lv" style="color:var(--ink-dan)">三境</span></div>`;
+  const sh = Object.entries(R.share).sort((a, b) => b[1] - a[1]).map(([e, s]) => `<b style="color:${EL[e].c}">${EL[e].n}盾</b> ${Math.round(s * 10)}成`);
+  sh.push(`${R.boss.name} ${R.boss.els.map((e) => `<b style="color:${EL[e].c}">${EL[e].n}</b>`).join("→")}`);
+  const gaps = GF.gapOf(S.r);
+  const cov = gaps.filter((g, i, a) => a.findIndex((x) => x.shield === g.shield) === i).map((g) => `<span class="${g.ok ? "" : "no"}"><b style="color:${EL[g.shield].c}">${EL[g.shield].n}盾</b> ${g.ok ? "✓ " + g.by.map((id) => SPELLS[id].name).join("、") : "✗"}</span>`);
+  const ok = openKey();
+  const grp = gapGroups();
+  const chips = grp.length
+    ? grp.map((g) => `<span class="gf-gap ${ok === g.need ? "on" : ""}" data-open="${g.need}">缺${EL[g.need].n}<span class="ar">▸</span></span>`).join("")
+    : `<span class="gf-gap gold ${ok === "road" ? "on" : ""}" data-open="road">顺路可收 ${GF.pickups(S.r).filter((id) => GF.state(id).k !== "ready").length}<span class="ar">▸</span></span>`;
+  const rd = GF.readyList();
+  $("facts").innerHTML = `
+    <div class="ink-row"><span class="k">妖谱</span><span class="v">${F.beast}</span></div>
+    <div class="ink-row"><span class="k">出产</span><span class="v">${F.out}</span></div>
+    <div class="ink-row"><span class="k">撤离</span><span class="v">${F.ex}</span></div>
+    <div class="ink-row"><span class="k">天时</span><span class="v">${F.t}</span></div>
+    <div class="sl"><span class="k">护盾</span><span>${sh.join(" · ")}</span></div>
+    <div class="sl"><span class="k">已带</span><span>${cov.join(" · ")}</span></div>
+    <div class="chips">${chips}</div>
+    ${rd.length ? `<div class="sl rdy" data-id="${rd[0]}"><span class="k">参悟</span><span><b>${rd.map((id) => SPELLS[id].name).join("、")}</b> 残页 ${GF.state(rd[0]).have}/${GF.state(rd[0]).need} · 已集齐 · 到洞府仓库参悟 ›</span></div>` : ""}`;
+  $("stats").textContent = `气血 ${200 + 30 * (P.layer - 1)} · 真气 ${100 + 15 * (P.layer - 1)} · 攻击 ${20 + 4 * (P.layer - 1)} · 法力 ${20 + 4 * (P.layer - 1)}`;
+  renderBar(); renderSlip(); renderMap(); renderPack(); renderAnno();
+  window.inkui && inkui.decorate();
+}
+function renderBar() {
+  const P = GF.P();
+  const sp = (i) => {
+    const id = P.build[i], ok = i < P.slots;
+    if (!ok) return `<div class="slot lk"><span class="key">${"QER"[i]}</span><span class="sk e1 is-empty" style="--s:46px"><b>锁</b></span><span class="cap">练气七层<br>解锁</span></div>`;
+    return `<div class="slot"><span class="key">${"QER"[i]}</span>${id ? GF.tok(id, { size: 46, rub: !1 }) : `<span class="sk e2 is-empty" style="--s:46px"></span>`}<span class="cap">${id ? SPELLS[id].name : "空"}</span></div>`;
+  };
+  const lk = (k, t) => `<div class="slot lk"><span class="key">${k}</span><span class="sk e3 is-empty" style="--s:46px"><b>锁</b></span><span class="cap">${t}</span></div>`;
+  $("bar").innerHTML = sp(0) + sp(1) + sp(2) + `<i class="sep"></i>` + lk("T", "练气七层<br>解锁") + lk("V", "练气七层<br>解锁") + `<i class="sep"></i>` +
+    (P.layer >= 4 ? `<div class="slot"><span class="key">心法</span><span class="sk e1" style="--s:46px;--el:rgba(21,24,27,.72)"><span class="ico" style="${GF.iconStyle("sk:mom_gather")}"></span></span><span class="cap">《蓄势》</span></div>` : lk("心法", "练气四层<br>解锁"));
+}
+
+// 一条候选：签 + 名 + 定位；状态（残页点 / 名门）；去处（本去处标绿）+ 概率档
+function cand(id) {
+  const d = SPELLS[id], st = GF.state(id), R = REGIONS[S.r];
+  let p = "";
+  if (st.k === "pages") p = `${GF.dots(id)}<span>残页 ${st.have}/${st.need}${st.fill ? ` · <span class="gold">悟性可补 ${st.fill} 页</span>` : ""}</span>`;
+  else if (st.k === "ready") p = `${GF.dots(id)}<span class="gold">已集齐 · 到洞府仓库参悟</span>`;
+  else if (st.k === "book") p = `<span>名门 · 一本即成${d.gate ? ` · ${d.gate} <span style="color:#2c7d57">${GF.P().layer >= 5 ? "✓" : "✗"}</span>` : ""}</span>`;
+  else p = `<span>${d.src[0].how}</span>`;
+  const here = d.src.filter((x) => GF.inRegion(x, S.r)), far = d.src.filter((x) => x.r && !GF.inRegion(x, S.r));
+  const w = here.length
+    ? `<span class="here">本去处</span> · ` + here.map((x) => `${x.place} <span class="o ${x.odds === "必得" ? "bi" : ""}">${x.odds}</span>`).join(" · ")
+    : far.length ? `${GF.regionName(far[0].r)} · ` + far.map((x) => `${x.place} <span class="o">${x.odds}</span>`).join(" · ") : "";
+  return `<div class="cd ${S.s === id ? "pin" : ""}" data-id="${id}">${GF.tok(id, { size: 40 })}<div><div class="n">${d.name}<small>${EL[d.el].n} · ${d.role}</small></div><div class="p">${p}</div><div class="w">${w}</div></div></div>`;
+}
+function renderSlip() {
+  const ok = openKey(), slip = $("slip");
+  if (!ok) { slip.classList.remove("on"); return; }
+  const R = REGIONS[S.r], P = GF.P();
+  let h = "";
+  if (ok === "road") {
+    const ids = GF.pickups(S.r).filter((id) => GF.state(id).k !== "ready");
+    h = `<div class="t1"><span class="big" style="color:#7c5d1a">顺路可收</span><span class="s">${R.name}</span><span class="x" data-open="0">×</span></div>
+      <div class="why">护盾都克得住。这一趟能顺手捡的功法：</div>${ids.map(cand).join("")}`;
+  } else {
+    const g = gapGroups().find((x) => x.need === ok);
+    const why = g.shields.map((s) => `${GF.shd(s.shield)} ${s.who}`).join("<br>");
+    const fu = { water: ["fu_water", "水符 · 破火"], wood: ["fu_wood", "木符 · 破土"], metal: ["fu_metal", "金符 · 破木"], fire: ["fu_fire", "火符 · 破金"], earth: ["fu_earth", "土符 · 破水"] }[ok];
+    h = `<div class="t1"><span class="big" style="color:${EL[ok].c}">缺${EL[ok].n}</span><span class="s">破${g.shields.map((s) => EL[s.shield].n).join("、")}盾</span><span class="x" data-open="0">×</span></div>
+      <div class="why">${why}</div>${g.cands.map((c) => cand(c.id)).join("")}
+      <div class="ft"><div class="fu"><span class="sk e2" style="--s:24px;--el:rgba(21,24,27,.45)"><span class="ico" style="${GF.iconStyle(fu[0])}"></span></span>本局补救：行囊里的<b>${fu[1]}</b></div>残页集齐后到洞府仓库参悟 · 悟性 ${P.wux}（每 3 点补 1 页）</div>`;
+  }
+  h += `<div class="acts"><span class="ink-btn ${showMap ? "on" : ""}" data-map="1">${showMap ? "✓ " : ""}舆图上标出</span><span class="ink-btn" data-open="0">收起</span></div>`;
+  slip.innerHTML = h;
+  slip.classList.add("on");
+}
+
+// ---------------- 舆图小样（示意：局内 M 手卷的一角） ----------------
+const TERRAIN = {
+  r2: `<svg class="terrain" viewBox="0 0 272 300" preserveAspectRatio="none"><g fill="none" stroke="rgba(21,24,27,.35)" stroke-linecap="round">
+    <path d="M206 0 C200 40 214 62 196 92 C178 122 140 128 128 160 C116 196 70 214 40 252 C26 270 20 288 18 300" stroke-width="7" stroke="rgba(47,127,168,.28)"/>
+    <path d="M206 0 C200 40 214 62 196 92 C178 122 140 128 128 160 C116 196 70 214 40 252 C26 270 20 288 18 300" stroke-width="1.2"/>
+    <path d="M196 92 l10 -4 M190 98 l12 0" stroke-width="1.6"/>
+    <ellipse cx="226" cy="214" rx="30" ry="18" fill="rgba(47,127,168,.16)" stroke-width="1.1"/>
+    <path d="M150 40 q14 -18 30 -8 M232 44 q12 -14 26 -4" stroke-width="1.4"/></g>
+    <g stroke="rgba(21,24,27,.28)" stroke-width="1.6" stroke-linecap="round">${Array.from({ length: 38 }, (_, i) => { const x = 22 + (i * 37) % 120, y = 150 + ((i * 53) % 120); return `<path d="M${x} ${y} l${(i % 3) - 1} -10"/>`; }).join("")}</g>
+    <g stroke="rgba(21,24,27,.22)" stroke-width="1.4" stroke-linecap="round">${Array.from({ length: 22 }, (_, i) => { const x = 30 + (i * 29) % 110, y = 22 + ((i * 41) % 90); return `<path d="M${x} ${y} l${(i % 3) - 1} -9"/>`; }).join("")}</g>
+    <text x="196" y="120" font-size="10" fill="rgba(21,24,27,.5)" font-family="KaiTi">瀑</text><text x="214" y="242" font-size="10" fill="rgba(21,24,27,.5)" font-family="KaiTi">碧水潭</text><text x="50" y="290" font-size="10" fill="rgba(21,24,27,.5)" font-family="KaiTi">竹海南</text></svg>`,
+  r1: `<svg class="terrain" viewBox="0 0 272 300" preserveAspectRatio="none"><g fill="none" stroke="rgba(21,24,27,.35)" stroke-linecap="round">
+    <path d="M150 0 C140 50 170 80 150 130 C132 176 160 220 140 300" stroke-width="7" stroke="rgba(47,127,168,.25)"/>
+    <path d="M150 0 C140 50 170 80 150 130 C132 176 160 220 140 300" stroke-width="1.2"/>
+    <path d="M20 120 C70 110 100 140 150 130 M150 130 C190 120 220 150 262 140" stroke-width="2.2" stroke="rgba(21,24,27,.18)"/>
+    <path d="M60 46 l20 -12 l20 12 M66 46 v16 h28 v-16" stroke-width="1.4"/>
+    <path d="M200 210 q20 -26 50 -10 M196 236 q26 -16 56 0" stroke-width="1.4"/></g>
+    <g fill="rgba(21,24,27,.12)">${Array.from({ length: 16 }, (_, i) => `<circle cx="${30 + (i * 47) % 200}" cy="${170 + ((i * 31) % 110)}" r="${4 + (i % 3) * 2}"/>`).join("")}</g>
+    <text x="54" y="80" font-size="10" fill="rgba(21,24,27,.55)" font-family="KaiTi">山神庙</text><text x="214" y="262" font-size="10" fill="rgba(21,24,27,.5)" font-family="KaiTi">狼谷</text><text x="30" y="160" font-size="10" fill="rgba(21,24,27,.5)" font-family="KaiTi">台地</text></svg>`,
+};
+// 地点 → 图上的位置 [x, y, 图标, 签的偏移 dx, dy]（固定点位来自关卡；宝箱 / 供案是「已见过的」那几个，签只挂在第一个上）
+const PLACES = {
+  r2: { "剑修遗府": [[206, 82, "map:cave", -118, 12]], "剑修遗府重探": [[206, 82, "map:cave", -118, 12]], "碧鳞重战": [[226, 206, "map:boss", -80, -50]],
+    "夜明宝箱": [[96, 60, "map:chest_night", 14, -26], [70, 196, "map:chest_night"]], "夜明 / 灵光宝箱": [[96, 60, "map:chest_night", 14, -26], [150, 248, "map:chest_glow"]],
+    "藤妖精英": [[60, 168, "map:elite", 14, -26]], "藤妖": [[100, 222, "map:mob", 14, -8], [42, 240, "map:mob"]], "灰鬃头目": [[160, 46, "map:elite", 14, -10]],
+    "亭中供案": [[120, 134, "map:chest", -100, -12]], "灵光宝箱": [[150, 248, "map:chest_glow", 14, -8]], "赤狼（异种）": [[236, 150, "map:elite", -94, -12]],
+    "宝箱": [[40, 110, "map:chest", 14, -8]], "灵光点": [[180, 176, "map:glow", 14, -8]], "普通宝箱": [[40, 110, "map:chest", 14, -8]] },
+  r1: { "山神庙地窖": [[80, 54, "map:cave", 16, -12]], "狼妖头目": [[60, 132, "map:elite", 14, -8], [214, 128, "map:elite"]], "石傀": [[110, 220, "map:mob", 14, -8]],
+    "普通宝箱": [[200, 60, "map:chest", -96, 14]], "亭中供案": [[100, 178, "map:chest", 14, -8]], "灵光宝箱": [[56, 250, "map:chest_glow", 14, -8]] },
+};
+function renderMap() {
+  const w = $("mapw"), ok = openKey();
+  if (!showMap || !ok) { w.innerHTML = ""; return; }
+  const ids = ok === "road" ? GF.pickups(S.r).filter((id) => GF.state(id).k !== "ready") : gapGroups().find((x) => x.need === ok).cands.map((c) => c.id);
+  // 按点位归并：同一处多门功法写在一张小签上
+  const at = new Map();
+  for (const id of ids) {
+    const st = GF.state(id);
+    if (st.k === "learned" || st.k === "ready" || st.k === "grant") continue;
+    for (const x of SPELLS[id].src) {
+      if (!GF.inRegion(x, S.r)) continue;
+      (PLACES[S.r][x.place] || []).forEach((pt) => {
+        const k = pt[0] + "," + pt[1];
+        const e = at.get(k) || { pt, items: [] };
+        if (pt.length > 3 && e.pt.length <= 3) e.pt = pt;
+        if (pt.length > 3 && !e.items.some((i) => i.id === id)) e.items.push({ id, txt: `${SPELLS[id].name} · ${st.k === "book" ? "名门" : "残页 " + st.have + "/" + st.need}` });
+        at.set(k, e);
+      });
+    }
+  }
+  let mk = "", tg = "";
+  for (const { pt, items } of at.values()) {
+    const [x, y, ico, dx, dy] = pt;
+    const pin = items.some((i) => i.id === S.s);
+    mk += `<span class="mk ${S.s && !pin && items.length ? "dim" : ""}" style="left:${x}px;top:${y}px">${GF.mapIco(ico, 22)}</span>`;
+    if (items.length) tg += `<div class="tag" style="left:${x + dx}px;top:${y + dy}px" data-id="${items[0].id}">${items.map((i) => `<i class="${i.id === S.s ? "pin" : S.s ? "dim" : ""}" style="--c:${EL[SPELLS[i.id].el].c}">${i.txt}</i>`).join("")}</div>`;
+  }
+  const none = at.size ? "" : `<div style="position:absolute;left:20px;top:130px;font:12px var(--f-kai);color:var(--ink-dan)">本去处没有这几门的来源 · 去处见纸条</div>`;
+  w.innerHTML = `<div class="cap"><b>舆图</b>局内按 M · 来源小签（示意）</div>
+    <div class="scroll">${TERRAIN[S.r]}<span class="nmv">${REGIONS[S.r].name}</span>${mk}${tg}${none}</div>
+    <div class="lg">只标「本去处 · 未领悟 · 缺口相关」的来源；宝箱 / 供案只标已见过的。拾到残页后签上页数自己变。</div>`;
+}
+function renderPack() {
+  const pi = (key, n, c, hint) => `<div class="pi ${hint ? "hint" : ""}"><span class="sk e${(n % 3) + 1}" style="--s:40px"><span class="ico" style="${GF.iconStyle(key)}"></span><i class="lv">×${n}</i></span>${c}</div>`;
+  $("pack").innerHTML = `<div class="ink-title">行囊<small>丹药 2 种 · 每种 3 枚</small></div><div class="slots">${pi("huichun_dan", 3, "回春丹")}${pi("huiqi_dan", 3, "回气丹")}${S.r === "r2" ? pi("fu_water", 1, "水符 · 破火", !0) : pi("fu_metal", 2, "金符 · 破木")}</div>`;
+  $("quest").innerHTML = `<div class="ink-title">委托</div>
+    <div class="q">不假外物<span class="rw">灵石 30 · 丹方残页 ×2</span><small>不服丹药，击败本区域首领</small></div>
+    <div class="q">踏勘山川<span class="rw">修为 40</span><small>本局让天机镜再着墨 14%</small></div>`;
+}
+function renderAnno() {
+  $("anno").innerHTML = `<i class="gf-anno" style="left:84px;top:${$("facts").querySelector(".chips").offsetTop + 383}px">1</i><i class="gf-anno" style="left:${$("slip").classList.contains("on") ? 680 : -99}px;top:142px">2</i><i class="gf-anno" style="left:${$("mapw").innerHTML ? 966 : -99}px;top:66px">3</i><i class="gf-anno" style="left:30px;top:${GF.readyList().length ? $("facts").querySelector(".rdy").offsetTop + 383 : -99}px">4</i>
+    <div class="gf-annolist" style="left:418px;top:690px"><b>1</b>缺口签 <b>2</b>缺口纸条：可得法术 · 去处 · 残页 · 补救 <b>3</b>舆图小签 <b>4</b>可参悟提醒</div>`;
+}
+function mock() {
+  $("mock").innerHTML = `<span>示意开关</span>${[["qi6", "练气六层"], ["qi3", "练气三层"]].map(([k, n]) => `<a data-p="${k}" class="${S.p === k ? "on" : ""}">${n}</a>`).join("")}<i>|</i>${["r1", "r2"].map((r) => `<a data-mr="${r}" class="${S.r === r ? "on" : ""}">${REGIONS[r].name}</a>`).join("")}`;
+}
+document.addEventListener("click", (ev) => {
+  const t = ev.target.closest("[data-r],[data-mr],[data-p],[data-id],[data-open],[data-map]");
+  if (!t) return;
+  if (t.dataset.r || t.dataset.mr) return GF.set({ r: t.dataset.r || t.dataset.mr, open: "", s: "" });
+  if (t.dataset.p) return GF.set({ p: t.dataset.p, open: "", s: "" });
+  if (t.dataset.map) { showMap = !showMap; return render(); }
+  if (t.dataset.open != null) return GF.set({ open: t.dataset.open === openKey() ? "0" : t.dataset.open, s: t.dataset.open === "0" ? "" : S.s });
+  if (t.dataset.id) return GF.set({ s: S.s === t.dataset.id ? "" : t.dataset.id });
+});
+GF.on(() => { render(); mock(); });
+render(); mock(); GF.ready();
+</script>
+</body></html>

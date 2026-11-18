@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 构筑与成长 v1 · 总览（可交互）</title>
+<link rel="stylesheet" href="../../../src/ui/ink/strokes.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../assets/fonts/MaShanZheng-Regular.ttf"); }
+:root { --paper: #ece6d6; --paper2: #e4ddca; --paper3: #f4efe3; --ink: #15181b; --ink2: #3b3c38; --ink3: #6f6c63; --ink4: #a7a293; --zhu: #b8291a; --jin: #a8812e; --qing: #2f7fa8; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 14px/1.65 "Microsoft YaHei", "PingFang SC", sans-serif; }
+.kai { font-family: "MaShanZheng", KaiTi, STKaiti, serif; font-weight: 400; }
+header { display: flex; align-items: baseline; gap: 24px; padding: 16px 32px 4px; flex-wrap: wrap; }
+header h1 { margin: 0; font-size: 30px; letter-spacing: .1em; }
+nav { display: flex; gap: 2px; flex-wrap: wrap; }
+nav a { font-size: 21px; letter-spacing: .06em; color: var(--ink4); padding: 2px 12px 9px; cursor: pointer; position: relative; user-select: none; }
+nav a:hover { color: var(--ink2); }
+nav a.on { color: var(--ink); }
+nav a.on::after { content: ""; position: absolute; left: 6px; right: 4px; bottom: 0; height: 8px; background: var(--zhu); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.lede { padding: 0 32px; color: var(--ink3); font-size: 13px; margin: 0; }
+.lede b { color: var(--ink2); font-weight: 600; }
+section.pg { display: none; padding: 12px 32px 32px; }
+section.pg.on { display: block; }
+h2 { margin: 6px 0 8px; font: 24px "MaShanZheng", KaiTi, serif; letter-spacing: .06em; }
+h2 small, h3 small { font: 13px "Microsoft YaHei", sans-serif; color: var(--ink3); margin-left: 10px; letter-spacing: 0; }
+h3 { margin: 0 0 6px; font: 20px "MaShanZheng", KaiTi, serif; letter-spacing: .05em; }
+h4 { margin: 0 0 3px; font: 17px "MaShanZheng", KaiTi, serif; }
+.sep { height: 10px; margin: 14px 0 10px; background: var(--ink4); opacity: .7; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.row { display: flex; gap: 28px; align-items: flex-start; }
+.col { flex: 1; min-width: 0; }
+.muted { color: var(--ink3); font-size: 12.5px; }
+ul.tight { margin: 2px 0; padding-left: 18px; } ul.tight li { margin: 1px 0; }
+/* 一页总览：三轴 */
+.axes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.axis { background: var(--paper3); border: 1.5px solid var(--ink2); border-radius: 3px 7px 4px 6px; padding: 10px 14px 12px; position: relative; }
+.axis .t { font: 26px "MaShanZheng", KaiTi, serif; }
+.axis .res { font-size: 12.5px; color: var(--ink3); }
+.axis .flow { margin: 6px 0 4px; font-size: 13.5px; }
+.axis .flow b { font: 16px "MaShanZheng", KaiTi, serif; font-weight: 400; }
+.axis .safe { position: absolute; top: 8px; right: 10px; font: 14px "MaShanZheng", KaiTi, serif; color: var(--qing); border: 1.5px solid var(--qing); border-radius: 3px; padding: 0 5px; transform: rotate(3deg); }
+.stake { margin-top: 12px; border: 1.5px dashed var(--zhu); border-radius: 3px 7px 4px 6px; padding: 8px 14px; display: flex; gap: 18px; align-items: baseline; }
+.stake .t { font: 22px "MaShanZheng", KaiTi, serif; color: var(--zhu); white-space: nowrap; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 4px 0 2px; }
+.kpi { border-left: 3px solid var(--ink2); padding: 2px 10px; }
+.kpi .v { font: 26px "MaShanZheng", KaiTi, serif; line-height: 1.2; }
+.kpi .v.z { color: var(--zhu); }
+.kpi .d { font-size: 12px; color: var(--ink3); line-height: 1.4; }
+.prin { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 22px; font-size: 13.5px; }
+.prin div b { font: 16px "MaShanZheng", KaiTi, serif; font-weight: 400; margin-right: 6px; }
+/* 成型对比 */
+table.cmp { border-collapse: separate; border-spacing: 3px; }
+table.cmp th { font-weight: 400; padding: 2px 6px; }
+table.cmp thead th { font: 16px "MaShanZheng", KaiTi, serif; color: var(--ink2); line-height: 1.2; }
+table.cmp thead th small { display: block; font: 11px "Microsoft YaHei", sans-serif; color: var(--ink3); }
+table.cmp th.rl { text-align: right; font: 18px "MaShanZheng", KaiTi, serif; padding-right: 8px; white-space: nowrap; }
+table.cmp td { width: 78px; height: 36px; text-align: center; font: 16px "MaShanZheng", KaiTi, serif; border-radius: 2px 5px 3px 4px; }
+table.cmp td.never { color: var(--zhu); background: transparent; border: 1.5px dashed var(--zhu); font-size: 14px; }
+table.cmp td.na { color: var(--ink4); background: transparent; font: 12px "Microsoft YaHei"; }
+table.cmp td.me { outline: 2px solid var(--zhu); outline-offset: 1px; }
+.legend { display: flex; gap: 14px; align-items: center; font-size: 12px; color: var(--ink3); margin-top: 6px; flex-wrap: wrap; }
+.ramp { width: 150px; height: 11px; border-radius: 2px; }
+/* 流派 */
+.schools { display: flex; gap: 8px; margin: 2px 0 10px; flex-wrap: wrap; }
+.schools a { cursor: pointer; padding: 3px 14px 4px; border: 1.5px solid var(--ink4); border-radius: 3px 7px 4px 6px; color: var(--ink3); user-select: none; }
+.schools a .n { font: 21px "MaShanZheng", KaiTi, serif; margin-right: 6px; }
+.schools a.on { border-color: var(--ink); background: var(--ink2); color: var(--paper); }
+.schools a:hover:not(.on) { border-color: var(--ink2); color: var(--ink); }
+.loop { font-size: 15px; margin: 0 0 8px; }
+.loop .kai { font-size: 22px; margin-right: 10px; }
+.stars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+.star { background: var(--paper3); border: 1.5px solid var(--ink2); border-radius: 3px 7px 4px 6px; padding: 7px 12px 8px; }
+.star .k { font-size: 12px; color: var(--ink3); }
+.star .nm { font: 21px "MaShanZheng", KaiTi, serif; }
+.star .nm i { font-style: normal; color: var(--zhu); font-size: 15px; margin-right: 4px; }
+.star .src { font-size: 12.5px; color: var(--ink2); line-height: 1.45; }
+.star .when { float: right; font: 15px "MaShanZheng", KaiTi, serif; color: var(--jin); }
+table.slots { border-collapse: collapse; width: 100%; font-size: 13px; }
+table.slots th { text-align: right; vertical-align: top; padding: 4px 10px 4px 0; font: 16px "MaShanZheng", KaiTi, serif; font-weight: 400; white-space: nowrap; width: 54px; }
+table.slots td { padding: 3px 0; border-bottom: 1px solid var(--paper2); }
+.chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; padding: 0 7px 0 3px; margin: 2px 4px 2px 0; border-radius: 2px 5px 3px 4px; line-height: 1.6; cursor: default; }
+.chip .c { font: 12px "MaShanZheng", KaiTi, serif; width: 17px; height: 17px; display: inline-grid; place-items: center; border-radius: 2px; }
+.chip.core { background: var(--ink2); color: var(--paper); } .chip.core .c { background: var(--zhu); color: var(--paper); }
+.chip.plus { border: 1.5px solid var(--ink2); } .chip.plus .c { background: var(--ink2); color: var(--paper); }
+.chip.x { border: 1.5px dashed var(--ink3); color: var(--ink2); } .chip.x .c { border: 1px dashed var(--ink3); }
+.chip.later { opacity: .45; border: 1.5px dotted var(--ink4); }
+.chip .nw { color: var(--jin); font-size: 11px; }
+.grow { display: grid; grid-template-columns: 1fr; gap: 6px; font-size: 13px; }
+.grow .g { background: var(--paper3); border-radius: 3px 6px 4px 5px; padding: 5px 10px; }
+.grow .g h4 { display: inline; margin-right: 6px; }
+.grow .g .z { display: grid; grid-template-columns: 52px 1fr; gap: 1px 8px; margin-top: 2px; }
+.grow .g .z b { font: 15px "MaShanZheng", KaiTi, serif; font-weight: 400; color: var(--ink2); }
+.grow .g .z b.f { color: var(--zhu); }
+table.boss { border-collapse: collapse; width: 100%; font-size: 13px; }
+table.boss th { text-align: left; vertical-align: top; padding: 3px 10px 3px 0; font: 16px "MaShanZheng", KaiTi, serif; font-weight: 400; white-space: nowrap; color: var(--zhu); width: 44px; }
+table.boss td { padding: 3px 0; border-bottom: 1px solid var(--paper2); }
+.where { font-size: 13px; }
+.where .zone { display: inline-block; border: 1.5px solid var(--ink3); border-radius: 3px; padding: 0 6px; margin: 1px 4px 1px 0; }
+.where .zone i { font-style: normal; color: var(--zhu); font-size: 11px; margin-left: 3px; }
+/* 成长轴 */
+table.ax { border-collapse: collapse; width: 100%; font-size: 13px; }
+table.ax th, table.ax td { padding: 6px 8px; border-bottom: 1px solid var(--ink4); text-align: left; vertical-align: top; }
+table.ax thead th { font: 16px "MaShanZheng", KaiTi, serif; font-weight: 400; color: var(--ink2); border-bottom: 2px solid var(--ink2); }
+table.ax td.nm { font: 19px "MaShanZheng", KaiTi, serif; white-space: nowrap; }
+table.ax td.nm small { display: block; font: 11.5px "Microsoft YaHei"; color: var(--ink3); }
+.lose { display: inline-block; white-space: nowrap; font: 14px "MaShanZheng", KaiTi, serif; padding: 0 6px; border-radius: 3px; }
+.lose.no { color: var(--qing); border: 1.5px solid var(--qing); }
+.lose.yes { color: var(--zhu); border: 1.5px solid var(--zhu); }
+.ladder { display: flex; gap: 0; margin-top: 6px; }
+.ladder > div { flex: 1; padding: 8px 12px; border-top: 4px solid var(--ink); font-size: 13px; }
+.ladder > div:nth-child(1) { border-color: var(--ink4); } .ladder > div:nth-child(2) { border-color: var(--ink3); } .ladder > div:nth-child(3) { border-color: var(--ink2); } .ladder > div:nth-child(4) { border-color: var(--ink); }
+.ladder b { font: 17px "MaShanZheng", KaiTi, serif; font-weight: 400; display: block; }
+/* 时间线 */
+.tl { display: grid; grid-template-columns: 92px repeat(6, 1fr); gap: 3px; }
+.tl .h { font: 18px "MaShanZheng", KaiTi, serif; text-align: center; color: var(--ink2); cursor: pointer; padding: 2px 0; line-height: 1.25; }
+.tl .h small { display: block; font: 11.5px "Microsoft YaHei"; color: var(--ink3); }
+.tl .h.sel { color: var(--zhu); }
+.tl .rl { text-align: right; padding-right: 8px; font: 16px "MaShanZheng", KaiTi, serif; color: var(--ink2); align-self: center; }
+.tl .c { background: var(--paper3); border-radius: 2px 5px 3px 4px; padding: 4px 6px; font-size: 12px; line-height: 1.45; cursor: pointer; outline: 2px solid transparent; outline-offset: 1px; min-height: 30px; }
+.tl .c.sel { outline-color: var(--zhu); }
+.tl .c .ch { color: var(--zhu); font-weight: 600; }
+.tl .c .st { color: var(--jin); }
+.tl .sc.sel { outline: 2px solid var(--zhu); outline-offset: 1px; }
+.tl .sc { border-radius: 2px 5px 3px 4px; text-align: center; font: 12.5px "Microsoft YaHei", sans-serif; line-height: 1.3; padding: 3px 2px; cursor: pointer; display: grid; place-items: center; min-height: 34px; }
+.tlside { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; font-size: 13px; }
+/* 待选题 */
+.qs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.q { background: var(--paper3); border: 1.5px solid var(--ink4); border-radius: 3px 7px 4px 6px; padding: 10px 14px 12px; }
+.q h4 { font-size: 19px; margin-bottom: 2px; }
+.q .why { font-size: 12.5px; color: var(--ink3); margin: 0 0 6px; }
+.q .opt { display: block; border: 1.5px solid var(--ink4); border-radius: 3px 6px 4px 5px; padding: 4px 9px; margin: 5px 0; cursor: pointer; font-size: 13px; position: relative; user-select: none; }
+.q .opt:hover { border-color: var(--ink2); }
+.q .opt.rec::before { content: "荐"; position: absolute; right: -6px; top: -9px; font: 13px "MaShanZheng", KaiTi, serif; color: var(--paper); background: var(--zhu); border-radius: 3px; padding: 0 4px; transform: rotate(6deg); }
+.q .opt.pick { border-color: var(--ink); background: var(--ink2); color: var(--paper); }
+.q .opt b { font: 16px "MaShanZheng", KaiTi, serif; font-weight: 400; margin-right: 4px; }
+.q .by { font-size: 11.5px; color: var(--ink3); margin-top: 6px; }
+.picked { margin-top: 14px; font-size: 13px; color: var(--ink2); }
+/* 落地 */
+table.plan { border-collapse: collapse; width: 100%; font-size: 13px; }
+table.plan th, table.plan td { padding: 6px 8px; border-bottom: 1px solid var(--ink4); text-align: left; vertical-align: top; }
+table.plan thead th { font: 16px "MaShanZheng", KaiTi, serif; font-weight: 400; border-bottom: 2px solid var(--ink2); }
+table.plan td.ph { font: 18px "MaShanZheng", KaiTi, serif; white-space: nowrap; }
+table.plan td.ph small { display: block; font: 11.5px "Microsoft YaHei"; color: var(--ink3); }
+code { font-family: Consolas, monospace; font-size: 12px; color: var(--ink2); background: var(--paper2); padding: 0 4px; border-radius: 2px; }
+#tip { position: fixed; pointer-events: none; z-index: 9; background: #f6f2e7; border: 1px solid var(--ink4); box-shadow: 0 6px 18px rgba(40,36,28,.22); padding: 7px 11px 8px; max-width: 340px; font-size: 12.5px; display: none; border-radius: 3px 6px 4px 5px; }
+#tip h5 { margin: 0 0 3px; font: 17px "MaShanZheng", KaiTi, serif; }
+</style></head>
+<body>
+<header>
+  <h1 class="kai">构筑与成长 · 总览</h1>
+  <nav id="tabs"></nav>
+</header>
+<p class="lede">玩法系统牵头，战斗（02 流派与机制）、数值（03 成长与数值）、关卡（04 投放与地图）合写。<b>只出方案，未落地</b>。三条底线：<b>真气不自动回复、击杀不回复</b>（回气只来自明确的构筑手段）；<b>主角强、不魂系</b>；<b>搜打撤：撤回才算得到</b>。品级只用 RARITY 一套。</p>
+
+<section class="pg" id="pg-ov">
+  <div class="row">
+    <div class="col" style="flex:1.25">
+      <h2>三条局外轴 + 一层赌注 <small>每条轴一种资源、一个站点；"几重"通用于法术 / 阵法 / 法宝</small></h2>
+      <div class="axes" id="axes"></div>
+      <div class="stake"><span class="t">赌注层</span><span>身上的法剑 / 法衣 / 玉佩（区域二身陨随机遗落 1 件，可取回、可认主）＋ 本局捡到的一切（<b>撤回才算</b>）。局内<b>不加</b>任何临时成长系统。</span></div>
+      <div class="sep"></div>
+      <h3>五条原则</h3>
+      <div class="prin" id="prin"></div>
+    </div>
+    <div class="col">
+      <h2>关键数字 <small>数值模拟：真实掉落表 + 关卡接触数，1000 次 / 画像</small></h2>
+      <div class="kpis" id="kpis"></div>
+      <div class="sep"></div>
+      <h3>五派何时成型 <small>核心部件到手概率平均 ≥ 70% 的境界；墨越浓成型越早</small></h3>
+      <table class="cmp" id="cmp"></table>
+      <div class="legend"><span>晚</span><span class="ramp" id="ramp"></span><span>早</span><span style="border:1.5px dashed var(--zhu);color:var(--zhu);padding:0 6px">筑基前成不了</span><span>朱框 = 本方案</span></div>
+      <p class="muted" id="cmpnote"></p>
+      <h3 style="margin-top:12px">五派打碧鳞用时 · 与中位的偏差 <small>练九，机器人实测（03 §4）；朱虚框 = 出 ±20% 带</small></h3>
+      <div class="row" style="gap:18px"><table class="cmp" id="bal"></table><p class="muted" style="flex:1;margin:4px 0 0">原稿下剑势 / 雷暴快 41–43%，其余三派比"不选流派"还慢——★法宝与入门心法本身带不带输出。调整（战斗已采纳）：加强葫芦、《凝神》、定风珠、《流云》、镇山印、《不动》；《连环》《蓄势》《锋锐》与雷痕各降一档。调整后只有雷暴略出带（单体爆发最高的定位）；首领气血不改。守御允许 +35%，换 1.7 倍耐打。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="pg-school">
+  <div class="schools" id="schools"></div>
+  <p class="loop" id="loop"></p>
+  <div class="row">
+    <div class="col" style="flex:1.1">
+      <div class="stars" id="stars"></div>
+      <h3>五个栏位能装什么 <small>朱印 = ★核心　实框 = 本派增强　虚框 = 交叉件　淡 = 第二期</small></h3>
+      <table class="slots" id="slots"></table>
+      <div class="sep"></div>
+      <h3>去哪刷 <small>关卡 04：每派每区一浅一深两个道途分区（括号为险度）</small></h3>
+      <div class="where" id="where"></div>
+    </div>
+    <div class="col">
+      <h3>成长手感 <small>数档与形档交替（朱字 = 改手感）</small></h3>
+      <div class="grow" id="grow"></div>
+      <div class="sep"></div>
+      <h3>首领怎么打</h3>
+      <table class="boss" id="boss"></table>
+      <p class="muted" id="weak" style="margin-top:6px"></p>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="pg-axes">
+  <h2>成长轴 <small>投入越深越安全：局外精进永不丢，赌桌上只有装备词条与本局收获</small></h2>
+  <table class="ax" id="axtab"></table>
+  <div class="sep"></div>
+  <h3>选错了怎么办 <small>代价阶梯（数值 03 建议值）</small></h3>
+  <div class="ladder" id="ladder"></div>
+</section>
+
+<section class="pg" id="pg-time">
+  <h2>获取与节奏 <small>一次回府约升两层（数值模拟中位）；点列看那次回府的全部内容</small></h2>
+  <div class="tl" id="tl"></div>
+  <div class="tlside" id="tlside"></div>
+</section>
+
+<section class="pg" id="pg-q">
+  <h2>请你选 <small>四个岗位的题合并去重；点选项可标记，朱印"荐"为推荐项</small></h2>
+  <div class="qs" id="qs"></div>
+  <p class="picked" id="picked"></p>
+</section>
+
+<section class="pg" id="pg-plan">
+  <h2>落地拆分 <small>只列不做；岗位按 docs/开发约定_v1.md 的文件归属</small></h2>
+  <table class="plan" id="plan"></table>
+</section>
+<div id="tip"></div>
+
+<script>
+const REALMS = ["练一", "练二", "练三", "练四", "练五", "练六", "练七", "练八", "练九", "筑基"];
+const TABS = [["ov", "一页总览"], ["school", "流派"], ["axes", "成长轴"], ["time", "时间线"], ["q", "待选题"], ["plan", "落地"]];
+
+const AXES = [
+  { t: "境界", res: "修为（感悟 + 炼化 + 聚气丹）→ 灵泉", flow: "管<b>几格</b>：开栏、属性、身法钥匙", note: "开栏只由境界决定（slotOpen 单一来源）" },
+  { t: "功法", res: "残页 / 完本 / 选择点 → 仓库参悟；悟性 → 内观阁", flow: "管<b>有什么牌</b>与<b>法术几重</b>（二重 数，三重 变体）", note: "重复残页化悟性，补页与加重二选一地花" },
+  { t: "法器", res: "灵石 + 产地主材 / 阵纹 → 炼器鼎", flow: "管<b>核心件</b>：法宝一–五重、阵法一–三重；装备词条", note: "本命上限五重、非本命三重；不新增货币" },
+];
+const PRIN = [
+  ["投入越深越安全", "重、祭炼、已学功法永不丢；首杀与选择奖励进护身格"],
+  ["选的是先后", "三选一没选的件，后面的匣 / 碑 / 分区里还拿得到"],
+  ["核心件走确定来源", "★心法 练二入门选、★法术 练四传功、★法宝 练六起的匣"],
+  ["偏置跟着装配走", "按身上心法流派现算，不立\"道途\"存档值；地图分区另给\"去哪刷\""],
+  ["概念预算", "只新增 2 个词（变体、散功）；新精进系统都在第 4 局以后"],
+];
+const KPIS = [
+  { v: "练七", d: "五派★三件齐的中位（p90 练八），赶在碧鳞前", z: 1 },
+  { v: "≥ 1", d: "每次回府至少一个构筑决定（现状前 4 局几乎为 0）" },
+  { v: "2", d: "新增给玩家的新词（变体、散功）" },
+  { v: "±20%", d: "调整后五派首领用时与中位的偏差（守御 +35%）；首领气血不改" },
+];
+// 成型对比：值 = REALMS 下标；-1 = 筑基前成不了；null = 未测
+const CMP_COLS = [["现状", ""], ["方向一", "补缺口"], ["方向二", "本命提前"], ["方向三", "入门定向"], ["框架 v0.1", "不含传功"], ["本方案", "含练四传功"]];
+const CMP = {
+  剑势: [9, 9, 8, 7, 7, 7],
+  五行: [-1, 9, 8, 7, 7, 7],
+  身法: [-1, -1, -1, 9, 9, 7],
+  雷暴: [-1, -1, -1, 9, 9, 7],
+};
+// 首领用时与同档中位的偏差（练九打碧鳞，机器人，03 §4）：原稿 / 调整后
+const BAL = [["剑势", -41, -18], ["五行", 6, 1], ["身法", 5, 0], ["雷暴", -43, -23], ["守御", 0, 12]];
+
+const SCHOOLS = [
+  { k: "jian", n: "剑势", d: "攒势 → 斩", res: "自身气势（可携带，不流失）",
+    stars: [["心法", "《蓄势》", "练二 入门五选一", "练二"], ["法术", "凝锋诀", "练四 玄机子传功（完本）；东麓石刻、灵光箱", "练四"], ["法宝", "青冥飞剑", "法宝匣（练六保底 / 青牙 / 剑修遗府 / 碧鳞，先开三选一）；或剑阵", "练六"]],
+    slots: { 心法: [["《连环》", "plus"], ["《满势》", "plus"], ["《余波》", "plus"], ["《回锋》", "x"], ["《拂柳》", "x", "新"]], 法术: [["剑气斩「凝」", "plus"], ["凝锋诀「锋」", "plus"], ["藤引", "x"], ["火鸦", "x"]], 法宝: [["定风珠", "x", "新"]], 阵法: [["八门阵", "later"]], 词条: [["气势获取", "plus"], ["蓄势斩伤害", "plus"], ["攻速", "plus"]] },
+    grow: [["凝锋诀", [["二重", "伤害 +15%、耗蓝 −15%"], ["三重", "「锋」立得气势 35→50 /「承」每施法 +15 气势（挂五行）", 1]]], ["青冥飞剑", [["三重", "第三把剑；齐发后钉地成小剑阵 1.5 秒", 1], ["五重", "本命：满势蓄势斩时诸剑随剑气齐出", 1]]], ["剑阵", [["二重", "目标 3、持续 +3 秒"], ["三重", "阵随身（0.6 倍移速跟随）", 1]]]],
+    boss: [["青牙", "木盾 剑气斩 + 剑意；土盾 剑意（每段 ≤60%）+ 撞柱；满势斩一刀断长嚎"], ["碧鳞", "火 / 土盾靠五行坛附灵；潜水突袭闪开后放满势斩"], ["心魔", "闪过它的第三段再右键"]],
+    weak: "要贴身：飞行、高处远程、会跑的敌人拖慢攒势；首领护盾段剑意封顶 60%。剑势不加新件，只修获取；《连环》每层 4% → 3%、《蓄势》斩伤 10% → 5%（数值拉平）。",
+    where: [["东麓", 2, "东麓石刻 · 凝锋诀"], ["北岭", 4], ["竹海深处", 3], ["北脊", 4]], mat: "主材：狼王遗骨（1–3 重）→ 剑胚 · 剑冢（4–5 重）" },
+  { k: "wux", n: "五行", d: "叠状态 → 相生引爆 → 克盾回气", res: "真气 + 敌人身上的五行状态",
+    stars: [["心法", "《凝神》", "练二 入门五选一（新：真气上限 +25%、回气丹 +25%、法术伤害 +25%、打中被克护盾返还 40% 耗蓝）", "练二"], ["法术", "落石诀", "练四 传功（完本）；山神庙残碑、石傀", "练四"], ["法宝 / 阵", "紫金葫芦 / 聚灵阵", "法宝匣 / 阵盘匣（剑修遗府、断涧东两座阵台）", "练六"]],
+    slots: { 心法: [["《轮转》", "plus", "新"], ["《灵根》", "plus", "改"]], 法术: [["剑气斩「散」", "plus"], ["缠藤诀", "plus"], ["火符", "plus"], ["寒冰锥", "plus"], ["掌心雷「落」", "x"], ["火鸦", "plus"], ["落石诀「熔」", "plus"]], 法宝: [["镇山印", "x"]], 阵法: [["火阵", "plus"]], 词条: [["法力%", "plus"], ["五行亲和", "plus"], ["冷却", "plus"], ["真气上限", "plus"]] },
+    grow: [["落石诀", [["二重", "伤害 +15%、耗蓝 −15%"], ["三重", "「熔」落点熔地 /「双」连落两石（挂守御）", 1]]], ["紫金葫芦", [["一重", "被动 真气上限 +20×重、法力 +8×重（删去每秒回气）；V 吸取伤害 ×2.5，每次回气封顶 15 + 3×(重−1)"], ["三重", "吸完吐焰：给周围敌人上一门法术的状态（接相生）", 1], ["五重", "本命：溢出的真气存进葫芦，下次先吐回", 1]]], ["聚灵阵（灵池）", [["一重", "不耗真气，阵内每秒 +6，每阵封顶 36（二重 47）"], ["三重", "阵内施法无前摇，第一发不耗真气", 1]]]],
+    boss: [["青牙", "木盾 剑气斩 / 掌心雷（凝神返还）；落石诀一发断长嚎；土盾 缠藤诀；召来的狼是葫芦的回气来源"], ["碧鳞", "寒冰锥 / 止水 → 缠藤 → 剑气斩；破盾后用土 / 熔岩打本体"], ["心魔", "真气只够 6–8 发，用反应打短窗口"]],
+    weak: "真气预算：一场扔完就只剩普攻；施法前摇被快攻打断；首领吃控打折。目标：一局法术次数 ≈ 其他流派 1.6–2 倍，不是无限。",
+    where: [["竹林 · 狼踪", 2], ["山神庙", 3, "山神庙残碑 · 落石诀"], ["竹海南 · 溪谷", 2], ["竹海深处", 3]], mat: "主材：灵蚌珠 → 水灵玉；《灵根·火》另由赤狼异种 25% 掉（彩蛋）" },
+  { k: "shen", n: "身法", d: "读招 → 闪 / 化 → 反打", res: "敌人出招的那一刻 + 闪身充能",
+    stars: [["心法", "《流云》", "练二 入门五选一；闪身充能 +1，完美闪身后 1.5 秒伤害 +20%（新增）", "练二"], ["法术", "止水诀", "练四 传功（完本）；北岭断碑（改投）、灵蚌灵光点", "练四"], ["法宝", "定风珠（新）", "法宝匣；V 定风：场内敌人动作 ×0.6（首领 ×0.85）、受伤 +8%", "练六"]],
+    slots: { 心法: [["《凌波》", "plus", "新"], ["《拂柳》", "plus", "新"], ["《剑影》", "plus"], ["《回锋》", "x"]], 法术: [["止水诀「流」", "plus"], ["土遁「遁」", "x"], ["藤引", "plus"], ["地行术", "plus"]], 法宝: [], 阵法: [["八门阵", "later"]], 词条: [["闪身冷却", "plus"]] },
+    grow: [["止水诀", [["二重", "伤害 +15%、耗蓝 −15%"], ["三重", "「流」反击后 2 秒闪身不耗充能 /「长」窗口 0.6→1.0 秒（挂守御）", 1]]], ["定风珠", [["三重", "完美闪身时原地自动落小定风", 1], ["五重", "本命：场内攻速 +20%、闪身冷却 ×0.5", 1]]]],
+    boss: [["青牙", "最适合：双噬 / 回首咬 / 影袭都是读招；定风让它 ×0.85；土盾借藤引"], ["碧鳞", "大招预警长，完美闪身的乐园；火盾用止水"], ["心魔", "它的招就是你的招"]],
+    weak: "不出招的敌人（放风筝、会跑、读条召唤）最难受；群怪窗口互相覆盖；护盾多半要借。",
+    where: [["竹林 · 狼踪", 2], ["北岭", 4, "北岭断碑 · 止水诀"], ["竹海南 · 溪谷", 2], ["断涧东", 4]], mat: "主材：鸦羽 → 千年竹心" },
+  { k: "lei", n: "雷暴", d: "暴击 → 叠雷痕 → 引雷", res: "敌人身上的雷痕（新状态，5 层自落天雷）",
+    stars: [["心法", "《锋锐》（改）", "练二 入门五选一；暴击 +15%、暴伤 +20%，暴击给目标叠 1 层雷痕", "练二"], ["法术", "掌心雷", "练四 传功（完本）；乱石岗石刻、狼妖头目", "练四"], ["法宝 / 阵", "青冥飞剑 / 剑阵", "法宝匣（v1 雷暴对应青冥飞剑，多段命中钓暴击）或阵盘匣的剑阵；五雷令第二期", "练六"]],
+    slots: { 心法: [["《雷引》", "plus", "改"], ["《满势》", "x"]], 法术: [["掌心雷「连」", "plus"], ["剑气斩「散」", "x"]], 法宝: [], 阵法: [], 词条: [["暴击", "plus"], ["暴伤", "plus", "新"], ["攻速", "plus"]] },
+    grow: [["掌心雷", [["二重", "伤害 +15%、耗蓝 −15%"], ["三重", "「连」跳 5 次、每跳叠雷痕 /「落」单体 ×2.2、打断 ×2（挂五行）", 1]]], ["剑阵", [["二重", "目标 3、持续 +3 秒（多段命中 = 多次掷暴击）"], ["三重", "阵随身", 1]]]],
+    boss: [["青牙", "木盾段是主场；土盾借缠藤 / 撞柱；破盾易伤 + 雷痕满层是最痛的爆发"], ["碧鳞", "五行坛附灵 → 《雷引》天雷随附灵五行"], ["心魔", "单体无盾，雷痕滚满的最佳对象"]],
+    weak: "雷痕只在单个目标上滚得起来，群怪分散暴击；自身件几乎都是金，只克木盾——不给它无视护盾的手段。",
+    where: [["东麓", 2], ["乱石岗", 3, "乱石岗石刻 · 掌心雷"], ["东台", 3], ["北脊", 4]], mat: "主材：沿用剑阵 / 飞剑；雷击木点位预留给第二期五雷令" },
+  { k: "shou", n: "守御", d: "扛 → 蓄震 → 反震", res: "吸收掉的伤害",
+    stars: [["心法", "《金刚体》", "练二 入门五选一", "练二"], ["法术", "土遁护体", "练四 传功（选金刚体时送）；练三开栏保底", "练四"], ["法宝", "镇山印", "法宝匣", "练六"]],
+    slots: { 心法: [["《不动》", "plus", "新"]], 法术: [["土遁「坚」", "plus"], ["止水「长」", "x"], ["落石「双」", "x"]], 法宝: [["紫金葫芦", "x"]], 阵法: [["火阵", "x"]], 词条: [["气血", "plus"], ["防御", "plus"]] },
+    grow: [["土遁护体", [["二重", "伤害 +15%、耗蓝 −15%"], ["三重", "「坚」吸收 +40% /「遁」先遁行 4 米再起护体（挂身法）", 1]]], ["镇山印", [["三重", "砸地后化山影护体 4 秒（可攒《不动》）", 1], ["五重", "本命：受重击时印自动落下反砸", 1]]], ["火阵", [["三重", "阵边火墙：进出各吃一次火伤（封路）", 1]]]],
+    boss: [["青牙", "土遁吃啸月冲击波 → 大反震；用时最长但掉血最少"], ["碧鳞", "本体土抗 −0.15，反震打本体很痛；火盾借止水"], ["心魔", "你厚它也厚，拼反震时机"]],
+    weak: "慢，伤害要先挨打；远程与潜行让反震攒不起来；木 / 土盾都要借。平衡目标允许比中位慢 35%，换更少掉血。",
+    where: [["山神庙", 3], ["乱石岗", 3], ["东台", 3], ["断涧东", 4]], mat: "主材：石傀心 → 岩髓 · 断涧东采集点" },
+];
+
+const AXTAB = {
+  head: ["轴", "玩家看到的量", "资源", "在哪做", "身陨", "成本（数值 03 建议）"],
+  rows: [
+    ["境界", "局外", "练一 → 筑基一层；开栏、属性、二段跳 / 御剑", "修为", "灵泉", "no", "一次回府约升两层"],
+    ["功法 · 收", "局外", "已学的法术 / 心法 / 阵法", "残页、完本、首杀、选择点、传功", "仓库 · 参悟", "no", "残页参悟花少量灵石；未带回的残页按储物袋规则"],
+    ["功法 · 重", "局外", "法术一–三重（二重 伤害 +15% 耗蓝 −15%；三重 变体二选一，洞府免费切换）", "悟性：重复残页 + 拓碑 +1 / 遗府首通 +4 / 青牙 +6 / 碧鳞 +10", "内观阁 · 功法匣", "no", "二重 6、三重 10；第 4 / 6 / 8 局累计约 11 / 30 / 42"],
+    ["法器 · 祭炼", "局外", "法宝一–五重（本命）/ 三重（非本命）；阵法一–三重", "灵石 + 产地主材（狼王遗骨、灵蚌珠、鸦羽、石傀心 → 剑胚、水灵玉、竹心、岩髓）；阵法用阵纹", "丹器房 · 炼器鼎", "no", "本命 2 / 3 / 4 / 5 重 灵石 120 / 300 / 700 / 1500；阵法二 / 三重 阵纹 3 / 6 + 灵石 150 / 400；不用精英妖丹"],
+    ["法器 · 装备", "有风险", "法剑 / 法衣 / 玉佩 品级 + 词条（新增暴伤）", "掉落、炼器、重铸、注灵、附灵", "炼器鼎", "yes", "区域二随机 1 件遗落（可取回）；认主 / 护器符保护"],
+    ["局内", "一局", "捡到的装备当场换、符丹、出发前的炼化增益", "局内拾取", "储物袋", "yes", "撤回才算；不加局内临时成长"],
+  ],
+};
+const LADDER = [
+  ["免费", "换装配：法术 / 心法 / 阵法 / 法宝；切换已解锁的法术变体（只在洞府）"],
+  ["30 灵石", "改入门心法（内观阁）；练四传功只发一次，改了不重发"],
+  ["返还 80%", "散功：退还悟性、祭炼灵石、阵纹；换本命：旧本命降到三重，超出部分同此比例"],
+  ["全额一次", "筑基突破时一次免费重修：所有\"重\"与祭炼全部退回重分"],
+];
+
+// 时间线：列 = 回府
+const TL = [
+  { h: "序章后", s: "→ 练一", slot: "法术栏 1", pick: "", get: "剑气斩", where: "洞府 · 玄机子", nw: 0, r: 0 },
+  { h: "第 2 局后", s: "练一 → 练三", slot: "心法栏 1（练二）、法术栏 2、法衣", pick: "入门心法五选一；第二法术", get: "★心法；道途碑开始必亮", where: "洞府 · 玄机子；山神庙地窖、道途碑", nw: 1, r: 2 },
+  { h: "第 3 局后", s: "练三 → 练五", slot: "玉佩、二段跳、区域二", pick: "玉佩词条；第一次加重", get: "★法术（练四传功完本）", where: "两个道途分区 + 狼妖头目", nw: 1, r: 4 },
+  { h: "第 4 局后", s: "练五 → 练七", slot: "法宝栏（练六）、法术栏 3、阵法栏", pick: "法宝匣三选一 = 本命；第三法术", get: "★法宝；祭炼开始；五派★三件齐（中位）", where: "洞府（练六保底）或狼王石后骨匣", nw: 1, r: 6 },
+  { h: "第 5 局后", s: "练七 → 练九", slot: "心法栏 2（练八）", pick: "阵盘匣三选一；第二心法；本命祭炼二重", get: "阵盘、阵纹", where: "剑修遗府供案、断涧东两座阵台", nw: 1, r: 8 },
+  { h: "第 6–7 局", s: "→ 筑基", slot: "御剑、土遁", pick: "核心法术三重 · 第一个变体；一次全额重修", get: "碧鳞第 4 个法宝匣；祭炼三重，筑基后四–五重", where: "碧鳞潭；剑冢、断涧东", nw: 0, r: 9 },
+];
+// 各派★部件到手的境界下标（心法 / 法术 / 法宝或阵）
+const CORE = { jian: { 法宝: [["青冥飞剑"]], 阵法: [["剑阵"]] }, wux: { 法宝: [["紫金葫芦"]], 阵法: [["聚灵阵"]] }, shen: { 法宝: [["定风珠"]] }, lei: { 阵法: [["剑阵"]], 法宝: [["青冥飞剑"], ["五雷令", "later"]] }, shou: { 法宝: [["镇山印"]] } };
+const STARAT = { jian: [1, 3, 5], wux: [1, 3, 5], shen: [1, 3, 5], lei: [1, 3, 5], shou: [1, 3, 5] };
+
+const QS = [
+  { t: "一 · 节奏与★核心件来源", why: "区域一只有 2–3 局，随机心法 / 残页在筑基前大多拿不到", by: "玩法 01 · 数值 03 §8-1 · 主管草图", opts: [
+    ["本方案", "补缺口 + 练二入门五选一 + 练四传功送★法术完本 + 匣先开三选一；五派 p50 练七成型", 1],
+    ["本方案 · 改道途残碑", "★法术靠道途残碑 + 入门送 1 页，保留\"刷\"感；身法到筑基"],
+    ["主管方向三", "入门定向 + 掉落偏向；剑势 / 五行练八，身法 / 雷暴筑基"],
+    ["只补缺口", "方向一；身法 / 雷暴筑基前成不了"]] },
+  { t: "二 · 几个流派、法宝几件", why: "守御给\"不想读招也能过\"的人；身法 v1 没有任何对应的法宝", by: "战斗 02 §10-1 · 玩法 01", opts: [
+    ["五派 · 法宝 4 件", "守御《金刚体》入门、加定风珠（身法）；五雷令第二期", 1],
+    ["五派 · 法宝 3 件", "身法借别人的法宝，成型永远差一格"],
+    ["四派 · 法宝 3 件", "守御件只当保命补件，入门四选一"]] },
+  { t: "三 · 法术流的回气", why: "只在打中被克护盾时返还；满配约 3 倍法术次数，约为冷却上限的一半", by: "战斗 02 §10-2 · 数值 03 §8-2", opts: [
+    ["算合规 · 接受 3 倍", "满配占满两心法 + 法宝 + 阵法、没有输出件，是极致续航的代价", 1],
+    ["算合规 · 灵池内葫芦不回", "满配降到约 2.2 倍"],
+    ["不算", "《凝神》改\"克盾命中冷却 −50%\"，不碰真气"]] },
+  { t: "四 · 强度怎么拉平（五派 + 青牙）", why: "原稿剑势 / 雷暴比中位快 41–43%；真青牙实测练四会闪就能斩（现状配装就已如此，非构筑造成）", by: "数值 03 §8-3 · 05 §6 · 战斗 02 §8.3", opts: [
+    ["拉平 + 青牙方案 C", "加强三派★件、连环 / 蓄势 / 锋锐 / 雷痕各降一档；青牙处决 6%、狼威 130、攻击 52（不动气血）；守御偏安全接受", 1],
+    ["只加强、不削，青牙不改", "剑势 / 雷暴照旧爽；首领整体更快，练四–五会闪的人多能斩青牙"],
+    ["拉平 + 青牙气血 20000", "效果相近但练六–七也变慢；再降土遁一重吸收，守御拉回同档"]] },
+  { t: "五 · 法术三重做什么", why: "现在三重是冷却 −15%，剑气斩会到 6.8 秒，越过\"8–18 秒决策型\"", by: "战斗 02 §10-3", opts: [
+    ["变体二选一", "改形不改动词，同一门法术挂两个流派；v1 先做 6 门；只在洞府免费切换", 1],
+    ["保留冷却 −15%", "零开发"],
+    ["三选一变体", "设计文档原话，内容量 1.5 倍"]] },
+  { t: "六 · 选错了的代价", why: "构筑要有分量，但不能一步选错就废档", by: "玩法 01 · 数值 03 §3.5", opts: [
+    ["代价阶梯", "装配 / 变体免费 → 改入门 30 灵石 → 散功返还 80% → 筑基一次全额重修；本命 = 祭炼上限五重", 1],
+    ["不能改", "选了就定，靠后续掉落补"],
+    ["随时免费重修", "构筑选择失去分量"]] },
+];
+
+const PLAN = [
+  ["P0", "先修与合规", "不等用户", [
+    ["法宝祭炼另起字段 refine（修 level 被当祭炼的 bug）+ 存档迁移", "流程 A", "src/game/run/run.js loadoutOf、存档迁移"],
+    ["紫金葫芦去掉被动回气、每次吸取回气封顶；聚灵阵改灵池（每阵 36）", "战斗 / 内容 D", "src/data/items.js、src/data/skills.js"],
+    ["性能前置：闪电、阵法网格池化", "性能 / 战斗", "src/fx/skill_fx.js、src/game/skills/formations.js"]]],
+  ["P1", "补缺口（只动数据）", "用户选题一后", [
+    ["心法常见化、挪出夜明主池、分区心法池；赤狼《灵根·火》", "内容 D / 数值", "src/data/loot.js、src/game/loot.js"],
+    ["北岭断碑改止水诀；道途碑必亮；首次灵光点必亮；阵台；新亭子 / 剑冢 / 岩髓点位", "关卡 B（流程传参 A）", "src/data/levels/r1.js、r2.js、src/world/level.js"],
+    ["法宝匣 / 阵盘匣物品与掉落（青牙骨匣、遗府供案、碧鳞第 4 匣）", "内容 D + 流程 A", "items_db.js、loot.js、run/containers.js"]]],
+  ["P2", "栏位与选择点", "UI 草图选定后", [
+    ["心法栏 1 → 练二、法宝栏 → 练六；练四传功；练六保底匣", "内容 D", "src/data/progression.js、src/data/gongfa.js"],
+    ["入门心法五选一、开匣三选一、改入门：界面与逻辑", "洞府 C + UI 设计（先出 HTML 草图）", "src/game/cave/**、src/ui/cave/**"],
+    ["旧档迁移（buildV3）：补弹入门、补发传功 / 匣、本命认定", "流程 A + 洞府 C", "src/game/flow/**、facilities.js"]]],
+  ["P3", "精进系统", "P2 之后", [
+    ["法术加重入口 + 三重变体（v1 6 门）", "战斗 + UI 设计", "src/data/skills.js、gongfa.js、src/ui/loadout.js"],
+    ["炼器鼎「祭炼」页（法宝 + 阵盘）、阵纹", "洞府 C + 内容 D", "src/ui/cave/forge_v2.js、recipes.js"],
+    ["散功 / 换本命 / 筑基重修（内观阁）", "洞府 C", "src/game/cave/**"]]],
+  ["P4", "新内容", "与 P3 并行", [
+    ["新心法：凝神、轮转、灵根、凌波、拂柳、不动；改锋锐、雷引；雷痕状态；暴伤词条", "战斗", "src/data/items.js、src/game/skills/**、src/game/player.js、loot.js 词条"],
+    ["定风珠（法宝）", "战斗 + 美术管线", "src/data/items.js、src/game/skills/**、图标"],
+    ["五派拉平的数值（葫芦 ×2.5、凝神、定风、流云、镇山印；连环 / 蓄势 / 锋锐 / 雷痕各降一档）", "战斗 + 数值", "src/data/items.js、src/data/player.js MOM_XINFA"],
+    ["青牙方案 C（处决 6%、狼威 130、攻击 52）；《金刚体》气血 +15%", "首领 / 战斗", "src/game/enemies/bosses/qingya.js、src/data/items.js"],
+    ["五派首领复测（num_ttk bcurve=1、num_qingya_build）、经济复跑", "数值", "tools/build_growth/**、tools/scenarios/num_*.mjs"]]],
+  ["二期", "第二期内容", "v1 验收后", [
+    ["五雷令、八门阵、另 6 门法术变体、标签词条", "战斗 / 关卡 / 数值", "—"],
+    ["心魔\"照见你的流派\"（另开任务）", "战斗", "—"]]],
+];
+
+// ---------- 渲染 ----------
+const $ = (id) => document.getElementById(id);
+const PAPER = [236, 230, 214], INK = [31, 32, 29];
+const ink = (t) => `rgb(${PAPER.map((p, i) => Math.round(p + (INK[i] - p) * Math.pow(t, 0.85))).join(",")})`;
+const fg = (t) => (t > 0.48 ? "#f3eee2" : "#15181b");
+let cur = "ov", school = "jian", col = 3;
+
+function tabs() {
+  $("tabs").innerHTML = TABS.map(([k, n]) => `<a class="kai ${cur === k ? "on" : ""}" data-k="${k}">${n}</a>`).join("");
+  $("tabs").querySelectorAll("a").forEach((a) => (a.onclick = () => { cur = a.dataset.k; location.hash = cur === "school" ? "school-" + school : cur; render(); }));
+}
+function ov() {
+  $("axes").innerHTML = AXES.map((a) => `<div class="axis"><span class="safe">不丢</span><div class="t">${a.t}</div><div class="res">${a.res}</div><div class="flow">${a.flow}</div><div class="muted">${a.note}</div></div>`).join("");
+  $("prin").innerHTML = PRIN.map(([a, b]) => `<div><b>${a}</b>${b}</div>`).join("");
+  $("kpis").innerHTML = KPIS.map((k) => `<div class="kpi"><div class="v ${k.z ? "z" : ""}">${k.v}</div><div class="d">${k.d}</div></div>`).join("");
+  $("ramp").style.background = `linear-gradient(90deg, ${[0, 0.3, 0.6, 1].map(ink).join(",")})`;
+  let h = `<thead><tr><th></th>${CMP_COLS.map(([a, b]) => `<th>${a}<small>${b || "&nbsp;"}</small></th>`).join("")}</tr></thead><tbody>`;
+  for (const [n, vals] of Object.entries(CMP)) {
+    h += `<tr><th class="rl">${n}</th>`;
+    vals.forEach((v, i) => {
+      const me = i === vals.length - 1 ? " me" : "";
+      if (v === null) h += `<td class="na${me}">未测</td>`;
+      else if (v < 0) h += `<td class="never${me}">成不了</td>`;
+      else { const t = 1 - (v / 9) * 0.8; h += `<td class="${me}" style="background:${ink(t)};color:${fg(t)}">${REALMS[v]}</td>`; }
+    });
+    h += "</tr>";
+  }
+  $("cmp").innerHTML = h + "</tbody>";
+  $("cmpnote").textContent = "口径同主管草图（部件可用概率平均 ≥ 70%），权重换成数值模拟的真实概率（03 §5）；草图原估算普遍早 1–2 个境界。按★三件口径，本方案五派 p50 练七、p90 练八（守御同）。";
+  $("bal").innerHTML = `<thead><tr><th></th><th>原稿</th><th>调整后</th></tr></thead><tbody>` + BAL.map(([n, a, b]) => `<tr><th class="rl">${n}</th>${[a, b].map((v) => `<td style="${Math.abs(v) > 20 ? "background:transparent;border:1.5px dashed var(--zhu);color:var(--zhu)" : "background:var(--paper3);border:1.5px solid var(--ink4)"}">${v > 0 ? "+" : ""}${v}%</td>`).join("")}</tr>`).join("") + "</tbody>";
+}
+const chip = (n, cls, nw, tip) => `<span class="chip ${cls}" ${tip ? `data-tip="${tip}"` : ""}><span class="c">${cls === "core" ? "★" : cls === "plus" ? "增" : cls === "x" ? "交" : "二"}</span>${n}${nw ? `<span class="nw">${nw}</span>` : ""}</span>`;
+function sch() {
+  $("schools").innerHTML = SCHOOLS.map((s) => `<a data-k="${s.k}" class="${s.k === school ? "on" : ""}"><span class="n">${s.n}</span>${s.d}</a>`).join("");
+  $("schools").querySelectorAll("a").forEach((a) => (a.onclick = () => { school = a.dataset.k; location.hash = "school-" + school; render(); }));
+  const S = SCHOOLS.find((s) => s.k === school);
+  $("loop").innerHTML = `<span class="kai">${S.n} · ${S.d}</span>资源放在：<b>${S.res}</b>`;
+  $("stars").innerHTML = S.stars.map(([k, n, src, w]) => `<div class="star"><span class="when">${w}</span><div class="k">★ ${k}</div><div class="nm"><i>★</i>${n}</div><div class="src">${src}</div></div>`).join("");
+  const order = ["心法", "法术", "法宝", "阵法", "词条"];
+  const starOf = { 心法: 0, 法术: 1 };
+  $("slots").innerHTML = order.map((k) => {
+    const list = S.slots[k] || [];
+    const st = S.stars[starOf[k]];
+    const core = st ? chip(st[1], "core") : (CORE[school][k] || []).map(([n, c]) => chip(n, c || "core", c === "later" ? "二期" : "")).join("");
+    const slotN = { 心法: "2 格（练二 / 练八）", 法术: "3 格（练一 / 练三 / 练七）", 法宝: "1 格（练六）", 阵法: "1 格（练七）", 词条: "法剑 / 法衣 / 玉佩" }[k];
+    return `<tr><th>${k}</th><td>${core}${list.map(([n, c, nw]) => chip(n, c, nw)).join("") || (core ? "" : '<span class="muted">—</span>')}<span class="muted" style="margin-left:6px">${slotN}</span></td></tr>`;
+  }).join("");
+  $("where").innerHTML = `<div>区域一：${S.where.slice(0, 2).map(zone).join("")}　区域二：${S.where.slice(2).map(zone).join("")}</div><div class="muted" style="margin-top:4px">${S.mat}</div>`;
+  $("grow").innerHTML = S.grow.map(([n, rows]) => `<div class="g"><h4>${n}</h4><div class="z">${rows.map(([a, b, f]) => `<b class="${f ? "f" : ""}">${a}</b><span>${b}</span>`).join("")}</div></div>`).join("");
+  $("boss").innerHTML = S.boss.map(([a, b]) => `<tr><th>${a}</th><td>${b}</td></tr>`).join("");
+  $("weak").innerHTML = `<b>弱点：</b>${S.weak}`;
+}
+const zone = ([n, r, stele]) => `<span class="zone">${n}<i>险${r}</i>${stele ? `<span class="muted">　碑：${stele}</span>` : ""}</span>`;
+function axes() {
+  const A = AXTAB;
+  $("axtab").innerHTML = `<thead><tr>${A.head.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>` + A.rows.map(([n, sub, see, res, at, lose, cost]) =>
+    `<tr><td class="nm">${n}<small>${sub}</small></td><td>${see}</td><td>${res}</td><td>${at}</td><td><span class="lose ${lose}">${lose === "no" ? "不丢" : "会丢"}</span></td><td>${cost}</td></tr>`).join("") + "</tbody>";
+  $("ladder").innerHTML = LADDER.map(([a, b]) => `<div><b>${a}</b>${b}</div>`).join("");
+}
+function time() {
+  let h = `<div></div>${TL.map((c, i) => `<div class="h ${i === col ? "sel" : ""}" data-c="${i}">${c.h}<small>${c.s}</small></div>`).join("")}`;
+  const rowsDef = [["开栏", "slot"], ["选择", "pick"], ["得到", "get"], ["在哪", "where"]];
+  for (const [n, k] of rowsDef) {
+    h += `<div class="rl">${n}</div>` + TL.map((c, i) => `<div class="c ${i === col ? "sel" : ""}" data-c="${i}">${c[k] ? (k === "pick" ? `<span class="ch">${c[k]}</span>` : k === "get" ? `<span class="st">${c[k]}</span>` : c[k]) : '<span class="muted">—</span>'}</div>`).join("");
+  }
+  // 五派★部件
+  for (const S of SCHOOLS) {
+    const at = STARAT[S.k];
+    h += `<div class="rl">${S.n}</div>` + TL.map((c, i) => {
+      const prev = i ? TL[i - 1].r : -1;
+      const have = at.filter((r) => r <= c.r).length, got = at.filter((r) => r > prev && r <= c.r).length;
+      const t = have / 3;
+      const names = S.stars.filter((_, j) => at[j] > prev && at[j] <= c.r).map((x) => x[1]).join(" ");
+      const lab = names ? `+${names}${have === 3 ? " · 成型" : ""}` : have === 3 ? "成型" : "—";
+      return `<div class="sc ${i === col ? "sel" : ""}" data-c="${i}" style="background:${have ? ink(0.12 + t * 0.8) : "transparent"};color:${fg(0.12 + t * 0.8)}">${lab}</div>`;
+    }).join("");
+  }
+  $("tl").innerHTML = h;
+  $("tl").querySelectorAll("[data-c]").forEach((el) => (el.onclick = () => { col = +el.dataset.c; render(); }));
+  const C = TL[col];
+  $("tlside").innerHTML = `<div><h3>${C.h} <small>${C.s}</small></h3><div>开栏：${C.slot || "—"}</div><div>选择：<b style="color:var(--zhu)">${C.pick || "—"}</b></div><div>得到：${C.get || "—"}</div><div>在哪：${C.where}</div><div class="muted">新构筑概念：${C.nw} 个（每次回府 ≤ 1–2 个）</div></div>`
+    + `<div><h3>同一次回府连跨两层时</h3><ul class="tight"><li>选择按 入门心法 → 传功 → 法宝匣 的顺序逐个弹，前一个关了才弹下一个</li><li>突破演出与"新领悟"合并成一屏</li><li>匣、首杀物在局内进护身格，回洞府再打开，局内不弹选择</li></ul></div>`
+    + `<div><h3>为什么核心件要走确定来源</h3><ul class="tight"><li>区域一实际只有 2–3 局；3–6% 的随机心法、3–5 页残页法术在筑基前大多拿不到</li><li>单块残碑每局在场仅 0.30–0.39 → 加"道途碑必亮"</li><li>夜明宝箱谨慎型拿到率 0% → 心法不挂夜明主池</li></ul></div>`;
+}
+function qs() {
+  const picks = JSON.parse(sessionStorage.getItem("bg_picks") || "{}");
+  $("qs").innerHTML = QS.map((q, qi) => `<div class="q"><h4>${q.t}</h4><p class="why">${q.why}</p>${q.opts.map(([a, b, rec], oi) => `<span class="opt ${rec ? "rec" : ""} ${picks[qi] === oi ? "pick" : ""}" data-q="${qi}" data-o="${oi}"><b>${a}</b>${b}</span>`).join("")}<div class="by">出处：${q.by}</div></div>`).join("");
+  $("qs").querySelectorAll(".opt").forEach((el) => (el.onclick = () => { const p = JSON.parse(sessionStorage.getItem("bg_picks") || "{}"); p[el.dataset.q] = +el.dataset.o; sessionStorage.setItem("bg_picks", JSON.stringify(p)); qs(); }));
+  const n = Object.keys(picks).length;
+  $("picked").textContent = n ? `已标记 ${n} / ${QS.length} 题（只存在本页，刷新标签页后清空）。` : "点任一选项可标记你的选择（只存在本页）。";
+}
+function plan() {
+  $("plan").innerHTML = `<thead><tr><th>阶段</th><th>做什么</th><th>岗位</th><th>文件</th></tr></thead><tbody>` + PLAN.map(([p, n, when, items]) =>
+    items.map((it, i) => `<tr>${i ? "" : `<td class="ph" rowspan="${items.length}">${p} · ${n}<small>${when}</small></td>`}<td>${it[0]}</td><td>${it[1]}</td><td><code>${it[2]}</code></td></tr>`).join("")).join("") + "</tbody>";
+}
+function render() {
+  tabs();
+  document.querySelectorAll("section.pg").forEach((s) => s.classList.toggle("on", s.id === "pg-" + cur));
+  ({ ov, school: sch, axes, time, q: qs, plan })[cur]();
+}
+const h0 = location.hash.slice(1);
+if (h0.startsWith("school")) { cur = "school"; school = h0.split("-")[1] || school; }
+else if (TABS.some(([k]) => k === h0)) cur = h0;
+else if (h0.startsWith("time")) { cur = "time"; col = +(h0.split("-")[1] ?? col); }
+render();
+</script>
+</body></html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 静室（备战建筑）· 三个方向（可交互草图）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../../assets/fonts/MaShanZheng-Regular.ttf"), url("../../../../src/ui/ink/MaShanZheng.woff2") format("woff2"); }
+body { margin: 0; background: #23231f; color: #ece6d6; font: 14px/1.7 "Microsoft YaHei", sans-serif; }
+header { display: flex; align-items: baseline; gap: 26px; padding: 14px 28px 6px; flex-wrap: wrap; }
+header h1 { margin: 0; font: 400 28px "MaShanZheng", KaiTi, serif; letter-spacing: .1em; }
+header .tabs { display: flex; gap: 6px; }
+header .tabs a { font: 400 20px "MaShanZheng", KaiTi, serif; letter-spacing: .08em; color: rgba(236,230,214,.5); padding: 4px 12px 8px; cursor: pointer; position: relative; }
+header .tabs a.on { color: #f5f0e3; }
+header .tabs a.on::after { content: ""; position: absolute; left: 6px; right: 4px; bottom: 0; height: 8px; background: #b8291a; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+header small { color: rgba(236,230,214,.55); }
+main { display: flex; gap: 22px; padding: 6px 28px 28px; align-items: flex-start; }
+.stage { flex: none; width: 1280px; height: 720px; box-shadow: 0 8px 30px rgba(0,0,0,.5); background: #000; }
+.stage iframe { width: 1280px; height: 720px; border: 0; display: block; }
+aside { width: 380px; flex: none; }
+aside h2 { font: 400 22px "MaShanZheng", KaiTi, serif; margin: 0 0 4px; letter-spacing: .08em; }
+aside ul { padding-left: 18px; margin: 6px 0 12px; } aside li { margin: 2px 0; }
+aside .st a { color: #d9b45e; margin-right: 10px; cursor: pointer; text-decoration: underline dotted; white-space: nowrap; }
+aside .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; }
+aside .pc b { display: block; color: #9cc4a8; font-weight: 400; } aside .pc b.c { color: #e09080; }
+aside .rec { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(236,230,214,.15); font-size: 13px; color: rgba(236,230,214,.8); }
+aside .rec b { color: #e8c76a; font-weight: 400; }
+.grid { display: none; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 6px 28px 28px; }
+.grid figure { margin: 0; cursor: pointer; } .grid img { width: 100%; display: block; box-shadow: 0 6px 20px rgba(0,0,0,.5); }
+.grid figcaption { font: 400 18px "MaShanZheng", KaiTi, serif; padding: 6px 2px; }
+body.ov main { display: none; } body.ov .grid { display: grid; }
+</style></head>
+<body>
+<header>
+  <h1>静室（工作名，候选：藏锋阁）· 可交互草图</h1>
+  <nav class="tabs" id="tabs">
+    <a data-k="ov" class="on">并排</a>
+    <a data-k="a">A · 出行同版式（推荐）</a>
+    <a data-k="b">B · 更衣 · 立绘为中心</a>
+    <a data-k="c">C · 页签式</a>
+  </nav>
+  <small>说明：<a style="color:#d9b45e" href="../静室_方案.md">静室_方案.md</a> · 数据照抄真实公式，练气七层示例角色</small>
+</header>
+<div class="grid">
+  <figure data-k="a"><img src="../png/静室_A.png"><figcaption>A · 出行同版式：左侧换成完整属性卷</figcaption></figure>
+  <figure data-k="b"><img src="../png/静室_B.png"><figcaption>B · 更衣：法器挂在身上，属性卷垂下</figcaption></figure>
+  <figure data-k="c"><img src="../png/静室_C.png"><figcaption>C · 页签式：属性来源矩阵 / 装配 / 行囊</figcaption></figure>
+</div>
+<main>
+  <div class="stage"><iframe id="fr"></iframe></div>
+  <aside id="side"></aside>
+</main>
+<script>
+const D = {
+  a: { f: "a_xingjuan.html", n: "A · 出行同版式（左侧属性卷）",
+    d: ["版式与出行准备一一对应：中间立绘 + 随身法器 + 功法匣 + 随身功法栏，右栏行囊。", "左侧扇面去处换成一整卷属性：境界、修为、16 项属性，每项一笔分段条（境 / 器 / 心 / 局）+ 来源小印。", "点属性 → 逐条来源明细；点法器 → 基础 / 词条 / 特殊词条 + 仓库里的同部位 ▲▼ 对比，点一下换上。", "\"洞府中 / 按出行计\"切换：炼化增益、出发前丹药只在出行时生效，洞府中显示为虚线。"],
+    st: [["默认", ""], ["攻击明细", "stat=atk"], ["会心明细", "stat=crit"], ["换法剑", "gear=sword"], ["洞府中", "mode=cave&stat=hp"], ["心法页", "tab=xinfa"]],
+    p: ["出行准备 = 本页 + 左侧换回去处，组件与数据一套", "改动面最小：prep.js 现成版式", "属性来源一眼全在"], c: ["这一屏信息最密", "属性卷占掉左侧，立绘区偏窄", "和出行台长得几乎一样，\"进阁\"的仪式感弱"] },
+  b: { f: "b_gengyi.html", n: "B · 更衣 · 立绘为中心",
+    d: ["阁中一幅\"更衣图\"：四件法器用一笔引线挂在身上（剑在手、衣在身、佩在腰、法宝浮在肩后）。", "左上\"气象\"只露四个大数，点\"展开属性卷\"垂下一轴完整属性（同 A 的属性卷）。", "下方案沿是随身功法栏，\"开匣\"时功法匣从案上展开成两列横卷。", "右侧纸笺在\"行囊 / 法器架\"间切换；点身上的法器 → 法器架定位到该部位。"],
+    st: [["默认", ""], ["法器架·法剑", "pane=rack&rack=sword"], ["属性卷展开", "zhou=1&stat=hp"], ["开匣", "box=1"], ["法宝", "pane=rack&rack=artifact"]],
+    p: ["最有\"进阁更衣\"的画面感，和建筑本身呼应", "法器在身上的位置一眼明白", "日常只看四个大数，界面安静"], c: ["属性、功法匣都要多点一下", "和出行准备版式不同，组件能共用，但版式两套", "立绘是占位图，锚点要跟着正式立绘调"] },
+  c: { f: "c_yeqian.html", n: "C · 页签式（属性 / 装配 / 行囊）",
+    d: ["一张整纸 + 三页签（1 / 2 / 3 切换）。左栏常驻：半身像、境界、四个主数、四件随身法器——换任何东西左栏数字当场跳一下。", "属性页是来源矩阵：行 = 属性，列 = 境界 / 法器 / 心法 / 本局，最后合计 + 分段条；点一行看逐条明细。", "装配页：随身功法栏 + 三列功法匣（功法 v2 法术变多也放得下）。", "行囊页：丹药囊 / 出发前服用 / 符箓 · 锦囊 三列，丹药按品质分格。"],
+    st: [["属性", ""], ["会心明细", "stat=crit"], ["装配", "page=ld"], ["装配·心法", "page=ld&tab=xinfa"], ["行囊", "page=pack"]],
+    p: ["最紧凑、最好读：所有来源并排对照", "最能容纳功法 v2 扩充和丹药品质", "每页的组件可原样嵌进出行准备"], c: ["看属性和换功法不在同一页", "最像传统\"角色面板\"，水墨意象最弱", "表格感重，要压住表线"] },
+};
+const fr = document.getElementById("fr"), side = document.getElementById("side");
+let cur = "ov";
+function show(k, hash = "") {
+  cur = k;
+  document.querySelectorAll("#tabs a").forEach((a) => a.classList.toggle("on", a.dataset.k === k));
+  document.body.classList.toggle("ov", k === "ov");
+  if (k === "ov") return;
+  const x = D[k];
+  fr.src = x.f + (hash ? "#" + hash : "");
+  side.innerHTML = `<h2>${x.n}</h2><ul>${x.d.map((t) => `<li>${t}</li>`).join("")}</ul>
+    <div class="st">状态：${x.st.map(([n, h]) => `<a data-h="${h}">${n}</a>`).join("")}</div>
+    <div class="pc" style="margin-top:10px"><div><b>好处</b>${x.p.map((t) => "· " + t).join("<br>")}</div><div><b class="c">代价</b>${x.c.map((t) => "· " + t).join("<br>")}</div></div>
+    <div class="rec">可试：拖功法匣里的法术进 Q / E / R 栏（会和栏里的互换）、丹药 ＋/－（种类与枚数上限会提示）、点法器换装（属性跟着变）、点属性看来源、切"洞府中 / 按出行计"。<br><b>推荐 A</b>：出行准备直接变成"静室 + 左侧去处"，两处一套组件、一份数据。</div>`;
+}
+document.getElementById("tabs").addEventListener("click", (e) => { const a = e.target.closest("a"); if (a) show(a.dataset.k); });
+document.querySelector(".grid").addEventListener("click", (e) => { const f = e.target.closest("figure"); if (f) show(f.dataset.k); });
+side.addEventListener("click", (e) => { const a = e.target.closest("[data-h]"); if (a) { fr.src = "about:blank"; setTimeout(() => (fr.src = D[cur].f + (a.dataset.h ? "#" + a.dataset.h : "")), 30); } });
+show(location.hash.slice(1) || "ov");
+</script>
+</body></html>

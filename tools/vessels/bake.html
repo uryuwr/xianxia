@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>器物插画烘焙</title></head>
+<body style="margin:0;background:#ece6d6">
+<!-- 构建期页面：由 tools/vessel_gen.mjs 通过 Vite 打开；把 tools/vessels/vessels.js 的器物模板画成纸性位图。游戏运行时不加载本页。 -->
+<script type="module">
+import { renderCanvas } from "../icons/inkicons.js";
+import { META, VARIANTS } from "./vessels.js";
+try {
+  const S = Number(new URLSearchParams(location.search).get("s") || 512);
+  const out = {};
+  for (const list of Object.values(VARIANTS)) for (const [id] of list) {
+    const t0 = performance.now();
+    const cv = renderCanvas([id, {}], S, S, 1);
+    out[id] = { png: cv.toDataURL("image/png"), ms: Math.round(performance.now() - t0) };
+    document.body.appendChild(cv);
+  }
+  window.__bake = { out, META, VARIANTS, S };
+} catch (e) {
+  window.__bakeErr = String(e.stack || e);
+}
+window.__ready = true;
+</script>
+</body></html>

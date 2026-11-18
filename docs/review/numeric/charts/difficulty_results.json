@@ -1,0 +1,109 @@
+{
+ "n": 2000,
+ "复核前": {
+  "谨慎": {
+   "runs_p50": 8.0,
+   "runs_p90": 9.0,
+   "min_p50": 89,
+   "min_p90": 99,
+   "deaths_mean": 0.29,
+   "death_rate_per_run": 0.037
+  },
+  "贪心": {
+   "runs_p50": 7.0,
+   "runs_p90": 8.0,
+   "min_p50": 84,
+   "min_p90": 98,
+   "deaths_mean": 0.58,
+   "death_rate_per_run": 0.084
+  },
+  "新手": {
+   "runs_p50": 8.0,
+   "runs_p90": 10.0,
+   "min_p50": 96,
+   "min_p90": 116,
+   "deaths_mean": 1.35,
+   "death_rate_per_run": 0.156
+  }
+ },
+ "复核后": {
+  "谨慎": {
+   "runs_p50": 8.0,
+   "runs_p90": 9.0,
+   "min_p50": 91,
+   "min_p90": 102,
+   "deaths_mean": 0.32,
+   "death_rate_per_run": 0.042
+  },
+  "贪心": {
+   "runs_p50": 7.0,
+   "runs_p90": 9.0,
+   "min_p50": 94,
+   "min_p90": 121,
+   "deaths_mean": 0.88,
+   "death_rate_per_run": 0.117
+  },
+  "新手": {
+   "runs_p50": 8.0,
+   "runs_p90": 10.0,
+   "min_p50": 99,
+   "min_p90": 119,
+   "deaths_mean": 1.56,
+   "death_rate_per_run": 0.182
+  }
+ },
+ "sensitivity": {
+  "撤离率再 −5pt": {
+   "谨慎": {
+    "runs_p50": 8.0,
+    "runs_p90": 9.0,
+    "min_p50": 91,
+    "min_p90": 102,
+    "deaths_mean": 0.52,
+    "death_rate_per_run": 0.067
+   },
+   "贪心": {
+    "runs_p50": 7.0,
+    "runs_p90": 9.0,
+    "min_p50": 93,
+    "min_p90": 119,
+    "deaths_mean": 1.03,
+    "death_rate_per_run": 0.137
+   },
+   "新手": {
+    "runs_p50": 8.0,
+    "runs_p90": 11.0,
+    "min_p50": 99,
+    "min_p90": 120,
+    "deaths_mean": 1.77,
+    "death_rate_per_run": 0.204
+   }
+  },
+  "单局时长再 +10%": {
+   "谨慎": {
+    "runs_p50": 7.0,
+    "runs_p90": 8.0,
+    "min_p50": 93,
+    "min_p90": 106,
+    "deaths_mean": 0.3,
+    "death_rate_per_run": 0.041
+   },
+   "贪心": {
+    "runs_p50": 7.0,
+    "runs_p90": 9.0,
+    "min_p50": 101,
+    "min_p90": 131,
+    "deaths_mean": 0.84,
+    "death_rate_per_run": 0.113
+   },
+   "新手": {
+    "runs_p50": 8.0,
+    "runs_p90": 10.0,
+    "min_p50": 102,
+    "min_p90": 128,
+    "deaths_mean": 1.4,
+    "death_rate_per_run": 0.17
+   }
+  }
+ }
+}

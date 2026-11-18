@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 开始界面（v2）</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/strokes.css">
+<link rel="stylesheet" href="kit/ink-ui.css">
+<script src="kit/ink-ui.js"></script>
+<style>
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+.abs { position: absolute; }
+/* 画：右侧山水从纸里"浮现"，左侧淡入成留白 */
+.painting { left: 300px; top: -40px; width: 1040px; height: 800px; background: url(img/overview.jpg) 40% 55% / cover; filter: sepia(.15) saturate(.85) contrast(1.02);
+  -webkit-mask-image: radial-gradient(ellipse 58% 60% at 60% 52%, #000 40%, transparent 78%); mask-image: radial-gradient(ellipse 58% 60% at 60% 52%, #000 40%, transparent 78%); mix-blend-mode: multiply; opacity: .95; }
+.mist { left: 0; top: 0; width: 1280px; height: 720px; background: var(--ink-tex-cloud); opacity: .55; mix-blend-mode: multiply; pointer-events: none; }
+/* 标题：竖排行书大字 + 落款 */
+.title { right: 88px; top: 70px; display: flex; flex-direction: row-reverse; gap: 22px; align-items: flex-start; }
+.title .word { writing-mode: vertical-rl; font-size: 150px; letter-spacing: 0; color: var(--ink); text-shadow: 0 0 30px rgba(245,240,227,.9), 0 0 60px rgba(245,240,227,.6); }
+.title .side { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 28px; }
+.title .side .ink-tiba { font-size: 17px; color: var(--ink-nong); letter-spacing: .35em; text-shadow: 0 0 8px rgba(245,240,227,.9); }
+/* 菜单：左侧留白里一列，选中项下面一道浓墨 */
+.menu { left: 110px; top: 214px; display: flex; flex-direction: column; gap: 22px; }
+.menu .ink-btn { font-size: 30px; padding-left: 4px; }
+.menu .ink-btn.cont { font-size: 38px; color: var(--ink); }
+.menu .row { display: flex; align-items: center; gap: 18px; }
+.save { margin-left: 6px; display: flex; flex-direction: column; gap: 3px; border-left: 0; }
+.save .a { font-family: var(--f-display); font-size: 16px; color: var(--ink-nong); letter-spacing: .1em; }
+.save .b { font-family: var(--f-ui); font-size: 12px; color: var(--ink-dan); }
+.brand { left: 112px; top: 120px; display: flex; align-items: center; gap: 14px; }
+.brand .ink-rule { width: 160px; }
+.brand span { font-family: var(--f-kai); font-size: 15px; color: var(--ink-zhong); letter-spacing: .5em; }
+.foot { left: 112px; bottom: 44px; font-family: var(--f-ui); font-size: 12px; color: var(--ink-dan); letter-spacing: .08em; }
+.bird { position: absolute; width: 18px; height: 6px; background: var(--ink-zhong); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+</style>
+</head>
+<body class="ink-stage">
+  <div class="abs painting"></div>
+  <div class="abs mist"></div>
+  <span class="bird" style="left:700px;top:110px;transform:rotate(-12deg)"></span><span class="bird" style="left:722px;top:104px;width:14px;transform:rotate(14deg)"></span>
+  <span class="bird" style="left:760px;top:130px;width:12px;transform:rotate(-8deg)"></span>
+
+  <div class="abs title">
+    <div class="word ink-splash">墨途</div>
+    <div class="side">
+      <div class="ink-tiba">一卷山河 · 一条归途</div>
+      <span class="ink-seal two" style="--s:46px">归途</span>
+    </div>
+  </div>
+
+  <div class="abs brand"><span>青岚卷</span><div class="ink-rule"></div></div>
+  <div class="abs menu">
+    <div class="row">
+      <span class="ink-btn cont is-hover">续卷</span>
+      <div class="save"><span class="a">练气五层 · 竹海溪谷</span><span class="b">第六次出行 · 一时十二分 · 今日 20:41</span></div>
+    </div>
+    <span class="ink-btn">新卷</span>
+    <span class="ink-btn">卷宗</span>
+    <span class="ink-btn">设置</span>
+    <span class="ink-btn">画外记</span>
+  </div>
+  <div class="abs foot">墨途 · 开发体验版 0.3　　按 Enter 续卷</div>
+</body>
+</html>

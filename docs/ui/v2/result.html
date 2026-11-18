@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 撤离结算（v2）</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/strokes.css">
+<link rel="stylesheet" href="kit/ink-ui.css">
+<script src="kit/ink-ui.js"></script>
+<style>
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+.abs { position: absolute; }
+.hero-p { left: 984px; top: 300px; width: 186px; height: 310px; background: url(kit/portrait_linmo.svg) 0 0 / 100% 100% no-repeat; }
+/* 左：大字 + 盖印 */
+.hero { left: 64px; top: 48px; }
+.hero .big { font-size: 96px; color: var(--ink); letter-spacing: .02em; }
+.hero .ink-seal { position: absolute; left: 352px; top: 66px; --s: 76px; --seal-rot: -8deg; }
+.hero .sub { margin-top: 18px; font-family: var(--f-kai); font-size: 16px; color: var(--ink-zhong); letter-spacing: .2em; display: flex; align-items: center; gap: 14px; }
+.stats { left: 68px; top: 248px; width: 360px; }
+.stats .ink-row { font-size: 15px; padding: 8px 2px; }
+.stats .ink-row .v { font-size: 20px; }
+.stats .ink-row .v small { font-family: var(--f-ui); font-size: 12px; color: var(--ink-dan); margin-left: 4px; }
+.xpwrap { left: 68px; top: 486px; width: 360px; }
+.xpwrap .r { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--f-display); font-size: 18px; letter-spacing: .1em; }
+.xpwrap .r small { font-family: var(--f-ui); font-size: 12px; color: var(--ink-zhong); letter-spacing: 0; }
+.xpwrap .bars { position: relative; height: 16px; margin-top: 6px; }
+.xpwrap .bars .ink-bar { position: absolute; inset: 0; }
+.xpwrap .bars .gain { --bc: rgba(217, 180, 94, 0.5); }
+.xpwrap .note { font-family: var(--f-ui); font-size: 12px; color: #7c5d1a; margin-top: 6px; }
+/* 右：账册 */
+.ledger { left: 486px; top: 44px; width: 430px; padding: 26px 34px 24px; }
+.ledger .ink-h { display: flex; justify-content: space-between; align-items: baseline; }
+.ledger .ink-h small { font-family: var(--f-ui); font-size: 12px; color: var(--ink-dan); letter-spacing: 0; }
+.ledger .ink-row { align-items: center; padding: 5px 2px; font-size: 16px; }
+.ledger .ink-slot { --z: 40px; font-size: 18px; }
+.ledger .ink-row .n { font-family: var(--f-display); font-size: 17px; }
+.ledger .ink-row .n small { font-family: var(--f-ui); font-size: 12px; color: var(--ink-dan); margin-left: 4px; }
+.ledger .ink-row .v { font-size: 19px; color: #7c5d1a; }
+.ledger .ink-row .v.q { color: var(--shiqing); }
+.ledger .total { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; position: relative; }
+.ledger .total::before { content: ""; position: absolute; left: -4px; right: -4px; top: 0; height: 9px; background: var(--ink-nong); -webkit-mask: var(--ink-stroke-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-1) 0 0 / 100% 100% no-repeat; }
+.ledger .total .k { font-family: var(--f-display); font-size: 20px; letter-spacing: .2em; }
+.ledger .total .n { font-family: var(--f-display); font-size: 46px; color: #7c5d1a; line-height: 1; }
+/* 最右：首次发现（竹简） */
+.found { left: 966px; top: 58px; }
+.found .ink-h { writing-mode: vertical-rl; position: absolute; right: -2px; top: 0; font-size: 20px; letter-spacing: .3em; }
+.found .ink-slips { margin-right: 42px; }
+.found .ink-slip { height: 270px; font-size: 18px; }
+.found .ink-slip small { display: inline; }
+.acts { right: 62px; bottom: 44px; display: flex; align-items: center; gap: 22px; }
+</style>
+</head>
+<body class="ink-stage">
+
+  <div class="abs hero">
+    <div class="big ink-splash">满载而归</div>
+    <span class="ink-seal four"><span>撤</span><span>离</span><span>功</span><span>成</span></span>
+    <div class="sub">竹海溪谷 · 第六次出行<span class="ink-rule" style="width:90px"></span></div>
+  </div>
+
+  <div class="abs stats ink-list">
+    <div class="ink-row"><span class="k">用时</span><span class="v">13:42</span></div>
+    <div class="ink-row"><span class="k">撤离点</span><span class="v">断涧古传送阵</span></div>
+    <div class="ink-row"><span class="k">斩妖</span><span class="v">34<small>精英 2</small></span></div>
+    <div class="ink-row"><span class="k">余下行囊</span><span class="v">回春丹 1<small>回气丹 2</small></span></div>
+  </div>
+  <div class="abs xpwrap">
+    <div class="r"><span>练气五层</span><small>1,102 → <b style="color:#7c5d1a">1,306</b> / 1,400</small></div>
+    <div class="bars"><div class="ink-bar gain" style="--v:.93"><i></i></div><div class="ink-bar xp" style="--v:.79"><i></i></div></div>
+    <div class="note">本局感悟 +204 已炼化 · 距六层 94</div>
+  </div>
+
+  <section class="abs ledger ink-paper">
+    <div class="ink-h">所得<small>21 件 · 鉴定后再计 1 件</small></div>
+    <div class="ink-list">
+      <div class="ink-row"><span class="ink-slot q-bao"><b>竹</b></span><span class="n">千年竹心</span><span class="v">360</span></div>
+      <div class="ink-row"><span class="ink-slot q-bao is-unid"><b>剑</b></span><span class="n">未鉴定的剑<small>宝光</small></span><span class="v q">？</span></div>
+      <div class="ink-row"><span class="ink-slot q-xian"><b>卷</b><i>新</i></span><span class="n">功法残卷<small>寒冰锥 · 3 / 3</small></span><span class="v">200</span></div>
+      <div class="ink-row"><span class="ink-slot q-ling"><b>果</b></span><span class="n">赤炎果<small>×2</small></span><span class="v">240</span></div>
+      <div class="ink-row"><span class="ink-slot q-ling"><b>丹</b></span><span class="n">狼妖内丹<small>×2</small></span><span class="v">160</span></div>
+      <div class="ink-row"><span class="ink-slot q-ling"><b>露</b></span><span class="n">寒露草<small>×6</small></span><span class="v">72</span></div>
+      <div class="ink-row"><span class="ink-slot q-fan"><b>灵</b></span><span class="n">灵石<small>×87</small></span><span class="v">87</span></div>
+      <div class="ink-row"><span class="ink-slot q-fan"><b>杂</b></span><span class="n">其余九件</span><span class="v">165</span></div>
+    </div>
+    <div class="total"><span class="k">带回灵值</span><span class="n">1,284</span></div>
+  </section>
+
+  <div class="abs found">
+    <div class="ink-h">首次所见</div>
+    <div class="ink-slips">
+      <div class="ink-slip on">千年竹心<small>　记入卷宗</small></div>
+      <div class="ink-slip">寒冰锥<small>　三卷已齐</small></div>
+      <div class="ink-slip">碧鳞水蟒<small>　遥见</small></div>
+      <div class="ink-slip dim">断涧残阵<small>　未明</small></div>
+    </div>
+  </div>
+
+  <div class="abs hero-p" role="img" aria-label="林墨"></div>
+  <div class="abs acts">
+    <span class="ink-btn">鉴宝台 <span class="key">未鉴定 1</span></span>
+    <span class="ink-btn">再出行</span>
+    <button class="ink-seal-btn">回府</button>
+  </div>
+</body>
+</html>

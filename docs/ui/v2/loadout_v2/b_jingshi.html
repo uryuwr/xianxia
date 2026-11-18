@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>装配 v2 · 方向二 · 静室·功法册页</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css"><link rel="stylesheet" href="common.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script>
+<style>
+/* 方向二 · 静室·功法册页（入口 b）：灵泉·静室的第二个页签"功法"。左页 = 周天图（立绘 + 按经络排布的栏位），右页 = 功法目录 + 预演去处。
+   第二个视图（#view=quick）= 出行准备里只做快速调整：点法术栏弹出"换一个"纸条。 */
+body { background: #2a2a28; }
+.scene { position: absolute; inset: -20px; background: url(../forge_v2/bg_cave.png) center / cover; filter: blur(7px) saturate(.35) brightness(.62); transform: scale(1.03); }
+.scene-veil { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 75% at 50% 50%, rgba(21, 24, 27, .28), rgba(21, 24, 27, .62)), var(--ink-tex-paper); background-blend-mode: normal, multiply; }
+.view { position: absolute; inset: 0; }
+body[data-view="quick"] #study, body[data-view="study"] #quick { display: none; }
+
+/* ---------------- 册页 ---------------- */
+.album { left: 46px; top: 30px; width: 1188px; height: 656px; padding: 16px; box-sizing: border-box; }
+.album .ink-mount-in { display: flex; height: 100%; }
+.album .fold { position: absolute; left: 560px; top: 0; bottom: 0; width: 18px; margin-left: -9px; background: linear-gradient(90deg, transparent, rgba(90,70,40,.16) 45%, rgba(255,255,255,.35) 55%, transparent); z-index: 2; pointer-events: none; }
+.page { position: relative; height: 100%; }
+#lp { flex: 0 0 560px; }
+#rp { flex: 1; }
+
+/* ---- 左页：周天图 ---- */
+.shell { position: absolute; left: 22px; top: 16px; display: flex; align-items: baseline; }
+.shell .ink-tab { font-size: 18px; padding: 2px 10px 6px; cursor: pointer; }
+.lp-title { position: absolute; left: 30px; top: 66px; display: flex; gap: 8px; }
+.lp-title .t { writing-mode: vertical-rl; font: 400 58px/1 var(--f-splash); color: var(--ink); letter-spacing: .04em; }
+.lp-title .ink-tiba { margin-top: 8px; font-size: 13px; line-height: 1.7; }
+.who { position: absolute; left: 34px; top: 236px; font: 12px/1.7 var(--f-ui); color: var(--ink-dan); }
+.who b { display: block; font: 400 18px var(--f-display); color: var(--ink-nong); letter-spacing: .06em; }
+.qi { position: absolute; left: 196px; top: 70px; width: 300px; height: 300px; background: var(--shiqing); opacity: .14; -webkit-mask: var(--ink-wash-round) center / 100% 100% no-repeat; mask: var(--ink-wash-round) center / 100% 100% no-repeat; pointer-events: none; }
+.fig { position: absolute; left: 196px; top: 46px; width: 282px; height: 470px; background: url(../../../../src/ui/ink/portrait_linmo.svg) 0 0 / 100% 100% no-repeat; pointer-events: none; }
+svg.mer { position: absolute; left: 0; top: 0; width: 560px; height: 620px; pointer-events: none; overflow: visible; }
+svg.mer path { fill: none; stroke-width: 1.3; stroke-linecap: round; }
+svg.mer circle { stroke: var(--paper-hi); stroke-width: 1.5; }
+/* 栏位 */
+.slot { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 2px; transform: translate(-50%, -32px); width: 104px; text-align: center; }
+.slot .nm { font: 400 15px/1.2 var(--f-display); color: var(--ink-nong); letter-spacing: .04em; white-space: nowrap; }
+.slot .nm .key { font: 11px var(--f-ui); color: var(--ink-dan); border-bottom: 1px solid var(--ink-qing); padding: 0 2px; margin-left: 3px; letter-spacing: 0; }
+.slot .sub { font: 11px/1.3 var(--f-ui); color: var(--ink-dan); white-space: nowrap; }
+.slot .sub.zhu { color: var(--zhu); }
+.slot.is-locked .nm { color: var(--ink-dan); }
+.slot.is-locked .sk::after { opacity: .14; }
+.slot.is-locked .sk > b { color: var(--ink-qing); font-size: 20px; }
+.slot .dup { position: absolute; left: 66px; top: -4px; z-index: 4; }
+.slot-grp { position: absolute; font: 12px var(--f-kai); color: var(--ink-dan); letter-spacing: .3em; writing-mode: vertical-rl; }
+/* 左页页脚：本次将带 */
+.carry { position: absolute; left: 30px; right: 28px; bottom: 22px; padding-top: 12px; }
+.carry::before { content: ""; position: absolute; left: 0; right: 12%; top: 0; height: 8px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-1) 0 0 / 100% 100% no-repeat; }
+.carry .l1 { display: flex; align-items: baseline; gap: 7px; font: 13px/1.7 var(--f-kai); color: var(--ink-zhong); white-space: nowrap; }
+.carry .l1 .h { font: 400 17px var(--f-display); color: var(--ink-nong); letter-spacing: .1em; }
+.carry .l1 b { font: 400 14px var(--f-display); color: var(--ink-nong); font-weight: 400; }
+.carry .l1 .g { color: #8a6a22; }
+.carry .cov { margin-top: 2px; flex-wrap: nowrap; gap: 4px 12px; white-space: nowrap; }
+.carry .cov .rg { font: 13px var(--f-kai); color: var(--ink-zhong); }
+
+/* ---- 右页：目录 ---- */
+.rp-h { position: absolute; left: 34px; top: 22px; right: 80px; display: flex; align-items: baseline; gap: 14px; }
+.rp-h .ink-title { font-size: 26px; }
+.rp-h small { font: 12px var(--f-ui); color: var(--ink-dan); }
+.rp-h small .key { font: 11px var(--f-ui); color: var(--ink-zhong); border-bottom: 1px solid var(--ink-qing); padding: 0 2px; }
+.vt { position: absolute; right: 16px; top: 62px; z-index: 3; }
+.vt .ink-vtab { cursor: pointer; padding: 10px 6px; font-size: 18px; }
+.vt .ink-vtab sup { writing-mode: horizontal-tb; display: inline-block; vertical-align: baseline; font: 10px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; margin-top: 4px; text-align: center; }
+.vt .ink-vtab.locked { color: var(--ink-qing); }
+.lib { position: absolute; left: 30px; right: 74px; top: 72px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 18px; align-content: start; }
+.it { position: relative; display: flex; align-items: center; gap: 10px; height: 47px; padding: 0 4px 0 0; }
+.it::before { content: ""; position: absolute; left: 46px; right: 26%; top: 0; height: 5px; background: var(--ink-mist); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.it:nth-child(-n + 2)::before { display: none; }
+.it .tx { flex: 1; min-width: 0; }
+.it .tx b { display: block; font: 400 17px/1.2 var(--f-display); color: var(--ink-nong); letter-spacing: .05em; white-space: nowrap; }
+.it .tx small { display: block; font: 11px/1.45 var(--f-ui); color: var(--ink-dan); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.it .tx small.gold { color: #8a6a22; }
+.it .on { font: 400 13px var(--f-display); color: var(--zhu); white-space: nowrap; }
+.it.ghost .tx b { color: var(--ink-dan); }
+.it.gray .tx b { color: var(--ink-zhong); }
+.it.carried::after { content: ""; position: absolute; left: -10px; right: -4px; top: 6px; bottom: 6px; z-index: -1; background: rgba(184,41,26,.07); -webkit-mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; }
+.lib .none { grid-column: 1 / -1; font: 14px/1.9 var(--f-kai); color: var(--ink-dan); padding: 12px 2px; }
+.affix { position: absolute; left: 30px; right: 74px; top: 362px; font: 12px/1.7 var(--f-kai); color: var(--ink-zhong); }
+.affix .k { font: 11px var(--f-ui); color: var(--ink-dan); margin-right: 6px; }
+.affix .g { color: #8a6a22; }
+
+/* ---- 右页下：预演去处 ---- */
+.plan { position: absolute; left: 30px; right: 30px; top: 386px; padding-top: 12px; }
+.plan::before { content: ""; position: absolute; left: 0; right: 8%; top: 0; height: 8px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-2) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-2) 0 0 / 100% 100% no-repeat; }
+.plan .hd { display: flex; align-items: baseline; gap: 6px; }
+.plan .hd .ink-h { font-size: 18px; margin-right: 6px; }
+.plan .hd .ink-tab { font-size: 16px; padding: 2px 8px 6px; cursor: pointer; }
+.plan .hd .jing { margin-left: auto; font: 11px var(--f-ui); color: var(--ink-dan); }
+.plan .grps { margin-top: 2px; }
+.plan .advs { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 12px; margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--ink-mist); }
+.grp { position: relative; display: flex; align-items: center; gap: 8px; padding: 3px 0; font: 13px/1.45 var(--f-kai); color: var(--ink-zhong); }
+.grp .sh { display: flex; gap: 1px; flex: none; width: 134px; flex-wrap: nowrap; }
+.grp .sh .shd { font-size: 14px; }
+.grp .sh .ar { color: var(--ink-dan); font: 11px var(--f-ui); align-self: center; }
+.grp .w { min-width: 0; }
+.grp .w { display: flex; align-items: baseline; gap: 10px; white-space: nowrap; }
+.grp .w small { display: inline !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grp .w b { min-width: 9.5em; font: 400 14px var(--f-display); color: var(--ink-nong); font-weight: 400; }
+.grp .w small { display: block; font: 11px var(--f-ui); color: var(--ink-dan); }
+.adv { display: flex; align-items: flex-start; gap: 6px; padding: 3px 0; font: 13px/1.4 var(--f-kai); color: var(--ink-nong); }
+.adv .els { flex: none; margin-top: 3px; }
+.adv .tx { flex: 1; white-space: nowrap; }
+.adv .tx > div { margin-top: 1px; }
+.adv .st { font: 13px var(--f-kai); white-space: nowrap; }
+.adv .st.ok { color: #2c7d57; }
+.adv .ink-btn { font-size: 14px; padding: 0 2px 4px; white-space: nowrap; }
+.adv .ink-btn::after { background: var(--zhu); opacity: .7; }
+.plan .fb { margin-top: 4px; font: 11px var(--f-ui); color: var(--ink-dan); }
+.rp-foot { position: absolute; left: 30px; right: 30px; bottom: 16px; display: flex; align-items: baseline; gap: 18px; }
+.rp-foot .ink-note { flex: 1; }
+.rp-foot .ink-btn { font-size: 16px; }
+.back { position: absolute; right: 56px; top: 18px; display: flex; align-items: baseline; gap: 4px; }
+.back .ink-btn { font-size: 20px; }
+.back .key { font: 11px var(--f-ui); color: var(--ink-dan); border-bottom: 1px solid var(--ink-qing); padding: 0 2px; }
+
+/* ---------------- 第二视图：出行准备 · 快速调整 ---------------- */
+#quick { background: var(--ink-tex-paper), var(--ink-tex-fiber), var(--paper); background-blend-mode: multiply; }
+#quick .hd { left: 60px; top: 30px; display: flex; align-items: center; gap: 18px; }
+#quick .hd .ink-title { font-size: 40px; }
+#quick .hd .ink-rule { width: 150px; }
+#quick .hd small { font: 13px var(--f-ui); color: var(--ink-dan); }
+#quick .fan { left: 40px; top: 96px; width: 380px; height: 200px; background: var(--ink-tex-cloud), radial-gradient(ellipse at 50% 80%, rgba(63,154,110,.35), transparent 70%), var(--paper-lo); background-blend-mode: multiply; display: flex; align-items: center; justify-content: center; }
+#quick .fan .nm { font: 50px var(--f-splash); color: var(--ink); text-shadow: 0 0 14px rgba(245,240,227,.9); margin-top: -40px; }
+#quick .fan .ink-seal { position: absolute; right: 70px; top: 36px; }
+#quick .regs { left: 60px; top: 330px; width: 340px; }
+#quick .regs .ink-row { cursor: pointer; align-items: center; }
+#quick .regs .nm { font: 22px var(--f-display); letter-spacing: .1em; color: var(--ink-nong); }
+#quick .regs .on .nm { color: var(--ink); }
+#quick .facts { left: 60px; top: 440px; width: 340px; }
+#quick .facts .ink-row { font-size: 14px; padding: 5px 2px; }
+#quick .facts .v { font-size: 15px; }
+#quick .facts .v .shd { font-size: 14px; margin-left: 6px; }
+#quick .por { left: 560px; top: 50px; width: 300px; height: 500px; background: url(../../../../src/ui/ink/portrait_linmo.svg) 0 0 / 100% 100% no-repeat; }
+#quick .who2 { left: 845px; top: 300px; font: 22px var(--f-display); writing-mode: vertical-rl; letter-spacing: .2em; }
+#quick .gear { left: 430px; top: 120px; display: flex; flex-direction: column; gap: 30px; align-items: flex-end; }
+#quick .gear .g { display: flex; align-items: center; gap: 10px; }
+#quick .gear .t { text-align: right; }
+#quick .gear .t b { display: block; font: 400 17px var(--f-display); color: var(--ink-nong); letter-spacing: .06em; }
+#quick .gear .t span { font: 11px var(--f-ui); color: var(--ink-dan); }
+#quick .bar { left: 468px; top: 560px; display: flex; gap: 26px; align-items: flex-start; }
+#quick .bar .q { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; width: 64px; }
+#quick .bar .q .c { font: 12px var(--f-kai); color: var(--ink-zhong); white-space: nowrap; }
+#quick .bar .q .c .key { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 2px; }
+#quick .bar .q.locked { cursor: default; }
+#quick .bar .q.locked .sk::after { opacity: .14; }
+#quick .bar .q.locked .sk > b { font-size: 18px; }
+#quick .bar .q.open .sk::after { background: var(--zhu); opacity: 1; }
+#quick .bar .q:not(.locked):hover .sk { transform: scale(1.05); }
+#quick .bar .q .chg { position: absolute; top: -6px; right: 2px; font: 11px var(--f-ui); color: var(--ink-dan); opacity: 0; transition: opacity .15s; }
+#quick .bar .q:not(.locked):hover .chg { opacity: 1; }
+#quick .bar .sep { width: 1px; height: 46px; margin: 8px 2px 0; background: var(--ink-qing); }
+#quick .bar .ro { opacity: .85; cursor: default; }
+#quick .cov2 { left: 470px; top: 530px; }
+#quick .pack { left: 905px; top: 70px; width: 320px; }
+#quick .pack .slots { display: flex; gap: 18px; padding: 4px 0; }
+#quick .pack .note { font: 12px var(--f-ui); color: var(--ink-dan); margin-top: 8px; }
+#quick .go { left: 1110px; top: 576px; }
+#quick .back2 { left: 905px; top: 610px; display: flex; flex-direction: column; gap: 4px; }
+#quick .back2 .ink-btn { font-size: 20px; }
+/* "换一个"纸条 */
+.swap { position: absolute; z-index: 40; width: 300px; padding: 16px 18px 12px; transform: rotate(-.5deg); animation: slipIn .22s var(--ease-ink) both; }
+@keyframes slipIn { from { opacity: 0; transform: translateY(8px) rotate(-.5deg); } }
+.swap .h { display: flex; align-items: baseline; gap: 8px; font: 400 19px var(--f-display); color: var(--ink); letter-spacing: .08em; }
+.swap .h small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+.swap .hint { margin: 4px 0 4px; font: 13px/1.5 var(--f-kai); color: var(--ink-zhong); }
+.swap .hint b { font-weight: 400; color: #2c7d57; }
+.swap .opt { position: relative; display: flex; align-items: center; gap: 10px; padding: 3px 4px 3px 0; cursor: pointer; }
+.swap .opt + .opt::before { content: ""; position: absolute; left: 44px; right: 30%; top: 0; height: 5px; background: var(--ink-mist); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.swap .opt .tx { flex: 1; }
+.swap .opt .tx b { font: 400 16px var(--f-display); color: var(--ink-nong); letter-spacing: .04em; font-weight: 400; }
+.swap .opt .tx small { display: block; font: 11px var(--f-ui); color: var(--ink-dan); }
+.swap .opt .tx small .good { color: #2c7d57; }
+.swap .opt .st { font: 12px var(--f-kai); color: var(--ink-dan); white-space: nowrap; }
+.swap .opt.cur .tx b::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--zhu); margin-right: 5px; vertical-align: 3px; }
+.swap .opt:hover .sk { transform: scale(1.06); }
+.swap .opt:hover::after { content: ""; position: absolute; left: -8px; right: -4px; top: 4px; bottom: 4px; z-index: -1; background: rgba(21,24,27,.05); -webkit-mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; }
+.swap .opt.off { cursor: pointer; }
+.swap .ft { margin-top: 6px; padding-top: 5px; border-top: 1px solid var(--ink-mist); font: 11px var(--f-ui); color: var(--ink-dan); display: flex; justify-content: space-between; }
+.swap .ft a { color: var(--ink-zhong); border-bottom: 1px solid var(--ink-qing); cursor: pointer; }
+.toggle { position: absolute; left: 430px; bottom: 5px; z-index: 120; font: 12px var(--f-ui); color: rgba(245,240,227,.75); cursor: pointer; border-bottom: 1px dotted rgba(245,240,227,.5); }
+body[data-view="quick"] .toggle { color: var(--ink-zhong); border-bottom-color: var(--ink-qing); }
+.mocktag { color: rgba(245,240,227,.5); }
+body[data-view="quick"] .mocktag { color: var(--ink-dan); }
+</style></head>
+<body data-view="study">
+<div class="view" id="study">
+  <div class="scene"></div><div class="scene-veil"></div>
+  <section class="ink-mount album abs"><div class="ink-mount-in"><i class="fold"></i>
+    <div class="page" id="lp"></div>
+    <div class="page" id="rp"></div>
+  </div></section>
+</div>
+<div class="view" id="quick"></div>
+<div id="mb"></div>
+<a class="toggle" id="tg"></a>
+<div class="mocktag">方向二 · 静室·功法册页</div>
+<script src="icons.js"></script>
+<script src="data.js"></script>
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const UI = { tab: "spell", view: /view=quick/.test(location.hash) ? "quick" : "study", pop: null };
+const S = LO.S;
+const EL = LD.EL;
+const KEYS = ["Q", "E", "R"];
+const shd = (el, t) => `<span class="shd" style="--c:${EL[el].c}">${t || EL[el].n + "盾"}</span>`;
+const els = (el) => `<span class="els" style="--c:${EL[el].c}">${EL[el].n}</span>`;
+
+// ---------------- 周天图：栏位坐标（左页坐标系 560×620）与对应穴位（立绘 282×470，left 196 top 46） ----------------
+// [kind, i, 栏位中心 x, y, 穴位 x, y, 穴名]
+const POS = [
+  ["spell", 0, 474, 112, 392, 190, "肩井"],
+  ["spell", 1, 508, 214, 414, 258, "曲池"],
+  ["spell", 2, 484, 322, 420, 290, "劳宫"],
+  ["xinfa", 0, 150, 340, 338, 214, "膻中"],
+  ["xinfa", 1, 150, 438, 346, 276, "丹田"],
+  ["artifact", 0, 262, 474, 288, 310, "持剑"],
+  ["formation", 0, 448, 458, 360, 470, "涌泉"],
+];
+
+function render() {
+  document.body.dataset.view = UI.view;
+  $("#tg").textContent = UI.view === "study" ? "看出行准备里的快速调整 →" : "← 回洞府 · 灵泉静室 · 功法";
+  if (UI.view === "study") (renderLeft(), renderRight());
+  else renderQuick();
+  window.inkui && inkui.decorate();
+}
+
+// ================= 左页 =================
+function slotHTML([kind, i, x, y]) {
+  const open = LO.unlocked(kind, i), id = open ? LO.get(kind, i) : null, d = id && LO.defOf(kind, id);
+  const key = kind === "spell" ? KEYS[i] : kind === "formation" ? "T" : kind === "artifact" ? "右键" : "";
+  const label = { spell: "法术", xinfa: "心法", artifact: "法宝", formation: "阵盘" }[kind];
+  let nm, sub = "";
+  if (!open) (nm = `${label}${key ? `<span class="key">${key}</span>` : ""}`), (sub = LO.unlockText(kind, i));
+  else if (!d) (nm = `<span style="color:var(--ink-dan)">空</span>${key ? `<span class="key">${key}</span>` : ""}`), (sub = "拖入或点选");
+  else {
+    nm = `${kind === "xinfa" ? "《" + d.name + "》" : d.name}${key ? `<span class="key">${key}</span>` : ""}`;
+    if (kind === "spell") sub = `${EL[d.el].n} · ${d.role} · ${d.cd} 秒`;
+    else if (kind === "formation") sub = `${d.el ? EL[d.el].n + " · " : ""}${d.cd} 秒`;
+    else if (kind === "artifact") sub = `<span style="color:${LD.RAR[d.rarity].t}">${LD.RAR[d.rarity].n}</span> · 祭炼 ${d.level + (d.bonus || 0)}`;
+    else if (LO.gearOf(id)) sub = `<span class="zhu">与${LO.gearOf(id).slot}词条重复</span>`;
+    else sub = d.desc.split("；")[0].slice(0, 9);
+  }
+  const dup = kind === "xinfa" && id && LO.gearOf(id) ? `<span class="dup ink-seal frame" style="--s:22px;font-size:12px">叠</span>` : "";
+  const tok = LO.tokenHTML(kind, id, { size: kind === "spell" ? 62 : 54, glyph: open ? "" : "锁", cls: "e" + ((i % 3) + 1) });
+  return `<div class="slot ${open ? "" : "is-locked"}" style="left:${x}px;top:${y}px" data-slot-kind="${kind}" data-slot-i="${i}">${tok}${dup}<div class="nm">${nm}</div><div class="sub">${sub}</div></div>`;
+}
+function merSVG() {
+  let p = "";
+  for (const [kind, i, x, y, ax, ay] of POS) {
+    const open = LO.unlocked(kind, i), id = open && LO.get(kind, i);
+    const c = id ? LO.colorOf(kind, id).c : "rgba(21,24,27,.3)";
+    const mx = (x + ax) / 2, my = (y + ay) / 2 - 18;
+    p += `<path d="M${ax} ${ay} Q${mx} ${my} ${x} ${y}" stroke="${c}" stroke-opacity="${id ? 0.55 : 0.35}" ${open ? (id ? "" : 'stroke-dasharray="2 5"') : 'stroke-dasharray="1 6"'}/>`;
+    p += `<circle cx="${ax}" cy="${ay}" r="${id ? 4.2 : 3}" fill="${id ? c : "rgba(21,24,27,.25)"}"/>`;
+  }
+  return `<svg class="mer" viewBox="0 0 560 620">${p}</svg>`;
+}
+function carryHTML() {
+  const sp = S.spells.map((id, i) => (LO.unlocked("spell", i) ? (id ? `${KEYS[i]} <b>${LD.SPELLS[id].name}</b>` : `${KEYS[i]} <span class="ink-dim">空</span>`) : null)).filter(Boolean);
+  const xs = S.xinfa.filter((id, i) => id && LO.unlocked("xinfa", i)).map((id) => `<b>${LD.XINFA[id].name}</b>`);
+  const gx = LD.GEAR.filter((g) => g.affix).map((g) => `<span class="g">${LD.XINFA[g.affix.xinfa].name}</span>`);
+  const ar = LO.unlocked("artifact") && S.artifact ? `<b>${LO.defOf("artifact", S.artifact).name}</b>` : "";
+  const fm = LO.unlocked("formation") && S.formation ? `<b>${LD.FORMATIONS[S.formation].name}</b>` : "";
+  const R = LD.REGIONS[S.region];
+  const cov = LO.coverage().map((c) => `<span class="c ${c.ok ? "ok" : "no"}">${shd(c.el)}<b>${c.ok ? "✓ " + c.by.join("、") : "✗ 缺" + EL[c.counter].n + "行"}</b></span>`).join("");
+  return `<div class="carry"><div class="l1"><span class="h">本次将带</span>${sp.join(" · ")}${xs.length ? `<span class="ink-dim">｜</span>${xs.join("、")}` : ""}${ar || fm ? `<span class="ink-dim">｜</span>${[ar, fm].filter(Boolean).join(" · ")}` : ""}</div>
+    <div class="cov"><span class="rg">往${R.name}：</span>${cov}</div></div>`;
+}
+function renderLeft() {
+  const h = LD.hero(S.layer);
+  $("#lp").innerHTML = `<div class="shell ink-tabs"><span class="ink-tab" data-shell>境界</span><span class="ink-tab on">功法</span></div>
+    <div class="lp-title"><div class="t">周天</div><div class="ink-tiba">运转所修 · 出门所带</div></div>
+    <div class="who"><b>${LD.layerName(S.layer)}</b>法力 ${h.spell} · 真气 ${h.mp}</div>
+    <div class="qi"></div><div class="fig"></div>${merSVG()}
+    ${POS.map(slotHTML).join("")}
+    ${carryHTML()}`;
+}
+
+// ================= 右页 =================
+const TABS = [["spell", "法术"], ["xinfa", "心法"], ["artifact", "法宝"], ["formation", "阵盘"]];
+function itemHTML(kind, e) {
+  const d = e.def;
+  let sub = "", cls = "";
+  if (!e.have) (cls = "ghost"), (sub = e.src);
+  else if (kind === "spell") sub = `${EL[d.el].n}行 · ${d.role} · 真气 ${d.cost} · ${d.cd} 秒${d.noHit ? "" : ` · 克${EL[LD.BEATS[d.el]].n}盾`}`;
+  else if (kind === "formation") sub = `${d.el ? EL[d.el].n + "行 · " : ""}真气 ${d.cost} · ${d.cd} 秒${d.el ? ` · 克${EL[LD.BEATS[d.el]].n}盾` : ""}`;
+  else if (kind === "artifact") sub = `<span style="color:${LD.RAR[d.rarity].t}">${LD.RAR[d.rarity].n}</span> · 祭炼 ${d.level + (d.bonus || 0)}${d.native ? " · 本命" : ""}`;
+  else if (e.gear) (cls = "gray"), (sub = `<span class="gold">${e.gear.slot}《${e.gear.name}》词条已提供 · 同名不叠加</span>`);
+  else sub = d.desc;
+  if (e.at >= 0 && e.have) cls += " carried";
+  const key = kind === "spell" ? KEYS[e.at] : kind === "xinfa" ? "心法" + "一二"[e.at] : "已带";
+  const on = e.at >= 0 && e.have ? `<span class="on">${key}</span>` : "";
+  const name = kind === "xinfa" ? `《${d.name}》` : d.name;
+  const tcls = !e.have ? "" : e.gear ? "is-gray" : "";
+  return `<div class="it ${cls}" data-src-kind="${kind}" data-src-id="${e.id}">${LO.tokenHTML(kind, e.id, { size: 40, ghost: !e.have, cls: tcls })}<div class="tx"><b>${name}</b><small${e.gear ? ' class="gold"' : ""}>${sub}</small></div>${on}</div>`;
+}
+function renderRight() {
+  const k = UI.tab;
+  let list = LO.pool(k);
+  const hint = { spell: `拖入左页栏位 · 或悬停按 <span class="key">Q</span><span class="key">E</span><span class="key">R</span>`, xinfa: "装备上的仙品词条等同心法 · 同名只算一次", artifact: "法宝一件 · 右键发动", formation: `阵盘一件 · 悬停按 <span class="key">T</span> 装入` }[k];
+  const tabs = TABS.map(([kk, n]) => {
+    const own = LO.pool(kk).filter((e) => e.have).length, lock = LO.slotCount(kk) === 0;
+    return `<span class="ink-vtab ${k === kk ? "on" : ""} ${lock ? "locked" : ""}" data-tab="${kk}">${n}<sup>${lock ? "未开" : own}</sup></span>`;
+  }).join("");
+  const lockAll = LO.slotCount(k) === 0 ? `<div class="none">${{ spell: "法术", xinfa: "心法", artifact: "法宝", formation: "阵盘" }[k]}栏${LO.unlockText(k, 0)}。下面是已得的，先看看。</div>` : "";
+  $("#rp").innerHTML = `<div class="rp-h"><span class="ink-title">功法目录</span><small>${hint}</small></div>
+    <div class="vt ink-vtabs">${tabs}</div>
+    <div class="lib">${lockAll}${list.map((e) => itemHTML(k, e)).join("")}</div>
+    ${k === "xinfa" ? affixHTML() : ""}
+    ${planHTML()}
+    <div class="rp-foot"><span class="ink-note">悬停看详情 · 栏里的拖出册页即卸下 · 改动即存，出行准备里沿用</span></div>
+    <div class="back"><span class="ink-btn">回洞府</span><span class="key">Esc</span></div>`;
+  document.querySelectorAll("#study [data-src-id]").forEach((el) => LO.attachTip(el, el.dataset.srcKind, el.dataset.srcId));
+  document.querySelectorAll("#study [data-slot-kind]").forEach((el) => { const id = LO.unlocked(el.dataset.slotKind, +el.dataset.slotI) && LO.get(el.dataset.slotKind, +el.dataset.slotI); if (id) LO.attachTip(el, el.dataset.slotKind, id); });
+}
+function affixHTML() {
+  return `<div class="affix"><span class="k">身上词条</span>${LD.GEAR.filter((g) => g.affix).map((g) => `${g.slot}《${g.name}》<span class="g">「${g.affix.text}」= 《${LD.XINFA[g.affix.xinfa].name}》</span>`).join("　")}</div>`;
+}
+// 预演去处：常见护盾 + 建议
+function planHTML() {
+  const R = LD.REGIONS[S.region];
+  const grps = R.groups.map((g) => `<div class="grp"><span class="sh">${g.els.map((e) => shd(e, EL[e].n)).join(g.phases ? '<span class="ar">→</span>' : "")}</span><span class="w"><b>${g.who}</b><small>${g.where} · ${g.share}</small></span></div>`).join("");
+  const advs = R.advice.map((a, n) => {
+    const sid = a.spells[0], carried = S.spells.some((x, i) => x === sid && LO.unlocked("spell", i)), have = LO.have("spell", sid);
+    const st = carried ? `<span class="st ok">✓ 已带${LD.SPELLS[sid].name}</span>` : have ? `<span class="ink-btn" data-adv="${n}">换上${LD.SPELLS[sid].name}</span>` : `<span class="st">未领悟</span>`;
+    return `<div class="adv">${els(a.el)}<div class="tx">${a.text}<div>${st}</div></div></div>`;
+  }).join("");
+  return `<div class="plan"><div class="hd"><span class="ink-h">预演去处</span>${Object.values(LD.REGIONS).map((r) => `<span class="ink-tab ${S.region === r.id ? "on" : ""}" data-region="${r.id}">${r.name}</span>`).join("")}<span class="jing">${R.jing} · 推荐${R.realm}</span></div>
+    <div class="grps">${grps}</div><div class="advs">${advs}</div><div class="fb">护盾：克制五行 ×${LD.SHIELD.counter}，其他五行 ×${LD.SHIELD.other}，普攻 ×${LD.SHIELD.physical}；缺克制时五行符、法剑附灵可兜底</div></div>`;
+}
+// "换上"：放进第一个空栏；没有空栏就换掉本去处用不上的那一个，再不行换最后一栏
+function adopt(sid) {
+  const n = LO.slotCount("spell");
+  if (!n) return LO.toast("法术栏" + LO.unlockText("spell", 0), "zhu");
+  let i = S.spells.slice(0, n).indexOf(null);
+  if (i < 0) {
+    const need = new Set(LD.REGIONS[S.region].groups.flatMap((g) => g.els).map((e) => LD.COUNTER[e]));
+    i = S.spells.slice(0, n).findIndex((x) => x && !need.has(LD.SPELLS[x].el));
+    if (i < 0) i = n - 1;
+  }
+  const old = S.spells[i];
+  if (LO.place("spell", i, sid).ok) LO.toast(`${KEYS[i]} 栏：${old ? LD.SPELLS[old].name + " → " : ""}${LD.SPELLS[sid].name}`);
+}
+
+// ================= 第二视图：出行准备 · 快速调整 =================
+function renderQuick() {
+  const R = LD.REGIONS[S.region];
+  const fanBg = S.region === "r2" ? "rgba(63,154,110,.35)" : "rgba(47,127,168,.28)";
+  const cov = LO.coverage().map((c) => `<span class="c ${c.ok ? "ok" : "no"}">${shd(c.el)}<b>${c.ok ? "✓" : "✗ 缺" + EL[c.counter].n}</b></span>`).join("");
+  const nsp = LO.slotCount("spell");
+  const bar = [0, 1, 2].map((i) => {
+    const open = i < nsp, id = open && S.spells[i];
+    const tok = LO.tokenHTML("spell", id || null, { size: 56, glyph: open ? "" : "锁", cls: "e" + (i + 1) });
+    const cap = !open ? `<span class="lock-cap">${LO.unlockText("spell", i)}</span>` : `<span class="c">${id ? LD.SPELLS[id].name : "空"}<span class="key">${KEYS[i]}</span></span>`;
+    return `<div class="q ${open ? "" : "locked"} ${UI.pop === i ? "open" : ""}" data-q="${i}">${tok}${cap}${open ? '<span class="chg">换</span>' : ""}</div>`;
+  }).join("");
+  // 阵盘 / 心法：只读（出行准备里不细调）
+  const ro = [];
+  if (LO.unlocked("formation") && S.formation) ro.push(`<div class="q ro" data-ro="formation">${LO.tokenHTML("formation", S.formation, { size: 46 })}<span class="c">${LD.FORMATIONS[S.formation].name}<span class="key">T</span></span></div>`);
+  S.xinfa.forEach((x, i) => x && LO.unlocked("xinfa", i) && ro.push(`<div class="q ro" data-ro="xinfa:${x}">${LO.tokenHTML("xinfa", x, { size: 46 })}<span class="c">${LD.XINFA[x].name}<span class="key">心法</span></span></div>`));
+  const gearRows = [["青锋剑", "法剑 · 仙品", "sword_qingfeng", 3], ["灵丝道袍", "法衣 · 灵品", "robe_lingsi", 1], ["水灵佩", "玉佩 · 仙品", "jade_shuiling", 3]];
+  if (LO.unlocked("artifact") && S.artifact) { const a = LO.defOf("artifact", S.artifact); gearRows.push([a.name, "法宝 · 右键", null, a.rarity, a.uid]); }
+  $("#quick").innerHTML = `<div class="abs hd"><span class="ink-title">出行</span><i class="ink-rule"></i><small>第九次 · 洞府辰时 · 储物袋已清空</small></div>
+    <div class="abs fan ink-fan" style="background:var(--ink-tex-cloud), radial-gradient(ellipse at 50% 80%, ${fanBg}, transparent 70%), var(--paper-lo);background-blend-mode:multiply"><span class="nm">${R.name}</span><span class="ink-seal two" style="--s:40px">${R.jing}</span></div>
+    <div class="abs regs ink-list">${Object.values(LD.REGIONS).map((r) => `<div class="ink-row ${S.region === r.id ? "on" : ""}" data-region="${r.id}"><span class="nm">${r.name}</span><span class="v" style="font-size:13px;font-family:var(--f-ui);color:var(--ink-dan)">${r.jing} · ${r.realm}</span></div>`).join("")}</div>
+    <div class="abs facts ink-list">
+      <div class="ink-row"><span class="k">妖谱</span><span class="v">${S.region === "r2" ? "狼妖 · 藤妖 · 碧鳞水蟒" : "狼妖 · 灰狼 · 石傀"}</span></div>
+      <div class="ink-row"><span class="k">护盾</span><span class="v">${[...new Set(R.groups.flatMap((g) => g.els))].map((e) => shd(e)).join("")}</span></div>
+      <div class="ink-row"><span class="k">宜带</span><span class="v" style="font-size:14px;font-family:var(--f-kai)">${R.line.split("；")[0]}</span></div>
+      <div class="ink-row"><span class="k">天时</span><span class="v">晨起 · 入夜妖潮</span></div></div>
+    <div class="abs gear">${gearRows.map(([n, s, ic, q, uid]) => `<div class="g"><div class="t"><b>${n}</b><span>${s}</span></div>${uid ? LO.tokenHTML("artifact", uid, { size: 50 }) : `<span class="sk" style="--s:50px;--el:${LD.RAR[q].c};--elw:${LD.RAR[q].c}33"><span class="ico" style="${LO.iconStyle(ic)}"></span></span>`}</div>`).join("")}</div>
+    <div class="abs por"></div><div class="abs who2">林墨</div>
+    <div class="abs cov cov2">${cov}</div>
+    <div class="abs bar">${bar}${ro.length ? '<i class="sep"></i>' + ro.join("") : ""}</div>
+    <section class="abs pack ink-paper"><div class="ink-h">行囊<small style="font:12px var(--f-ui);color:var(--ink-dan);margin-left:10px">丹药 3 种 · 每种 3 枚</small></div>
+      <div class="slots">${["huichun_dan", "huiqi_dan", "dundi_fu"].map((id, n) => `<span class="sk" style="--s:50px;--el:${LD.RAR[0].c};--elw:transparent"><span class="ico" style="${LO.iconStyle(id) || LO.iconStyle("fu_wood")}"></span><i class="lv">${[3, 2, 1][n]}</i></span>`).join("")}</div>
+      <div class="note">（示意：行囊、委托与现行出行准备相同，略）</div></section>
+    <div class="abs back2"><span class="ink-btn">回洞府</span><span class="ink-note">细调：灵泉静室 · 功法</span></div>
+    <div class="abs go ink-seal-btn">启程</div>
+    ${UI.pop != null ? swapHTML(UI.pop) : ""}`;
+  document.querySelectorAll("#quick [data-ro]").forEach((el) => { const [k, id] = el.dataset.ro.split(":"); LO.attachTip(el, k, id || LO.S.formation); });
+}
+function swapHTML(i) {
+  const R = LD.REGIONS[S.region];
+  const need = new Set(R.groups.flatMap((g) => g.els));
+  const cur = S.spells[i];
+  const opts = LO.pool("spell").filter((e) => e.have).map((e) => {
+    const d = e.def, t = LD.BEATS[d.el], good = !d.noHit && need.has(t);
+    const st = e.id === cur ? "此栏" : e.at >= 0 ? `在 ${KEYS[e.at]} · 互换` : "";
+    return `<div class="opt ${e.id === cur ? "cur" : ""}" data-pick="${e.id}">${LO.tokenHTML("spell", e.id, { size: 38 })}<div class="tx"><b>${d.name}</b><small>${EL[d.el].n}行 · ${d.role} · ${d.noHit ? "不破盾" : `<span class="${good ? "good" : ""}">克${EL[t].n}盾${good ? " · 此行用得上" : ""}</span>`}</small></div><span class="st">${st}</span></div>`;
+  }).join("");
+  const x = 468 + i * 90 - 120, y = 560 - 18;
+  return `<section class="swap ink-paper slip" style="left:${Math.max(380, x)}px;bottom:${720 - y}px"><div class="h">换 ${KEYS[i]} 栏<small>点一下即换</small></div>
+    <div class="hint">${R.name}：<b>${R.line}</b></div>${opts}
+    <div class="ft"><span>细调在洞府 · 灵泉静室 · 功法</span><a data-close>收起</a></div></section>`;
+}
+
+// ================= 事件 =================
+document.addEventListener("click", (ev) => {
+  const t = ev.target.closest("[data-tab],[data-region],[data-adv],[data-q],[data-pick],[data-close],#tg");
+  if (!t) {
+    if (UI.view === "quick" && UI.pop != null && !ev.target.closest(".swap")) (UI.pop = null), render();
+    return;
+  }
+  if (t.id === "tg") { UI.view = UI.view === "study" ? "quick" : "study"; UI.pop = null; LO.hideTip(); return render(); }
+  if (t.dataset.tab) { UI.tab = t.dataset.tab; return render(); }
+  if (t.dataset.region) { S.region = t.dataset.region; return LO.emit(); }
+  if (t.dataset.adv) return adopt(LD.REGIONS[S.region].advice[+t.dataset.adv].spells[0]);
+  if (t.dataset.q != null) {
+    const i = +t.dataset.q;
+    if (i >= LO.slotCount("spell")) return LO.toast("此栏" + LO.unlockText("spell", i), "zhu");
+    UI.pop = UI.pop === i ? null : i;
+    return render();
+  }
+  if (t.dataset.pick) { const i = UI.pop; UI.pop = null; LO.place("spell", i, t.dataset.pick); return render(); }
+  if (t.hasAttribute("data-close")) { UI.pop = null; return render(); }
+});
+window.addEventListener("keydown", (ev) => {
+  if (ev.code === "Escape" && UI.pop != null) (UI.pop = null), render();
+});
+LO.on(render);
+render();
+LO.dnd($("#study"));
+LO.mockBar($("#mb"));
+const syncMock = () => $("#mb").classList.toggle("dark", UI.view === "study");
+LO.on(syncMock); syncMock();
+new MutationObserver(syncMock).observe(document.body, { attributes: !0, attributeFilter: ["data-view"] });
+LO.ready();
+</script>
+</body></html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 精细化小样 v1 · 建筑 / 环境 / 角色（可交互）</title>
+<link rel="stylesheet" href="../../../src/ui/ink/strokes.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../assets/fonts/MaShanZheng-Regular.ttf"); }
+:root { --paper: #ece6d6; --paper2: #e4ddca; --ink: #15181b; --ink2: #3b3c38; --ink3: #6f6c63; --ink4: #a7a293; --zhu: #b8291a; --jin: #a8812e; --qing: #2f7fa8; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--ink); font: 13.5px/1.6 "Microsoft YaHei", "PingFang SC", sans-serif; }
+.kai { font-family: "MaShanZheng", KaiTi, STKaiti, serif; font-weight: 400; }
+header { display: flex; align-items: baseline; gap: 22px; padding: 14px 28px 2px; flex-wrap: wrap; }
+header h1 { margin: 0; font-size: 30px; letter-spacing: .1em; }
+.lede { padding: 0 28px; color: var(--ink3); font-size: 13px; margin: 0; }
+.lede b { color: var(--ink2); font-weight: 600; }
+main { display: flex; gap: 22px; padding: 10px 28px 22px; align-items: flex-start; }
+#stage { position: relative; flex: none; width: 1280px; height: 720px; background: #ddd6c4; border-radius: 2px 5px 3px 4px; box-shadow: 0 0 0 1px rgba(60,55,45,.18); overflow: hidden; }
+#stage canvas { display: block; width: 100%; height: 100%; }
+#stage.full { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 20; border-radius: 0; }
+#stage .tag { position: absolute; left: 14px; top: 10px; font: 22px "MaShanZheng", KaiTi, serif; color: var(--ink); text-shadow: 0 0 6px var(--paper), 0 0 2px var(--paper); pointer-events: none; letter-spacing: .06em; }
+#stage .tag small { font: 12px "Microsoft YaHei", sans-serif; color: var(--ink2); margin-left: 8px; letter-spacing: 0; }
+#stage .hint { position: absolute; right: 12px; bottom: 8px; font-size: 12px; color: var(--ink2); text-shadow: 0 0 4px var(--paper); pointer-events: none; }
+#stage .fullx { position: absolute; right: 12px; top: 10px; display: none; }
+#stage.full .fullx { display: block; }
+#loading { position: absolute; inset: 0; display: grid; place-items: center; background: var(--paper); font: 26px "MaShanZheng", KaiTi, serif; color: var(--ink2); z-index: 5; }
+.side { flex: 1; min-width: 360px; max-width: 470px; }
+.row { display: flex; align-items: baseline; gap: 6px; margin: 0 0 6px; flex-wrap: wrap; }
+.row > label { width: 44px; flex: none; font: 17px "MaShanZheng", KaiTi, serif; color: var(--ink2); }
+.seg { display: flex; gap: 2px; flex-wrap: wrap; }
+.seg a { font-size: 13.5px; color: var(--ink3); padding: 1px 9px 6px; cursor: pointer; position: relative; user-select: none; white-space: nowrap; }
+.seg a:hover { color: var(--ink); }
+.seg a.on { color: var(--ink); font-weight: 600; }
+.seg a.on::after { content: ""; position: absolute; left: 5px; right: 4px; bottom: 0; height: 6px; background: var(--zhu); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.seg a.dis { opacity: .35; pointer-events: none; }
+.sep { height: 9px; margin: 8px 0 8px; background: var(--ink4); opacity: .7; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.note { font-size: 12.5px; color: var(--ink2); margin: 2px 0 0; min-height: 3.2em; }
+.note .kai { font-size: 17px; color: var(--ink); margin-right: 6px; }
+h3 { margin: 0 0 2px; font: 20px "MaShanZheng", KaiTi, serif; letter-spacing: .06em; }
+h3 small { font: 12px "Microsoft YaHei", sans-serif; color: var(--ink3); margin-left: 6px; letter-spacing: 0; }
+.big { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 10px; margin: 4px 0 6px; }
+.big div { line-height: 1.15; }
+.big b { display: block; font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.big span { font-size: 11.5px; color: var(--ink3); }
+table.st { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+table.st th { text-align: right; font-weight: 400; color: var(--ink3); padding: 1px 4px; border-bottom: 1px solid var(--ink4); }
+table.st th:first-child, table.st td:first-child { text-align: left; }
+table.st td { text-align: right; padding: 1px 4px; }
+table.st tr.sum td { border-top: 1px solid var(--ink4); font-weight: 600; }
+.gpu { font-size: 11.5px; color: var(--ink3); margin-top: 4px; }
+.files { font-size: 12px; color: var(--ink3); margin-top: 8px; }
+.files code { font-family: Consolas, monospace; color: var(--ink2); background: var(--paper2); padding: 0 4px; border-radius: 2px; }
+.re { color: var(--zhu); cursor: pointer; margin-left: 4px; }
+.btn { display: inline-block; font-size: 12.5px; padding: 1px 10px; border: 1.5px solid var(--ink2); border-radius: 3px 5px 3px 6px; cursor: pointer; user-select: none; background: rgba(236,230,214,.9); }
+.btn:hover { color: var(--zhu); border-color: var(--zhu); }
+</style></head>
+<body>
+<header><h1 class="kai">墨途 · 精细化小样 v1</h1>
+<p class="lede" style="padding:0">山神庙一角（约 30×30 米）· <b>全部纯程序生成</b>（几何、贴图在页面里现算，主角 / 青牙由 art-char 交付）· 默认是游戏现行 45° 跟随镜头</p></header>
+<main>
+  <div id="stage"><canvas id="view"></canvas><div class="tag" id="tag"></div><div class="hint" id="hint"></div><span class="btn fullx" data-act="unfull">退出全窗口（Esc）</span><div id="loading">研墨中……</div></div>
+  <div class="side">
+    <div class="row"><label>版本</label><div class="seg" data-k="ver"><a data-v="old">现状</a><a data-v="new">精细版</a></div></div>
+    <div class="row"><label>着色</label><div class="seg" data-k="shade"><a data-v="A">A 现行 toon</a><a data-v="B">B 水墨写意</a><a data-v="C">C 写实 PBR</a></div></div>
+    <div class="row"><label>精度</label><div class="seg" data-k="lod"><a data-v="full">全量（近景也经得起看）</a><a data-v="budget">游戏预算（隐藏近景细节件、草减半）</a></div></div>
+    <div class="row"><label>镜头</label><div class="seg" data-k="cam"><a data-v="game">游戏 45°</a><a data-v="orbit">近景环绕</a></div></div>
+    <div class="row"><label>动作</label><div class="seg" data-k="anim"><a data-v="idle">待机</a><a data-v="attack">攻击</a></div></div>
+    <div class="row"><label>后期</label><div class="seg" data-k="post"><a data-v="ink">水墨后期</a><a data-v="raw">关（看原始着色）</a></div></div>
+    <div class="row"><label>画布</label><div class="seg" data-k="size"><a data-v="720">1280×720</a><a data-v="full">全窗口</a></div><div class="seg" data-k="pr" style="margin-left:6px"><a data-v="1">像素比 1</a><a data-v="1.5">1.5（高档上限）</a></div></div>
+    <p class="note" id="note"></p>
+    <div class="sep"></div>
+    <h3>实测代价<small>每帧连续渲染，不降帧</small></h3>
+    <div class="big"><div><b id="fps">–</b><span>帧率（受刷新率封顶）</span></div><div><b id="gpu">–</b><span>GPU 毫秒 / 帧</span></div><div><b id="cpu">–</b><span>CPU 提交毫秒</span></div>
+      <div><b id="calls">–</b><span>draw call（含阴影）</span></div><div><b id="tris">–</b><span>三角面（主 pass）</span></div><div><b id="vram">–</b><span>贴图显存</span></div>
+      <div><b id="bench">–</b><span>GPU 基准毫秒 <a class="re" data-act="bench">重测</a></span></div><div style="grid-column: span 2"><span style="font-size:11.5px;line-height:1.4;display:block;padding-top:3px">基准 = 同一画面背靠背画 30 帧取中位数，比帧循环里的计时稳（低负载时显卡会降频）。切换状态后约 1 秒自动重测。</span></div></div>
+    <table class="st"><thead><tr><th>分项</th><th>三角面</th><th>网格 / 实例</th><th>投影</th><th>贴图</th></tr></thead><tbody id="rows"></tbody></table>
+    <div class="gpu" id="gpuname"></div>
+    <div class="files">生成器 <code>tools/art_refine_v1/src/</code> · 打包 <code>node tools/art_refine_v1/build.mjs</code> · 说明 <code>建筑与环境.md</code></div>
+  </div>
+</main>
+<script>/*__BUNDLE__*/</script>
+</body></html>

@@ -1,0 +1,495 @@
+{
+ "temple": [
+  {
+   "name": "roof-bed",
+   "tris": 7232,
+   "perInst": 7232,
+   "inst": 1,
+   "cast": true,
+   "mat": "bed:B"
+  },
+  {
+   "name": "roof-under",
+   "tris": 4000,
+   "perInst": 4000,
+   "inst": 1,
+   "cast": false,
+   "mat": "under:B"
+  },
+  {
+   "name": "fascia",
+   "tris": 384,
+   "perInst": 384,
+   "inst": 1,
+   "cast": false,
+   "mat": "wood:B"
+  },
+  {
+   "name": "tiles-pan",
+   "tris": 41616,
+   "perInst": 24,
+   "inst": 1734,
+   "cast": false,
+   "mat": "tile:B"
+  },
+  {
+   "name": "tiles-cover",
+   "tris": 55680,
+   "perInst": 32,
+   "inst": 1740,
+   "cast": false,
+   "mat": "tile:B"
+  },
+  {
+   "name": "tiles-wadang",
+   "tris": 21888,
+   "perInst": 144,
+   "inst": 152,
+   "cast": false,
+   "mat": "tile:B"
+  },
+  {
+   "name": "tiles-dishui",
+   "tris": 7104,
+   "perInst": 48,
+   "inst": 148,
+   "cast": false,
+   "mat": "tile:B"
+  },
+  {
+   "name": "ridges",
+   "tris": 11738,
+   "perInst": 11738,
+   "inst": 1,
+   "cast": true,
+   "mat": "ridge:B"
+  },
+  {
+   "name": "ridge-beasts",
+   "tris": 3928,
+   "perInst": 3928,
+   "inst": 1,
+   "cast": true,
+   "mat": "ridge:B"
+  },
+  {
+   "name": "gable",
+   "tris": 120,
+   "perInst": 120,
+   "inst": 1,
+   "cast": true,
+   "mat": "gable:B"
+  },
+  {
+   "name": "bofeng",
+   "tris": 688,
+   "perInst": 688,
+   "inst": 1,
+   "cast": true,
+   "mat": "lacquer:B"
+  },
+  {
+   "name": "rafters",
+   "tris": 1872,
+   "perInst": 12,
+   "inst": 156,
+   "cast": false,
+   "mat": "wood:B"
+  },
+  {
+   "name": "rafters",
+   "tris": 4368,
+   "perInst": 28,
+   "inst": 156,
+   "cast": false,
+   "mat": "wood:B"
+  },
+  {
+   "name": "brackets",
+   "tris": 13780,
+   "perInst": 530,
+   "inst": 26,
+   "cast": true,
+   "mat": "caihua:B"
+  },
+  {
+   "name": "beams",
+   "tris": 352,
+   "perInst": 352,
+   "inst": 1,
+   "cast": true,
+   "mat": "caihua:B"
+  },
+  {
+   "name": "purlins",
+   "tris": 336,
+   "perInst": 336,
+   "inst": 1,
+   "cast": false,
+   "mat": "wood:B"
+  },
+  {
+   "name": "columns",
+   "tris": 1280,
+   "perInst": 1280,
+   "inst": 1,
+   "cast": true,
+   "mat": "lacquer:B"
+  },
+  {
+   "name": "col-bases",
+   "tris": 1080,
+   "perInst": 1080,
+   "inst": 1,
+   "cast": true,
+   "mat": "stone:B"
+  },
+  {
+   "name": "walls-brick",
+   "tris": 264,
+   "perInst": 264,
+   "inst": 1,
+   "cast": true,
+   "mat": "brick:B"
+  },
+  {
+   "name": "walls-plaster",
+   "tris": 132,
+   "perInst": 132,
+   "inst": 1,
+   "cast": true,
+   "mat": "plaster:B"
+  },
+  {
+   "name": "joinery",
+   "tris": 4532,
+   "perInst": 4532,
+   "inst": 1,
+   "cast": true,
+   "mat": "wood:B"
+  },
+  {
+   "name": "lattice",
+   "tris": 30,
+   "perInst": 30,
+   "inst": 1,
+   "cast": false,
+   "mat": "lattice:B"
+  },
+  {
+   "name": "paper",
+   "tris": 30,
+   "perInst": 30,
+   "inst": 1,
+   "cast": false,
+   "mat": "paper:B"
+  },
+  {
+   "name": "dark:B",
+   "tris": 12,
+   "perInst": 12,
+   "inst": 1,
+   "cast": false,
+   "mat": "dark:B"
+  },
+  {
+   "name": "stone:B",
+   "tris": 44,
+   "perInst": 44,
+   "inst": 1,
+   "cast": false,
+   "mat": "stone:B"
+  },
+  {
+   "name": "statue",
+   "tris": 192,
+   "perInst": 192,
+   "inst": 1,
+   "cast": false,
+   "mat": "statue:B"
+  },
+  {
+   "name": "plaque:B",
+   "tris": 2,
+   "perInst": 2,
+   "inst": 1,
+   "cast": false,
+   "mat": "plaque:B"
+  },
+  {
+   "name": "wood:B",
+   "tris": 44,
+   "perInst": 44,
+   "inst": 1,
+   "cast": false,
+   "mat": "wood:B"
+  },
+  {
+   "name": "platform",
+   "tris": 5120,
+   "perInst": 5120,
+   "inst": 1,
+   "cast": true,
+   "mat": "stone:B"
+  },
+  {
+   "name": "floor",
+   "tris": 2,
+   "perInst": 2,
+   "inst": 1,
+   "cast": false,
+   "mat": "pave:B"
+  },
+  {
+   "name": "tuft:B",
+   "tris": 3486,
+   "perInst": 42,
+   "inst": 83,
+   "cast": false,
+   "mat": "tuft:B"
+  }
+ ],
+ "env": [
+  {
+   "name": "ground",
+   "tris": 47432,
+   "perInst": 47432,
+   "inst": 1,
+   "cast": false,
+   "mat": "ground:B"
+  },
+  {
+   "name": "slab:B",
+   "tris": 420,
+   "perInst": 84,
+   "inst": 5,
+   "cast": false,
+   "mat": "slab:B"
+  },
+  {
+   "name": "slab:B",
+   "tris": 500,
+   "perInst": 100,
+   "inst": 5,
+   "cast": false,
+   "mat": "slab:B"
+  },
+  {
+   "name": "slab:B",
+   "tris": 1160,
+   "perInst": 116,
+   "inst": 10,
+   "cast": false,
+   "mat": "slab:B"
+  },
+  {
+   "name": "slab:B",
+   "tris": 924,
+   "perInst": 132,
+   "inst": 7,
+   "cast": false,
+   "mat": "slab:B"
+  },
+  {
+   "name": "rocks",
+   "tris": 2500,
+   "perInst": 2500,
+   "inst": 1,
+   "cast": true,
+   "mat": "rock:B"
+  },
+  {
+   "name": "pebbles",
+   "tris": 5200,
+   "perInst": 20,
+   "inst": 260,
+   "cast": false,
+   "mat": "pebble:B"
+  },
+  {
+   "name": "grass",
+   "tris": 33240,
+   "perInst": 60,
+   "inst": 554,
+   "cast": false,
+   "mat": "grass:B"
+  },
+  {
+   "name": "grass",
+   "tris": 53760,
+   "perInst": 84,
+   "inst": 640,
+   "cast": false,
+   "mat": "grass:B"
+  },
+  {
+   "name": "grass",
+   "tris": 24192,
+   "perInst": 42,
+   "inst": 576,
+   "cast": false,
+   "mat": "grass:B"
+  },
+  {
+   "name": "culms",
+   "tris": 28320,
+   "perInst": 944,
+   "inst": 30,
+   "cast": true,
+   "mat": "culm:B"
+  },
+  {
+   "name": "bamboo-leaves",
+   "tris": 22848,
+   "perInst": 16,
+   "inst": 1428,
+   "cast": true,
+   "mat": "bleaf:B"
+  },
+  {
+   "name": "bamboo-twigs",
+   "tris": 5760,
+   "perInst": 16,
+   "inst": 360,
+   "cast": false,
+   "mat": "culm:B"
+  },
+  {
+   "name": "trees-bark",
+   "tris": 5264,
+   "perInst": 5264,
+   "inst": 1,
+   "cast": true,
+   "mat": "bark:B"
+  },
+  {
+   "name": "pine-pads",
+   "tris": 152,
+   "perInst": 2,
+   "inst": 76,
+   "cast": true,
+   "mat": "pine:B"
+  },
+  {
+   "name": "tree-leaves",
+   "tris": 90,
+   "perInst": 2,
+   "inst": 45,
+   "cast": true,
+   "mat": "tleaf:B"
+  },
+  {
+   "name": "lanterns",
+   "tris": 1184,
+   "perInst": 1184,
+   "inst": 1,
+   "cast": true,
+   "mat": "lantern:B"
+  }
+ ],
+ "templeStats": {
+  "tiles": 0,
+  "covers": 1740,
+  "ends": 300,
+  "pans": 1734,
+  "rafters": 312,
+  "brackets": 26,
+  "tufts": 83
+ },
+ "envStats": {
+  "slabs": 27,
+  "rockTris": 2500,
+  "grass": 1770,
+  "culms": 30,
+  "bambooLeaves": 1428,
+  "pinePads": 76,
+  "leafCards": 45
+ },
+ "bake": [
+  [
+   "noise",
+   256,
+   349525.3333333333
+  ],
+  [
+   "tile",
+   512,
+   4194304
+  ],
+  [
+   "lacquer",
+   512,
+   4194304
+  ],
+  [
+   "wood",
+   512,
+   4194304
+  ],
+  [
+   "plaster",
+   512,
+   4194304
+  ],
+  [
+   "brick",
+   512,
+   4194304
+  ],
+  [
+   "stone",
+   512,
+   4194304
+  ],
+  [
+   "pave",
+   512,
+   4194304
+  ],
+  [
+   "caihua",
+   512,
+   4194304
+  ],
+  [
+   "lattice",
+   256,
+   349525.3333333333
+  ],
+  [
+   "plaque",
+   512,
+   546133.3333333334
+  ],
+  [
+   "ground",
+   1024,
+   16777216
+  ],
+  [
+   "rock",
+   1024,
+   16777216
+  ],
+  [
+   "bark",
+   512,
+   4194304
+  ],
+  [
+   "bamboo",
+   256,
+   1048576
+  ],
+  [
+   "pine_needles",
+   256,
+   349525.3333333333
+  ],
+  [
+   "tree_leaves",
+   256,
+   349525.3333333333
+  ]
+ ]
+}

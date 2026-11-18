@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 水墨 UI 套件 · 组件总览</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="strokes.css">
+<link rel="stylesheet" href="ink-ui.css">
+<script src="ink-ui.js"></script>
+<style>
+html, body { margin: 0; width: 1280px; }
+body { padding: 40px 56px 60px; box-sizing: border-box; min-height: 100vh; }
+h1 { font-family: var(--f-splash); font-weight: 400; font-size: 64px; margin: 0; display: flex; align-items: center; gap: 18px; }
+h1 small { font-family: var(--f-kai); font-size: 15px; color: var(--ink-zhong); letter-spacing: .2em; }
+h2 { font-family: var(--f-display); font-weight: 400; font-size: 24px; letter-spacing: .12em; margin: 38px 0 14px; display: flex; align-items: center; gap: 14px; }
+h2 .ink-rule { width: 120px; }
+h2 small { font-family: var(--f-ui); font-size: 12px; color: var(--ink-dan); letter-spacing: 0; }
+.row { display: flex; gap: 34px; align-items: flex-start; flex-wrap: wrap; }
+.cell { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.cap { font-family: var(--f-ui); font-size: 11px; color: var(--ink-dan); }
+.sw { width: 74px; height: 50px; border-radius: 40% 46% 38% 50% / 44% 40% 50% 42%; }
+.shape { width: 150px; height: 60px; background: var(--ink-nong); -webkit-mask: var(--m) center / 100% 100% no-repeat; mask: var(--m) center / 100% 100% no-repeat; }
+.shape.sq { width: 70px; height: 70px; }
+.dark { background: #2a2c2e url(../img/play.jpg) center / cover; padding: 18px 22px; border-radius: 4px; }
+.scene { position: relative; width: 560px; height: 300px; background: url(../img/play.jpg) 40% 40% / 1100px auto; border-radius: 3px; overflow: hidden; }
+.scene svg { position: absolute; inset: 0; }
+</style>
+</head>
+<body class="ink-stage">
+  <h1>墨途 · 水墨界面套件<small>不画方框 · 以墨分层 · 以白为底 · 一点朱砂</small></h1>
+
+  <h2>色<span class="ink-rule"></span><small>纸 · 墨五色 · 矿物点色 · 品质</small></h2>
+  <div class="row">
+    <div class="cell"><div class="sw" style="background:var(--paper-hi)"></div><span class="cap">纸 paper-hi</span></div>
+    <div class="cell"><div class="sw" style="background:var(--paper-lo)"></div><span class="cap">旧纸 paper-lo</span></div>
+    <div class="cell"><div class="sw" style="background:var(--ink-jiao)"></div><span class="cap">焦 .92</span></div>
+    <div class="cell"><div class="sw" style="background:var(--ink-nong)"></div><span class="cap">浓 .78</span></div>
+    <div class="cell"><div class="sw" style="background:var(--ink-zhong)"></div><span class="cap">重 .58</span></div>
+    <div class="cell"><div class="sw" style="background:var(--ink-dan)"></div><span class="cap">淡 .36</span></div>
+    <div class="cell"><div class="sw" style="background:var(--ink-qing)"></div><span class="cap">清 .16</span></div>
+    <div class="cell"><div class="sw" style="background:var(--zhu)"></div><span class="cap">朱砂</span></div>
+    <div class="cell"><div class="sw" style="background:var(--shiqing)"></div><span class="cap">石青</span></div>
+    <div class="cell"><div class="sw" style="background:var(--shilv)"></div><span class="cap">石绿</span></div>
+    <div class="cell"><div class="sw" style="background:var(--nijin)"></div><span class="cap">泥金</span></div>
+    <div class="cell"><div class="sw" style="background:var(--zhe)"></div><span class="cap">赭石</span></div>
+  </div>
+
+  <h2>字<span class="ink-rule"></span><small>行书（大字）· 楷书（标题按钮）· 楷体（标签）· 黑体（小字数字）</small></h2>
+  <div class="row" style="align-items:baseline">
+    <span class="ink-splash" style="font-size:72px">满载而归</span>
+    <span class="ink-title l">储物袋</span>
+    <span class="ink-h">破境所得</span>
+    <span class="ink-label">撤离点 · 断涧古传送阵</span>
+    <span class="ink-note">本局感悟 +204 · 13:42</span>
+    <div class="ink-tiba" style="height:240px">竹深溪浅 · 量力而归<span class="ink-seal" style="--s:22px;font-size:11px">墨</span></div>
+  </div>
+
+  <h2>笔<span class="ink-rule"></span><small>程序化生成，全部是 mask 形状，颜色随意染</small></h2>
+  <div class="row">
+    <div class="cell"><div class="shape" style="--m:var(--ink-stroke-1)"></div><span class="cap">stroke-1</span></div>
+    <div class="cell"><div class="shape" style="--m:var(--ink-stroke-3)"></div><span class="cap">stroke-3</span></div>
+    <div class="cell"><div class="shape" style="--m:var(--ink-stroke-band);height:44px"></div><span class="cap">stroke-band</span></div>
+    <div class="cell"><div class="shape" style="--m:var(--ink-stroke-thin);height:14px"></div><span class="cap">stroke-thin</span></div>
+    <div class="cell"><div class="shape sq" style="--m:var(--ink-enso-1)"></div><span class="cap">enso-1</span></div>
+    <div class="cell"><div class="shape sq" style="--m:var(--ink-enso-3);background:var(--shiqing)"></div><span class="cap">enso-3</span></div>
+    <div class="cell"><div class="shape sq" style="--m:var(--ink-seal-sq2);background:var(--zhu)"></div><span class="cap">seal-sq2</span></div>
+    <div class="cell"><div class="shape sq" style="--m:var(--ink-splash-2)"></div><span class="cap">splash-2</span></div>
+    <div class="cell"><div class="shape sq" style="--m:var(--ink-wash-round);background:var(--ink-zhong)"></div><span class="cap">wash-round</span></div>
+    <div class="cell"><div class="shape sq" style="--m:var(--ink-cloud)"></div><span class="cap">cloud</span></div>
+  </div>
+
+  <h2>纸<span class="ink-rule"></span><small>面板 = 一张有毛边的纸；装裱、手卷、扇面、竹简按场合选用</small></h2>
+  <div class="row">
+    <section class="ink-paper" style="width:200px;height:110px"><div class="ink-h">宣纸</div><div class="ink-note">.ink-paper</div></section>
+    <section class="ink-paper alt tilt-l" style="width:200px;height:110px"><div class="ink-h">另一张</div><div class="ink-note">.alt .tilt-l</div></section>
+    <section class="ink-paper sajin" style="width:200px;height:110px"><div class="ink-h">洒金笺</div><div class="ink-note">.sajin · 稀有内容</div></section>
+    <div class="ink-mount" style="width:200px;height:146px;box-sizing:border-box"><div class="ink-mount-in" style="padding:14px"><div class="ink-h">装裱</div><div class="ink-note">.ink-mount · 境界、鉴宝</div></div></div>
+  </div>
+  <div class="row" style="margin-top:28px">
+    <div class="ink-fan-rim" style="width:300px;height:180px"><div class="ink-fan" style="position:absolute;inset:0;background:url(../img/bamboo.jpg) center / cover"></div></div>
+    <div class="ink-slips"><div class="ink-slip on">聚气丹<small>　可炼</small></div><div class="ink-slip">回春丹</div><div class="ink-slip dim">筑基丹</div></div>
+    <div class="ink-paper slip ink-tag" style="margin-top:30px">炼丹炉<small>二阶</small><s></s></div>
+    <div class="ink-paper slip ink-tag locked" style="margin-top:30px">炼器鼎<small>未建</small></div>
+    <div class="ink-wash" style="padding:16px 30px;margin-top:20px"><span class="ink-h">墨晕底衬</span><div class="ink-note">.ink-wash · HUD 用</div></div>
+  </div>
+
+  <h2>钮<span class="ink-rule"></span><small>次要＝一笔下划；主要＝浓墨一笔作底；决断＝朱印</small></h2>
+  <div class="row" style="align-items:center">
+    <span class="ink-btn">返回</span><span class="ink-btn is-hover">悬停</span><span class="ink-btn is-disabled">不可用</span>
+    <span class="ink-btn primary">放入锦囊</span><span class="ink-btn primary is-hover">主要 · 悬停</span>
+    <button class="ink-seal-btn">启程</button><button class="ink-seal-btn is-hover">悬停</button><button class="ink-seal-btn is-disabled">突破</button>
+  </div>
+  <div class="row" style="margin-top:18px;align-items:center">
+    <div class="ink-tabs"><span class="ink-tab on">储物袋</span><span class="ink-tab">行囊</span><span class="ink-tab locked">法宝</span></div>
+    <div class="ink-vtabs" style="flex-direction:row"><span class="ink-vtab on">炼丹</span><span class="ink-vtab">炼器</span></div>
+    <div class="ink-list" style="width:300px"><div class="ink-row on"><span class="k">撤离点</span><span class="v">断涧古传送阵</span></div><div class="ink-row"><span class="k">斩妖</span><span class="v">34</span></div></div>
+  </div>
+
+  <h2>物<span class="ink-rule"></span><small>圆相物品格：凡 · 灵 · 宝 · 仙 · 极；未鉴定 · 新 · 选中 · 空 · 锁</small></h2>
+  <div class="row" style="align-items:center">
+    <span class="ink-slot q-fan"><b>灵</b><em>87</em><span class="cap">凡</span></span>
+    <span class="ink-slot q-ling"><b>露</b><em>6</em><span class="cap">灵</span></span>
+    <span class="ink-slot q-bao"><b>竹</b><span class="cap">宝</span></span>
+    <span class="ink-slot q-xian"><b>卷</b><i>仙</i><span class="cap">仙</span></span>
+    <span class="ink-slot q-ji"><b>冥</b><i>极</i><span class="cap">极</span></span>
+    <span class="ink-slot q-bao is-unid"><b>剑</b><span class="cap">未鉴定</span></span>
+    <span class="ink-slot q-ling is-new"><s></s><b>果</b><span class="cap">新</span></span>
+    <span class="ink-slot q-bao is-sel"><b>冰</b><span class="cap">选中</span></span>
+    <span class="ink-slot is-empty"><span class="cap">空</span></span>
+    <span class="ink-slot is-locked"><b>锁</b><span class="cap">未解锁</span></span>
+    <span class="ink-slot lg q-xian"><b>丹</b><span class="cap">.lg</span></span>
+    <div class="ink-grid" style="--cols:4;--cell:56px;margin-left:10px">
+      <div class="it w2 h2 big q-bao is-sel"><b>竹</b><small>千年竹心</small></div><div class="it q-ling"><b>露</b><em>6</em></div><div class="it"><b>灵</b><em>87</em></div><div class="it q-xian"><b>卷</b></div><div class="it h2 q-bao is-unid"><b>剑</b></div><div class="it w2"><b>皮</b></div>
+    </div>
+  </div>
+
+  <h2>数<span class="ink-rule"></span><small>一笔进度条 · 圆相读条 · 计数</small></h2>
+  <div class="row" style="align-items:center">
+    <div style="width:260px;display:flex;flex-direction:column;gap:14px">
+      <div class="ink-bar hp" style="--v:.72;--lag:.84"><i></i><b></b></div>
+      <div class="ink-bar qi thin" style="--v:.45"><i></i></div>
+      <div class="ink-bar xp" style="--v:.93"><i></i></div>
+      <div class="ink-bar ok thick" style="--v:.3"><i></i></div>
+    </div>
+    <div class="ink-ring" style="--v:.58;--rc:var(--zhu);width:110px;height:110px"></div>
+    <div class="ink-ring" style="--v:.82;--rc:var(--shilv);width:80px;height:80px"></div>
+    <div style="display:flex;align-items:center;gap:10px"><span class="ink-seal round gold" style="--s:30px;font-size:13px">石</span><span class="ink-num" style="font-size:34px;color:#7c5d1a">2,431</span></div>
+    <div class="ink-seal four" style="--s:70px"><span>撤</span><span>离</span><span>功</span><span>成</span></div>
+    <span class="ink-seal frame" style="--s:46px">妖</span><span class="ink-seal round blue" style="--s:40px">灵</span><span class="ink-seal oval green" style="--s:46px">药</span>
+  </div>
+
+  <h2>示<span class="ink-rule"></span><small>浮签 · 通知 · 对话</small></h2>
+  <div class="row" style="align-items:flex-start">
+    <div class="ink-tip"><b style="font-family:var(--f-display);font-weight:400;font-size:18px">寒露草</b> <span class="c-ling">灵品</span><br>夜露凝于草尖，入丹可清心火。<br><span class="ink-note">灵值 12 · 占 1 格</span></div>
+    <div style="display:flex;flex-direction:column;gap:14px"><span class="ink-toast">拾得 · 灵石 ×12</span><span class="ink-toast gold">首次发现 · 千年竹心</span><span class="ink-toast zhu">妖潮将起 · 速寻撤离</span></div>
+    <div class="ink-say"><div class="who">守阵老人<span class="ink-seal" style="--s:22px;font-size:11px">叟</span></div><div class="ink-paper alt" style="width:300px;padding:18px 24px"><div class="line">此阵三百年未开，你若要走，便趁天黑之前。</div></div></div>
+  </div>
+
+  <h2>HUD<span class="ink-rule"></span><small>压在真实画面上的样子（无框，只用墨晕托底）</small></h2>
+  <div class="row dark" style="gap:40px;align-items:center">
+    <div class="ink-wash" style="--wash-color:rgba(240,234,220,.9);padding:10px 4px"><div class="hud-vital"><span class="lbl">气血</span><div class="ink-bar hp" style="--v:.72;--lag:.8"><i></i><b></b></div><span class="num">238 / 330</span><span class="lbl">真气</span><div class="ink-bar qi thin" style="--v:.45"><i></i></div><span class="num">74 / 165</span></div></div>
+    <div class="ink-wash" style="--wash-color:rgba(240,234,220,.85);display:flex;gap:14px;padding:12px 18px">
+      <div class="hud-skill metal"><span class="k">Q</span>剑</div><div class="hud-skill water" style="--cd:.62"><span class="k">E</span>冰<span class="cd"></span><span class="t">7</span></div><div class="hud-skill locked"><span class="k">R</span>锁</div><div class="hud-skill sm wood"><span class="k">1</span>春</div>
+    </div>
+    <div class="hud-mirror" style="--z:120px"><span class="knob"></span><div class="map" style="background:url(../img/overview.jpg) 52% 58% / 330% auto"></div></div>
+  </div>
+
+  <h2>立绘<span class="ink-rule"></span><small>界面里不出现低模 3D 人偶；用写意 2D 立绘（kit/portrait_linmo.svg，可由画师立绘同尺寸替换）</small></h2>
+  <div class="row" style="align-items:flex-end">
+    <img src="portrait_linmo.svg" width="240" height="400" alt="林墨 全身">
+    <img src="portrait_linmo_bust.svg" width="190" height="230" alt="林墨 半身">
+    <img src="art_danlu.svg" width="190" height="210" alt="丹炉">
+  </div>
+
+  <h2>光标<span class="ink-rule"></span><small>kit/cursors/ · 墨色主体 + 纸色描边，白地与墨块上都清楚</small></h2>
+  <div class="row" style="align-items:center">
+    <div class="row" style="gap:22px">
+      <div class="cell"><img src="cursors/default_64.svg" width="48"><span class="cap">默认</span></div>
+      <div class="cell"><img src="cursors/ui_64.svg" width="48"><span class="cap">界面悬停</span></div>
+      <div class="cell"><img src="cursors/interact_64.svg" width="48"><span class="cap">可交互</span></div>
+      <div class="cell"><img src="cursors/enemy_64.svg" width="48"><span class="cap">敌人</span></div>
+      <div class="cell"><img src="cursors/invalid_64.svg" width="48"><span class="cap">不可用</span></div>
+      <div class="cell"><img src="cursors/aim-metal_64.svg" width="48"><span class="cap">瞄准·金</span></div>
+      <div class="cell"><img src="cursors/aim-water_64.svg" width="48"><span class="cap">瞄准·水</span></div>
+      <div class="cell"><img src="cursors/aim-fire_64.svg" width="48"><span class="cap">瞄准·火</span></div>
+    </div>
+    <div class="dark row" style="gap:18px"><img src="cursors/default_32.svg"><img src="cursors/interact_32.svg"><img src="cursors/enemy_32.svg"><img src="cursors/invalid_32.svg"><img src="cursors/aim-wood_32.svg"><img src="cursors/aim-earth_32.svg"></div>
+  </div>
+
+  <h2>技能预览<span class="ink-rule"></span><small>地面上的范围、落点、扇形、弹道：低饱和五行色 + 毛边 + 淡晕，压在白纸地面与墨块上都可辨</small></h2>
+  <div class="row">
+    <div class="scene">
+      <svg viewBox="0 0 560 300">
+        <defs>
+          <filter id="brushy" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter>
+          <radialGradient id="aoe"><stop offset="0" stop-color="#2f7fa8" stop-opacity=".08"/><stop offset=".75" stop-color="#2f7fa8" stop-opacity=".2"/><stop offset="1" stop-color="#2f7fa8" stop-opacity=".32"/></radialGradient>
+          <radialGradient id="cone" cx="0" cy=".5" r="1"><stop offset="0" stop-color="#a8862f" stop-opacity=".3"/><stop offset="1" stop-color="#a8862f" stop-opacity=".06"/></radialGradient>
+        </defs>
+        <!-- 施法范围：淡墨细圆（不可越过），外圈纸色描边 -->
+        <g filter="url(#brushy)" transform="translate(150 170) scale(1 .62)">
+          <circle r="120" fill="none" stroke="#f5f0e3" stroke-opacity=".7" stroke-width="5" stroke-dasharray="14 9"/>
+          <circle r="120" fill="none" stroke="#15181b" stroke-opacity=".45" stroke-width="2.2" stroke-dasharray="14 9"/>
+        </g>
+        <!-- 落点 AoE：石青墨晕 + 一笔圆相边 -->
+        <g filter="url(#brushy)" transform="translate(215 140) scale(1 .62)">
+          <circle r="44" fill="url(#aoe)"/>
+          <circle r="44" fill="none" stroke="#f5f0e3" stroke-opacity=".75" stroke-width="5"/>
+          <path d="M44 0 A44 44 0 1 1 30 -32" fill="none" stroke="#2f7fa8" stroke-opacity=".85" stroke-width="3" stroke-linecap="round"/>
+          <circle r="3" fill="#2f7fa8"/>
+        </g>
+        <!-- 弹道：施法者到落点的一道淡墨虚笔 -->
+        <path d="M150 170 Q 180 140 215 140" fill="none" stroke="#2f7fa8" stroke-opacity=".7" stroke-width="2.4" stroke-dasharray="3 6" stroke-linecap="round"/>
+        <!-- 扇形（剑气斩）：泥金淡扇 -->
+        <g filter="url(#brushy)" transform="translate(400 190) scale(1 .62)">
+          <path d="M0 0 L 118 -62 A 134 134 0 0 1 118 62 Z" fill="url(#cone)" stroke="#f5f0e3" stroke-opacity=".7" stroke-width="4"/>
+          <path d="M0 0 L 118 -62 A 134 134 0 0 1 118 62 Z" fill="none" stroke="#a8862f" stroke-opacity=".75" stroke-width="2"/>
+        </g>
+        <!-- 直线（冲刺 / 飞剑）：一道带箭头的笔 -->
+        <g filter="url(#brushy)"><path d="M330 80 L 470 60" stroke="#f5f0e3" stroke-opacity=".7" stroke-width="16" stroke-linecap="round"/><path d="M330 80 L 470 60" stroke="#3f9a6e" stroke-opacity=".28" stroke-width="12" stroke-linecap="round"/><path d="M462 52 L 478 59 L 464 70" fill="none" stroke="#3f9a6e" stroke-opacity=".9" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+        <!-- 超出范围：同一形状改为淡墨 + 斜线 -->
+        <g transform="translate(500 240) scale(1 .62)" filter="url(#brushy)"><circle r="28" fill="rgba(21,24,27,.08)" stroke="rgba(21,24,27,.5)" stroke-width="2" stroke-dasharray="5 6"/><path d="M-16 16 L16 -16" stroke="rgba(21,24,27,.55)" stroke-width="2.6" stroke-linecap="round"/></g>
+      </svg>
+    </div>
+    <div class="ink-list" style="width:520px">
+      <div class="ink-row"><span class="k">施法范围</span><span class="v" style="font-family:var(--f-kai);font-size:14px">淡墨虚圆 α .45 + 纸色外描 · 不填色</span></div>
+      <div class="ink-row"><span class="k">落点 AoE</span><span class="v" style="font-family:var(--f-kai);font-size:14px">五行色墨晕 α .08→.32 · 一笔圆相边 α .85</span></div>
+      <div class="ink-row"><span class="k">扇形 / 直线</span><span class="v" style="font-family:var(--f-kai);font-size:14px">同色淡填 α .06–.3 · 2px 毛边描线</span></div>
+      <div class="ink-row"><span class="k">弹道</span><span class="v" style="font-family:var(--f-kai);font-size:14px">点状虚笔 3/6 · 终点箭头一笔</span></div>
+      <div class="ink-row"><span class="k">不可施放</span><span class="v" style="font-family:var(--f-kai);font-size:14px">一律退成淡墨 + 一道斜笔，不用红色</span></div>
+      <div class="ink-row"><span class="k">渲染层</span><span class="v" style="font-family:var(--f-kai);font-size:14px">画在水墨后处理之后（或排除描边/抖动）</span></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,486 @@
+{
+ "n": 2000,
+ "不化灵（旧假设）": {
+  "谨慎": {
+   "runs_p50": 8.0,
+   "runs_p90": 9.0,
+   "min_p50": 91,
+   "min_p90": 102,
+   "stones_in": 1483,
+   "hualing": 0,
+   "hualing_from_xp_items": 0,
+   "sink": 1218,
+   "refined": 152,
+   "xp_share": {
+    "感悟": 29.0,
+    "炼化": 38.1,
+    "丹药": 7.1,
+    "首杀/遗府": 20.6,
+    "委托/奇遇": 5.4
+   },
+   "wasted_xp": 397,
+   "facilities": {
+    "炼丹炉Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "炼器鼎Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 3.0
+    },
+    "灵泉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    },
+    "储物袋24": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "炼丹炉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 6.0
+    },
+    "炼器鼎Lv2": {
+     "p_bought": 0.47,
+     "run_p50": 7.0
+    },
+    "储物袋32": {
+     "p_bought": 0.54,
+     "run_p50": 7.0
+    },
+    "药园Lv2": {
+     "p_bought": 0.79,
+     "run_p50": 7.0
+    }
+   }
+  },
+  "贪心": {
+   "runs_p50": 7.0,
+   "runs_p90": 9.0,
+   "min_p50": 94,
+   "min_p90": 121,
+   "stones_in": 1880,
+   "hualing": 0,
+   "hualing_from_xp_items": 0,
+   "sink": 1361,
+   "refined": 260,
+   "xp_share": {
+    "感悟": 33.1,
+    "炼化": 39.3,
+    "丹药": 5.8,
+    "首杀/遗府": 17.4,
+    "委托/奇遇": 4.3
+   },
+   "wasted_xp": 869,
+   "facilities": {
+    "炼丹炉Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "炼器鼎Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "灵泉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "储物袋24": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "炼丹炉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 6.0
+    },
+    "炼器鼎Lv2": {
+     "p_bought": 0.8,
+     "run_p50": 7.0
+    },
+    "储物袋32": {
+     "p_bought": 0.77,
+     "run_p50": 7.0
+    },
+    "药园Lv2": {
+     "p_bought": 0.89,
+     "run_p50": 6.0
+    }
+   }
+  },
+  "新手": {
+   "runs_p50": 8.0,
+   "runs_p90": 10.0,
+   "min_p50": 99,
+   "min_p90": 119,
+   "stones_in": 1543,
+   "hualing": 0,
+   "hualing_from_xp_items": 0,
+   "sink": 1235,
+   "refined": 178,
+   "xp_share": {
+    "感悟": 28.9,
+    "炼化": 39.6,
+    "丹药": 7.0,
+    "首杀/遗府": 19.5,
+    "委托/奇遇": 5.0
+   },
+   "wasted_xp": 499,
+   "facilities": {
+    "炼丹炉Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "炼器鼎Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 3.0
+    },
+    "灵泉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    },
+    "储物袋24": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "炼丹炉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 7.0
+    },
+    "炼器鼎Lv2": {
+     "p_bought": 0.53,
+     "run_p50": 8.0
+    },
+    "储物袋32": {
+     "p_bought": 0.51,
+     "run_p50": 8.0
+    },
+    "药园Lv2": {
+     "p_bought": 0.75,
+     "run_p50": 8.0
+    }
+   }
+  }
+ },
+ "现行化灵公式": {
+  "谨慎": {
+   "runs_p50": 6.0,
+   "runs_p90": 7.0,
+   "min_p50": 70,
+   "min_p90": 83,
+   "stones_in": 6990,
+   "hualing": 5874,
+   "hualing_from_xp_items": 4424,
+   "sink": 1497,
+   "refined": 1244,
+   "xp_share": {
+    "感悟": 6.1,
+    "炼化": 85.4,
+    "丹药": 1.4,
+    "首杀/遗府": 7.0,
+    "委托/奇遇": 0.1
+   },
+   "wasted_xp": 2564,
+   "facilities": {
+    "炼丹炉Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "炼器鼎Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "灵泉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "储物袋24": {
+     "p_bought": 1.0,
+     "run_p50": 3.0
+    },
+    "炼丹炉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    },
+    "炼器鼎Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    },
+    "储物袋32": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "药园Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    }
+   }
+  },
+  "贪心": {
+   "runs_p50": 6.0,
+   "runs_p90": 9.0,
+   "min_p50": 83,
+   "min_p90": 112,
+   "stones_in": 8334,
+   "hualing": 6595,
+   "hualing_from_xp_items": 4700,
+   "sink": 1518,
+   "refined": 1188,
+   "xp_share": {
+    "感悟": 10.1,
+    "炼化": 81.5,
+    "丹药": 1.7,
+    "首杀/遗府": 6.4,
+    "委托/奇遇": 0.2
+   },
+   "wasted_xp": 3508,
+   "facilities": {
+    "炼丹炉Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "炼器鼎Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "灵泉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "储物袋24": {
+     "p_bought": 1.0,
+     "run_p50": 3.0
+    },
+    "炼丹炉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    },
+    "炼器鼎Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    },
+    "储物袋32": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "药园Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    }
+   }
+  },
+  "新手": {
+   "runs_p50": 6.0,
+   "runs_p90": 9.0,
+   "min_p50": 77,
+   "min_p90": 104,
+   "stones_in": 7629,
+   "hualing": 6388,
+   "hualing_from_xp_items": 4748,
+   "sink": 1518,
+   "refined": 1232,
+   "xp_share": {
+    "感悟": 6.9,
+    "炼化": 84.6,
+    "丹药": 1.4,
+    "首杀/遗府": 6.9,
+    "委托/奇遇": 0.2
+   },
+   "wasted_xp": 2825,
+   "facilities": {
+    "炼丹炉Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "炼器鼎Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "灵泉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "储物袋24": {
+     "p_bought": 1.0,
+     "run_p50": 3.0
+    },
+    "炼丹炉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    },
+    "炼器鼎Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    },
+    "储物袋32": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    },
+    "药园Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 5.0
+    }
+   }
+  }
+ },
+ "新 HUALING": {
+  "谨慎": {
+   "runs_p50": 7.0,
+   "runs_p90": 8.0,
+   "min_p50": 83,
+   "min_p90": 94,
+   "stones_in": 1732,
+   "hualing": 412,
+   "hualing_from_xp_items": 0,
+   "sink": 1319,
+   "refined": 256,
+   "xp_share": {
+    "感悟": 25.3,
+    "炼化": 43.2,
+    "丹药": 6.8,
+    "首杀/遗府": 20.2,
+    "委托/奇遇": 4.5
+   },
+   "wasted_xp": 470,
+   "facilities": {
+    "炼丹炉Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "炼器鼎Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "灵泉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "储物袋24": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "炼丹炉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 6.0
+    },
+    "炼器鼎Lv2": {
+     "p_bought": 0.88,
+     "run_p50": 7.0
+    },
+    "储物袋32": {
+     "p_bought": 0.69,
+     "run_p50": 7.0
+    },
+    "药园Lv2": {
+     "p_bought": 0.84,
+     "run_p50": 7.0
+    }
+   }
+  },
+  "贪心": {
+   "runs_p50": 7.0,
+   "runs_p90": 9.0,
+   "min_p50": 92,
+   "min_p90": 120,
+   "stones_in": 2306,
+   "hualing": 432,
+   "hualing_from_xp_items": 0,
+   "sink": 1468,
+   "refined": 348,
+   "xp_share": {
+    "感悟": 30.3,
+    "炼化": 44.0,
+    "丹药": 5.9,
+    "首杀/遗府": 16.1,
+    "委托/奇遇": 3.7
+   },
+   "wasted_xp": 1113,
+   "facilities": {
+    "炼丹炉Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "炼器鼎Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "灵泉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 3.0
+    },
+    "储物袋24": {
+     "p_bought": 1.0,
+     "run_p50": 3.0
+    },
+    "炼丹炉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 6.0
+    },
+    "炼器鼎Lv2": {
+     "p_bought": 0.94,
+     "run_p50": 6.0
+    },
+    "储物袋32": {
+     "p_bought": 0.92,
+     "run_p50": 6.0
+    },
+    "药园Lv2": {
+     "p_bought": 0.98,
+     "run_p50": 6.0
+    }
+   }
+  },
+  "新手": {
+   "runs_p50": 8.0,
+   "runs_p90": 10.0,
+   "min_p50": 92,
+   "min_p90": 115,
+   "stones_in": 1838,
+   "hualing": 414,
+   "hualing_from_xp_items": 0,
+   "sink": 1345,
+   "refined": 281,
+   "xp_share": {
+    "感悟": 25.3,
+    "炼化": 45.0,
+    "丹药": 6.8,
+    "首杀/遗府": 18.7,
+    "委托/奇遇": 4.3
+   },
+   "wasted_xp": 607,
+   "facilities": {
+    "炼丹炉Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "炼器鼎Lv1": {
+     "p_bought": 1.0,
+     "run_p50": 2.0
+    },
+    "灵泉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "储物袋24": {
+     "p_bought": 1.0,
+     "run_p50": 4.0
+    },
+    "炼丹炉Lv2": {
+     "p_bought": 1.0,
+     "run_p50": 6.0
+    },
+    "炼器鼎Lv2": {
+     "p_bought": 0.82,
+     "run_p50": 7.0
+    },
+    "储物袋32": {
+     "p_bought": 0.69,
+     "run_p50": 7.0
+    },
+    "药园Lv2": {
+     "p_bought": 0.86,
+     "run_p50": 7.0
+    }
+   }
+  }
+ }
+}

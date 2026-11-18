@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>静室草图 · 方向 A · 出行同版式（左侧属性卷）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<link rel="stylesheet" href="../loadout_v2/common.css"><link rel="stylesheet" href="common.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script><script src="icons.js"></script><script src="../loadout_v2/data.js"></script>
+<script src="common.js"></script><script src="widgets.js"></script>
+<style>
+/* 方向 A：版式与出行准备（src/ui/screens/prep.js）一一对应——中间立绘 + 随身法器 + 功法匣 + 随身功法栏、右栏行囊不动；
+   左侧"扇面去处 + 区域情报 + 护盾覆盖"换成一整卷属性。出行准备 = 本页 + 左侧换回去处。 */
+.hd { left: 46px; top: 22px; display: flex; align-items: center; gap: 16px; }
+.hd .ink-title { font-size: 40px; }
+.hd .ink-rule { width: 110px; }
+.hd .sub { font: 12px var(--f-ui); color: var(--ink-dan); }
+
+/* 属性卷：一张竖长纸笺 */
+.sheet { left: 26px; top: 80px; width: 330px; height: 594px; box-sizing: border-box; padding: 16px 22px 12px 26px; }
+.sheet .rh { display: flex; align-items: center; gap: 10px; }
+.sheet .rn { font: 30px var(--f-display); color: var(--ink); letter-spacing: .12em; }
+.sheet .rx { font: 11px var(--f-ui); color: var(--ink-dan); margin-top: 3px; display: flex; gap: 8px; align-items: center; }
+.sheet .md { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; font: 11px var(--f-ui); color: var(--ink-dan); }
+.sheet .cf-stats { margin-top: 0; }
+.sheet .cf-legend { position: absolute; left: 26px; bottom: 12px; gap: 9px; }
+
+.gearcol { left: 344px; top: 100px; display: flex; flex-direction: column; gap: 24px; align-items: flex-end; width: 210px; }
+.por { left: 548px; top: 52px; width: 196px; height: 480px; background: url(../../../../src/ui/ink/portrait_linmo.svg) center top / contain no-repeat; mix-blend-mode: multiply; }
+.who { left: 560px; top: 70px; writing-mode: vertical-rl; font: 22px var(--f-display); letter-spacing: .2em; display: flex; align-items: center; gap: 8px; }
+
+.box { left: 738px; top: 54px; width: 276px; height: 478px; box-sizing: border-box; padding: 16px 18px 12px 20px; }
+.box .bh { display: flex; align-items: baseline; gap: 8px; }
+.box .bh .ink-title { font-size: 24px; }
+.box .bh small { font: 11px var(--f-ui); color: var(--ink-dan); }
+
+.bar-t { left: 396px; top: 538px; font: 13px var(--f-display); color: var(--ink-zhong); letter-spacing: .2em; }
+.bar { left: 396px; top: 558px; }
+.bar-h { left: 396px; top: 680px; }
+
+.pack { left: 1022px; top: 22px; width: 246px; height: 630px; box-sizing: border-box; padding: 14px 16px 10px 18px; }
+.pack .ink-title { font-size: 24px; }
+.pack .ink-title small { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 6px; letter-spacing: 0; }
+.pack .note { position: absolute; left: 18px; right: 14px; bottom: 10px; font: 11px/1.5 var(--f-kai); color: var(--ink-zhong); }
+
+.back { left: 1030px; top: 674px; font-size: 19px; }
+.go { left: 1156px; top: 676px; font-size: 16px; color: var(--ink-zhong); }
+</style></head>
+<body class="ink-stage">
+<div class="abs hd"><span class="ink-title">藏锋阁</span><span class="ink-rule"></span><span class="sub">洞府 · 整装备战 · 改动即存，出行台直接沿用</span></div>
+
+<section class="abs sheet ink-paper" id="sheet"></section>
+<div class="abs gearcol" id="gear"></div>
+<div class="abs por"></div>
+<div class="abs who">林墨<span class="ink-seal" style="--s:24px">剑</span></div>
+<section class="abs box cf-box ink-paper alt tilt-r" id="box"></section>
+<div class="abs bar-t">随身功法</div>
+<div class="abs bar cf-bar-w" id="bar"></div>
+<div class="abs bar-h cf-help"><b>拖入栏位</b> · 栏间拖动换位 · 拖出卸下 · 悬停按 <b>Q / E / R / T</b> 装入 · 点属性看来源 · 点法器看详情与替换</div>
+<section class="abs pack ink-paper" id="pack"></section>
+<span class="abs ink-btn back">回洞府 <span class="key">Esc</span></span>
+<span class="abs ink-btn go">去出行台 ›</span>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let tab = CF.H.tab || "spell";
+W.statSide = "right"; W.gearSide = "left";
+function render() {
+  const R = CF.REALM;
+  $("sheet").innerHTML = `<div class="rh"><span class="rn">${R.name}</span><span class="ink-seal" style="--s:30px">七</span></div>
+    <div class="rx">${W.xpHTML(150)}<span>修为 ${R.xp} / ${R.need}</span></div>
+    <div class="md"><span>点任一项看来源</span>${W.modeHTML()}</div>
+    ${W.statsHTML({ bar: 62 })}${W.legendHTML()}`;
+  $("gear").innerHTML = ["sword", "robe", "jade"].map((s) => W.gearRowHTML(s, { right: 1 })).join("");
+  const b = W.boxHTML(tab);
+  $("box").innerHTML = `<div class="bh"><span class="ink-title">功法匣</span><small>领悟与所得</small></div>${b.tabs}${b.gl}${b.body}`;
+  W.bindBox($("box"), tab);
+  $("bar").innerHTML = W.barHTML({ size: 52 });
+  W.bindBar($("bar"));
+  $("pack").innerHTML = `<div class="ink-title">行囊<small>出行时从仓库取出</small></div>${W.packHTML()}<div class="note">出行台照此装；仓库不够时按现有补，缺的格子标"缺"。</div>`;
+  window.inkui && inkui.decorate();
+}
+W.render = render;
+document.addEventListener("click", (ev) => {
+  const t = ev.target.closest("[data-tab]");
+  if (t) { tab = t.dataset.tab; LO.setHeld(null); render(); }
+});
+CF.on(render);
+render();
+LO.dnd();
+W.applyHash();
+LO.ready();
+</script>
+</body></html>

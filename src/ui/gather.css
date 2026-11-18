@@ -1,0 +1,108 @@
+/* 采集表现（UI 设计，docs/ui/v2/灵草采集_v1.md）：交互提示、采集读条（运笔圆相）、完成反馈（采印、飞入储物袋、拾取字）、储物袋灵草格。
+   规则同风格指南：不画方框；墨色浓淡 + 一点点色；只动画 opacity / transform / clip-path。 */
+.mk-layer-gather, .mk-layer-gather * { pointer-events: none; }
+
+/* ---------- 1. 交互提示：贴在物件上方的"F 印 + 动词 + 名称" ---------- */
+.mk-gp { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity 0.16s ease; will-change: transform; --gp-c: var(--ink-nong); }
+.mk-gp.on { opacity: 1; }
+.mk-gp .in {
+  position: absolute; left: 0; bottom: 14px; display: flex; align-items: center; gap: 7px; white-space: nowrap;
+  padding: 5px 14px 9px 9px; transform: translateX(-50%) scale(var(--mk-scale, 1)); transform-origin: 50% 100%;
+  --wash-color: rgba(242, 236, 222, 0.84);
+}
+/* 指向物件的一笔短竖（上浓下淡） */
+.mk-gp::after { content: ""; position: absolute; left: -1px; bottom: 0; width: 3px; height: 16px; background: linear-gradient(var(--gp-c), transparent); border-radius: 2px; opacity: 0.7; }
+.mk-gp .key {
+  flex: none; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; margin-right: 1px;
+  font: 700 15px var(--f-ui); color: var(--paper-hi); background: var(--ink-jiao); transform: rotate(-5deg);
+  -webkit-mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat;
+}
+.mk-gp .verb { font: 25px/1 var(--f-display); color: var(--ink); text-shadow: 0 0 4px var(--paper-hi), 0 0 2px var(--paper-hi); }
+.mk-gp .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-dan); }
+.mk-gp .nm { position: relative; font: 20px/1.1 var(--f-display); letter-spacing: 0.06em; color: var(--gp-c); text-shadow: 0 0 4px var(--paper-hi), 0 0 2px var(--paper-hi); }
+.mk-gp .nm::after {
+  content: ""; position: absolute; left: -3px; right: -8px; bottom: -7px; height: 7px; background: var(--gp-c); opacity: 0.7;
+  -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat;
+  clip-path: inset(0 100% 0 0); transition: clip-path 0.36s var(--ease-ink) 0.06s;
+}
+.mk-gp.on .nm::after { clip-path: inset(0 0 0 0); }
+.mk-gp .sub { font: 12px var(--f-ui); color: var(--ink-zhong); text-shadow: 0 0 3px var(--paper-hi), 0 0 3px var(--paper-hi); margin-left: 2px; }
+.mk-gp .tag { --s: 26px; margin-left: 2px; }
+.mk-gp .tag:empty { display: none; }
+/* 名称色：采集点 / 宝箱按品质（RARITY，由 gather_ui.js 写 --gp-c）；其他交互物按种类 */
+.mk-gp.k-extract, .mk-gp.k-lostbag, .mk-gp.k-encounter { --gp-c: var(--zhu); }
+.mk-gp.k-cave { --gp-c: #8a6a22; }
+.mk-gp .key { background: var(--gp-key, var(--ink-jiao)); }
+.mk-gp.t-glow .nm { font-size: 22px; }
+
+/* ---------- 2. 采集读条：一笔圆相按进度画出；运笔时机 = 一段泥金弧；被打断 = 转朱、抖、钤"断" ---------- */
+.mk-gring { position: absolute; left: 0; top: 0; width: 0; height: 0; display: none; }
+.mk-gring.on { display: block; }
+.mk-gring .ink-ring, .mk-gring .sweet { position: absolute; left: -52px; top: -52px; width: 104px; height: 104px; }
+.mk-gring .ink-ring { --rc: var(--shilv); transform: scale(var(--mk-scale, 1)); }
+.mk-gring .sweet {
+  --a: 0.7; --b: 0.85; transform: scale(calc(var(--mk-scale, 1) * 1.16)); opacity: 0.85;
+  background: conic-gradient(from -90deg, transparent calc(var(--a) * 360deg), var(--nijin) 0 calc(var(--b) * 360deg), transparent 0);
+  -webkit-mask: var(--ink-enso-full) 0 0 / 100% 100% no-repeat; mask: var(--ink-enso-full) 0 0 / 100% 100% no-repeat;
+}
+.mk-gring .sweet.off { display: none; }
+.mk-gring .lbl { position: absolute; left: 0; top: -66px; transform: translate(-50%, -100%); display: flex; gap: 8px; align-items: baseline; white-space: nowrap; }
+.mk-gring .lbl .v { font: 20px var(--f-display); color: var(--ink); letter-spacing: 0.12em; text-shadow: 0 0 6px var(--paper-hi), 0 0 3px var(--paper-hi); }
+.mk-gring .lbl .t { font: 400 24px var(--f-splash); color: #2c6e4f; text-shadow: 0 0 6px var(--paper-hi), 0 0 3px var(--paper-hi); }
+.mk-gring .lbl .t small { font: 12px var(--f-ui); }
+.mk-gring .r { position: absolute; left: 0; top: 60px; transform: translateX(-50%); white-space: nowrap; font: 12px/1.6 var(--f-ui); color: var(--ink-zhong); text-shadow: 0 0 3px var(--paper-hi), 0 0 3px var(--paper-hi), 0 0 2px var(--paper-hi); }
+.mk-gring .brk { position: absolute; left: -22px; top: -22px; --s: 44px; display: none; }
+.mk-gring.cut .ink-ring { --rc: var(--zhu); animation: mk-gshake 0.32s ease 2; }
+.mk-gring.cut .sweet { display: none; }
+.mk-gring.cut .brk { display: inline-flex; animation: ink-stamp 0.42s var(--ease-ink) both; }
+.mk-gring.cut .lbl .t, .mk-gring.cut .r { color: var(--zhu); font-weight: 700; }
+.mk-gring.fade { opacity: 0; transition: opacity 0.5s ease 0.35s; }
+@keyframes mk-gshake { 0%, 100% { translate: 0 0; } 25% { translate: -4px 1px; } 50% { translate: 3px -1px; } 75% { translate: -2px 0; } }
+
+/* ---------- 3. 完成反馈 ---------- */
+/* 采印：采下的瞬间在原处钤一方小圆印（石绿 / 泥金） */
+.mk-gstamp { position: absolute; left: 0; top: 0; }
+.mk-gstamp .ink-seal { position: absolute; left: -20px; top: -20px; --s: 40px; animation: ink-stamp 0.42s var(--ease-ink) both, mk-gout 0.5s ease 0.6s forwards; }
+@keyframes mk-gout { to { opacity: 0; transform: rotate(-4deg) scale(1.08); } }
+/* 飞入储物袋：物品圆相格沿弧线飞向右上"储物袋"计数，身后一串墨点 */
+.mk-gfly { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
+.mk-gfly .mk-tok { background: radial-gradient(circle, rgba(245, 240, 227, 0.92) 30%, rgba(245, 240, 227, 0) 68%); }
+.mk-gdot { position: absolute; width: 9px; height: 9px; margin: -4px 0 0 -4px; border-radius: 50% 44% 52% 40%; background: var(--gd-c, var(--ink-nong)); opacity: 0; animation: mk-gdot 0.9s ease forwards; }
+@keyframes mk-gdot { 0% { opacity: 0; transform: scale(0.4); } 15% { opacity: 0.75; transform: scale(1); } 100% { opacity: 0; transform: scale(0.6) translateY(4px); } }
+/* 袋口收到时：计数一跳 */
+.mk-layer-runhud .mk-val.mk-gpulse .s { animation: mk-gpulse 0.42s var(--ease-ink); }
+.mk-layer-runhud .mk-val.mk-gpulse .n { animation: mk-gpulse 0.42s var(--ease-ink); }
+@keyframes mk-gpulse { 0% { transform: scale(1); } 35% { transform: scale(1.12); } 100% { transform: scale(1); } }
+/* 拾取字：按品质着色的"名称 ×数量"，在拾取处上浮淡出 */
+.mk-glabel {
+  position: absolute; left: 0; top: 0; transform: translate(-50%, -100%); white-space: nowrap;
+  font: 21px var(--f-display); letter-spacing: 0.05em; color: var(--ink-nong);
+  text-shadow: 0 0 5px var(--paper-hi), 0 0 3px var(--paper-hi), 0 0 2px var(--paper-hi);
+  animation: mk-glabel 1.6s var(--ease-ink) forwards;
+}
+.mk-glabel small { font: 700 13px var(--f-ui); margin-left: 3px; }
+.mk-glabel.q3::after, .mk-glabel.q4::after { content: attr(data-q); display: inline-flex; vertical-align: 3px; margin-left: 5px; width: 18px; height: 18px; align-items: center; justify-content: center; font: 11px var(--f-display); color: var(--paper-hi); -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; }
+@keyframes mk-glabel { 0% { opacity: 0; translate: 0 6px; } 14% { opacity: 1; translate: 0 0; } 70% { opacity: 1; } 100% { opacity: 0; translate: 0 -30px; } }
+
+/* ---------- 4. 物品格：灵草 / 矿石 / 灵物的写意小图（2–4 笔，品类色，压在字后） ---------- */
+.ink-grid > .it.g-herb, .ink-grid > .it.g-ore, .ink-grid > .it.g-treasure { background-position: 50% 42%; background-size: 82% 82%; background-repeat: no-repeat; }
+.ink-grid > .it.g-herb { background-image: var(--g-herb); }
+.ink-grid > .it.g-ore { background-image: var(--g-ore); }
+.ink-grid > .it.g-treasure { background-image: var(--g-treasure); }
+.ink-grid > .it.g-herb > b, .ink-grid > .it.g-ore > b, .ink-grid > .it.g-treasure > b { text-shadow: 0 0 3px var(--paper-hi), 0 0 2px var(--paper-hi); }
+.ink-slot.g-herb::before, .ink-slot.g-ore::before, .ink-slot.g-treasure::before { background: var(--g-pic) 50% 45% / 86% 86% no-repeat, radial-gradient(circle at 50% 50%, var(--qw), transparent 70%); inset: 8%; }
+.ink-slot.g-herb { --g-pic: var(--g-herb); }
+.ink-slot.g-ore { --g-pic: var(--g-ore); }
+.ink-slot.g-treasure { --g-pic: var(--g-treasure); }
+.ink-slot.g-herb > b, .ink-slot.g-ore > b, .ink-slot.g-treasure > b { text-shadow: 0 0 3px var(--paper-hi), 0 0 2px var(--paper-hi); }
+/* 数量：右下角黑体 + 纸色描边（§5.6） */
+.ink-grid > .it > em { top: auto; right: 5px; bottom: 3px; font-size: 11px; font-weight: 700; color: var(--ink-nong); text-shadow: 0 0 3px var(--paper-hi), 0 0 3px var(--paper-hi); }
+.ink-grid > .it.g-herb.q-fan > b, .ink-grid > .it.g-ore.q-fan > b { color: var(--ink-nong); }
+/* 未鉴定：字模糊 + "？" + 同色淡晕呼吸 */
+.ink-grid > .it.is-unid::before { animation: ink-breathe 2.4s ease-in-out infinite; }
+.ink-grid > .it.is-unid { background-image: none; }
+.ink-grid > .it.is-unid > b { filter: blur(0.8px); opacity: 0.8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-gring.cut .ink-ring, .mk-gstamp .ink-seal, .mk-gdot, .mk-glabel, .ink-grid > .it.is-unid::before { animation-duration: 0.01s; }
+}

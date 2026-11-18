@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>墨途 · 天机镜（v2）</title>
+<link rel="stylesheet" href="kit/fonts.css">
+<link rel="stylesheet" href="kit/strokes.css">
+<link rel="stylesheet" href="kit/ink-ui.css">
+<script src="kit/ink-ui.js"></script>
+<style>
+html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+body { position: relative; }
+.abs { position: absolute; }
+/* 局内展开：场景隐去，一卷手卷从中间展开 */
+.scene { inset: 0; background: url(img/play.jpg) center / cover; filter: blur(4px) grayscale(.6) brightness(.8); transform: scale(1.03); }
+.dim { inset: 0; background: rgba(30, 28, 24, .35); }
+.scroll { left: 70px; top: 70px; width: 1140px; height: 580px; }
+.scroll .paper { position: absolute; inset: 0; background: var(--ink-tex-paper), var(--ink-tex-fiber), #efe7d3; background-blend-mode: multiply; box-shadow: 0 14px 30px rgba(0,0,0,.35); }
+.scroll .paper::before { /* 上下绫边 */ content: ""; position: absolute; left: 0; right: 0; top: 0; height: 16px; background: linear-gradient(#b9c4c0, #a9b5b0); box-shadow: 0 564px 0 #a9b5b0; }
+/* 引首（右）：卷名 */
+.yin { position: absolute; right: 0; top: 16px; bottom: 16px; width: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; background: rgba(185, 196, 192, .25); }
+.yin .t { writing-mode: vertical-rl; font-size: 54px; color: var(--ink); }
+/* 画心 */
+.hua { position: absolute; left: 160px; right: 160px; top: 30px; bottom: 30px; }
+.hua .img { position: absolute; inset: 0; background: url(img/overview.jpg) -50px -44px / 960px 540px; filter: sepia(.2) contrast(1.02); mix-blend-mode: multiply; -webkit-mask-image: radial-gradient(ellipse 52% 54% at 50% 50%, #000 70%, transparent 100%); mask-image: radial-gradient(ellipse 52% 54% at 50% 50%, #000 70%, transparent 100%); }
+.hua .fog { position: absolute; inset: -2px; background: var(--ink-tex-paper), #efe7d3; background-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(circle at 300px 300px, transparent 0 150px, #000 250px), radial-gradient(circle at 440px 190px, transparent 0 110px, #000 200px);
+  -webkit-mask-composite: source-in; mask-image: radial-gradient(circle at 300px 300px, transparent 0 150px, #000 250px), radial-gradient(circle at 440px 190px, transparent 0 110px, #000 200px); mask-composite: intersect; opacity: .93; }
+.hua svg { position: absolute; inset: 0; overflow: visible; }
+.mk { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.mk .l { font-family: var(--f-kai); font-size: 12px; color: var(--ink); white-space: nowrap; padding: 2px 10px; background: radial-gradient(ellipse at center, rgba(239,231,211,.92) 45%, rgba(239,231,211,0) 72%); text-shadow: 0 0 3px #efe7d3, 0 0 3px #efe7d3; }
+.mk .l.d { color: var(--ink-zhong); }
+.you { position: absolute; width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 20px solid var(--zhu); transform: translate(-50%, -50%) rotate(40deg); filter: drop-shadow(0 0 2px #fff); }
+.you-ring { position: absolute; width: 46px; height: 46px; transform: translate(-50%, -50%); background: var(--zhu); opacity: .5; -webkit-mask: var(--ink-enso-2) center / 100% 100%; mask: var(--ink-enso-2) center / 100% 100%; }
+/* 跋（左）：图例与本局记录 */
+.ba { position: absolute; left: 22px; top: 40px; bottom: 40px; width: 128px; display: flex; flex-direction: row-reverse; gap: 14px; }
+.ba .ink-tiba { font-size: 13px; line-height: 2; }
+.legend { position: absolute; left: 20px; bottom: 36px; display: grid; grid-template-columns: auto auto; gap: 8px 8px; align-items: center; font-family: var(--f-kai); font-size: 12px; color: var(--ink-zhong); }
+.legend .ink-seal { --s: 22px; font-size: 11px; }
+.close { right: 70px; top: 24px; display: flex; gap: 18px; align-items: center; }
+.close .ink-btn { color: var(--paper-hi); }
+.close .ink-btn::after { background: rgba(245,240,227,.6); }
+.compass { position: absolute; right: 170px; bottom: 44px; width: 64px; height: 64px; }
+</style>
+</head>
+<body>
+  <div class="abs scene"></div><div class="abs dim"></div>
+  <div class="abs close"><span class="ink-btn">合上 <span class="key" style="color:#e7dfcc">M</span></span></div>
+
+  <div class="abs scroll ink-scroll h">
+    <div class="paper"></div>
+    <span class="rod l"></span><span class="rod r"></span>
+
+    <div class="yin">
+      <div class="t ink-splash">竹海溪谷</div>
+      <span class="ink-seal two" style="--s:36px">天机</span>
+      <span class="ink-note" style="writing-mode:vertical-rl;letter-spacing:.2em">探明四成</span>
+    </div>
+
+    <div class="hua">
+      <div class="img"></div>
+      <div class="fog"></div>
+      <!-- 足迹：淡墨虚线 -->
+      <svg viewBox="0 0 820 520" width="820" height="520">
+        <path d="M232 318 C 260 300, 280 330, 300 350 S 330 372, 342 378" fill="none" stroke="#15181b" stroke-opacity=".55" stroke-width="2.4" stroke-dasharray="2 7" stroke-linecap="round"/>
+        <path d="M342 378 C 352 400, 360 420, 368 440" fill="none" stroke="#b8291a" stroke-opacity=".7" stroke-width="2.4" stroke-dasharray="7 6" stroke-linecap="round"/>
+      </svg>
+      <div class="mk" style="left:368px;top:452px"><span class="ink-seal round" style="--s:30px">撤</span><span class="l">断涧古传送阵 · 38 丈</span></div>
+      <div class="mk" style="left:560px;top:66px"><span class="ink-seal round ink" style="--s:26px;opacity:.6">撤</span><span class="l d">北岭石门 · 需阵钥</span></div>
+      <div class="mk" style="left:418px;top:64px"><span class="ink-seal gold" style="--s:28px">府</span><span class="l">无名遗府</span></div>
+      <div class="mk" style="left:492px;top:200px"><span class="ink-seal frame" style="--s:30px">妖</span><span class="l">碧鳞水蟒 · 遥见</span></div>
+      <div class="mk" style="left:640px;top:206px"><span class="ink-seal ink" style="--s:26px">阵</span><span class="l d">残阵 · 未明</span></div>
+      <div class="mk" style="left:292px;top:330px"><span class="ink-seal round ink" style="--s:24px">袋</span><span class="l">遗落储物袋</span></div>
+      <div class="you-ring" style="left:342px;top:378px"></div><div class="you" style="left:342px;top:378px"></div>
+    </div>
+
+    <div class="ba">
+      <div class="ink-tiba">第六次出行 · 晨入暮出<br>此卷随行随画 · 未至之处尚是白纸</div>
+    </div>
+    <div class="legend">
+      <span class="ink-seal round">撤</span><span>撤离</span>
+      <span class="ink-seal gold">府</span><span>遗府</span>
+      <span class="ink-seal frame">妖</span><span>强敌</span>
+      <span class="ink-seal ink">阵</span><span>残阵</span>
+    </div>
+  </div>
+</body>
+</html>

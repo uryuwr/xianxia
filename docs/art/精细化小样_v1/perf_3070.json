@@ -1,0 +1,142 @@
+[
+ {
+  "size": "720p×1",
+  "state": "现状",
+  "gpu": 0.55808,
+  "calls": 93,
+  "cpu": 1.206250011920929,
+  "tris": "59.8k",
+  "vram": "7.4 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "720p×1",
+  "state": "A",
+  "gpu": 0.731136,
+  "calls": 124,
+  "cpu": 1.887499988079071,
+  "tris": "486.9k",
+  "vram": "24.5 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "720p×1",
+  "state": "B",
+  "gpu": 1.26976,
+  "calls": 124,
+  "cpu": 1.7687500417232513,
+  "tris": "486.9k",
+  "vram": "118.5 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "720p×1",
+  "state": "C",
+  "gpu": 1.014784,
+  "calls": 124,
+  "cpu": 1.5812499821186066,
+  "tris": "486.9k",
+  "vram": "134.5 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "720p×1",
+  "state": "B 预算",
+  "gpu": 0.956416,
+  "calls": 114,
+  "cpu": 1.4749999940395355,
+  "tris": "390.6k",
+  "vram": "118.5 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   1280,
+   720
+  ]
+ },
+ {
+  "size": "1080p×1.5",
+  "state": "现状",
+  "gpu": 1.432576,
+  "calls": 93,
+  "cpu": 1.2624999582767487,
+  "tris": "59.8k",
+  "vram": "7.4 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   2880,
+   1620
+  ]
+ },
+ {
+  "size": "1080p×1.5",
+  "state": "A",
+  "gpu": 1.975296,
+  "calls": 124,
+  "cpu": 1.737500011920929,
+  "tris": "486.9k",
+  "vram": "24.5 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   2880,
+   1620
+  ]
+ },
+ {
+  "size": "1080p×1.5",
+  "state": "B",
+  "gpu": 2.425856,
+  "calls": 124,
+  "cpu": 1.8562500774860382,
+  "tris": "486.9k",
+  "vram": "118.5 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   2880,
+   1620
+  ]
+ },
+ {
+  "size": "1080p×1.5",
+  "state": "C",
+  "gpu": 2.374656,
+  "calls": 124,
+  "cpu": 1.6812500059604645,
+  "tris": "486.9k",
+  "vram": "134.5 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   2880,
+   1620
+  ]
+ },
+ {
+  "size": "1080p×1.5",
+  "state": "B 预算",
+  "gpu": 2.331648,
+  "calls": 114,
+  "cpu": 1.262499988079071,
+  "tris": "390.6k",
+  "vram": "118.5 MB",
+  "gpuName": "显卡：NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11",
+  "px": [
+   2880,
+   1620
+  ]
+ }
+]

@@ -1,0 +1,33 @@
+{
+ "ding": {
+  "id": "ding_square",
+  "mouth": [
+   64,
+   44
+  ],
+  "smoke": [
+   64,
+   40
+  ],
+  "base": 117,
+  "fire": null
+ },
+ "furnace": {
+  "id": "furnace_bagua",
+  "mouth": [
+   64,
+   38
+  ],
+  "smoke": [
+   64,
+   22
+  ],
+  "base": 119,
+  "fire": [
+   64,
+   86,
+   24,
+   18
+  ]
+ }
+}

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>静室草图 · 方向 C · 页签式（属性 / 装配 / 行囊）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<link rel="stylesheet" href="../loadout_v2/common.css"><link rel="stylesheet" href="common.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script><script src="icons.js"></script><script src="../loadout_v2/data.js"></script>
+<script src="common.js"></script><script src="widgets.js"></script>
+<style>
+/* 方向 C：一张整纸 + 三个页签。左侧窄栏常驻（半身像、境界、四个主数、四件随身法器）——换任何东西，左栏的数字当场跳一下；
+   右侧按页签切换：属性（来源矩阵：每一列是一类来源）、装配（随身功法栏 + 两列功法匣）、行囊（丹药按品质 · 出发前 · 符箓 · 锦囊）。 */
+.sheet { left: 28px; top: 20px; width: 1224px; height: 650px; box-sizing: border-box; padding: 0; }
+.rail { left: 52px; top: 40px; width: 230px; height: 610px; }
+.rail .bust { width: 200px; height: 200px; margin-left: 10px; background: url(../../../../src/ui/ink/portrait_linmo_bust.svg) center top / contain no-repeat; mix-blend-mode: multiply; }
+.rail .rn { font: 26px var(--f-display); letter-spacing: .12em; margin-top: 4px; display: flex; align-items: center; gap: 8px; }
+.rail .rx { font: 11px var(--f-ui); color: var(--ink-dan); display: flex; gap: 8px; align-items: center; margin: 2px 0 8px; }
+.rail .big .cf-st { padding: 0 4px; }
+.rail .big .cf-st .v { font-size: 20px; }
+.rail .big .cf-bar { display: none; }
+.rail .gears { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.rail .gears .cf-gear .t b { font-size: 16px; }
+.rail .gears .cf-gear .t span { font-size: 11px; }
+.vline { left: 300px; top: 44px; width: 8px; height: 600px; background: var(--ink-qing); -webkit-mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-v) 0 0 / 100% 100% no-repeat; }
+
+.tabs { left: 336px; top: 30px; display: flex; gap: 10px; align-items: baseline; }
+.tabs .ink-tab { font-size: 26px; padding: 4px 14px 10px; cursor: pointer; letter-spacing: .2em; }
+.tabs .ink-tab small { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 4px; letter-spacing: 0; }
+.tabs .ttl { margin-left: 26px; font: 13px var(--f-kai); color: var(--ink-dan); }
+.pane { left: 336px; top: 92px; width: 890px; height: 560px; }
+
+/* 属性：来源矩阵 */
+.mx { width: 100%; border-collapse: collapse; font: 13px var(--f-ui); color: var(--ink-zhong); }
+.mx th { font: 400 14px var(--f-display); color: var(--ink-zhong); text-align: right; padding: 0 10px 4px; letter-spacing: .1em; white-space: nowrap; }
+.mx th:first-child { text-align: left; }
+.mx th .cf-src { margin-right: 4px; vertical-align: -2px; }
+.mx td { padding: 2px 10px; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mx td.n { text-align: left; font: 14px var(--f-kai); color: var(--ink-zhong); }
+.mx td.t { font: 18px var(--f-display); color: var(--ink); }
+.mx td.t.tmp { color: #8a6a22; }
+.mx td.z { color: var(--ink-qing); }
+.mx td.j { color: #8a6a22; }
+.mx td.off { color: rgba(138,106,34,.45); text-decoration: line-through; }
+.mx tr.g td { font: 13px var(--f-display); color: var(--ink-dan); letter-spacing: .3em; text-align: left; padding-top: 6px; }
+.mx tr.r { cursor: pointer; }
+.mx tr.r:hover td { background: rgba(21,24,27,.035); }
+.mx tr.r.on td { background: rgba(184,41,26,.06); }
+.mx tr.r.on td.n::before { content: "● "; color: var(--zhu); font-size: 9px; vertical-align: 2px; }
+.mxh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font: 11px var(--f-ui); color: var(--ink-dan); }
+
+/* 装配 */
+.ld-top { display: flex; align-items: flex-end; gap: 20px; }
+.ld-top .cf-help { margin-left: auto; text-align: right; line-height: 1.6; }
+.ld-box { margin-top: 12px; }
+.ld-box .list.cols { grid-template-columns: 1fr 1fr 1fr; column-gap: 22px; }
+
+/* 行囊：三列 */
+.pk { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 34px; }
+.pk .cf-q { width: 62px; }
+.pk .cf-pill { margin-bottom: 8px; }
+.pk .cf-pill .qs { gap: 10px; }
+.pk h4 { margin: 0 0 4px; font: 400 18px var(--f-display); letter-spacing: .14em; color: var(--ink-nong); }
+.pk h4 small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; margin-left: 6px; }
+.pk .col > .cf-pills { gap: 12px; }
+.pk .cf-fus { gap: 8px 4px; }
+.pk .note { margin-top: 14px; font: 12px/1.7 var(--f-kai); color: var(--ink-zhong); }
+.back { left: 1040px; top: 676px; font-size: 19px; }
+.go { left: 1160px; top: 678px; font-size: 16px; color: var(--ink-zhong); }
+.hdk { left: 52px; top: 680px; font: 11px var(--f-ui); color: var(--ink-dan); }
+</style></head>
+<body class="ink-stage">
+<section class="abs sheet ink-paper"></section>
+<div class="abs rail" id="rail"></div>
+<div class="abs vline"></div>
+<div class="abs tabs" id="tabs"></div>
+<div class="abs pane" id="pane"></div>
+<div class="abs hdk">1 / 2 / 3 切页签 · Esc 回洞府</div>
+<span class="abs ink-btn back">回洞府 <span class="key">Esc</span></span>
+<span class="abs ink-btn go">去出行台 ›</span>
+<script>
+const $ = (id) => document.getElementById(id);
+const H = CF.H;
+let page = H.page || "stat", tab = H.tab || "spell";
+W.gearSide = "right"; W.statSide = "right"; W.ps = 46;
+const PAGES = [["stat", "属性"], ["ld", "装配"], ["pack", "行囊"]];
+let last = {};
+function railHTML() {
+  const R = CF.REALM;
+  const art = CF.artifactNow();
+  return `<div class="bust"></div><div class="rn">${R.name}<span class="ink-seal" style="--s:24px">七</span></div><div class="rx">${W.xpHTML(110)}<span>修为 ${R.xp} / ${R.need}</span></div>
+    <div class="big">${W.statsHTML({ rows: ["hp", "mp", "atk", "spell"], noGroup: 1, bar: 0 })}</div>
+    <div class="gears">${["sword", "robe", "jade"].map((s) => W.gearRowHTML(s, { size: 40 })).join("")}
+      <div class="cf-gear">${LO.tokenHTML("artifact", art ? art.uid : null, { size: 40 })}<div class="t"><b style="color:${art ? LD.RAR[art.rarity].t : ""}">${art ? art.name : "（空）"}</b><span>法宝 · V${art && art.native ? " · 本命" : ""}</span></div></div></div>`;
+}
+function matrixHTML() {
+  const G = ["境", "器", "心", "局"];
+  let h = `<div class="mxh"><span>每一列是一类来源；点一行看逐条明细</span>${W.modeHTML()}</div><table class="mx"><tr><th>属性</th>${G.map((g) => `<th><i class="cf-src g-${g}">${g}</i>${CF.GRP[g].n}${g === "局" ? "<small style='font:11px var(--f-ui)'>（炼化 · 丹药）</small>" : ""}</th>`).join("")}<th>合计</th><th></th></tr>`;
+  for (const g of CF.GROUPS) {
+    const rows = g.rows.filter((r) => CF.shown(r.k));
+    h += `<tr class="g"><td colspan="7">${g.g}</td></tr>`;
+    for (const r of rows) {
+      const s = CF.stat(r.k);
+      const by = {}, off = {};
+      for (const p of s.list) {
+        const b = p.off ? off : by;
+        b[p.grp] = (b[p.grp] || 0) + (p.t === "base" ? p.v : p.c);
+      }
+      const cell = (g) => {
+        if (by[g] != null) return `<td class="${g === "局" ? "j" : ""}">${g === "境" && r.k !== "vuln" ? CF.fmt(r.k, CF.roundOf(r.k, by[g])) : CF.fmtD(r.k, by[g])}</td>`;
+        if (off[g] != null) return `<td class="off" title="出行时生效">${CF.fmtD(r.k, off[g])}</td>`;
+        return `<td class="z">·</td>`;
+      };
+      const tmp = s.list.some((p) => p.temp && !p.off);
+      h += `<tr class="r ${W.statSel === r.k ? "on" : ""}" data-stat="${r.k}" data-pop><td class="n">${r.n}</td>${G.map(cell).join("")}<td class="t ${tmp ? "tmp" : ""}">${CF.fmt(r.k, CF.roundOf(r.k, s.final))}${r.u ? `<small style="font:11px var(--f-ui);color:var(--ink-dan)">${r.u}</small>` : ""}</td><td data-anchor>${CF.barHTML(r.k, 90)}</td></tr>`;
+    }
+  }
+  return h + `</table>`;
+}
+function render() {
+  // 主数变化时闪一下（换装 / 换心法 → 左栏当场跳）
+  $("rail").innerHTML = railHTML();
+  for (const k of ["hp", "mp", "atk", "spell"]) {
+    const v = CF.roundOf(k, CF.stat(k).final);
+    if (last[k] != null && last[k] !== v) $("rail").querySelector(`[data-stat="${k}"]`).classList.add("flash");
+    last[k] = v;
+  }
+  const cnt = { stat: "", ld: `${LO.S.spells.filter(Boolean).length + (LO.S.xinfa[0] ? 1 : 0) + 2}/7`, pack: `${CF.pillKinds()}/${CF.PK.pillSlots} 种` };
+  $("tabs").innerHTML = PAGES.map(([k, n], i) => `<span class="ink-tab ${page === k ? "on" : ""}" data-page="${k}">${n}<small>${i + 1}${cnt[k] ? " · " + cnt[k] : ""}</small></span>`).join("") + `<span class="ttl">藏锋阁 · 改动即存，出行台沿用</span>`;
+  const P = $("pane");
+  if (page === "stat") P.innerHTML = matrixHTML() + `<div style="margin-top:8px">${W.legendHTML()}</div>`;
+  else if (page === "ld") {
+    const b = W.boxHTML(tab, { cols: 1, dense: 1 });
+    P.innerHTML = `<div class="ld-top"><div class="cf-bar-w" id="bar">${W.barHTML({ size: 54 })}</div><div class="cf-help"><b>拖入栏位</b> · 栏间拖动换位 · 拖出卸下<br>悬停按 <b>Q / E / R / T</b> 直接装入 · 局内不能换</div></div>
+      <div class="ld-box cf-box">${b.tabs}${b.gl}${b.body}</div>`;
+    W.bindBar(P.querySelector("#bar"));
+    W.bindBox(P, tab);
+  } else {
+    const pack = W.packHTML(), parts = pack.split('<div class="cf-sub"><b>');
+    // 拆成三列：丹药囊 / 出发前服用 / 符箓 + 锦囊
+    const seg = (i) => '<div class="cf-sub"><b>' + parts[i];
+    P.innerHTML = `<div class="pk"><div class="col"><h4>丹药囊<small>局内 1 / 2 键</small></h4>${seg(1)}</div><div class="col"><h4>出发前服用<small>不占丹药栏</small></h4>${seg(2)}</div><div class="col"><h4>符箓 · 锦囊</h4>${seg(3)}<div class="note">出行台照此装；仓库不够时按现有补，缺的格子标"缺"。<br>丹药品质的实际效果由玩法组定（现在只有聚气丹分档）。</div></div></div>`;
+  }
+  window.inkui && inkui.decorate();
+}
+W.render = render;
+document.addEventListener("click", (ev) => {
+  const p = ev.target.closest("[data-page]");
+  if (p) { page = p.dataset.page; CF.closePop(); W.statSel = null; return render(); }
+  const t = ev.target.closest("[data-tab]");
+  if (t) { tab = t.dataset.tab; LO.setHeld(null); return render(); }
+});
+addEventListener("keydown", (e) => { const i = { Digit1: 0, Digit2: 1, Digit3: 2 }[e.code]; if (i != null) { page = PAGES[i][0]; CF.closePop(); render(); } });
+CF.on(render);
+render();
+LO.dnd();
+W.applyHash();
+LO.ready();
+</script>
+</body></html>

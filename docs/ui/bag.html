@@ -1,0 +1,60 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 UI · bag</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:720px;overflow:hidden}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:#15181b;background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'300'%20height%3D'300'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.9'%20numOctaves%3D'3'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.35%20%200%200%200%200%20.32%20%200%200%200%200%20.26%20%200%200%200%20.09%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'300'%20height%3D'300'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E"),url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'600'%20height%3D'600'%3E%3Cfilter%20id%3D'f'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.012%20.2'%20numOctaves%3D'2'%20seed%3D'4'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.3%20%200%200%200%200%20.27%20%200%200%200%200%20.2%20%200%200%200%20.05%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'600'%20height%3D'600'%20filter%3D'url(%23f)'%2F%3E%3C%2Fsvg%3E"),#ece6d6;background-blend-mode:multiply;position:relative}
+.kai{font-family:"STKaiti","KaiTi","楷体","Kaiti SC",serif}
+.paper{background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'300'%20height%3D'300'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.9'%20numOctaves%3D'3'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.35%20%200%200%200%200%20.32%20%200%200%200%200%20.26%20%200%200%200%20.09%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'300'%20height%3D'300'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E"),rgba(244,239,226,.94);box-shadow:0 0 0 1px rgba(21,24,27,.28),0 8px 24px rgba(21,24,27,.18),inset 0 0 22px rgba(120,100,70,.18);border-radius:3px}
+.ink-line{height:2px;background:linear-gradient(90deg,transparent,#15181b 8%,#15181b 70%,transparent);opacity:.75;border-radius:2px}
+.seal{display:inline-flex;align-items:center;justify-content:center;background:#b8291a;color:#f4ece0;font-family:"STKaiti","KaiTi",serif;font-weight:900;border-radius:3px;box-shadow:inset 0 0 0 2px rgba(244,236,224,.55),0 1px 2px rgba(0,0,0,.3)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:"STKaiti","KaiTi",serif;font-weight:700;font-size:20px;padding:6px 22px;border:1.5px solid #15181b;border-radius:3px;background:rgba(244,239,226,.7)}
+.btn.primary{background:#15181b;color:#f1eadb}
+.q0{--q:#6a6760}.q1{--q:#3fae7a}.q2{--q:#2f7fa8}.q3{--q:#c9a040}.q4{--q:#c9a040}
+.tag{display:inline-block;font-size:12px;padding:1px 6px;border-radius:2px;border:1px solid currentColor;line-height:16px}
+.muted{color:#6a6760}
+h1,h2,h3{font-family:"STKaiti","KaiTi",serif}
+.bar{position:relative;height:10px;background:rgba(21,24,27,.18);border-radius:5px 2px 6px 2px;overflow:hidden}
+.bar i{position:absolute;inset:0;border-radius:inherit;transform-origin:left}
+</style></head><body>
+<style>
+.grid{display:grid;grid-template-columns:repeat(6,62px);grid-auto-rows:62px;gap:5px}
+.it,.slot{position:relative;border-radius:3px;background:rgba(236,230,214,.9);box-shadow:inset 0 0 0 2px var(--q,#6a6760),inset 0 0 14px rgba(21,24,27,.12)}
+.slot{box-shadow:inset 0 0 0 1px rgba(21,24,27,.2);background:rgba(21,24,27,.05)}
+.it b{position:absolute;left:0;right:0;top:6px;text-align:center;font-size:26px;color:var(--q)}
+.it[style*="span 2;grid-row"] b{font-size:54px;top:22px}
+.it[style*="span 2"]:not([style*="grid-row"]) b{font-size:28px}
+.it span{position:absolute;left:0;right:0;bottom:3px;text-align:center;font-size:11px;color:#15181b;white-space:nowrap;overflow:hidden}
+.it em{position:absolute;right:3px;top:2px;font-size:10px;font-style:normal;color:#8a6a20}
+.it.unk{background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--q) 35%,transparent),rgba(236,230,214,.9) 70%)}
+.it.unk b{filter:blur(.6px);opacity:.75}
+
+.wrap{position:absolute;inset:60px 48px auto;display:grid;grid-template-columns:420px 1fr 300px;gap:22px;align-items:start}
+.col{padding:18px}
+h2{font-size:28px;margin-bottom:6px}
+.sub{font-size:13px;margin-bottom:10px}
+.pouch{display:grid;grid-template-columns:repeat(2,62px);grid-auto-rows:62px;gap:5px;padding:10px;border:2px dashed #b8291a;border-radius:6px;width:max-content}
+.det h3{font-size:26px}
+.det .q{color:#2f7fa8;font-weight:700}
+.kv{display:flex;justify-content:space-between;font-size:14px;padding:5px 0;border-bottom:1px dashed rgba(21,24,27,.2)}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.big{font-size:30px;font-weight:900;color:#8a6a20}
+</style>
+<div class="wrap">
+  <div class="col paper"><h2>储物袋 <span style="font-size:16px" class="muted">灵丝储物袋</span></h2><div class="sub muted">21 / 24 格 · 物品按大小占格</div>
+    <div class="grid"><div class="it q3" style="grid-column:span 2;grid-row:span 2"><b class="kai">竹</b><span>千年竹心</span><em>360</em></div><div class="it q2 unk" style="grid-column:span 2"><b class="kai">剑</b><span>未鉴定的剑</span><em>?</em></div><div class="it q0" style=""><b class="kai">灵</b><span>灵石</span><em>50</em></div><div class="it q0" style=""><b class="kai">灵</b><span>灵石</span><em>37</em></div><div class="it q1" style=""><b class="kai">露</b><span>寒露草</span><em>36</em></div><div class="it q1" style="grid-column:span 2"><b class="kai">藤</b><span>紫藤</span><em>48</em></div><div class="it q1" style=""><b class="kai">丹</b><span>狼妖内丹</span><em>80</em></div><div class="it q0" style=""><b class="kai">翼</b><span>蝠翼</span><em>12</em></div><div class="it q2" style=""><b class="kai">炎</b><span>赤炎果</span><em>120</em></div><div class="it q1" style=""><b class="kai">春</b><span>回春丹</span><em>30</em></div><div class="it q0" style="grid-column:span 2"><b class="kai">皮</b><span>狼皮</span><em>24</em></div><div class="it q0" style=""><b class="kai">花</b><span>凝露花</span><em>10</em></div><div class="it q0" style=""><b class="kai">铁</b><span>铁精石</span><em>14</em></div><div class="it q1" style=""><b class="kai">符</b><span>遁地符</span><em>40</em></div><div class="it q2" style=""><b class="kai">卷</b><span>功法残卷</span><em>200</em></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
+    <div class="foot"><span class="kai" style="font-size:16px">总灵值</span><span class="big kai">1,284</span></div></div>
+  <div class="col paper"><h2>贴身锦囊</h2><div class="sub muted">身陨也不会丢失 · 只能放 1 格物品</div>
+    <div class="pouch"><div class="it q2" style=""><b class="kai">卷</b><span>功法残卷</span><em>200</em></div><div class="slot"></div></div>
+    <div class="ink-line" style="margin:18px 0"></div>
+    <h2 style="font-size:22px">身陨时</h2>
+    <div class="kv"><span>储物袋物品</span><b style="color:#b8291a">遗落（区域二）</b></div>
+    <div class="kv"><span>锦囊物品</span><b>保留</b></div>
+    <div class="kv"><span>装备</span><b style="color:#b8291a">随机 1 件遗落（认主 / 本命除外）</b></div>
+    <div class="kv"><span>本局感悟修为</span><b>保留</b></div>
+    <div class="kv"><span>遗落储物袋</span><b>下一局取回：装备 100% · 其余 60%</b></div>
+    <div class="foot"><span class="btn">整理</span><span class="btn">丢弃</span><span class="btn primary">放入锦囊</span></div></div>
+  <div class="col paper det"><div style="display:flex;gap:12px;align-items:center"><div class="it q2 unk" style="width:124px;height:62px"><b style="font-size:30px">剑</b></div><div><h3>未鉴定的剑</h3><div class="q">宝光 · 二条词条</div></div></div>
+    <div class="ink-line" style="margin:12px 0"></div>
+    <div class="kv"><span>大小</span><b>2 格</b></div><div class="kv"><span>估计灵值</span><b>200 ~ 900</b></div><div class="kv"><span>来源</span><b>守宝精英 · 藤妖</b></div>
+    <p style="font-size:14px;line-height:22px;margin-top:12px">剑身蒙着一层石青色的灵光，看不清铭文。<br>带回洞府交给玄机子鉴定，方知其真面目。</p>
+    <p class="kai muted" style="margin-top:14px;font-size:15px">玄机子："这光色……老夫看着手痒。"</p></div>
+</div></body></html>

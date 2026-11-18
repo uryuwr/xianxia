@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>体检_v1 · 世界里的危险信息（敌人血条 · 境界标签 · 地面预警）</title>
+<link rel="stylesheet" href="common.css">
+<style>
+body { background: #1d1d1d; }
+.wrap { position: relative; width: 1280px; height: 720px; overflow: hidden; background: #1d1d1d; }
+.hd { position: absolute; left: 14px; top: 8px; font: 20px var(--f-display); color: #f5f0e3; letter-spacing: .08em; }
+.hd small { font: 12px var(--f-ui); color: #bdb6a2; margin-left: 10px; letter-spacing: 0; }
+.cv { position: absolute; width: 630px; height: 330px; overflow: hidden; background-repeat: no-repeat; background-size: 1280px 720px; }
+.cv .lab { position: absolute; left: 0; top: 0; z-index: 9; font: 13px var(--f-ui); color: #f5f0e3; background: rgba(0,0,0,.6); padding: 2px 10px; }
+.cv .lab b { color: #ffb4a4; }
+.cv svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+/* ---- 现状：src/game/enemies/hpbars.js 原样 ---- */
+.eb { position: absolute; transform: translate(-50%, -100%); font-family: "STKaiti","KaiTi","楷体",serif; z-index: 5; }
+.eb.now .bg { position: relative; width: 52px; height: 6px; background: rgba(20,22,24,.55); border-radius: 3px 1px 4px 1px; box-shadow: 0 0 0 1px rgba(20,22,24,.7); overflow: hidden; margin: 0 auto; }
+.eb.now .lag { position: absolute; inset: 0; background: rgba(236,230,214,.85); transform-origin: left; }
+.eb.now .fill { position: absolute; inset: 0; background: linear-gradient(#d8402a, #a8241a); transform-origin: left; }
+.eb.now.elite .bg { width: 110px; height: 8px; }
+.eb.now.elite .fill { background: linear-gradient(#8a5ab8, #5a2e86); }
+.eb.now .sh { position: relative; width: 110px; height: 6px; margin: 3px auto 0; background: rgba(20,22,24,.35); border-radius: 3px; overflow: hidden; }
+.eb.now .sh i { position: absolute; inset: 0; transform-origin: left; background: var(--shc); }
+.eb.now .el { position: absolute; left: -26px; bottom: -4px; width: 22px; height: 22px; border-radius: 50%; color: #f4f1e8; font-size: 15px; font-weight: 900; text-align: center; line-height: 22px; background: var(--shc); box-shadow: 0 0 0 1px rgba(20,22,24,.7); }
+.eb.now .name { text-align: center; color: #1b1d1f; font-size: 15px; font-weight: 700; margin-bottom: 2px; white-space: nowrap; text-shadow: 0 0 3px rgba(236,230,214,.95), 0 0 6px rgba(236,230,214,.8); letter-spacing: 2px; }
+.eb.now .name.small { font-size: 12px; font-weight: 600; letter-spacing: 1px; margin-bottom: 1px; }
+.eb.now .rl { margin-left: 2px; }
+.eb.now .rl.warn { color: #c9786a; }
+.eb.now .rl.danger { color: #d2321e; font-weight: 900; }
+/* ---- 建议：一笔墨条 + 纸色衬（双层）、敌命用墨（与首领条一致）、余迹朱、精英一方朱印、境界标签三档墨 / 赭 / 朱 ---- */
+.eb.neo .name { text-align: center; color: #15181b; font: 700 13px var(--f-kai); letter-spacing: 1px; white-space: nowrap; margin-bottom: 2px;
+  text-shadow: 0 0 2px #f5f0e3, 0 0 4px #f5f0e3, 0 0 7px rgba(245,240,227,.9); }
+.eb.neo .name { position: relative; isolation: isolate; padding: 0 6px; }
+.eb.neo .name::before { content: ""; position: absolute; inset: -3px -10px -2px; z-index: -1; background: rgba(245,240,227,.82); -webkit-mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; }
+.eb.neo.elite .name { font-size: 15px; letter-spacing: 2px; }
+.eb.neo .rl { margin-left: 3px; font-weight: 700; color: rgba(21,24,27,.72); }
+.eb.neo .rl.warn { color: #8a5a22; }
+.eb.neo .rl.danger { color: #b8291a; font-weight: 900; }
+.eb.neo .b2 { position: relative; width: 58px; height: 9px; margin: 0 auto; isolation: isolate; }
+.eb.neo.elite .b2 { width: 116px; height: 12px; }
+.eb.neo .b2::before { content: ""; position: absolute; inset: -4px -6px; z-index: -1; background: rgba(245,240,227,.88); -webkit-mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; }
+.eb.neo .b2 > s, .eb.neo .b2 > b, .eb.neo .b2 > i { position: absolute; inset: 0; -webkit-mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; }
+.eb.neo .b2 > s { background: rgba(21,24,27,.18); }
+.eb.neo .b2 > b { background: rgba(184,41,26,.55); clip-path: inset(0 calc((1 - var(--lag)) * 100%) 0 calc(var(--v) * 100%)); }
+.eb.neo .b2 > i { background: linear-gradient(#2a2d31, #121417); clip-path: inset(0 calc((1 - var(--v)) * 100%) 0 0); }
+.eb.neo .seal { position: absolute; left: -27px; top: 50%; margin-top: -10px; width: 20px; height: 20px; display: grid; place-items: center; font: 13px var(--f-display); color: #f5f0e3; background: var(--zhu); transform: rotate(-5deg);
+  -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; }
+.eb.neo .sh2 { position: relative; width: 116px; height: 6px; margin: 0 auto 3px; }
+.eb.neo .sh2::before, .eb.neo .sh2 > i { content: ""; position: absolute; inset: 0; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.eb.neo .sh2::before { background: rgba(245,240,227,.85); inset: -2px -3px; }
+.eb.neo .sh2 > i { background: var(--shc); clip-path: inset(0 calc((1 - var(--s)) * 100%) 0 0); }
+.eb.neo .sh2 > u { position: absolute; right: -24px; top: -7px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font: 12px var(--f-display); color: #f5f0e3; background: var(--shc); box-shadow: 0 0 0 2px rgba(245,240,227,.9); text-decoration: none; }
+.notes { position: absolute; left: 14px; right: 14px; bottom: 6px; font: 12px/1.55 var(--f-ui); color: #d8d2c0; }
+.notes b { color: #ffb4a4; font-weight: 700; }
+</style>
+<script src="hud.js"></script>
+</head>
+<body><div class="wrap" id="root"></div>
+<script>
+// 贴地图形：在地面坐标里画，再按 45° 俯视压扁（y × 0.72），线宽保持屏幕像素（non-scaling-stroke）
+function sectorPath(R, a0, a1) {
+  const p = (a, r) => `${(Math.cos(a) * r).toFixed(1)},${(Math.sin(a) * r).toFixed(1)}`;
+  return `M0,0 L${p(a0, R)} A${R},${R} 0 0 1 ${p(a1, R)} Z`;
+}
+function rectPath(L, W) { return `M0,${-W / 2} L${L},${-W / 2} L${L},${W / 2} L0,${W / 2} Z`; }
+const HATCH = `<pattern id="hz" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="9" height="9" fill="rgba(184,41,26,.14)"/><line x1="0" y1="0" x2="0" y2="9" stroke="rgba(184,41,26,.55)" stroke-width="2.4"/></pattern>`;
+function tele(kind, neo, cx, cy, rot, R, W, k) {
+  const g = (inner) => `<g transform="translate(${cx},${cy}) scale(1,.72) rotate(${rot})">${inner}</g>`;
+  const shape = kind === "sector" ? sectorPath(R, -0.9, 0.9) : rectPath(R, W);
+  const prog = kind === "sector" ? sectorPath(R * k, -0.9, 0.9) : rectPath(R * k, W);
+  if (!neo) // 现状：INKC.red #d2321e，底 α .13、已填 α .42、外缘 3px 实色；没有纸色外描
+    return g(`<path d="${shape}" fill="#d2321e" fill-opacity=".13"/><path d="${prog}" fill="#d2321e" fill-opacity=".42"/>
+      <path data-m="${kind === "sector" ? "扇形预警外缘" : "直线预警外缘"}" data-k="bar" d="${shape}" fill="none" stroke="#d2321e" stroke-width="3.2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>`);
+  // 建议：朱 #b8291a + 纸色外描（风格指南 §8.2 双层结构）；已填部分用朱色斜皴线（读得出"在涨"，又不把地面糊成一片橘色）
+  return g(`<path d="${shape}" fill="#b8291a" fill-opacity=".07"/><path d="${prog}" fill="url(#hz)"/>
+      <path d="${shape}" fill="none" stroke="rgba(245,240,227,.85)" stroke-width="7.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+      <path data-m="${kind === "sector" ? "扇形预警外缘" : "直线预警外缘"}" data-k="bar" d="${shape}" fill="none" stroke="#b8291a" stroke-width="3.2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>`);
+}
+function bar(neo, o) {
+  const { x, y, name, rl, rc, v, lag, elite, el, shc, s } = o;
+  if (!neo) return `<div class="eb now${elite ? " elite" : ""}" style="left:${x}px;top:${y}px;--shc:${shc || "#e0b45a"}">
+    <div class="name${elite ? "" : " small"}"><span data-m="${elite ? "精英名" : "敌名"}">${name}</span><span class="rl ${rc}" data-m="境界标签·${rc || "平"}">${rl}</span></div>
+    <div class="bg"><div class="lag" style="transform:scaleX(${lag})"></div><div class="fill" data-m="${elite ? "精英血条" : "敌人血条"}" data-k="bar" style="transform:scaleX(${v})"></div></div>
+    ${elite ? `<div class="sh"><i style="transform:scaleX(${s})"></i></div><div class="el">${el}</div>` : ""}</div>`;
+  return `<div class="eb neo${elite ? " elite" : ""}" style="left:${x}px;top:${y}px;--shc:${shc || "#e0b45a"}">
+    <div class="name"><span data-m="${elite ? "精英名" : "敌名"}">${name}</span><span class="rl ${rc}" data-m="境界标签·${rc || "平"}">${rl}</span></div>
+    ${elite ? `<div class="sh2" style="--s:${s}"><i></i><u>${el}</u></div>` : ""}
+    <div class="b2" style="--v:${v};--lag:${lag}"><s></s><b></b><i data-m="${elite ? "精英血条" : "敌人血条"}" data-k="bar"></i>${elite ? '<span class="seal">精</span>' : ""}</div></div>`;
+}
+const CELLS = [
+  // 底图, 裁剪原点, 内容
+  { bg: "B", ox: 330, oy: 170, t: "精细 B · 山神庙前（朱柱 + 石阶）", tele: ["sector", 505, 228, 180, 175, 0, 0.55],
+    bars: [{ x: 520, y: 182, name: "狼王青牙", rl: "练气?", rc: "danger", v: 0.7, lag: 0.82, elite: true, el: "木", shc: "#3f9a6e", s: 0.6 }, { x: 118, y: 150, name: "灰毛狼妖", rl: "练气三层", rc: "warn", v: 0.45, lag: 0.6 }] },
+  { bg: "C", ox: 600, oy: 330, t: "精细 C · 草地 + 投影", tele: ["line", 380, 120, 168, 250, 46, 0.6],
+    bars: [{ x: 395, y: 50, name: "赤狼", rl: "练气五层", rc: "warn", v: 0.55, lag: 0.7, elite: true, el: "火", shc: "#b8291a", s: 0.35 }, { x: 120, y: 205, name: "灰毛狼妖", rl: "练气二层", rc: "", v: 0.3, lag: 0.48 }] },
+];
+let html = `<div class="hd">世界里的危险信息 · 敌人血条 / 境界标签 / 地面预警<small>上排 = 现状（hpbars.js、enemy_fx.js 原样参数），下排 = 建议；底图 = 精细化小样 B / C</small></div>`;
+[false, true].forEach((neo, row) => CELLS.forEach((c, col) => {
+  const L = 10 + col * 640, T = 38 + row * 340;
+  html += `<div class="cv" style="left:${L}px;top:${T}px;background-image:url(${TJ.BG[c.bg]});background-position:${-c.ox}px ${-c.oy}px">
+    <svg viewBox="0 0 630 330"><defs>${HATCH}</defs>${tele(c.tele[0], neo, ...c.tele.slice(1))}</svg>
+    ${c.bars.map((b) => bar(neo, b)).join("")}
+    <div class="lab">${neo ? "<b>建议</b>" : "现状"} · ${c.t}</div></div>`;
+}));
+document.getElementById("root").innerHTML = html;
+document.fonts.ready.then(() => setTimeout(() => (window.__ready = true), 150));
+</script></body></html>

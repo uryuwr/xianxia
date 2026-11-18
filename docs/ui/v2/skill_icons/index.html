@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 技能图标草图（待选）</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css">
+<link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css">
+<link rel="stylesheet" href="../mock_bag_v2/fonts.css">
+<style>
+html, body { margin: 0; width: 1280px; }
+body { background: var(--ink-tex-paper), var(--ink-tex-fiber), #ece6d6; background-blend-mode: multiply, multiply, normal; font-family: var(--f-kai); color: var(--ink); padding: 18px 26px 24px; box-sizing: border-box; }
+h1 { margin: 0; font: 400 32px var(--f-splash); letter-spacing: .1em; }
+.sub { font: 13px var(--f-ui); color: var(--ink-zhong); margin: 4px 0 12px; }
+h2 { font: 400 20px var(--f-display); letter-spacing: .12em; margin: 14px 0 6px; display: flex; align-items: baseline; gap: 10px; }
+h2 small { font: 12px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+/* 局内背景条 */
+.scene { position: relative; height: 128px; margin-bottom: 8px; background: url(../../../../work/shots/loop_levels_r2_play_day.png) 50% 38% / 1280px auto; display: flex; align-items: center; }
+.scene .lab { width: 210px; padding: 0 16px; align-self: stretch; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(90deg, rgba(236,230,214,.95), rgba(236,230,214,.75) 80%, transparent); }
+.scene .lab b { font: 400 20px var(--f-display); letter-spacing: .08em; }
+.scene .lab span { font: 12px/1.5 var(--f-kai); color: var(--ink-zhong); }
+.scene .lab.rec b::after { content: "推荐"; margin-left: 8px; font: 12px var(--f-display); color: var(--paper-hi); background: var(--zhu); padding: 1px 5px 2px; -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; vertical-align: 3px; }
+.bar { position: relative; display: flex; align-items: flex-end; gap: 14px; padding: 16px 28px 26px; margin-left: 120px; }
+.bar::before { content: ""; position: absolute; inset: 0; background: rgba(240,234,220,.8); -webkit-mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat; }
+.bar .gap { width: 8px; }
+/* 技能格（与 src/ui/skillbar.js 同一套：圆相按五行着色、格心五行淡彩、冷却墨扇、真气不足退淡） */
+.hud-skill { --elw: transparent; }
+.hud-skill::before { inset: 6%; background: radial-gradient(circle at 50% 46%, var(--elw) 0 34%, transparent 62%), radial-gradient(circle, rgba(245, 240, 227, .92) 40%, rgba(245, 240, 227, 0) 72%); }
+.hud-skill:nth-of-type(3n + 1)::after { -webkit-mask-image: var(--ink-enso-1); mask-image: var(--ink-enso-1); }
+.hud-skill:nth-of-type(3n + 3)::after { -webkit-mask-image: var(--ink-enso-3); mask-image: var(--ink-enso-3); }
+.hud-skill.metal { --elw: rgba(168,134,47,.24); } .hud-skill.wood { --elw: rgba(63,154,110,.22); } .hud-skill.water { --elw: rgba(47,127,168,.22); } .hud-skill.fire { --elw: rgba(192,57,43,.2); } .hud-skill.earth { --elw: rgba(154,106,50,.22); }
+.hud-skill > .g { position: relative; line-height: 1; z-index: 0; }
+.hud-skill > .ico { position: absolute; left: 50%; top: 50%; width: 72%; height: 72%; transform: translate(-50%, -50%); z-index: 0; }
+.hud-skill > .ico.bg { width: 76%; height: 76%; opacity: .32; }
+.hud-skill > .cd { inset: 12%; z-index: 1; background: conic-gradient(rgba(21, 24, 27, .64) 0 calc(var(--cd, 0) * 360deg - 8deg), rgba(21, 24, 27, .34) calc(var(--cd, 0) * 360deg), transparent 0);
+  -webkit-mask: radial-gradient(circle, #000 52%, rgba(0, 0, 0, .55) 66%, transparent 74%); mask: radial-gradient(circle, #000 52%, rgba(0, 0, 0, .55) 66%, transparent 74%); border-radius: 0; }
+.hud-skill > .t { z-index: 2; text-shadow: 0 0 4px rgba(21, 24, 27, .85), 0 0 2px rgba(21, 24, 27, .9); }
+.hud-skill > .k, .hud-skill > .c { z-index: 2; }
+.hud-skill > .ct { position: absolute; left: 50%; top: calc(100% + 2px); transform: translateX(-50%); white-space: nowrap; font: 12px/13px var(--f-kai); color: var(--ink-nong); text-shadow: 0 0 3px var(--paper-hi), 0 0 3px var(--paper-hi), 0 0 6px var(--paper-hi); }
+.hud-skill.nomp::after { opacity: .32; }
+.hud-skill.nomp > .g { color: var(--ink-dan); }
+.hud-skill.nomp > .ico { opacity: .4; filter: grayscale(.7); }
+.hud-skill.nomp > .c { color: var(--zhu); }
+.hud-skill.locked > .g { font-size: .7em; color: var(--ink-qing); }
+.hud-skill.locked > .ico { opacity: .22; filter: grayscale(1); }
+.hud-skill.locked > .lk { position: absolute; z-index: 2; font: 13px var(--f-display); color: var(--paper-hi); background: var(--ink-dan); width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; right: 2px; bottom: 2px; }
+.hud-skill.sm { --z: 46px; }
+/* 状态演示 */
+.states { display: flex; gap: 20px; }
+.st { background: radial-gradient(ellipse closest-side, rgba(245,240,227,.9), rgba(245,240,227,.4)); padding: 10px 18px 6px; }
+.st .row { display: flex; gap: 22px; align-items: flex-end; padding-bottom: 20px; }
+.st .cap { font: 13px var(--f-display); color: var(--ink-nong); margin-bottom: 8px; }
+.cell { display: flex; flex-direction: column; align-items: center; }
+.cell > small { margin-top: 18px; font: 11px var(--f-ui); color: var(--ink-zhong); }
+/* 全集 */
+.grid { display: flex; flex-wrap: wrap; gap: 14px 6px; }
+.gi { width: 86px; display: flex; flex-direction: column; align-items: center; }
+.gi .nm { margin-top: 16px; font: 12px var(--f-kai); color: var(--ink-nong); white-space: nowrap; }
+.gi .nm small { color: var(--ink-dan); font: 10px var(--f-ui); }
+.grp-t { width: 40px; writing-mode: vertical-rl; font: 400 15px var(--f-display); color: var(--ink-zhong); letter-spacing: .1em; margin: 0 4px 0 10px; height: 80px; display: flex; align-items: center; }
+.note { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 30px; font: 13px/1.7 var(--f-kai); color: var(--ink-nong); }
+.note b { font-family: var(--f-display); font-weight: 400; }
+</style></head><body>
+<h1>技能图标 · 草图（请选一种）</h1>
+<div class="sub">与物品图标同一套笔路模板与纸性位图（tools/icons/skillicons.js）；五行色只做淡彩，与技能栏圆相五行色一致；图标占圆相内径约 70%，按键角标、冷却墨扇、真气数都在外圈不被挡。丹药符箓直接用物品图标。</div>
+
+<h2>一 · 局内技能栏对比<small>背景为局内截图；Q 剑气斩 · E 火符 · R 缠藤诀 · 右键 青冥飞剑 · T 剑阵 · 1 回气丹 · 2 回春丹</small></h2>
+<div class="scene"><div class="lab"><b>现状 · 单字</b><span>圆相里一个楷书字</span></div><div class="bar" id="bar0"></div></div>
+<div class="scene"><div class="lab rec"><b>甲 · 意象写意</b><span>画法术的意象：月牙剑气、符纸火焰、盘藤……</span></div><div class="bar" id="bar1"></div></div>
+<div class="scene"><div class="lab"><b>乙 · 字印 + 意象</b><span>保留楷书字，身后衬一层淡墨意象</span></div><div class="bar" id="bar2"></div></div>
+
+<h2>二 · 状态<small>就绪 / 冷却中（墨扇 + 秒数）/ 真气不足（圆相退淡、图标退灰、真气数转朱）/ 锁定（图标只留清墨影 + "锁"印）</small></h2>
+<div class="states"><div class="st" id="st1"></div><div class="st" id="st2"></div></div>
+
+<h2>三 · 甲方案全集<small>法术 7 · 法宝主动 3 · 阵盘 3 · 普攻与蓄势斩 2 · 心法 13</small></h2>
+<div class="grid" id="all"></div>
+<div class="note">
+  <div><b>甲 · 意象写意（推荐）</b>：一眼看出"这一招是什么"，和物品图标同一种笔性；同五行的两招（剑气斩 / 掌心雷）靠意象区分，不靠字。代价：新技能要多画一个模板（约 1–2 小时）。</div>
+  <div><b>乙 · 字印 + 意象</b>：老玩家熟悉的单字仍在，最稳；但字和意象叠在一起，62px 下略杂，丹药 / 符箓（物品图标）与技能（字）两套语言并存。</div>
+</div>
+<script type="module">
+import { renderCanvas } from "../../../../tools/icons/inkicons.js";
+import { SKILL_ICONS, skillSpec } from "../../../../tools/icons/skillicons.js";
+const url = (spec) => renderCanvas(spec, 128, 128, 2).toDataURL();
+const SK = {
+  sword_qi: ["剑气斩", "剑", "metal"], fire_talisman: ["火符", "火", "fire"], frost: ["寒冰锥", "冰", "water"], vine: ["缠藤诀", "藤", "wood"], earth_shield: ["土遁护体", "盾", "earth"], rock: ["落石诀", "岩", "earth"], thunder: ["掌心雷", "雷", "metal"],
+  art_flying_sword: ["青冥飞剑", "冥", "water"], art_seal: ["镇山印", "印", "earth"], art_gourd: ["紫金葫芦", "葫", "water"],
+  sword_array: ["剑阵", "剑", "metal"], fire_array: ["火阵", "焱", "fire"], spirit_array: ["聚灵阵", "灵", "none"],
+  attack: ["普攻", "斩", "metal"], charge: ["蓄势斩", "势", "metal"],
+  kill_mp: ["斩敌回气", "气", "water"], dash_shadow: ["剑影", "影", "metal"], crit_thunder: ["雷引", "引", "metal"], fire_root: ["灵根·火", "炎", "fire"], vajra: ["金刚体", "刚", "earth"], sharp: ["锋锐", "锐", "metal"],
+  mom_gather: ["蓄势", "蓄", "metal"], mom_chain: ["连环", "环", "metal"], mom_haste: ["满势", "满", "metal"], mom_wave: ["余波", "波", "metal"], mom_return: ["回锋", "锋", "metal"], dash_flow: ["流云", "云", "water"], lingtai: ["灵台", "台", "water"],
+};
+const PILL = { huiqi_dan: ["回气丹", "气", "water"], huichun_dan: ["回春丹", "春", "wood"] };
+const U = {};
+for (const k of Object.keys(SK)) U[k] = url(skillSpec(k));
+U.huiqi_dan = url("huiqi_dan");
+U.huichun_dan = url("huichun_dan");
+// 一个技能格：mode 0 单字 / 1 意象 / 2 字印 + 意象；st：{ cd, t, nomp, locked }
+function slot(key, label, mode, st = {}, o = {}) {
+  const [nm, g, el] = SK[key] || PILL[key];
+  const pill = !!PILL[key];
+  let inner = "";
+  if (st.locked) inner = mode === 0 ? `<span class="g">锁</span>` : `<img class="ico" src="${U[key]}"><i class="lk">锁</i>`;
+  else if (mode === 0) inner = `<span class="g">${g}</span>`;
+  else if (mode === 1 || pill) inner = `<img class="ico" src="${U[key]}">`;
+  else inner = `<img class="ico bg" src="${U[key]}"><span class="g">${g}</span>`;
+  const cost = pill ? (o.n != null ? "×" + o.n : "") : o.cost || "";
+  return `<div class="hud-skill ${el === "none" ? "" : el}${st.nomp ? " nomp" : ""}${st.locked ? " locked" : ""}${o.sm ? " sm" : ""}" style="--cd:${st.cd || 0}">${inner}${st.cd ? `<span class="cd"></span><span class="t">${st.t}</span>` : ""}<span class="k">${label}</span><span class="c">${cost}</span>${o.ct ? `<span class="ct">${o.ct}</span>` : ""}</div>`;
+}
+const BAR = [["sword_qi", "Q", 18], ["fire_talisman", "E", 24], ["vine", "R", 28], "gap", ["art_flying_sword", "右键", 20], ["sword_array", "T", 30], "gap", ["huiqi_dan", "1", 5], ["huichun_dan", "2", 3]];
+for (const mode of [0, 1, 2])
+  document.getElementById("bar" + mode).innerHTML = BAR.map((b, i) => (b === "gap" ? '<i class="gap"></i>' : slot(b[0], b[1], mode, i === 1 ? { cd: 0.55, t: 6 } : i === 2 ? { nomp: 1 } : {}, { cost: b[2], n: b[2], sm: b[1] === "1" || b[1] === "2" }))).join("");
+for (const mode of [1, 2]) {
+  const S = [["就绪", {}], ["冷却中", { cd: 0.62, t: 7 }], ["冷却将尽", { cd: 0.12, t: 1 }], ["真气不足", { nomp: 1 }], ["锁定", { locked: 1 }]];
+  document.getElementById("st" + mode).innerHTML = `<div class="cap">${mode === 1 ? "甲 · 意象写意" : "乙 · 字印 + 意象"}</div><div class="row">${S.map(([n, st], i) => `<div class="cell">${slot(["sword_qi", "frost", "fire_talisman", "thunder", "earth_shield"][i], ["Q", "E", "R", "Q", "R"][i], mode, st, { cost: [18, 26, 24, 20, 30][i] })}<small>${n}</small></div>`).join("")}</div>`;
+}
+const groups = [["法术", SKILL_ICONS.spell], ["法宝主动", Object.values(SKILL_ICONS.artifact)], ["阵盘", SKILL_ICONS.formation], ["普攻", SKILL_ICONS.move], ["心法", SKILL_ICONS.xinfa]];
+document.getElementById("all").innerHTML = groups.map(([t, ks]) => `<div class="grp-t">${t}</div>` + ks.map((k) => `<div class="gi">${slot(k, "", 1)}<div class="nm">${SK[k][0]} <small>${SK[k][2] === "none" ? "" : { metal: "金", wood: "木", water: "水", fire: "火", earth: "土" }[SK[k][2]]}</small></div></div>`).join("")).join("");
+window.__ready = true;
+</script>
+</body></html>

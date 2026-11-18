@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 构筑节奏 v1 · 四个流派何时成型（可交互草图）</title>
+<link rel="stylesheet" href="../../../src/ui/ink/strokes.css">
+<style>
+@font-face { font-family: "MaShanZheng"; src: url("../../../assets/fonts/MaShanZheng-Regular.ttf"); }
+:root { --paper: #ece6d6; --paper2: #e4ddca; --ink: #15181b; --ink2: #3b3c38; --ink3: #6f6c63; --ink4: #a7a293; --zhu: #b8291a; --jin: #a8812e; --qing: #2f7fa8; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 14px/1.65 "Microsoft YaHei", "PingFang SC", sans-serif; }
+.kai { font-family: "MaShanZheng", KaiTi, STKaiti, serif; font-weight: 400; }
+header { display: flex; align-items: baseline; gap: 24px; padding: 16px 32px 4px; flex-wrap: wrap; }
+header h1 { margin: 0; font-size: 30px; letter-spacing: .1em; }
+nav { display: flex; gap: 4px; }
+nav a { font-size: 21px; letter-spacing: .06em; color: var(--ink4); padding: 2px 12px 9px; cursor: pointer; position: relative; user-select: none; }
+nav a:hover { color: var(--ink2); }
+nav a.on { color: var(--ink); }
+nav a.on::after { content: ""; position: absolute; left: 6px; right: 4px; bottom: 0; height: 8px; background: var(--zhu); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.lede { padding: 0 32px; color: var(--ink3); font-size: 13px; }
+.lede b { color: var(--ink2); font-weight: 600; }
+main { display: flex; gap: 28px; padding: 10px 32px 28px; align-items: flex-start; }
+.left { flex: none; width: 930px; }
+.right { flex: 1; min-width: 380px; }
+.idea { font-size: 15px; color: var(--ink2); margin: 0 0 10px; min-height: 2.2em; }
+.idea .kai { font-size: 22px; color: var(--ink); margin-right: 10px; }
+
+/* 矩阵 */
+table.mx { border-collapse: separate; border-spacing: 3px; width: 100%; table-layout: fixed; }
+table.mx th, table.mx td { padding: 0; text-align: center; }
+table.mx th.rl { width: 92px; text-align: right; padding-right: 8px; font-size: 20px; }
+table.mx th.rl small { display: block; font: 12px "Microsoft YaHei", sans-serif; color: var(--ink3); line-height: 1.2; }
+table.mx thead th.realm { font-size: 19px; color: var(--ink2); cursor: pointer; padding-bottom: 2px; }
+table.mx thead th.realm.sel { color: var(--zhu); }
+.unl { font-size: 11.5px; line-height: 1.3; color: var(--ink3); height: 44px; vertical-align: top; cursor: pointer; }
+.unl.sel { color: var(--ink); }
+.unl i { font-style: normal; display: block; }
+.unl i.chg { color: var(--jin); }
+.boss { height: 26px; vertical-align: middle; cursor: pointer; }
+.boss span { display: inline-block; font-size: 15px; color: var(--zhu); border: 1.5px solid var(--zhu); border-radius: 3px 5px 3px 6px; padding: 0 5px; line-height: 1.35; transform: rotate(-2deg); }
+td.cell { height: 64px; border-radius: 2px 5px 3px 4px; cursor: pointer; position: relative; transition: outline-color .1s; outline: 2px solid transparent; outline-offset: 1px; }
+td.cell:hover { outline-color: var(--ink3); }
+td.cell.sel { outline-color: var(--zhu); }
+td.cell .pct { font-size: 18px; font-weight: 600; letter-spacing: .02em; }
+td.cell .add { display: block; font-size: 11px; line-height: 1.25; opacity: .85; padding: 0 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+td.cell .ok { position: absolute; top: 2px; right: 4px; font: 13px "MaShanZheng", KaiTi, serif; }
+.legend { display: flex; gap: 22px; align-items: center; margin: 10px 0 0 98px; font-size: 12.5px; color: var(--ink3); flex-wrap: wrap; }
+.ramp { display: flex; align-items: center; gap: 6px; }
+.ramp .bar { width: 160px; height: 12px; border-radius: 2px; }
+
+/* 部件签 */
+.chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; padding: 1px 7px 1px 3px; margin: 2px 4px 2px 0; border-radius: 2px 5px 3px 4px; line-height: 1.5; position: relative; }
+.chip .c { font: 13px "MaShanZheng", KaiTi, serif; width: 18px; height: 18px; display: inline-grid; place-items: center; border-radius: 2px; }
+.chip.bi { background: var(--ink2); color: var(--paper); }
+.chip.bi .c { background: var(--paper); color: var(--ink); }
+.chip.chang { border: 1.5px solid var(--ink2); color: var(--ink); }
+.chip.chang .c { background: var(--ink2); color: var(--paper); }
+.chip.han { border: 1.5px dashed var(--ink4); color: var(--ink2); }
+.chip.han .c { border: 1px dashed var(--ink3); color: var(--ink2); }
+.chip.que { border: 1.5px solid var(--zhu); color: var(--zhu); text-decoration: line-through; text-decoration-thickness: 1px; }
+.chip.que .c { border: 1.5px solid var(--zhu); color: var(--zhu); text-decoration: none; }
+.chip.later { opacity: .38; }
+.chip .g { width: 7px; height: 7px; border-radius: 50%; background: var(--jin); position: absolute; top: -2px; right: -2px; box-shadow: 0 0 0 2px var(--paper); }
+
+.right h3 { margin: 0 0 4px; font-size: 22px; letter-spacing: .06em; }
+.right h3 small { font: 13px "Microsoft YaHei", sans-serif; color: var(--ink3); margin-left: 8px; }
+.bline { margin: 4px 0 10px; }
+.bline .bn { font: 17px "MaShanZheng", KaiTi, serif; margin-right: 6px; }
+.bline .bp { font-size: 12.5px; color: var(--ink3); }
+.sep { height: 10px; margin: 12px 0 10px; background: var(--ink4); opacity: .7; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.pc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 13px; }
+.pc h4 { margin: 0 0 2px; font: 17px "MaShanZheng", KaiTi, serif; }
+.pc ul { margin: 0; padding-left: 16px; }
+.pc li { margin: 1px 0; }
+.files { font-size: 12.5px; color: var(--ink3); margin-top: 10px; }
+.files code { font-family: Consolas, monospace; color: var(--ink2); background: var(--paper2); padding: 0 4px; border-radius: 2px; }
+
+/* 悬停卡 */
+#tip { position: fixed; pointer-events: none; z-index: 9; background: #f6f2e7; border: 1px solid var(--ink4); box-shadow: 0 6px 18px rgba(40,36,28,.22); padding: 8px 12px 9px; max-width: 360px; font-size: 12.5px; display: none; border-radius: 3px 6px 4px 5px; }
+#tip h5 { margin: 0 0 4px; font: 17px "MaShanZheng", KaiTi, serif; }
+#tip .n { color: var(--ink3); }
+#tip .row { margin: 1px 0; }
+
+/* 并排对比 */
+#cmp { display: none; padding: 6px 32px 30px; }
+body.ov main { display: none; } body.ov #cmp { display: block; }
+table.cmp { border-collapse: separate; border-spacing: 3px; }
+table.cmp th { font-weight: 400; padding: 2px 6px; }
+table.cmp thead th { font: 19px "MaShanZheng", KaiTi, serif; color: var(--ink2); }
+table.cmp thead tr.sub th { font: 12px "Microsoft YaHei", sans-serif; color: var(--ink3); }
+table.cmp th.rl { text-align: right; font: 19px "MaShanZheng", KaiTi, serif; padding-right: 10px; }
+table.cmp td { width: 64px; height: 38px; text-align: center; font-size: 14px; font-weight: 600; border-radius: 2px 5px 3px 4px; }
+table.cmp td.tx { background: transparent; font-weight: 400; color: var(--ink2); font-size: 13px; }
+table.cmp td.tx b { font: 16px "MaShanZheng", KaiTi, serif; font-weight: 400; color: var(--ink); }
+table.cmp td.tx.never { color: var(--zhu); }
+table.cmp .gap { width: 14px; }
+.qs { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; font-size: 13.5px; }
+.qs h4 { margin: 0 0 4px; font: 19px "MaShanZheng", KaiTi, serif; }
+.qs ol { margin: 0; padding-left: 18px; }
+.cmp-note { color: var(--ink3); font-size: 12.5px; margin: 8px 0 0; }
+</style></head>
+<body>
+<header>
+  <h1 class="kai">构筑节奏 · 四个流派何时成型</h1>
+  <nav class="kai" id="tabs"></nav>
+</header>
+<p class="lede"><b>成型度</b>＝该流派核心部件"到这个境界大概率已在手上"的程度（粗估：<b>必得</b> 1 · <b>常见</b> 0.6 · <b>罕见</b> 0.25 · <b>缺失</b> 0，按部件数平均）；≥ 70% 记为<b>成型</b>。点矩阵里的某一列，右侧看那时身上有什么；悬停格子看新拿到的部件和出处。三个方向都遵守：<b>真气不自动回复、击杀不回复</b>。</p>
+<main>
+  <section class="left">
+    <p class="idea" id="idea"></p>
+    <table class="mx" id="mx"></table>
+    <div class="legend">
+      <span class="ramp">0%<span class="bar" id="rampbar"></span>100%</span>
+      <span><span class="chip bi"><span class="c">必</span>必得</span><span class="chip chang"><span class="c">常</span>常见</span><span class="chip han"><span class="c">罕</span>罕见</span><span class="chip que"><span class="c">缺</span>拿不到</span></span>
+      <span><span class="chip chang" style="padding-right:10px"><span class="c">常</span>相对现状改过<span class="g"></span></span></span>
+      <span class="kai" style="font-size:15px;color:var(--ink2)">成 = 已成型</span>
+    </div>
+  </section>
+  <aside class="right" id="side"></aside>
+</main>
+<section id="cmp"></section>
+<div id="tip"></div>
+
+<script>
+const REALMS = ["练一", "练二", "练三", "练四", "练五", "练六", "练七", "练八", "练九", "筑基"];
+const BOSS = { 5: "青牙", 7: "碧鳞", 8: "心魔" };
+const W = { 必: 1, 常: 0.6, 罕: 0.25, 缺: 0 };
+const CLS = { 必: "bi", 常: "chang", 罕: "han", 缺: "que" };
+const BUILDS = [
+  { k: "jian", n: "剑势流", d: "普攻攒势 → 蓄势斩" },
+  { k: "fa", n: "法术流", d: "五行破盾 · 反应爆发" },
+  { k: "shen", n: "身法流", d: "闪身 / 读招反击" },
+  { k: "bao", n: "暴击流", d: "堆暴击 · 引雷" },
+];
+const SHOW_OK = 0.7, SHOW_DIR = 0.35;
+
+// 部件：[名, 境界下标（-1 = 拿不到）, 必/常/罕/缺, 出处]
+const BASE = {
+  jian: [["凝锋诀", 3, "常", "残页 ×3：东麓石刻、灵光宝箱 15%"], ["剑势心法①", 3, "罕", "《蓄势》《连环》：精英 / 灵光宝箱 3–5%"], ["法剑气势词条", 4, "常", "法剑随机词条（气势获取 / 蓄势斩伤害）"], ["青冥飞剑", 6, "必", "剑修遗府首通"], ["剑阵", 6, "必", "区域二灵光点 · 阵盘"], ["剑势心法②", 7, "罕", "《满势》《余波》《回锋》：夜明宝箱 / 遗府重探 5–12%，第 2 心法栏练八开"]],
+  fa: [["法术心法", -1, "缺", "《灵根·火》只有数据，没有任何掉落"], ["法术栏2", 2, "必", "练三开栏"], ["火符", 4, "常", "区域二残卷 ×3"], ["寒冰锥", 6, "必", "剑修遗府首通"], ["法术栏3", 6, "必", "练七开栏"], ["紫金葫芦", -1, "缺", "没有掉落（同类只有极品乾坤镜，约 1%）"], ["聚灵阵", -1, "缺", "没有获取途径（阵盘只有剑阵）"]],
+  shen: [["《流云》", 3, "罕", "灵光 / 夜明宝箱，混在 4–9 本心法里抽"], ["地行术", 4, "常", "残页 ×4：灰鬃头目、宝箱、东台石刻"], ["闪身2充能", 5, "必", "练六境界成长"], ["止水诀", 6, "常", "残页 ×5：夜明宝箱、遗府重探、碧鳞"], ["《回锋》", 6, "罕", "夜明宝箱 / 遗府重探"], ["《剑影》", 6, "罕", "夜明宝箱 / 遗府重探"]],
+  bao: [["《锋锐》", 3, "必", "练四自动领悟"], ["掌心雷", 3, "常", "残页 ×4：狼妖头目 25%、碑"], ["玉佩暴击词条", 4, "常", "练五开玉佩栏，随机词条"], ["《雷引》", 6, "罕", "夜明宝箱 6%（四本里抽一）"]],
+};
+// 方向 = 在 BASE 上按名字覆盖
+const patch = (base, over) => Object.fromEntries(Object.entries(base).map(([k, list]) => [k, list.map((p) => (over[p[0]] ? [p[0], ...over[p[0]]] : p))]));
+const FIX = { // 方向一的"补缺口"，方向二、三都包含
+  "剑势心法①": [3, "常", "掉率 3–5% → 10–12%"],
+  "剑势心法②": [7, "常", "掉率 5–12% → 15%"],
+  "法术心法": [6, "常", "新增《凝神》：真气上限 +40%、回气丹效果 +50%（不回蓝），进夜明宝箱 / 遗府重探心法池"],
+  "紫金葫芦": [7, "必", "碧鳞首杀必得"],
+  "聚灵阵": [6, "必", "区域二两个阵盘点之一改为聚灵阵"],
+  "《流云》": [3, "常", "身法心法单独成池，掉率提高"],
+  "《回锋》": [6, "常", "掉率提高"],
+  "《剑影》": [6, "常", "掉率提高"],
+  "《雷引》": [6, "常", "掉率提高"],
+};
+const DIRS = {
+  base: {
+    tab: "现状", title: "现状", one: "按当前代码与掉落表核出来的节奏。",
+    pieces: BASE,
+    unlock: { 0: ["法术栏1"], 1: ["丹药2"], 2: ["法术栏2", "法衣栏"], 3: ["心法栏1", "送《锋锐》"], 4: ["玉佩栏", "二段跳"], 5: ["闪身2"], 6: ["法术栏3", "法宝栏", "阵法栏"], 7: ["心法栏2"], 9: ["御剑"] },
+    pro: ["剑势流能在练七–八勉强成型（靠飞剑 + 剑阵两件必得）", "前半程选择少，新手不容易乱"],
+    con: ["法术流三个关键件全缺，真气续航只有回气丹", "身法流、暴击流的心法全是罕见掉落，基本看运气", "练七之前几乎没有\"我在走某条路\"的感觉"],
+    files: "",
+  },
+  a: {
+    tab: "方向一 · 补缺口", title: "方向一 · 补缺口", one: "节奏不动，只把拿不到的件补上、把罕见心法提到常见。改动最小，基本只动掉落表。",
+    pieces: patch(BASE, FIX),
+    unlock: null,
+    pro: ["四个流派都能成型；法术流第一次有真气来源", "只改数据：掉落表 + 一个灵光点 + 三个新物品", "不加新界面，不碰已定稿的流程"],
+    con: ["成型时间仍在练七–八，前半程体验基本不变", "紫金葫芦放在碧鳞首杀，法术流要打完区域二才完整", "方向感仍然来得晚：练五前看不出差别"],
+    files: "<code>src/data/loot.js</code>（心法掉率、碧鳞首杀、《凝神》进池） · <code>src/data/levels/r2.js</code>（一个阵盘点改聚灵阵） · <code>src/data/items_db.js</code> / <code>items.js</code>（紫金葫芦、聚灵阵盘、《凝神》）",
+  },
+  b: {
+    tab: "方向二 · 本命提前", title: "方向二 · 本命提前（含方向一的补缺）", one: "法宝栏提前到练五；青牙首杀时让玩家从三件法宝里挑本命——第一个大的构筑选择放在第一个首领身上。",
+    pieces: patch(patch(BASE, FIX), {
+      "青冥飞剑": [5, "必", "青牙首杀 · 本命三选一（选飞剑）"],
+      "紫金葫芦": [5, "必", "青牙首杀 · 本命三选一（选葫芦）；第三件是镇山印（打断控制，通用）"],
+      "剑阵": [6, "必", "阵盘三选一：剑阵 / 聚灵阵 / 火阵"],
+      "聚灵阵": [6, "必", "阵盘三选一：剑阵 / 聚灵阵 / 火阵"],
+    }),
+    unlock: { 0: ["法术栏1"], 1: ["丹药2"], 2: ["法术栏2", "法衣栏"], 3: ["心法栏1", "送《锋锐》"], 4: ["玉佩栏", "二段跳", "+法宝栏"], 5: ["闪身2", "+本命三选一"], 6: ["法术栏3", "+阵盘三选一"], 7: ["心法栏2"], 9: ["御剑"] },
+    pro: ["青牙首杀变成一个\"岔路口\"，打赢有实打实的方向", "剑势流、法术流练六就有核心件，练七成型", "利用了已有的三件法宝（飞剑 / 葫芦 / 镇山印），不用新做法宝"],
+    con: ["要做\"本命三选一\"和\"阵盘三选一\"两个选择界面", "剑修遗府首通奖励要重排（飞剑挪走后，改给祭炼材料或未选的那件）", "身法流、暴击流没有对应的法宝，比另两条路弱一截"],
+    files: "方向一的全部 + <code>src/data/progression.js</code>（法宝栏练五） · <code>src/data/loot.js</code>（青牙首杀、遗府首通） · 新选择界面（需 UI 草图） · <code>src/game/cave/facilities.js</code>（本命认主）",
+  },
+  c: {
+    tab: "方向三 · 入门定向", title: "方向三 · 入门定向（含方向一的补缺）", one: "心法栏提前到练二：玄机子让你从四本入门心法里选一本（蓄势 / 凝神 / 流云 / 锋锐）；之后心法和残页掉落六成偏向你选的路。",
+    pieces: patch(patch(BASE, FIX), {
+      "剑势心法①": [1, "必", "练二入门四选一（选《蓄势》）"],
+      "剑势心法②": [5, "常", "机缘偏向：心法掉落 60% 落在所选流派；第 2 心法栏提前到练六"],
+      "剑阵": [6, "必", "阵盘二选一：剑阵 / 聚灵阵"],
+      "法术心法": [1, "必", "练二入门四选一（选《凝神》）"],
+      "紫金葫芦": [6, "必", "剑修遗府首通：飞剑 / 葫芦二选一"],
+      "聚灵阵": [6, "必", "阵盘二选一：剑阵 / 聚灵阵"],
+      "《流云》": [1, "必", "练二入门四选一（选《流云》）"],
+      "止水诀": [5, "常", "机缘偏向：残页更常出"],
+      "《回锋》": [5, "常", "机缘偏向"],
+      "《剑影》": [5, "常", "机缘偏向"],
+      "《锋锐》": [1, "必", "练二入门四选一（选《锋锐》）；练四不再自动送，改为\"再选一本\""],
+      "《雷引》": [5, "常", "机缘偏向"],
+    }),
+    unlock: { 0: ["法术栏1"], 1: ["丹药2", "+心法栏1", "+入门四选一"], 2: ["法术栏2", "法衣栏"], 3: ["+再选一本心法"], 4: ["玉佩栏", "二段跳"], 5: ["闪身2", "+心法栏2"], 6: ["法术栏3", "法宝栏", "阵法栏", "+遗府 / 阵盘二选一"], 9: ["御剑"] },
+    pro: ["练二就有方向感，四条路一开始就平等", "掉落偏向让\"我在走这条路\"一直被强化（D3 Smart Loot 的思路）", "身法流、暴击流也能在练六–七成型"],
+    con: ["练二的玩家还不懂系统，入门选择可能选错 → 需要在静室花悟性改选", "偏向掉落要改掉落逻辑（game/loot.js），需要数值复核", "改动最多：栏位、玄机子剧情、两个选择界面、练四赠予"],
+    files: "方向一的全部 + <code>src/data/progression.js</code>（心法栏练二 / 练六、练四赠予） · <code>src/game/loot.js</code>（流派偏向） · 玄机子入门对话 + 选择界面（需 UI 草图） · 静室改选入口",
+  },
+};
+const ORDER = ["base", "a", "b", "c"];
+
+// 墨色梯度：纸 → 焦墨（单色顺序梯度）
+const PAPER = [236, 230, 214], INK = [31, 32, 29];
+const ink = (t) => `rgb(${PAPER.map((p, i) => Math.round(p + (INK[i] - p) * Math.pow(t, 0.85))).join(",")})`;
+const fg = (t) => (t > 0.48 ? "#f3eee2" : "#15181b");
+document.getElementById("rampbar").style.background = `linear-gradient(90deg, ${[0, 0.25, 0.5, 0.75, 1].map(ink).join(",")})`;
+
+function score(list, r) { return list.reduce((s, p) => s + (p[1] >= 0 && p[1] <= r ? W[p[2]] : 0), 0) / list.length; }
+function baseOf(k, name) { return BASE[k].find((p) => p[0] === name); }
+function changed(k, p) { const b = baseOf(k, p[0]); return b && (b[1] !== p[1] || b[2] !== p[2]); }
+function firstAt(list, th) { for (let r = 0; r < REALMS.length; r++) if (score(list, r) >= th - 1e-9) return r; return -1; }
+const chip = (k, p, later) => `<span class="chip ${CLS[p[2]]}${later ? " later" : ""}"><span class="c">${p[2]}</span>${p[0]}${changed(k, p) ? '<span class="g"></span>' : ""}</span>`;
+
+let cur = "base", sel = 5;
+const $ = (id) => document.getElementById(id);
+const tip = $("tip");
+
+function tabs() {
+  $("tabs").innerHTML = ORDER.map((k) => `<a data-k="${k}" class="${k === cur ? "on" : ""}">${DIRS[k].tab}</a>`).join("") + `<a data-k="ov" class="${cur === "ov" ? "on" : ""}">并排对比</a>`;
+  $("tabs").querySelectorAll("a").forEach((a) => (a.onclick = () => { cur = a.dataset.k; location.hash = cur; render(); }));
+}
+
+function matrix() {
+  const D = DIRS[cur], U = D.unlock || DIRS.base.unlock;
+  let h = `<thead><tr><th class="rl"></th>${REALMS.map((r, i) => `<th class="realm kai${i === sel ? " sel" : ""}" data-r="${i}">${r}</th>`).join("")}</tr>`;
+  h += `<tr><th class="rl"><small>开栏 / 事件</small></th>${REALMS.map((_, i) => `<td class="unl${i === sel ? " sel" : ""}" data-r="${i}">${(U[i] || []).map((s) => (s[0] === "+" ? `<i class="chg">${s.slice(1)}</i>` : `<i>${s}</i>`)).join("")}</td>`).join("")}</tr>`;
+  h += `<tr><th class="rl"><small>首领</small></th>${REALMS.map((_, i) => `<td class="boss" data-r="${i}">${BOSS[i] ? `<span class="kai">${BOSS[i]}</span>` : ""}</td>`).join("")}</tr></thead><tbody>`;
+  for (const B of BUILDS) {
+    const list = D.pieces[B.k];
+    h += `<tr><th class="rl kai">${B.n}<small>${B.d}</small></th>`;
+    for (let r = 0; r < REALMS.length; r++) {
+      const t = score(list, r), add = list.filter((p) => p[1] === r);
+      h += `<td class="cell${r === sel ? " sel" : ""}" data-b="${B.k}" data-r="${r}" style="background:${ink(t)};color:${fg(t)}">`
+        + `<span class="pct">${Math.round(t * 100)}%</span>${add.length ? `<span class="add">+${add.map((p) => p[0]).join(" ")}</span>` : ""}`
+        + `${t >= SHOW_OK - 1e-9 ? '<span class="ok">成</span>' : ""}</td>`;
+    }
+    h += "</tr>";
+  }
+  $("mx").innerHTML = h + "</tbody>";
+  $("mx").querySelectorAll("[data-r]").forEach((el) => {
+    el.onclick = () => { sel = +el.dataset.r; render(); };
+    if (el.classList.contains("cell")) {
+      el.onmousemove = (e) => showTip(e, el.dataset.b, +el.dataset.r);
+      el.onmouseleave = () => (tip.style.display = "none");
+    }
+  });
+}
+
+function showTip(e, k, r) {
+  const list = DIRS[cur].pieces[k], B = BUILDS.find((b) => b.k === k);
+  const add = list.filter((p) => p[1] === r), have = list.filter((p) => p[1] >= 0 && p[1] < r), miss = list.filter((p) => p[1] < 0 || p[1] > r);
+  const line = (p) => { const b = baseOf(k, p[0]); return `<div class="row">${chip(k, p)} <span class="n">${p[3]}</span>${changed(k, p) ? `<div class="n" style="color:var(--jin)">现状：${b[1] < 0 ? "拿不到" : REALMS[b[1]] + " · " + b[2]}</div>` : ""}</div>`; };
+  tip.innerHTML = `<h5>${B.n} · ${REALMS[r]} · ${Math.round(score(list, r) * 100)}%</h5>`
+    + (add.length ? `<div class="n">这一层新到手</div>${add.map(line).join("")}` : `<div class="n">这一层没有新部件</div>`)
+    + (have.length ? `<div class="n" style="margin-top:4px">之前已有：${have.map((p) => p[0]).join("、")}</div>` : "")
+    + (miss.length ? `<div class="n">还差：${miss.map((p) => p[0] + (p[1] < 0 ? "（拿不到）" : `（${REALMS[p[1]]}）`)).join("、")}</div>` : "");
+  tip.style.display = "block";
+  const x = Math.min(e.clientX + 16, innerWidth - tip.offsetWidth - 10), y = Math.min(e.clientY + 16, innerHeight - tip.offsetHeight - 10);
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+
+function side() {
+  const D = DIRS[cur];
+  let h = `<h3 class="kai">${REALMS[sel]} 时身上<small>${BOSS[sel] ? `正好打${BOSS[sel]}` : "点左侧任一列切换"}</small></h3>`;
+  for (const B of BUILDS) {
+    const list = D.pieces[B.k];
+    h += `<div class="bline"><span class="bn">${B.n}</span><span class="bp">${Math.round(score(list, sel) * 100)}%</span><br>${list.map((p) => chip(B.k, p, p[1] < 0 || p[1] > sel)).join("")}</div>`;
+  }
+  h += `<div class="sep"></div><div class="pc"><div><h4>得</h4><ul>${D.pro.map((s) => `<li>${s}</li>`).join("")}</ul></div><div><h4>失</h4><ul>${D.con.map((s) => `<li>${s}</li>`).join("")}</ul></div></div>`;
+  if (D.files) h += `<div class="files">要改：${D.files}</div>`;
+  $("side").innerHTML = h;
+}
+
+function compare() {
+  const cols = [["青牙时", 5, "pct"], ["碧鳞时", 7, "pct"], ["定向", SHOW_DIR, "at"], ["成型", SHOW_OK, "at"]];
+  let h = `<p class="idea"><span class="kai">并排对比</span>同一个流派、同一组核心部件，四种节奏下的成型度（格子颜色同矩阵）。"定向" = 成型度第一次 ≥ 35% 的境界，"成型" = 第一次 ≥ 70%。</p>`;
+  h += `<table class="cmp"><thead><tr><th></th>${ORDER.map((k, i) => `${i ? '<th class="gap"></th>' : ""}<th colspan="4">${DIRS[k].tab}</th>`).join("")}</tr>`;
+  h += `<tr class="sub"><th></th>${ORDER.map((k, i) => `${i ? '<th class="gap"></th>' : ""}${cols.map((c) => `<th>${c[0]}</th>`).join("")}`).join("")}</tr></thead><tbody>`;
+  for (const B of BUILDS) {
+    h += `<tr><th class="rl">${B.n}</th>`;
+    ORDER.forEach((k, i) => {
+      const list = DIRS[k].pieces[B.k];
+      if (i) h += '<td class="gap" style="background:none"></td>';
+      for (const [, v, kind] of cols) {
+        if (kind === "pct") { const t = score(list, v); h += `<td style="background:${ink(t)};color:${fg(t)}">${Math.round(t * 100)}%</td>`; }
+        else { const r = firstAt(list, v); h += `<td class="tx${r < 0 ? " never" : ""}">${r < 0 ? "到不了" : `<b>${REALMS[r]}</b>`}</td>`; }
+      }
+    });
+    h += "</tr>";
+  }
+  h += `</tbody></table><p class="cmp-note">数字是按"必得 1 / 常见 0.6 / 罕见 0.25"粗估的期望，不是掉率模拟；方向二、三里的"二选一 / 三选一"按"走这条路的人选了对应那件"计，所以同一局里四个流派不会同时拿满。</p>`;
+  h += `<div class="sep" style="max-width:900px"></div><div class="qs">
+    <div><h4>请选 1 · 走哪个方向</h4><ol><li>方向一：只补缺口（改动最小）</li><li>方向二：青牙首杀选本命（选择点放在首领上）</li><li>方向三：练二入门定向 + 掉落偏向（方向感最早）</li><li>二 + 三 组合：入门定向，青牙再选本命</li></ol></div>
+    <div><h4>请选 2 · 法术流的真气从哪来</h4><ol><li>紫金葫芦（法宝，吸取回气）</li><li>聚灵阵（阵法，阵内回气）</li><li>两个都给，各占一个栏位</li></ol><p class="cmp-note">都不违反"真气不自动回复、击杀不回复"。</p></div>
+    <div><h4>请选 3 · 选错了怎么办</h4><ol><li>静室花悟性改选（推荐）</li><li>不能改，靠后续掉落补</li><li>每个境界大关（筑基）免费重选一次</li></ol></div>
+  </div>`;
+  $("cmp").innerHTML = h;
+}
+
+function render() {
+  tabs();
+  document.body.classList.toggle("ov", cur === "ov");
+  if (cur === "ov") return compare();
+  const D = DIRS[cur];
+  $("idea").innerHTML = `<span class="kai">${D.title}</span>${D.one}`;
+  matrix(); side();
+}
+const h0 = location.hash.slice(1); if (h0 === "ov" || DIRS[h0]) cur = h0;
+render();
+</script>
+</body></html>

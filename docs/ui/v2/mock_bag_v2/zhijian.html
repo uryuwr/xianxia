@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>储物袋 v2 · 方向四 · 侧挂纸笺</title>
+<link rel="stylesheet" href="../kit/strokes.css"><link rel="stylesheet" href="../kit/ink-ui.css"><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="base.css">
+<script src="../kit/ink-ui.js"></script>
+<style>
+/* 世界照常运行：只在右侧四成压一层渐变薄纸 */
+.veil { background: linear-gradient(90deg, transparent 0, transparent 52%, rgba(236,230,214,.35) 64%, rgba(236,230,214,.7) 100%); }
+/* 右侧纸笺：一张竖长宣纸，从右边挂下来 */
+.strip { left: 846px; top: 10px; width: 370px; height: 664px; padding: 16px 22px 12px 26px; }
+.strip > .ink-sheet::before { -webkit-mask-image: var(--ink-deckle-2); mask-image: var(--ink-deckle-2); background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(150,125,85,.14)), var(--ink-tex-paper), var(--ink-tex-fiber), rgba(245,240,227,.95); background-blend-mode: normal, multiply, multiply, normal; }
+.hd { display: flex; align-items: flex-end; gap: 12px; }
+.hd .t { font: 400 30px/1 var(--f-splash); letter-spacing: .06em; }
+.hd .worth { margin-left: auto; text-align: right; }
+.hd .worth small { display: block; font: 12px var(--f-kai); color: var(--ink-zhong); letter-spacing: .2em; }
+.hd .worth b { font: 400 34px/1 var(--f-splash); color: #8a6a22; }
+.cap { display: flex; align-items: center; gap: 8px; margin: 8px 0 2px; font: 12px var(--f-ui); color: var(--ink-zhong); }
+.cap .ink-bar { flex: 1; height: 8px; }
+.cap b { color: var(--zhu); font-weight: 700; }
+.sec { display: flex; align-items: baseline; gap: 8px; margin: 9px 0 4px; font: 400 16px var(--f-display); letter-spacing: .12em; color: var(--ink-nong); }
+.sec small { font: 11px var(--f-ui); letter-spacing: 0; color: var(--ink-dan); }
+.sec .r { margin-left: auto; }
+/* 随身：四个装备位 + 行囊 */
+.worn { display: flex; align-items: flex-start; gap: 4px; }
+.slot { position: relative; width: 48px; height: 62px; }
+.slot .tok { --cell: 48px; --gap: 0px; }
+.slot > span { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; font: 11px var(--f-kai); color: var(--ink-zhong); }
+.worn .sep { width: 10px; }
+.belt .slot { width: 40px; height: 62px; }
+.belt .slot .tok { --cell: 40px; top: 4px; }
+.belt .slot > span { font: 10px var(--f-ui); color: var(--ink-dan); }
+/* 储物袋格 */
+#bag { --cell: 54px; --gap: 4px; margin-left: 4px; }
+/* 腾格建议：估价 / 格最低的物品，圆相外加一圈朱色虚笔 + "可弃" */
+.tok.cheap > .cut { position: absolute; inset: -1px; z-index: 2; border-radius: 50%; border: 1.5px dashed rgba(184,41,26,.75); }
+.tok.cheap > .cutl { position: absolute; left: -4px; top: -6px; z-index: 4; font: 10px/1 var(--f-display); color: var(--paper-hi); background: var(--zhu); padding: 2px 3px 3px; transform: rotate(-6deg); -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; }
+/* 锦囊 / 护身：两种底，一眼分开 */
+.safe { display: flex; gap: 6px; margin-top: 8px; }
+.grp { position: relative; padding: 6px 8px 4px 10px; isolation: isolate; width: 160px; white-space: nowrap; }
+.grp .lab { font: 400 15px var(--f-display); letter-spacing: .1em; display: flex; align-items: center; gap: 6px; }
+.grp .lab small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+.grp .row { position: relative; height: 48px; margin-top: 3px; }
+.grp .row .tok { --cell: 46px; --gap: 2px; }
+/* 锦囊：胭脂色锦缎晕 + 朱绳结 */
+.pouch::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(181,72,90,.13); -webkit-mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat; }
+.pouch .knot { width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle, #c23a2a 0 40%, transparent 42%), conic-gradient(from 20deg, #b8291a 0 12%, transparent 0 25%, #b8291a 0 37%, transparent 0 50%, #b8291a 0 62%, transparent 0 75%, #b8291a 0 87%, transparent 0); }
+/* 护身：石青圆印框 + 锁字 */
+.amulet::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(47,127,168,.10); -webkit-mask: var(--ink-wash-2) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-2) 0 0 / 100% 100% no-repeat; }
+.amulet .lock { --s: 18px; font-size: 10px; --seal-color: var(--shiqing); }
+/* 脚下 */
+.ground { display: flex; align-items: center; gap: 8px; margin-top: 4px; padding: 2px 0 0; }
+.ground .g { position: relative; width: 84px; height: 42px; flex: none; }
+.ground .g .tok { --cell: 40px; --gap: 4px; }
+.ground .txt { font: 13px/1.45 var(--f-kai); color: var(--ink-nong); }
+.ground .txt b { color: var(--zhu); font-weight: 400; font-family: var(--f-display); }
+.ground .txt small { display: block; font: 11px var(--f-ui); color: var(--ink-zhong); }
+.ground .ink-btn { font-size: 15px; padding: 2px 6px 6px; margin-left: auto; white-space: nowrap; }
+/* 若身陨此地：一行三签 */
+.die { display: grid; grid-template-columns: auto 1fr; gap: 0 10px; margin-top: 4px; font: 12.5px/1.55 var(--f-kai); color: var(--ink-zhong); }
+.die .h { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; font: 400 15px var(--f-display); color: var(--ink-nong); letter-spacing: .1em; }
+.die .v { text-align: right; color: var(--ink-nong); font-family: var(--f-display); font-size: 14px; }
+.die .v.zhu { color: var(--zhu); }
+.keys { left: 872px; top: 690px; font: 11px var(--f-ui); color: var(--ink-zhong); display: flex; gap: 12px; }
+.keys b { color: var(--ink-nong); border-bottom: 1px solid var(--ink-dan); padding: 0 2px; margin-right: 3px; }
+/* 详情浮签：贴在纸笺左外沿、与选中物品同高；松开 / 移开即收 */
+.tip { left: 540px; top: 22px; width: 280px; padding: 16px 20px 12px; transform: rotate(-.6deg); }
+.mocktag { right: auto; left: 12px; }
+.mi { display: inline-block; width: 22px; height: 22px; } .mi > img { width: 100%; height: 100%; }
+.tip .top { display: flex; gap: 12px; align-items: center; }
+.tip .pic { position: relative; width: 112px; height: 56px; flex: none; }
+.tip .pic .tok { --cell: 54px; --gap: 4px; }
+.tip .nm { font: 400 25px/1.1 var(--f-display); letter-spacing: .08em; }
+.tip .meta { white-space: nowrap; font: 11.5px var(--f-kai); color: var(--ink-zhong); margin-top: 4px; }
+.tip p { font: 13.5px/1.7 var(--f-kai); color: var(--ink-nong); margin: 8px 0 6px; }
+.cmp { width: 100%; border-collapse: collapse; font: 13px var(--f-kai); }
+.cmp th { font: 11px var(--f-ui); color: var(--ink-dan); font-weight: 400; text-align: right; padding: 0 0 2px; }
+.cmp th:first-child, .cmp td:first-child { text-align: left; color: var(--ink-zhong); }
+.cmp td { text-align: right; padding: 3px 0; font-family: var(--f-display); font-size: 15px; color: var(--ink-nong); }
+.cmp td.o { color: var(--ink-dan); font-size: 13px; }
+.cmp tr + tr td { background: linear-gradient(90deg, rgba(21,24,27,.08), rgba(21,24,27,0) 80%) 0 0 / 100% 1px no-repeat; }
+.affix { font: 12.5px/1.6 var(--f-kai); color: #245f7f; margin-top: 6px; }
+.affix::before { content: "· "; }
+.tip .val { display: flex; justify-content: space-between; align-items: baseline; margin-top: 6px; font: 12px var(--f-kai); color: var(--ink-zhong); }
+.tip .val b { font: 400 20px var(--f-splash); color: #8a6a22; }
+.tip .acts { display: flex; align-items: center; gap: 2px; margin-top: 8px; }
+.tip .acts .ink-btn { font-size: 16px; padding: 3px 8px 7px; letter-spacing: .1em; }
+.tip .acts .ink-btn.primary { padding: 6px 16px 8px 14px; font-size: 17px; }
+.tip .acts .off { color: var(--ink-qing); flex-direction: column; align-items: flex-start; gap: 0; line-height: 1; }
+.tip .acts .note { font: 10.5px var(--f-ui); color: var(--ink-dan); display: block; letter-spacing: 0; }
+.lead { left: 818px; top: 150px; width: 90px; transform: rotate(34deg); transform-origin: 0 50%; height: 8px; background: var(--zhu); opacity: .55; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+/* 开袋时妖物逼近：纸笺左沿一点朱 */
+.warn { left: 628px; top: 548px; display: flex; padding: 6px 12px; background: radial-gradient(ellipse closest-side, rgba(245,240,227,.85), rgba(245,240,227,0)); align-items: center; gap: 6px; font: 12px var(--f-kai); color: var(--zhu); }
+.warn .ink-seal { --s: 26px; font-size: 13px; }
+.warn i { display: block; width: 40px; height: 7px; background: var(--zhu); opacity: .6; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; transform: rotate(160deg); }
+/* 拖拽：从格子拖到装备位的朱色虚影 */
+.drag { left: 909px; top: 128px; width: 160px; height: 120px; pointer-events: none; }
+</style></head><body>
+<div class="world"></div><div class="veil"></div>
+
+<section class="abs strip ink-paper">
+  <div class="hd"><span class="t">储物袋</span><span class="ink-seal two gold" style="--s:34px;--seal-rot:-6deg">满载</span><span class="worth"><small>袋中估价</small><b>2,612</b></span></div>
+  <div class="cap"><span>占格 <b>24 / 24</b></span><div class="ink-bar hp thin" style="--v:1"><i></i></div><span>灵石 22</span></div>
+
+  <div class="sec">随身<small>剑 · 衣 · 佩 · 法宝</small><span class="r" style="font:11px var(--f-ui);color:var(--ink-dan);letter-spacing:0">行囊 · 快捷 1 2 3</span></div>
+  <div class="worn" id="worn"></div>
+
+  <div class="sec">袋中<small>拖拽整理 · 右键丢弃 · 双击装备</small></div>
+  <div id="bag"></div>
+
+  <div class="safe">
+    <div class="grp pouch"><div class="lab"><i class="mi" data-icon="jinnang"></i>贴身锦囊<small>身陨不失 · 2/2</small></div><div class="row" id="pouch"></div></div>
+    <div class="grp amulet"><div class="lab"><span class="ink-seal round lock">护</span>护身格<small>关键物品 · 不占格</small></div><div class="row" id="key"></div></div>
+  </div>
+
+  <div class="ground"><div class="g" id="ground"></div><div class="txt">脚下 · 狼王内丹 <b>放不下</b>（需 2 格）</div></div>
+
+  <div class="die">
+    <div class="h"><span class="ink-seal ink" style="--s:20px;font-size:11px">陨</span>若身陨此地</div>
+    <span>失去</span><span class="v"><span style="color:var(--zhu)">约 2,090 估价</span> · 法器随机 1 件未认主的遗落</span>
+    <span>护住</span><span class="v">锦囊 乾坤镜 · 护身格 2 件 · 斩妖感悟</span>
+  </div>
+</section>
+<div class="abs keys"><span><b>Tab</b>合上</span><span><b>拖拽</b>整理 / 换装</span><span><b>右键</b>丢弃</span><span><b>双击</b>装备</span></div>
+
+
+<section class="abs tip ink-paper alt">
+  <div class="top"><div class="pic" id="selpic"></div><div><div class="nm qname q2">青锋剑</div><div class="meta"><span class="qtag q2">宝品</span> · 法剑 · 占 2 格</div></div></div>
+  <p>青岚山外剑冢所出，剑身有一线青芒。</p>
+  <table class="cmp"><tr><th></th><th>此剑</th><th>身上 · 锈剑</th><th>差</th></tr>
+    <tr><td>攻击</td><td>+13</td><td class="o">+4</td><td class="up">9</td></tr>
+    <tr><td>会心</td><td>+3%</td><td class="o">—</td><td class="up">3%</td></tr>
+  </table>
+  <div class="affix">剑气斩伤害 +8%</div>
+  <div class="val"><span>估价（三阶宝品）</span><b>180</b></div>
+  <div class="acts"><span class="ink-btn primary">装备</span><span class="ink-btn off">入锦囊<span class="note">锦囊已满</span></span><span class="ink-btn">丢弃</span></div>
+</section>
+
+<div class="abs warn"><span class="ink-seal">妖</span><span>狼妖 · 左下 6 丈逼近</span><i></i></div>
+<div class="mocktag">方向四 · 侧挂纸笺（已定稿）</div>
+
+<script type="module">
+import { BAG, POUCH, KEY, WORN, BELT, GROUND, tok, grid, done } from "./data.js";
+const $ = (id) => document.getElementById(id);
+// 随身
+let h = "";
+for (const k of ["sword", "robe", "jade", "artifact"]) { const w = WORN[k]; h += `<div class="slot">${tok(w, { w: 1, h: 1 })}<span>${w.slot}</span></div>`; }
+h += `<i class="sep"></i><div class="worn belt">`;
+for (const b of BELT) h += `<div class="slot">${tok(b, { w: 1, h: 1 })}<span>${b.key}</span></div>`;
+$("worn").innerHTML = h + "</div>";
+// 袋中
+grid($("bag"), BAG, 6, 4);
+$("pouch").innerHTML = tok(POUCH.items[0], { c: 1, r: 1 });
+$("key").innerHTML = tok(KEY[0], { c: 1, r: 1, w: 1, h: 1 }) + tok(KEY[1], { c: 2, r: 1 });
+$("ground").innerHTML = tok({ ...GROUND[0] }, { c: 1, r: 1, cls: "nofit" });
+$("selpic").innerHTML = tok({ id: "sword_qingfeng", q: 2, sz: 2 }, { c: 1, r: 1 });
+done();
+</script>
+</body></html>

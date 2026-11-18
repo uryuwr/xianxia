@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 · 程序画人试验 v1（纯 SVG，无图片 / 无模型）</title>
+<style>
+body { margin: 0; background: #2a2925; color: #ece6d6; font: 14px/1.7 "Microsoft YaHei", sans-serif; display: flex; gap: 28px; padding: 22px 28px; }
+.stage { width: 800px; height: 1000px; flex: none; box-shadow: 0 10px 34px rgba(0,0,0,.5); }
+aside { max-width: 420px; }
+h1 { font: 400 28px KaiTi, STKaiti, serif; margin: 0 0 8px; letter-spacing: .08em; }
+h2 { font: 400 20px KaiTi, STKaiti, serif; margin: 18px 0 4px; }
+button { font: 15px KaiTi, serif; background: #3b3a35; color: #ece6d6; border: 1px solid #6d6a60; padding: 4px 12px; margin: 0 6px 6px 0; cursor: pointer; border-radius: 3px; }
+button.on { background: #b8291a; border-color: #b8291a; }
+ul { padding-left: 18px; margin: 4px 0; } li { margin: 2px 0; }
+small { color: #a8a293; }
+</style></head>
+<body>
+<svg class="stage" id="cv" viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="paper" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="3" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.42  0 0 0 0 0.38  0 0 0 0 0.3  0 0 0 0.09 0"/>
+    </filter>
+    <filter id="fiber" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.18" numOctaves="2" seed="9" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.5  0 0 0 0 0.45  0 0 0 0 0.35  0 0 0 0.06 0"/>
+    </filter>
+    <filter id="brush" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="5" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="wash" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="11" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="38" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="5" result="b"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" seed="2" result="g"/>
+      <feComposite in="b" in2="g" operator="arithmetic" k1="0" k2="1" k3="-0.18" k4="0"/>
+    </filter>
+    <filter id="soft" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="9"/></filter>
+    <filter id="soft2" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="3.2"/></filter>
+    <radialGradient id="skin" cx="50%" cy="42%" r="62%">
+      <stop offset="0" stop-color="#f8e8d6"/><stop offset=".62" stop-color="#f1dcc5"/><stop offset="1" stop-color="#ddbb9d"/>
+    </radialGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26282c"/><stop offset=".55" stop-color="#17181b"/><stop offset="1" stop-color="#0f1012"/>
+    </linearGradient>
+    <radialGradient id="iris" cx="50%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#6b4b33"/><stop offset=".55" stop-color="#3a2618"/><stop offset="1" stop-color="#140d08"/>
+    </radialGradient>
+    <linearGradient id="lip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c0645a"/><stop offset="1" stop-color="#d98a7c"/>
+    </linearGradient>
+    <linearGradient id="robe" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9dcd8"/><stop offset=".35" stop-color="#f4f2ea"/><stop offset=".7" stop-color="#f1efe6"/><stop offset="1" stop-color="#d3d6d2"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="#efe7d5"/>
+  <g id="bg"></g>
+  <g id="fig"></g>
+  <rect width="800" height="1000" filter="url(#paper)" pointer-events="none"/>
+  <rect width="800" height="1000" filter="url(#fiber)" pointer-events="none"/>
+</svg>
+<aside>
+  <h1>程序画人 · 试验 v1</h1>
+  <p>整张图是一个 HTML 文件里的 SVG：<b>没有任何图片、贴图或模型</b>。每一笔都是代码算出来的——笔锋的提按与收尖、头发逐缕生成、宣纸纤维与水彩晕染是 SVG 滤镜。</p>
+  <div>
+    <button data-m="full" class="on">完整</button><button data-m="line">只看线稿</button><button data-m="nofx">去掉纸纹 / 晕染滤镜</button>
+  </div>
+  <div><button id="reseed">换一组发丝随机数</button></div>
+  <h2>用到的程序手法</h2>
+  <ul>
+    <li>笔锋：中线（Catmull-Rom 样条）+ 宽度曲线（起笔按下、行笔、收笔出锋）→ 轮廓多边形，再用置换滤镜做毛边</li>
+    <li>头发：沿发际线均匀分布约 90 缕，每缕各自的弯度、粗细、浓淡随机；鬓边垂发单独生成</li>
+    <li>五官：眼 = 上睑粗笔 + 下睑淡笔 + 渐变虹膜 + 瞳孔 + 两点高光 + 睫毛；眉 = 头重尾轻的笔锋</li>
+    <li>皮肤：径向渐变 + 模糊的阴影 / 腮红块；衣袍：淡墨晕染块 + 粗细变化的衣纹线</li>
+  </ul>
+  <h2>说明</h2>
+  <p><small>这是 2D 画法的上限试探，不是游戏模型。游戏是 3D、45° 俯视、要做动画，同样的精细度搬到 3D 上难得多（上一轮林墨 v2 就是证明）。这张图用来回答"程序到底能画多细"。</small></p>
+</aside>
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const $ = (id) => document.getElementById(id);
+let seed = 7;
+const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+let CUR = null; // 当前绘制分组（衣袍整体上移用）
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || CUR || $("fig")).appendChild(e); return e; };
+
+// Catmull-Rom 采样
+function spline(pts, n = 48) {
+  const out = [];
+  const P = [pts[0], ...pts, pts[pts.length - 1]];
+  for (let i = 1; i < P.length - 2; i++) {
+    const [p0, p1, p2, p3] = [P[i - 1], P[i], P[i + 1], P[i + 2]];
+    const m = Math.max(2, Math.round(n / (pts.length - 1)));
+    for (let k = 0; k < m; k++) {
+      const t = k / m, t2 = t * t, t3 = t2 * t;
+      out.push([0, 1].map((j) => 0.5 * (2 * p1[j] + (-p0[j] + p2[j]) * t + (2 * p0[j] - 5 * p1[j] + 4 * p2[j] - p3[j]) * t2 + (-p0[j] + 3 * p1[j] - 3 * p2[j] + p3[j]) * t3)));
+    }
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+}
+// 笔锋：w(t) 起笔按下 → 行笔 → 收笔出锋
+function stroke(pts, { w = 4, w0 = 0.35, w1 = 0.05, press = 0.18, release = 0.35, color = "#1a1a1c", op = 1, fx = true, parent, n } = {}) {
+  const s = spline(pts, n || 48), N = s.length, L = [], R = [];
+  for (let i = 0; i < N; i++) {
+    const t = i / (N - 1);
+    let k = t < press ? w0 + (1 - w0) * Math.sin((t / press) * Math.PI / 2) : t > 1 - release ? w1 + (1 - w1) * Math.cos(((t - (1 - release)) / release) * Math.PI / 2) : 1;
+    const a = s[Math.max(0, i - 1)], b = s[Math.min(N - 1, i + 1)];
+    let dx = b[0] - a[0], dy = b[1] - a[1]; const d = Math.hypot(dx, dy) || 1; dx /= d; dy /= d;
+    const hw = (w * k) / 2;
+    L.push([s[i][0] - dy * hw, s[i][1] + dx * hw]); R.push([s[i][0] + dy * hw, s[i][1] - dx * hw]);
+  }
+  const poly = [...L, ...R.reverse()].map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
+  const e = el("polygon", { points: poly, fill: color, "fill-opacity": op, class: "ln" }, parent);
+  if (fx) e.setAttribute("filter", "url(#brush)");
+  return e;
+}
+const path = (d, attrs, parent) => el("path", { d, ...attrs }, parent);
+const mirror = (pts) => pts.map(([x, y]) => [800 - x, y]);
+
+function background() {
+  const g = $("bg"); g.innerHTML = "";
+  const wash = (d, fill, op) => path(d, { fill, "fill-opacity": op, filter: "url(#wash)", class: "fx" }, g);
+  wash("M-40 620 C80 520 150 560 210 470 C260 400 300 470 330 430 L330 1040 L-40 1040Z", "#7d8a88", 0.32);
+  wash("M520 520 C580 440 640 470 690 400 C740 340 790 380 850 330 L850 1040 L520 1040Z", "#8f9b97", 0.28);
+  wash("M600 120 C640 90 700 110 720 160 C760 150 790 200 760 240 C700 260 630 230 600 120Z", "#c9b48b", 0.25);
+  wash("M40 180 C90 150 140 170 150 220 C120 260 60 250 40 180Z", "#9aa6a2", 0.22);
+  for (let i = 0; i < 26; i++) el("circle", { cx: 560 + rnd() * 200, cy: 60 + rnd() * 160, r: 1 + rnd() * 3.5, fill: "#3d3f3c", "fill-opacity": 0.25 + rnd() * 0.4, class: "fx" }, g);
+}
+
+function figure() {
+  const g = $("fig"); g.innerHTML = "";
+  const INK = "#1b1b1d", LINE = "#5b3f30";
+
+  CUR = el("g", { transform: "translate(0 -34)" });
+  // —— 剑柄（背在左肩后）
+  stroke([[226, 700], [248, 610], [268, 520]], { w: 13, w0: 1, w1: 0.9, press: 0.01, release: 0.05, color: "#2a2422" });
+  stroke([[214, 612], [282, 640]], { w: 7, w0: 1, w1: 1, press: 0.01, release: 0.01, color: "#3a3330" });
+  stroke([[268, 520], [252, 560], [236, 610]], { w: 3, color: "#b8291a", op: 0.9 });
+
+  // —— 衣袍
+  const robe = "M350 640 C300 662 240 672 196 712 C150 752 128 830 118 1010 L690 1010 C676 836 656 760 610 716 C566 674 500 664 450 640 Z".replace(/1010/g, "1060");
+  path(robe, { fill: "url(#robe)" });
+  // 晕染衣褶
+  const robeWash = (d, op) => path(d, { fill: "#8d9894", "fill-opacity": op, filter: "url(#soft)", class: "fx" });
+  robeWash("M150 800 C170 760 210 740 240 760 C230 840 200 930 160 1000 L120 1000Z", 0.35);
+  robeWash("M640 790 C620 760 590 748 566 770 C580 850 610 930 650 1000 L690 1000Z", 0.35);
+  robeWash("M300 900 C330 870 360 880 360 930 C340 980 300 1000 280 1000Z", 0.22);
+  robeWash("M470 860 C500 840 540 860 530 920 C510 960 480 980 460 960Z", 0.18);
+  // 内衣领（淡青）
+  path("M372 640 C384 672 396 700 404 722 L420 700 C430 680 436 660 440 646 Z", { fill: "#c7d4d0" });
+  // 交领（右衽：外襟从右肩斜向左下，呈 y 字）
+  path("M452 638 C440 700 406 770 352 856 L326 846 C380 760 414 694 428 636 Z", { fill: "#e9ebe6" });
+  stroke([[454, 636], [440, 700], [404, 772], [352, 858]], { w: 4.2, color: INK, op: 0.85 });
+  stroke([[428, 634], [414, 694], [380, 760], [326, 846]], { w: 2.6, color: INK, op: 0.7 });
+  stroke([[350, 640], [370, 676], [392, 708], [404, 724]], { w: 3, color: INK, op: 0.75 });
+  // 肩线 / 袖
+  stroke([[352, 641], [290, 662], [216, 700], [168, 760], [140, 860], [126, 1000]], { w: 6.5, w0: 0.6, color: INK, op: 0.9 });
+  stroke([[448, 641], [512, 662], [584, 700], [634, 760], [660, 860], [676, 1000]], { w: 6.5, w0: 0.6, color: INK, op: 0.9 });
+  // 衣纹（几笔）
+  stroke([[210, 760], [222, 830], [214, 920]], { w: 2.4, color: INK, op: 0.45 });
+  stroke([[590, 760], [578, 840], [590, 930]], { w: 2.4, color: INK, op: 0.45 });
+  stroke([[300, 880], [318, 940], [312, 1000]], { w: 2, color: INK, op: 0.35 });
+  stroke([[500, 860], [492, 930], [500, 1000]], { w: 2, color: INK, op: 0.35 });
+  // 腰带一角（朱砂发带呼应用的青灰带）
+  path("M300 960 C380 948 450 948 540 962 L544 1060 L296 1060 Z", { fill: "#3c4442" });
+  stroke([[300, 960], [380, 950], [460, 950], [542, 963]], { w: 2.6, color: INK, op: 0.8 });
+  CUR = null;
+
+  // —— 颈
+  path("M366 548 C366 575 362 596 354 614 C386 630 418 630 448 614 C440 596 434 575 434 548 Z", { fill: "url(#skin)" });
+  path("M366 560 C384 600 418 602 434 560 L434 600 C410 618 388 618 366 600 Z", { fill: "#c9a084", "fill-opacity": 0.45, filter: "url(#soft2)", class: "fx" });
+
+  // —— 头发底（后脑大形，脸先压在上面）
+  const hairBack = "M296 360 C286 280 300 200 352 168 C380 152 420 152 448 168 C500 200 514 280 504 360 C520 300 520 220 476 172 C440 136 360 136 324 172 C280 220 280 300 296 360 Z";
+  path("M292 380 C278 300 290 210 346 168 C380 146 420 146 454 168 C510 210 522 300 508 380 L496 330 C480 300 320 300 304 330 Z", { fill: "url(#hair)" });
+
+  // —— 耳
+  for (const s of [1, -1]) {
+    const x = (v) => (s > 0 ? v : 800 - v);
+    path(`M${x(300)} 392 C${x(284)} 384 ${x(280)} 404 ${x(284)} 424 C${x(287)} 444 ${x(296)} 456 ${x(306)} 452 Z`, { fill: "#ecd2b8" });
+    stroke([[x(300), 394], [x(287), 400], [x(286), 424], [x(296), 446], [x(305), 451]], { w: 2, color: LINE, op: 0.7 });
+    stroke([[x(296), 408], [x(292), 424], [x(298), 436]], { w: 1.4, color: LINE, op: 0.45 });
+  }
+
+  // —— 脸
+  const faceL = [[400, 270], [348, 276], [312, 306], [302, 360], [304, 420], [314, 476], [330, 530], [360, 570], [400, 587]];
+  const fs = spline(faceL, 40), fr = mirror(fs).reverse();
+  const faceD = "M" + [...fs, ...fr].map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L") + "Z";
+  path(faceD, { fill: "url(#skin)" });
+  // 体积：两颊、下颌、额侧阴影；腮红
+  const blob = (cx, cy, rx, ry, fill, op, f = "url(#soft)") => el("ellipse", { cx, cy, rx, ry, fill, "fill-opacity": op, filter: f, class: "fx" });
+  blob(316, 430, 18, 70, "#d4a888", 0.45); blob(484, 430, 18, 70, "#d4a888", 0.45);
+  blob(400, 300, 90, 22, "#cfa587", 0.3);
+  blob(356, 470, 26, 14, "#e79a8c", 0.14); blob(444, 470, 26, 14, "#e79a8c", 0.14);
+  // 脸轮廓：只在下颌和腮边落淡赭色线，不封闭
+  stroke(fs.slice(16, 41).filter((_, i) => i % 2 === 0), { w: 2.4, w0: 0.1, w1: 0.6, color: LINE, op: 0.75, n: 40 });
+  stroke(mirror(fs.slice(16, 41).filter((_, i) => i % 2 === 0)), { w: 2.4, w0: 0.1, w1: 0.6, color: LINE, op: 0.75, n: 40 });
+
+  // —— 眉（头重尾轻，略扬）
+  for (const s of [1, -1]) {
+    const x = (v) => (s > 0 ? v : 800 - v);
+    stroke([[x(384), 364], [x(362), 354], [x(338), 349], [x(312), 352]], { w: 9, w0: 0.85, w1: 0.08, press: 0.08, release: 0.55, color: "#2b2522", op: 0.92 });
+    stroke([[x(378), 364], [x(352), 354], [x(326), 352]], { w: 3, w0: 0.5, w1: 0.05, color: "#2b2522", op: 0.4 });
+  }
+  // —— 眼
+  for (const s of [1, -1]) {
+    const x = (v) => (s > 0 ? v : 800 - v);
+    const cx = x(350), cy = 399;
+    const up = [[x(380), 402], [x(366), 388], [x(348), 384], [x(330), 388], [x(318), 395]];
+    const lo = [[x(380), 403], [x(364), 409], [x(346), 410], [x(328), 405], [x(318), 397]];
+    const us = spline(up, 24), ls = spline(lo, 24);
+    const eyeD = "M" + [...us, ...ls.reverse()].map((p) => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L") + "Z";
+    const cid = "eyeclip" + s;
+    const cp = el("clipPath", { id: cid }); path(eyeD, {}, cp);
+    path(eyeD, { fill: "#fbf8f2" });
+    const ig = el("g", { "clip-path": `url(#${cid})` });
+    el("circle", { cx: cx + s * -1, cy: cy, r: 11.5, fill: "url(#iris)" }, ig);
+    el("circle", { cx: cx + s * -1, cy: cy, r: 5.2, fill: "#0b0806" }, ig);
+    el("ellipse", { cx: cx, cy: 389, rx: 30, ry: 6, fill: "#8a6a58", "fill-opacity": 0.35, filter: "url(#soft2)" }, ig);
+    el("circle", { cx: cx + s * -1 + 4, cy: cy - 4.5, r: 3.1, fill: "#fff" }, ig);
+    el("circle", { cx: cx + s * -1 - 4, cy: cy + 4, r: 1.4, fill: "#fff", "fill-opacity": 0.85 }, ig);
+    // 上睑（粗，眼尾微挑）
+    stroke([...up.slice(0, 4), [x(318), 395], [x(312), 394]], { w: 4.2, w0: 0.3, w1: 0.1, press: 0.25, release: 0.3, color: "#151213" });
+    // 双眼皮淡线
+    stroke([[x(372), 386], [x(350), 378], [x(328), 382]], { w: 1.5, w0: 0.2, w1: 0.1, color: LINE, op: 0.5 });
+    // 下睑（淡）
+    stroke([[x(374), 407], [x(352), 411], [x(330), 406]], { w: 1.5, w0: 0.1, w1: 0.1, color: LINE, op: 0.5 });
+    // 睫毛（眼尾三笔）
+    if (0) for (let k = 0; k < 3; k++) stroke([[x(326 - k * 5), 389 - k], [x(321 - k * 6), 382 - k * 2]], { w: 1.6, w0: 1, w1: 0.05, press: 0.01, release: 0.9, color: "#151213", op: 0.85, fx: false });
+  }
+  // —— 鼻（一笔鼻梁暗示 + 鼻底）
+  stroke([[392, 404], [388, 432], [386, 456]], { w: 1.4, w0: 0.1, w1: 0.2, color: LINE, op: 0.14 });
+  blob(392, 466, 9, 6, "#c79c80", 0.4, "url(#soft2)");
+  stroke([[384, 470], [392, 474], [400, 475], [408, 474], [416, 470]], { w: 2, w0: 0.2, w1: 0.2, color: LINE, op: 0.6 });
+  el("ellipse", { cx: 391, cy: 470, rx: 3, ry: 1.8, fill: "#6e4a3a", "fill-opacity": 0.5 });
+  el("ellipse", { cx: 409, cy: 470, rx: 3, ry: 1.8, fill: "#6e4a3a", "fill-opacity": 0.5 });
+  // —— 嘴
+  path("M376 516 C388 510 396 512 400 514 C404 512 412 510 424 516 C412 520 404 521 400 520 C396 521 388 520 376 516 Z", { fill: "#b07a6c" });
+  path("M378 517 C390 526 410 526 422 517 C412 532 388 532 378 517 Z", { fill: "url(#lip)" });
+  stroke([[374, 516], [388, 518], [400, 519], [412, 518], [426, 516]], { w: 1.8, w0: 0.1, w1: 0.1, color: "#6b3a32", op: 0.75 });
+  blob(400, 538, 12, 4, "#c99a80", 0.35, "url(#soft2)");
+
+  // —— 头发：前额向后梳的发丝（逐缕）
+  const hairline = spline([[300, 352], [312, 300], [346, 272], [400, 262], [454, 272], [488, 300], [500, 352]], 120);
+  const top = path(`M300 352 C296 300 312 250 346 214 C372 190 428 190 454 214 C488 250 504 300 500 352 C490 310 470 284 400 272 C330 284 310 310 300 352 Z`, { fill: "url(#hair)" });
+  const strands = 140;
+  for (let i = 0; i < strands; i++) {
+    const u = i / (strands - 1);
+    const p0 = hairline[Math.round(u * (hairline.length - 1))];
+    const dx = p0[0] - 400;
+    const sw = (rnd() - 0.5) * 14, bend = 0.95 + rnd() * 0.16;
+    const p1 = [400 + dx * bend + sw, p0[1] - 52 - Math.abs(dx) * 0.18 + (rnd() - 0.5) * 10];
+    const p2 = [400 + dx * (0.55 + rnd() * 0.15) + sw * 0.6, 198 - Math.abs(dx) * 0.05 + (rnd() - 0.5) * 8];
+    const p3 = [400 + dx * 0.22, 168];
+    const shade = rnd();
+    stroke([[p0[0], p0[1] + 2], p1, p2, p3], { w: 1.4 + rnd() * 2.2, w0: 0.5, w1: 0.2, color: shade > 0.9 ? "#5a5e66" : shade > 0.6 ? "#202226" : "#0e0f11", op: 0.35 + rnd() * 0.5, fx: false, n: 30 });
+  }
+  // 柔光带
+  path("M330 238 C360 214 440 214 470 238 C440 228 360 228 330 238 Z", { fill: "#7c818a", "fill-opacity": 0.35, filter: "url(#soft2)", class: "fx" });
+  // 发髻
+  el("ellipse", { cx: 400, cy: 132, rx: 50, ry: 40, fill: "url(#hair)" });
+  for (let i = 0; i < 18; i++) {
+    const a0 = -Math.PI * 0.9 + i * 0.32, r = 42 - (i % 3) * 8;
+    stroke([[400 + Math.cos(a0) * r, 132 + Math.sin(a0) * r * 0.8], [400 + Math.cos(a0 + 0.8) * (r - 8), 132 + Math.sin(a0 + 0.8) * (r - 8) * 0.8], [400 + Math.cos(a0 + 1.6) * (r - 14), 132 + Math.sin(a0 + 1.6) * (r - 14) * 0.8]], { w: 2.6, color: i % 4 === 0 ? "#4a4d53" : "#0e0f11", op: 0.6, fx: false, n: 20 });
+  }
+  // 玉簪
+  stroke([[318, 118], [400, 128], [488, 140]], { w: 5, w0: 1, w1: 0.7, press: 0.01, release: 0.2, color: "#8fb3a0" });
+  el("circle", { cx: 318, cy: 118, r: 6, fill: "#7aa18c" });
+  // 朱砂发带 + 飘带
+  path("M352 160 C380 172 420 172 448 160 L446 174 C420 186 380 186 354 174 Z", { fill: "#b8291a" });
+  stroke([[446, 166], [490, 190], [530, 250], [548, 318]], { w: 9, w0: 1, w1: 0.15, press: 0.01, release: 0.5, color: "#b8291a", op: 0.95 });
+  stroke([[440, 172], [474, 214], [500, 280], [504, 350]], { w: 7, w0: 1, w1: 0.1, press: 0.01, release: 0.6, color: "#a52416", op: 0.9 });
+
+  // —— 鬓边垂发（两侧各一束长发 + 几根碎发）
+  for (const s of [1, -1]) {
+    const x = (v) => (s > 0 ? v : 800 - v);
+    for (let k = 0; k < 9; k++) {
+      const o = k * 2.2 - 8;
+      stroke([[x(318 + o), 286], [x(300 + o), 360], [x(296 + o * 1.2), 450], [x(306 + o), 540], [x(298 + o * 1.5), 640 + k * 6]], { w: 2 + rnd() * 2.4, w0: 0.6, w1: 0.05, press: 0.05, release: 0.55, color: "#0f1012", op: 0.6 + rnd() * 0.35, fx: false, n: 40 });
+    }
+    for (let k = 0; k < 3; k++) stroke([[x(340 + k * 10), 278], [x(332 + k * 9), 312], [x(338 + k * 8), 346 + k * 6]], { w: 1.6, w0: 0.7, w1: 0.05, release: 0.7, color: "#121315", op: 0.75, fx: false });
+  }
+
+  // —— 落款印章
+  const sg = el("g", { transform: "translate(668 880) rotate(-3)" });
+  el("rect", { x: 0, y: 0, width: 66, height: 66, rx: 4, fill: "#b8291a", filter: "url(#brush)" }, sg);
+  const t = el("text", { x: 33, y: 46, "text-anchor": "middle", "font-size": 30, fill: "#f3e6d4", "font-family": "KaiTi, STKaiti, serif" }, sg);
+  t.textContent = "林墨";
+  t.setAttribute("font-size", 26);
+}
+
+function render() { seed = window.__seed || 7; background(); figure(); applyMode(); }
+let mode = "full";
+function applyMode() {
+  const svg = $("cv");
+  svg.querySelectorAll(".fx").forEach((e) => (e.style.display = mode === "full" ? "" : "none"));
+  svg.querySelectorAll("rect[filter]").forEach((e) => (e.style.display = mode === "full" ? "" : "none"));
+  svg.querySelectorAll("#fig > *:not(.ln)").forEach((e) => { if (!e.classList.contains("fx")) e.style.opacity = mode === "line" ? 0.06 : 1; });
+}
+document.querySelectorAll("button[data-m]").forEach((b) => (b.onclick = () => { mode = b.dataset.m; document.querySelectorAll("button[data-m]").forEach((x) => x.classList.toggle("on", x === b)); applyMode(); }));
+$("reseed").onclick = () => { window.__seed = 1 + Math.floor(Math.random() * 1e6); render(); };
+render();
+</script>
+</body></html>

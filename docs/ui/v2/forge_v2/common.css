@@ -1,0 +1,138 @@
+/* 炼器 v2 示意图公用样式（只给 docs/ui/v2/forge_v2/*.html 用，不是游戏代码）
+   依赖：../../../../src/ui/ink/strokes.css、ink-ui.css（游戏里的水墨套件）
+   字体：优先用完整书法字体（assets/fonts，本地才有），找不到再退到游戏里的子集字体（src/ui/ink/*.woff2） */
+@font-face { font-family: "MaShanZheng"; src: url("../../../../assets/fonts/MaShanZheng-Regular.ttf"), url("../../../../src/ui/ink/MaShanZheng.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "ZhiMangXing"; src: url("../../../../assets/fonts/ZhiMangXing-Regular.ttf"), url("../../../../src/ui/ink/ZhiMangXing.woff2") format("woff2"); font-display: block; }
+
+html { overflow: clip; }
+html, body { margin: 0; width: 1280px; height: 720px; overflow: clip; }
+body { position: relative; font-family: var(--f-kai); color: var(--ink); background: #2a2a28; user-select: none; }
+.abs { position: absolute; }
+:root {
+  /* 品级：严格按 src/core/items.js RARITY（凡 / 灵 / 宝 / 仙 / 极） */
+  --r0: #6a6760; --r1: #3fae7a; --r2: #2f7fa8; --r3: #c9a040; --r4: #d2321e;
+  --r0w: rgba(106, 103, 96, .10); --r1w: rgba(63, 174, 122, .26); --r2w: rgba(47, 127, 168, .26); --r3w: rgba(201, 160, 64, .34); --r4w: rgba(210, 50, 30, .26);
+  /* 名称字色（在纸上要够深，取同色相的深一档） */
+  --r0t: #3b3a36; --r1t: #2c7d57; --r2t: #245f7f; --r3t: #8a6a22; --r4t: #b8291a;
+}
+.q0 { --qc: var(--r0); --qw: var(--r0w); --qt: var(--r0t); }
+.q1 { --qc: var(--r1); --qw: var(--r1w); --qt: var(--r1t); }
+.q2 { --qc: var(--r2); --qw: var(--r2w); --qt: var(--r2t); }
+.q3 { --qc: var(--r3); --qw: var(--r3w); --qt: var(--r3t); }
+.q4 { --qc: var(--r4); --qw: var(--r4w); --qt: var(--r4t); }
+.qt { color: var(--qt); }
+
+/* ---------------- 背景：洞府 3D 画面压暗 + 虚化，再罩一层淡墨（打开丹器房时） ---------------- */
+.scene { position: absolute; inset: -20px; background: url(bg_cave.png) center / cover; filter: blur(7px) saturate(.35) brightness(.62); transform: scale(1.03); }
+.scene-veil { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 75% at 50% 50%, rgba(21, 24, 27, .28), rgba(21, 24, 27, .62)), var(--ink-tex-paper); background-blend-mode: normal, multiply; }
+/* 打开动画：先清晰，0.35s 内虚化压暗（游戏里用后处理做：模糊 + 降饱和 + 压暗） */
+body.opening .scene { animation: sceneDim .5s var(--ease-ink) both; }
+@keyframes sceneDim { from { filter: blur(0) saturate(1) brightness(1); transform: scale(1); } }
+
+/* ---------------- 物品签：圆相 + 水墨图标 + 品质晕（与储物袋 v2 / 搜取窗口同一套） ----------------
+   <span class="tk q2" style="--s:56px"><img class="ico" data-icon="sword_qingfeng"><em>3</em></span> */
+.tk { position: relative; display: inline-flex; align-items: center; justify-content: center; flex: none; isolation: isolate; width: var(--s, 56px); height: var(--s, 56px); --qc: var(--r0); --qw: var(--r0w); }
+.tk.q1 { --qc: var(--r1); --qw: var(--r1w); } .tk.q2 { --qc: var(--r2); --qw: var(--r2w); } .tk.q3 { --qc: var(--r3); --qw: var(--r3w); } .tk.q4 { --qc: var(--r4); --qw: var(--r4w); }
+.tk::before { content: ""; position: absolute; inset: 2%; z-index: -2; border-radius: 50%; background: radial-gradient(closest-side, var(--qw), transparent); }
+.tk::after { content: ""; position: absolute; inset: 2px; z-index: 1; background: var(--qc); opacity: .6; -webkit-mask: var(--ink-enso-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-enso-1) 0 0 / 100% 100% no-repeat; pointer-events: none; transition: opacity .2s, background-color .2s; }
+.tk.q0::after { opacity: .34; }
+.tk.e2::after { -webkit-mask-image: var(--ink-enso-2); mask-image: var(--ink-enso-2); }
+.tk.e3::after { -webkit-mask-image: var(--ink-enso-3); mask-image: var(--ink-enso-3); }
+.tk > .ico { position: relative; z-index: 0; width: 84%; height: 84%; object-fit: contain; pointer-events: none; }
+.tk > em { position: absolute; right: 0; bottom: -2px; z-index: 3; font: 700 11px var(--f-ui); font-style: normal; color: var(--ink-nong); text-shadow: 0 0 3px var(--paper-hi), 0 0 3px var(--paper-hi), 0 0 2px var(--paper-hi); }
+.tk > i.cs { position: absolute; right: 0; top: 0; z-index: 3; width: 15px; height: 15px; display: flex; align-items: center; justify-content: center; font: 10px/1 var(--f-display); font-style: normal; color: var(--paper-hi); background: var(--qc); -webkit-mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-sq) 0 0 / 100% 100% no-repeat; transform: rotate(-5deg); }
+.tk.is-sel::after { background: var(--zhu); opacity: .95; }
+.tk.lack::after { background: var(--zhu); opacity: .55; -webkit-mask-image: var(--ink-enso-2); mask-image: var(--ink-enso-2); }
+.tk.lack > .ico { opacity: .45; filter: grayscale(.7); }
+.tk.ghost > .ico { opacity: .3; filter: grayscale(1); }
+.tk.ghost::after { opacity: .18; background: var(--ink); }
+.tk.empty::after { opacity: .18; background: var(--ink); }
+.tk.empty > b { font: 15px var(--f-display); color: var(--ink-qing); }
+.tk.lock > .ico { filter: grayscale(1) blur(.5px); opacity: .35; }
+
+/* 小字：品级标签（一短笔 + 字） */
+.qtag { display: inline-flex; align-items: center; gap: 4px; font: 12px var(--f-kai); color: var(--ink-zhong); white-space: nowrap; }
+.qtag::before { content: ""; width: 14px; height: 6px; background: var(--qc, #6a6760); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.up { color: #2c7d57; } .down { color: var(--zhu); }
+.up::before { content: "▲"; font-size: .7em; margin-right: 2px; vertical-align: 1px; }
+.down::before { content: "▼"; font-size: .7em; margin-right: 2px; vertical-align: 1px; }
+.key { font: 11px var(--f-ui); color: var(--ink-dan); border-bottom: 1px solid var(--ink-qing); padding: 0 2px; margin-left: 4px; }
+.mocktag { position: absolute; right: 10px; bottom: 6px; font: 11px var(--f-ui); color: rgba(245, 240, 227, .55); z-index: 99; pointer-events: none; }
+.hide { display: none !important; }
+.clk { cursor: pointer; }
+
+/* ---------------- 品质范围条（五档刻度：凡 灵 宝 仙 极；可能出的档位晕开，概率写在下面） ---------------- */
+.qrange { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
+.qrange > div { position: relative; text-align: center; padding: 3px 0 2px; font: 13px var(--f-display); color: var(--ink-qing); }
+.qrange > div::before { content: ""; position: absolute; left: 4%; right: 4%; top: 0; height: 22px; background: var(--qc); opacity: .1; -webkit-mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-bar) 0 0 / 100% 100% no-repeat; }
+.qrange > div > b { position: relative; display: block; font-weight: 400; line-height: 22px; }
+.qrange > div > small { display: block; font: 11px var(--f-ui); color: var(--ink-dan); min-height: 14px; }
+.qrange > div.on { color: var(--qt); }
+.qrange > div.on::before { opacity: .55; }
+.qrange > div.on > b { color: var(--paper-hi); text-shadow: 0 0 2px rgba(0, 0, 0, .25); }
+.qrange > div.main::before { opacity: .85; }
+.qrange > div.no > b { text-decoration: line-through; text-decoration-color: var(--ink-qing); }
+
+/* ---------------- 材料行：签 + 名 + 数（足 / 缺）+ 何处可得 ---------------- */
+.mat { display: flex; align-items: center; gap: 8px; padding: 3px 0; position: relative; }
+.mat .nm { font: 15px var(--f-display); color: var(--ink-nong); letter-spacing: .04em; }
+.mat .nm small { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 4px; letter-spacing: 0; }
+.mat .ct { margin-left: auto; font: 13px var(--f-ui); font-variant-numeric: tabular-nums; color: var(--ink-zhong); white-space: nowrap; }
+.mat .ct b { font: 400 17px var(--f-display); color: var(--ink-nong); }
+.mat .ok { color: #2c7d57; font: 12px var(--f-kai); margin-left: 4px; }
+.mat .no { color: var(--zhu); font: 12px var(--f-kai); margin-left: 4px; }
+.mat.short .ct b { color: var(--zhu); }
+.mat .src { display: block; font: 11.5px var(--f-ui); color: var(--ink-zhong); margin-top: 1px; }
+.mat .src::before { content: "得 "; display: inline-block; font: 10px/14px var(--f-display); width: 14px; height: 14px; text-align: center; margin-right: 4px; color: var(--paper-hi); background: var(--zhe); -webkit-mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat; mask: var(--ink-seal-round) 0 0 / 100% 100% no-repeat; }
+/* 挂念：把缺的材料记到出行准备 / 天机镜里 */
+.pin { font: 12px var(--f-kai); color: var(--ink-zhong); cursor: pointer; border-bottom: 1px dashed var(--ink-dan); white-space: nowrap; }
+.pin.on { color: var(--zhu); border-bottom-color: var(--zhu); }
+.pin.on::before { content: "● "; font-size: 9px; vertical-align: 1px; }
+
+/* ---------------- 动效：盖印 / 墨溅 / 品质晕开 ---------------- */
+@keyframes stampIn { 0% { transform: translate(-50%, -50%) scale(1.9) rotate(-16deg); opacity: 0; } 55% { transform: translate(-50%, -50%) scale(.92) rotate(-5deg); opacity: 1; } 75% { transform: translate(-50%, -50%) scale(1.03) rotate(-6deg); } 100% { transform: translate(-50%, -50%) scale(1) rotate(-6deg); opacity: 1; } }
+@keyframes splat { 0% { transform: translate(-50%, -50%) scale(.2); opacity: 0; } 30% { opacity: .55; } 100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; } }
+@keyframes qbloom { 0% { transform: translate(-50%, -50%) scale(.1); opacity: 0; } 40% { opacity: .9; } 100% { transform: translate(-50%, -50%) scale(1); opacity: .65; } }
+@keyframes inkIn { from { opacity: 0; filter: blur(4px); transform: translateY(6px); } to { opacity: 1; filter: none; transform: none; } }
+@keyframes shake { 0%, 100% { transform: none; } 25% { transform: translate(1px, -1px) rotate(.2deg); } 50% { transform: translate(-1px, 1px); } 75% { transform: translate(1px, 1px) rotate(-.2deg); } }
+.fx-inkin { animation: inkIn .45s var(--ease-ink) both; }
+.fx-shake { animation: shake .18s linear 2; }
+.stamp-layer { position: absolute; inset: 0; pointer-events: none; z-index: 80; }
+.stamp-layer .splat { position: absolute; width: 260px; height: 260px; background: var(--ink); -webkit-mask: var(--ink-splash-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-splash-1) 0 0 / 100% 100% no-repeat; animation: splat .7s ease-out both; }
+.stamp-layer .bloom { position: absolute; width: 360px; height: 360px; border-radius: 50%; background: radial-gradient(closest-side, var(--qc), transparent); animation: qbloom .9s var(--ease-ink) both; }
+.stamp-layer .seal { position: absolute; animation: stampIn .5s cubic-bezier(.2, .7, .2, 1) both; }
+/* 盖印按钮落下 */
+.ink-seal-btn.pressing { transform: scale(.88) rotate(-2deg) !important; transition: transform .08s; }
+
+/* 结果签（炼成后浮出的一张小纸条） */
+.result { position: absolute; z-index: 85; width: 300px; padding: 18px 22px 14px; animation: inkIn .5s .25s var(--ease-ink) both; }
+.result .hd { display: flex; align-items: center; gap: 12px; }
+.result .nm { font: 400 26px/1.1 var(--f-display); letter-spacing: .06em; }
+.result .sub { font: 12px var(--f-kai); color: var(--ink-zhong); margin-top: 3px; }
+.result .ln { display: flex; justify-content: space-between; font: 13px var(--f-kai); color: var(--ink-zhong); padding: 2px 0; }
+.result .ln b { font: 400 15px var(--f-display); color: var(--ink-nong); }
+.result .ln.af b { color: var(--qt); }
+.result .acts { display: flex; gap: 18px; justify-content: flex-end; margin-top: 8px; }
+
+/* ---------------- 重铸：新旧词条对照 ---------------- */
+.rf-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; margin: 2px 0; cursor: pointer; position: relative; border-radius: 2px; }
+.rf-row .k { font: 15px var(--f-display); color: var(--ink-nong); letter-spacing: .06em; }
+.rf-row .v { margin-left: auto; font: 15px var(--f-display); color: var(--ink-nong); }
+.rf-row .lk { font: 11px var(--f-ui); color: var(--ink-dan); margin-left: 6px; }
+.rf-row.off { cursor: default; opacity: .55; }
+.rf-row.on::before { content: ""; position: absolute; left: -6px; right: -6px; top: 0; bottom: 0; z-index: -1; background: var(--zhu-wash); -webkit-mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; }
+.rf-row.on .k::before { content: "● "; color: var(--zhu); font-size: 10px; vertical-align: 2px; }
+.rf-row.sp .k { color: var(--r3t); }
+.rf-cmp { display: grid; grid-template-columns: 1fr 34px 1fr; align-items: center; gap: 6px; }
+.rf-cmp .side { text-align: center; padding: 10px 6px 8px; position: relative; }
+.rf-cmp .side small { display: block; font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: .1em; }
+.rf-cmp .side b { display: block; font: 400 20px/1.3 var(--f-display); margin-top: 2px; }
+.rf-cmp .side.old b { color: var(--ink-zhong); }
+.rf-cmp .side.neo b { color: var(--qt); }
+.rf-cmp .side.neo { animation: inkIn .6s .35s var(--ease-ink) both; }
+.rf-cmp .arr { text-align: center; font: 22px var(--f-display); color: var(--ink-dan); }
+.rf-cmp .side.pick::after { content: ""; position: absolute; inset: -2px -4px; z-index: -1; background: var(--zhu-wash); -webkit-mask: var(--ink-wash-round) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-round) 0 0 / 100% 100% no-repeat; }
+.rf-cmp .side .tier { font: 11px var(--f-ui); color: var(--ink-dan); }
+
+/* 通用：滚动条隐藏（示意图里列表都不滚） */
+::-webkit-scrollbar { width: 0; height: 0; }

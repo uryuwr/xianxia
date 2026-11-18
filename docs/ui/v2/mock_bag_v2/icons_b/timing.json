@@ -1,0 +1,58 @@
+{
+  "internal": 512,
+  "items": {
+    "sword": {
+      "build_ms": 3.1,
+      "render_read_ms": 107.8,
+      "downsample_ms": 1.2,
+      "total_ms": 112.1
+    },
+    "robe": {
+      "build_ms": 2.9,
+      "render_read_ms": 40.2,
+      "downsample_ms": 1.8,
+      "total_ms": 44.9
+    },
+    "jade": {
+      "build_ms": 3.5,
+      "render_read_ms": 42.1,
+      "downsample_ms": 1.7,
+      "total_ms": 47.3
+    },
+    "herb": {
+      "build_ms": 3.4,
+      "render_read_ms": 77.2,
+      "downsample_ms": 1.2,
+      "total_ms": 81.8
+    },
+    "core": {
+      "build_ms": 1.8,
+      "render_read_ms": 170,
+      "downsample_ms": 1.1,
+      "total_ms": 172.9
+    },
+    "ore": {
+      "build_ms": 5.1,
+      "render_read_ms": 49.8,
+      "downsample_ms": 1.1,
+      "total_ms": 56
+    },
+    "pill": {
+      "build_ms": 1.3,
+      "render_read_ms": 42.9,
+      "downsample_ms": 1.2,
+      "total_ms": 45.4
+    },
+    "fu": {
+      "build_ms": 2,
+      "render_read_ms": 71.4,
+      "downsample_ms": 1.2,
+      "total_ms": 74.6
+    }
+  },
+  "first_build_compile_ms": 390.3,
+  "atlas_bake_ms": 637.4,
+  "page_total_ms": 1186.4,
+  "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "mode": "swiftshader"
+}

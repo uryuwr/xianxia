@@ -1,0 +1,56 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>墨途 UI · map</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1280px;height:720px;overflow:hidden}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:#15181b;background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'300'%20height%3D'300'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.9'%20numOctaves%3D'3'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.35%20%200%200%200%200%20.32%20%200%200%200%200%20.26%20%200%200%200%20.09%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'300'%20height%3D'300'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E"),url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'600'%20height%3D'600'%3E%3Cfilter%20id%3D'f'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.012%20.2'%20numOctaves%3D'2'%20seed%3D'4'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.3%20%200%200%200%200%20.27%20%200%200%200%200%20.2%20%200%200%200%20.05%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'600'%20height%3D'600'%20filter%3D'url(%23f)'%2F%3E%3C%2Fsvg%3E"),#ece6d6;background-blend-mode:multiply;position:relative}
+.kai{font-family:"STKaiti","KaiTi","楷体","Kaiti SC",serif}
+.paper{background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'300'%20height%3D'300'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.9'%20numOctaves%3D'3'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.35%20%200%200%200%200%20.32%20%200%200%200%200%20.26%20%200%200%200%20.09%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'300'%20height%3D'300'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E"),rgba(244,239,226,.94);box-shadow:0 0 0 1px rgba(21,24,27,.28),0 8px 24px rgba(21,24,27,.18),inset 0 0 22px rgba(120,100,70,.18);border-radius:3px}
+.ink-line{height:2px;background:linear-gradient(90deg,transparent,#15181b 8%,#15181b 70%,transparent);opacity:.75;border-radius:2px}
+.seal{display:inline-flex;align-items:center;justify-content:center;background:#b8291a;color:#f4ece0;font-family:"STKaiti","KaiTi",serif;font-weight:900;border-radius:3px;box-shadow:inset 0 0 0 2px rgba(244,236,224,.55),0 1px 2px rgba(0,0,0,.3)}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-family:"STKaiti","KaiTi",serif;font-weight:700;font-size:20px;padding:6px 22px;border:1.5px solid #15181b;border-radius:3px;background:rgba(244,239,226,.7)}
+.btn.primary{background:#15181b;color:#f1eadb}
+.q0{--q:#6a6760}.q1{--q:#3fae7a}.q2{--q:#2f7fa8}.q3{--q:#c9a040}.q4{--q:#c9a040}
+.tag{display:inline-block;font-size:12px;padding:1px 6px;border-radius:2px;border:1px solid currentColor;line-height:16px}
+.muted{color:#6a6760}
+h1,h2,h3{font-family:"STKaiti","KaiTi",serif}
+.bar{position:relative;height:10px;background:rgba(21,24,27,.18);border-radius:5px 2px 6px 2px;overflow:hidden}
+.bar i{position:absolute;inset:0;border-radius:inherit;transform-origin:left}
+</style></head><body>
+<style>
+.scroll{position:absolute;left:30px;right:30px;top:70px;height:470px;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px rgba(21,24,27,.3),0 8px 24px rgba(0,0,0,.2);background:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'300'%20height%3D'300'%3E%3Cfilter%20id%3D'n'%3E%3CfeTurbulence%20type%3D'fractalNoise'%20baseFrequency%3D'.9'%20numOctaves%3D'3'%20stitchTiles%3D'stitch'%2F%3E%3CfeColorMatrix%20values%3D'0%200%200%200%20.35%20%200%200%200%200%20.32%20%200%200%200%200%20.26%20%200%200%200%20.09%200'%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D'300'%20height%3D'300'%20filter%3D'url(%23n)'%2F%3E%3C%2Fsvg%3E"),#ece6d6}
+.rodl,.rodr{position:absolute;top:60px;width:16px;height:490px;background:linear-gradient(90deg,#3a2a1c,#7a5a3a,#3a2a1c);border-radius:8px}
+.rodl{left:18px}.rodr{right:18px}
+.head{position:absolute;left:40px;top:18px;display:flex;align-items:baseline;gap:16px}
+.head h2{font-size:34px}
+svg.m{position:absolute;inset:0;width:100%;height:100%}
+.leg{position:absolute;left:40px;right:40px;bottom:22px;display:flex;gap:22px;align-items:center;font-size:14px}
+.leg span{display:flex;align-items:center;gap:6px}
+.mk{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:3px;font:900 13px "STKaiti","KaiTi"}
+</style>
+<div class="head"><h2 class="kai">天机镜 · 万象山河图</h2><span class="muted">已着墨 58% · 第 5 次出行后 · 洞府已迁至溪谷</span></div>
+<div class="rodl"></div><div class="rodr"></div>
+<div class="scroll"><svg class="m" viewBox="0 0 1220 470" preserveAspectRatio="none">
+  <defs><linearGradient id="fadeR" x1="0" x2="1"><stop offset="0" stop-color="#ece6d6" stop-opacity="0"/><stop offset="1" stop-color="#ece6d6"/></linearGradient>
+  <filter id="ink"><feTurbulence baseFrequency=".02" numOctaves="3"/><feDisplacementMap in="SourceGraphic" scale="14"/></filter></defs>
+  <g filter="url(#ink)">
+    <path d="M0 330 Q60 240 120 280 T240 230 T360 270 T470 210 L470 470 H0Z" fill="#15181b" opacity=".32"/>
+    <path d="M0 380 Q90 330 180 360 T380 330 T470 350 L470 470 H0Z" fill="#15181b" opacity=".5"/>
+    <path d="M440 300 Q520 170 600 240 T760 190 T860 240 L860 470 H440Z" fill="#2f5e46" opacity=".45"/>
+    <path d="M440 380 Q560 320 660 360 T860 330 L860 470 H440Z" fill="#15181b" opacity=".35"/>
+    <path d="M620 470 C640 400 610 330 660 260" stroke="#3f8fa8" stroke-width="10" fill="none" opacity=".6"/>
+    <path d="M840 330 Q900 230 980 280 T1100 220 L1100 470 H840Z" fill="#15181b" opacity=".18"/>
+  </g>
+  <rect x="820" y="0" width="400" height="470" fill="url(#fadeR)"/>
+  <text x="160" y="190" font-size="30" font-family="KaiTi" fill="#15181b">青岚山外</text><text x="168" y="215" font-size="14" fill="#5a5a55">练气 1–4 · 风险低</text>
+  <text x="560" y="150" font-size="30" font-family="KaiTi" fill="#15181b">竹海 · 溪谷</text><text x="568" y="175" font-size="14" fill="#5a5a55">练气 5–9 · 风险高</text>
+  <text x="930" y="170" font-size="30" font-family="KaiTi" fill="#15181b" opacity=".35">黑风岭</text><text x="934" y="195" font-size="14" fill="#5a5a55" opacity=".5">下一章 · 后续</text>
+  <text x="1100" y="90" font-size="20" font-family="KaiTi" fill="#5a5a55" opacity=".4">留白之境 →</text>
+  <rect x="77" y="287" width="26" height="26" rx="3" fill="#b8291a"/><text x="90" y="306" font-size="16" text-anchor="middle" fill="#f4ece0" font-family="KaiTi">撤</text><rect x="317" y="237" width="26" height="26" rx="3" fill="#b8291a"/><text x="330" y="256" font-size="16" text-anchor="middle" fill="#f4ece0" font-family="KaiTi">撤</text><rect x="547" y="287" width="26" height="26" rx="3" fill="#b8291a"/><text x="560" y="306" font-size="16" text-anchor="middle" fill="#f4ece0" font-family="KaiTi">撤</text><rect x="707" y="247" width="26" height="26" rx="3" fill="#b8291a"/><text x="720" y="266" font-size="16" text-anchor="middle" fill="#f4ece0" font-family="KaiTi">撤</text><rect x="417" y="317" width="26" height="26" rx="3" fill="none" stroke="#b8291a" stroke-width="2" stroke-dasharray="4 3"/><text x="430" y="336" font-size="16" text-anchor="middle" fill="#b8291a" font-family="KaiTi">?</text><rect x="757" y="327" width="26" height="26" rx="3" fill="none" stroke="#b8291a" stroke-width="2" stroke-dasharray="4 3"/><text x="770" y="346" font-size="16" text-anchor="middle" fill="#b8291a" font-family="KaiTi">?</text>
+  <circle cx="250" cy="330" r="12" fill="none" stroke="#15181b" stroke-dasharray="3 3" opacity=".5"/><text x="250" y="355" font-size="11" text-anchor="middle" fill="#5a5a55">旧府</text><circle cx="830" cy="250" r="16" fill="#15181b"/><text x="830" y="256" font-size="16" text-anchor="middle" fill="#ece6d6" font-family="KaiTi">府</text>
+  <circle cx="380" cy="300" r="15" fill="none" stroke="#15181b" stroke-width="3"/><text x="380" y="305" font-size="14" text-anchor="middle" font-family="KaiTi">遗</text>
+  <circle cx="660" cy="250" r="15" fill="none" stroke="#15181b" stroke-width="3"/><text x="660" y="255" font-size="14" text-anchor="middle" font-family="KaiTi">遗</text>
+  <path d="M190 260 l12 -20 l12 20 z" fill="#15181b"/><text x="202" y="280" font-size="12" text-anchor="middle">青牙 · 已斩</text>
+  <path d="M640 330 l12 -20 l12 20 z" fill="#b8291a"/><text x="652" y="350" font-size="12" text-anchor="middle" fill="#b8291a">碧鳞水蟒</text>
+  <circle cx="520" cy="215" r="34" fill="#c9a040" opacity=".18"/><text x="520" y="219" font-size="12" text-anchor="middle" fill="#8a6a20">灵光？</text>
+  <g transform="translate(700 380)"><rect x="-12" y="-10" width="24" height="20" rx="4" fill="#8a6a20"/><text x="0" y="28" font-size="12" text-anchor="middle" fill="#8a6a20">遗落储物袋</text></g>
+</svg></div>
+<div class="leg"><span><i class="mk seal">撤</i>古传送阵（常驻）</span><span><i class="mk" style="border:2px dashed #b8291a;color:#b8291a">?</i>残阵（未明 · 每局随机）</span><span><i class="mk" style="background:#15181b;color:#ece6d6;border-radius:50%">府</i>洞府</span><span><i class="mk" style="border:2px solid #15181b;border-radius:50%">遗</i>遗府</span><span><i class="mk" style="color:#b8291a">▲</i>Boss</span><span><i class="mk" style="background:rgba(201,160,64,.3);border-radius:50%"></i>灵光点（大致范围）</span><span class="muted">留白处尚未探索</span></div></body></html>

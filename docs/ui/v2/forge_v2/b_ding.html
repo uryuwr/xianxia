@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>炼器 v2 · 方向二 · 鼎为中心</title>
+<link rel="stylesheet" href="../../../../src/ui/ink/strokes.css"><link rel="stylesheet" href="../../../../src/ui/ink/ink-ui.css"><link rel="stylesheet" href="common.css">
+<script src="../../../../src/ui/ink/ink-ui.js"></script>
+<script src="inkicons.classic.js"></script>
+<script src="common.js"></script>
+<style>
+/* ---------------- 大纸面：整页是一张毛边宣纸，鼎画在纸中央 ---------------- */
+.sheet { left: 18px; top: 12px; width: 1244px; height: 696px; padding: 0; }
+.sheet > .ink-sheet::before { -webkit-mask-size: 101.6% 102.6%; mask-size: 101.6% 102.6%; -webkit-mask-position: center; mask-position: center; background: radial-gradient(ellipse 34% 42% at 47% 56%, rgba(150, 125, 85, .10), transparent 70%), radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(150, 125, 85, .18)), var(--ink-tex-paper), var(--ink-tex-fiber), var(--paper-hi); background-blend-mode: normal, normal, multiply, multiply, normal; }
+
+/* ---------------- 顶部：丹器房外壳 ---------------- */
+.hdr { left: 52px; top: 26px; display: flex; align-items: center; gap: 22px; z-index: 5; }
+.hdr .t { font: 400 40px/1 var(--f-splash); letter-spacing: .06em; color: var(--ink-jiao); }
+.hdr .ink-tabs { margin-top: 6px; }
+.hdr .ink-tab { cursor: pointer; }
+.stones { right: 190px; top: 34px; display: flex; align-items: center; gap: 6px; z-index: 5; }
+.stones b { font: 400 26px/1 var(--f-display); color: #8a6a22; }
+.stones small { font: 11px var(--f-ui); color: var(--ink-dan); }
+.back { right: 44px; top: 24px; z-index: 5; }
+
+/* ---------------- 左：分类竖签 + 器方目录 ---------------- */
+.cats { left: 46px; top: 96px; z-index: 5; }
+.cats .ink-vtab { cursor: pointer; padding: 10px 6px; }
+.cats .ink-vtab.locked { color: var(--ink-qing); }
+.list { left: 100px; top: 96px; width: 226px; z-index: 5; }
+.list .cap { font: 12px var(--f-ui); color: var(--ink-dan); margin: 0 0 6px 4px; letter-spacing: .06em; }
+.row { position: relative; display: flex; align-items: center; gap: 10px; padding: 4px 6px; height: 50px; cursor: pointer; isolation: isolate; }
+.row + .row::before { content: ""; position: absolute; left: 56px; right: 20%; top: 0; height: 5px; background: var(--ink-mist); -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.row.on::after { content: ""; position: absolute; left: -10px; right: -14px; top: 3px; bottom: 3px; z-index: -1; background: rgba(21, 24, 27, .09); -webkit-mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-band) 0 0 / 100% 100% no-repeat; }
+.row.on .nm::after { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--zhu); margin-left: 6px; vertical-align: 3px; }
+.row .tx { min-width: 0; }
+.row .nm { font: 17px/1.2 var(--f-display); letter-spacing: .04em; color: var(--ink-nong); white-space: nowrap; }
+.row .st { font: 12px/1.4 var(--f-ui); color: var(--ink-dan); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+.row .st.ok { color: #2c7d57; } .row .st.no { color: var(--zhu); }
+.row.dim .nm { color: var(--ink-dan); }
+.row.dim .tk { opacity: .55; }
+
+.pins { left: 100px; top: 556px; width: 226px; z-index: 5; }
+.pins .t { font: 400 17px var(--f-display); color: var(--ink-nong); letter-spacing: .1em; }
+.pins .t small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; margin-left: 6px; }
+.pins .ls { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+.pins .e { font: 11.5px/1.6 var(--f-ui); color: var(--ink-dan); margin-top: 4px; }
+/* ---------------- 中：鼎与围绕的材料 ---------------- */
+#ding { left: 336px; top: 86px; width: 520px; height: 604px; z-index: 4; }
+#ding > svg.dingart { position: absolute; left: 95px; top: 160px; width: 330px; height: 310px; overflow: visible; }
+#ding > svg.links { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.m { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; cursor: pointer; z-index: 3; }
+.m .lb { margin-top: 2px; text-align: center; white-space: nowrap; font: 14px/1.3 var(--f-kai); color: var(--ink-zhong); }
+.m .lb b { font: 400 15px var(--f-display); color: var(--ink-nong); }
+.m .lb .n { display: block; font: 12px var(--f-ui); color: var(--ink-zhong); font-variant-numeric: tabular-nums; }
+.m .lb .n i { font-style: normal; color: var(--zhu); margin-left: 3px; }
+.m .lb .n s { text-decoration: none; color: #2c7d57; margin-left: 3px; }
+.m.lack .lb b { color: var(--zhu); }
+.m.top .lb b { font-size: 18px; }
+.m .mq { font: 11px var(--f-ui); color: var(--ink-dan); }
+/* 炉火与烟 */
+.fire { position: absolute; left: 180px; top: 430px; width: 160px; height: 60px; border-radius: 50%; background: radial-gradient(closest-side, rgba(184, 41, 26, .28), transparent); filter: blur(4px); animation: fire 2.4s ease-in-out infinite; }
+@keyframes fire { 50% { opacity: .55; transform: scale(1.08, .9); } }
+.smoke { position: absolute; left: 230px; top: 210px; width: 60px; height: 90px; pointer-events: none; }
+.smoke i { position: absolute; bottom: 0; left: 20px; width: 22px; height: 60px; background: var(--ink); opacity: 0; -webkit-mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat; mask: var(--ink-wash-1) 0 0 / 100% 100% no-repeat; animation: smoke 4s ease-out infinite; }
+.smoke i:nth-child(2) { left: 6px; animation-delay: 1.3s; } .smoke i:nth-child(3) { left: 32px; animation-delay: 2.6s; }
+@keyframes smoke { 0% { opacity: 0; transform: translateY(20px) scale(.6); } 30% { opacity: .12; } 100% { opacity: 0; transform: translateY(-60px) scale(1.4, 1.8); } }
+#ding.busy .smoke i { animation-duration: 1.6s; }
+/* 鼎铭：设施升级的独立入口（不进配方卡） */
+.ming { position: absolute; left: 50%; bottom: 2px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; white-space: nowrap; font: 13px var(--f-kai); color: var(--ink-zhong); cursor: pointer; z-index: 3; padding: 4px 10px; }
+.ming .t { font: 18px var(--f-display); color: var(--ink-nong); letter-spacing: .1em; }
+.ming .go { font: 17px var(--f-display); color: var(--ink-nong); position: relative; isolation: isolate; padding: 0 4px 4px; }
+.ming .go::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 7px; z-index: -1; background: var(--nijin); opacity: .7; -webkit-mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; mask: var(--ink-stroke-thin) 0 0 / 100% 100% no-repeat; }
+.ming:hover .go::after { opacity: 1; }
+.ming .sep { color: var(--ink-qing); }
+
+/* ---------------- 何处可得：材料小纸条 ---------------- */
+.pop { position: absolute; z-index: 60; width: 236px; padding: 14px 18px 12px; font-size: 13px; transform: rotate(-.6deg); }
+.pop .h { display: flex; align-items: baseline; gap: 8px; }
+.pop .h b { font: 400 19px var(--f-display); color: var(--ink-nong); }
+.pop .h small { font: 12px var(--f-ui); color: var(--ink-zhong); margin-left: auto; }
+.pop .h small i { font-style: normal; color: var(--zhu); }
+.pop .lab { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: .12em; margin: 8px 0 2px; }
+.pop .s { font: 12.5px/1.7 var(--f-ui); color: var(--ink-nong); }
+.pop .s::before { content: "· "; color: var(--zhe); }
+.pop .ft { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font: 11px var(--f-ui); color: var(--ink-dan); }
+
+/* ---------------- 右：成品预览纸笺 ---------------- */
+#card { left: 870px; top: 88px; width: 326px; height: 474px; padding: 20px 26px 16px 28px; z-index: 6; }
+#card .head { display: flex; align-items: center; gap: 12px; }
+#card .nm { font: 400 28px/1.1 var(--f-display); letter-spacing: .06em; }
+#card .sub { font: 12px var(--f-kai); color: var(--ink-zhong); margin-top: 3px; }
+#card .desc { font: 13px/1.6 var(--f-kai); color: var(--ink-zhong); margin: 8px 0 4px; }
+#card .sec { display: flex; align-items: baseline; gap: 8px; margin: 10px 0 5px; font: 400 17px var(--f-display); letter-spacing: .1em; color: var(--ink-nong); }
+#card .sec small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; }
+#card .sec .r { margin-left: auto; }
+.qpick { display: flex; gap: 10px; }
+.qpick > div { display: flex; flex-direction: column; align-items: center; cursor: pointer; width: 56px; }
+.qpick > div small { font: 11px/1.3 var(--f-ui); color: var(--ink-zhong); white-space: nowrap; }
+.qpick > div small i { font-style: normal; color: var(--zhu); }
+.qpick > div.off { cursor: default; }
+.qpick > div.off small { color: var(--ink-dan); }
+.qpick > div.on .tk::after { background: var(--zhu); opacity: .95; }
+.qpick > div.on small { color: var(--ink); font-weight: 700; }
+.stt { width: 100%; border-collapse: collapse; font: 13px var(--f-kai); }
+.stt th { font: 400 12px var(--f-ui); color: var(--ink-dan); text-align: right; padding: 0 0 3px; white-space: nowrap; }
+.stt th:first-child { text-align: left; }
+.stt td { padding: 3px 0; text-align: right; color: var(--ink-zhong); white-space: nowrap; }
+.stt td:first-child { text-align: left; }
+.stt td b { font: 400 15px var(--f-display); color: var(--ink-nong); }
+.stt td small { font: 10.5px var(--f-ui); margin-left: 2px; }
+.stt tr + tr td { background: linear-gradient(var(--ink-mist), var(--ink-mist)) 0 0 / 72% 1px no-repeat; }
+.rule { font: 11.5px/1.6 var(--f-ui); color: var(--ink-dan); margin-top: 8px; }
+.rule b { color: var(--ink-zhong); font-weight: 400; }
+.lockbox { margin-top: 14px; padding: 10px 0; }
+.lockbox .why { font: 400 20px var(--f-display); color: var(--zhu); letter-spacing: .08em; }
+.lockbox .how { font: 13px/1.7 var(--f-kai); color: var(--ink-zhong); margin-top: 4px; }
+.bigto { display: flex; align-items: baseline; justify-content: center; gap: 16px; margin: 14px 0 6px; }
+.bigto b { font: 400 44px/1 var(--f-splash); color: var(--ink-dan); }
+.bigto b.to { color: var(--ink-jiao); }
+.bigto span { font: 22px var(--f-display); color: var(--ink-dan); }
+.bigto small { font: 12px var(--f-ui); color: var(--ink-zhong); }
+.cells { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; width: 240px; margin: 6px auto 0; }
+.cells i { width: 14px; height: 14px; border-radius: 50%; background: var(--ink-qing); }
+.cells i.n { background: #2c7d57; opacity: .7; }
+.imb { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 10px 0; }
+.imb .el { font: 400 34px/1 var(--f-splash); }
+.imb .el.old { color: var(--ink-dan); text-decoration: line-through; text-decoration-color: var(--zhu); }
+.imb .arr { font: 18px var(--f-display); color: var(--ink-dan); }
+.warn { font: 12px/1.6 var(--f-ui); color: var(--zhu); }
+.cardrow { display: flex; justify-content: space-between; align-items: baseline; font: 13px var(--f-kai); color: var(--ink-zhong); padding: 3px 0; }
+.cardrow b { font: 400 16px var(--f-display); color: var(--ink-nong); }
+.rf-list { margin: 2px -6px 0; }
+.pool { font: 11.5px/1.6 var(--f-ui); color: var(--ink-dan); margin-top: 6px; }
+
+/* ---------------- 右下：决断 ---------------- */
+.act { right: 64px; bottom: 40px; z-index: 7; display: flex; align-items: center; gap: 18px; }
+.act .why { text-align: right; font: 13px/1.6 var(--f-kai); color: var(--ink-zhong); max-width: 240px; }
+.act .why b { font: 400 18px var(--f-display); color: #2c7d57; display: block; }
+.act .why b.no { color: var(--zhu); }
+.act .ink-seal-btn { --s: 88px; }
+
+/* ---------------- 弹层：遮罩 + 一张纸 ---------------- */
+.mask { position: absolute; inset: 0; z-index: 90; background: rgba(21, 24, 27, .38); display: flex; align-items: center; justify-content: center; animation: inkIn .3s both; }
+.modal { width: 600px; padding: 28px 36px 22px; }
+.modal h3 { margin: 0; font: 400 32px/1 var(--f-splash); letter-spacing: .08em; color: var(--ink-jiao); display: flex; align-items: center; gap: 14px; }
+.modal .cols { display: grid; grid-template-columns: 1fr 30px 1fr; gap: 6px; margin: 18px 0 8px; }
+.modal .col .lv { font: 400 20px var(--f-display); color: var(--ink-nong); letter-spacing: .12em; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.modal .col.cur .lv { color: var(--ink-dan); }
+.modal .col p { margin: 3px 0; font: 13.5px/1.6 var(--f-kai); color: var(--ink-zhong); }
+.modal .col.nx p { color: var(--ink-nong); }
+.modal .col.nx p.new::before { content: "新 "; color: var(--zhu); font: 12px var(--f-display); }
+.modal .arr { align-self: center; text-align: center; font: 24px var(--f-display); color: var(--ink-dan); }
+.modal .cond { font: 13px var(--f-kai); margin: 8px 0 0; }
+.modal .cond.no { color: var(--zhu); } .modal .cond.ok { color: #2c7d57; }
+.modal .foot { display: flex; align-items: center; justify-content: flex-end; gap: 24px; margin-top: 12px; }
+.modal .foot .ink-seal-btn { --s: 80px; }
+.modal .mats { display: grid; grid-template-columns: 1fr 1fr; column-gap: 26px; }
+
+/* ---------------- 浮层：结果签 / 重铸揭示 / 提示 ---------------- */
+#fx { position: absolute; inset: 0; z-index: 70; pointer-events: none; }
+#fx > * { pointer-events: auto; }
+.result { left: 450px; top: 372px; }
+.result .lab2 { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: .12em; margin-top: 4px; }
+.tgt { display: flex; align-items: center; gap: 10px; font: 13px var(--f-kai); color: var(--ink-zhong); padding: 2px 0; }
+.tgt b { font: 400 17px var(--f-display); }
+.reveal { position: absolute; left: 446px; top: 384px; width: 300px; padding: 16px 22px 14px; animation: inkIn .5s .3s var(--ease-ink) both; }
+.reveal .t { font: 400 20px var(--f-display); letter-spacing: .1em; color: var(--ink-nong); }
+.reveal .t small { font: 11px var(--f-ui); color: var(--ink-dan); letter-spacing: 0; margin-left: 6px; }
+.reveal .acts { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.reveal .acts .ink-btn.primary { font-size: 19px; padding: 9px 24px 10px 22px; }
+.reveal .acts .ink-btn { font-size: 18px; }
+.toasts { position: absolute; left: 50%; top: 82px; transform: translateX(-50%); z-index: 95; display: flex; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; }
+.toasts .ink-toast { animation: inkIn .3s both; }
+.cheat { left: 52px; bottom: 30px; z-index: 8; font: 11px var(--f-ui); color: var(--ink-dan); display: flex; gap: 10px; }
+.cheat span { cursor: pointer; border-bottom: 1px dashed var(--ink-qing); }
+.cheat span:hover { color: var(--ink-nong); }
+.mocktag { color: rgba(245, 240, 227, .55); right: 24px; bottom: 2px; }
+</style></head>
+<body class="opening">
+<div class="scene"></div><div class="scene-veil"></div>
+<section class="ink-paper abs sheet"></section>
+
+<div class="abs hdr"><span class="t">丹器房</span>
+  <div class="ink-tabs"><span class="ink-tab" data-tab="alc">炼丹</span><span class="ink-tab on">炼器</span><span class="ink-tab" data-tab="gar">药园</span></div>
+</div>
+<div class="abs stones"><span class="ink-seal round gold" style="--s:24px">石</span><b id="stoneN">260</b><small>灵石</small></div>
+<span class="abs back ink-btn" id="back">回洞府<span class="key">Esc</span></span>
+
+<div class="abs ink-vtabs cats" id="cats"></div>
+<div class="abs list" id="list"></div>
+<div class="abs pins" id="pins"></div>
+
+<div class="abs" id="ding">
+  <div class="fire"></div>
+  <svg class="dingart" id="dingart" viewBox="0 0 330 310"></svg>
+  <div class="smoke"><i></i><i></i><i></i></div>
+  <svg class="links" id="links"></svg>
+  <div id="mats"></div>
+  <div class="ming" id="ming"></div>
+</div>
+
+<section class="ink-paper alt abs" id="card"></section>
+<div class="abs act" id="act"></div>
+
+<div id="fx"></div>
+<div class="toasts" id="toasts"></div>
+<div class="abs cheat"><em style="font-style:normal">示意开关：</em><span data-c="mats">补齐材料</span><span data-c="move">已搬迁溪谷</span><span data-c="recipe">得器方《法衣》</span><span data-c="reset">重置</span></div>
+<div class="mocktag">方向二 · 鼎为中心</div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const RAR = FG.RAR;
+  const sel = { cat: "gear", rec: {}, q: {}, rf: null, rfIdx: null, bind: null };
+  let pending = null; // 重铸待定 { uid, idx, old, neo, n }
+  let pop = null; // 打开的何处可得纸条
+  const h = (s) => s;
+
+  // ---------------- 写意鼎（程序化毛笔：提按、出锋，边缘位移滤镜） ----------------
+  function spline(pts, N) {
+    const p = [pts[0], ...pts, pts[pts.length - 1]], out = [];
+    for (let i = 1; i < p.length - 2; i++)
+      for (let k = 0; k < N; k++) {
+        const t = k / N, t2 = t * t, t3 = t2 * t, [a, b, c, d] = [p[i - 1], p[i], p[i + 1], p[i + 2]];
+        out.push([0, 1].map((j) => 0.5 * (2 * b[j] + (-a[j] + c[j]) * t + (2 * a[j] - 5 * b[j] + 4 * c[j] - d[j]) * t2 + (-a[j] + 3 * b[j] - 3 * c[j] + d[j]) * t3)));
+      }
+    out.push(pts[pts.length - 1]);
+    return out;
+  }
+  let seed = 7;
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  function brush(pts, w, o = {}) {
+    const C = spline(pts, 10), n = C.length - 1, L = [], R = [];
+    const head = o.head ?? 0.1, taper = o.taper ?? 0.35, press = o.press ?? 1.25, tail = o.tail ?? 0.05;
+    const wob = Array.from({ length: 6 }, () => rnd() * 2 - 1);
+    for (let i = 0; i <= n; i++) {
+      const t = i / n, a = C[Math.max(0, i - 1)], b = C[Math.min(n, i + 1)];
+      const dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy) || 1, nx = -dy / d, ny = dx / d;
+      let p = 1 + 0.12 * wob[Math.floor(t * 5.99)];
+      if (t < head) p *= 0.55 + 0.45 * (t / head) * press;
+      else if (t < head * 2) p *= press - (press - 1) * ((t - head) / head);
+      if (t > 1 - taper) p *= Math.max(tail, 1 - Math.pow((t - (1 - taper)) / taper, 1.2));
+      const hw = (w / 2) * p;
+      L.push([C[i][0] + nx * hw, C[i][1] + ny * hw]);
+      R.push([C[i][0] - nx * hw, C[i][1] - ny * hw]);
+    }
+    const P = [...L, ...R.reverse()];
+    return `<path d="M${P.map((q) => q[0].toFixed(1) + " " + q[1].toFixed(1)).join("L")}Z" fill="${o.c || "#15181b"}" opacity="${o.op ?? 0.85}" ${o.f ? `filter="url(#${o.f})"` : ""}/>`;
+  }
+  function drawDing() {
+    seed = 11;
+    const W = (pts, c, op, f = "dbleed") => `<path d="M${pts.map((q) => q.join(" ")).join("L")}Z" fill="${c}" opacity="${op}" filter="url(#${f})"/>`;
+    let s = `<defs>
+      <filter id="drough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+      <filter id="dbleed" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="3" seed="2"/><feDisplacementMap in="SourceGraphic" scale="12"/><feGaussianBlur stdDeviation="3"/></filter>
+      <linearGradient id="dbody" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3a4a52" stop-opacity=".30"/><stop offset=".5" stop-color="#15181b" stop-opacity=".10"/><stop offset="1" stop-color="#15181b" stop-opacity=".34"/></linearGradient>
+    </defs>`;
+    // 地面淡影
+    s += `<ellipse cx="165" cy="292" rx="140" ry="14" fill="#15181b" opacity=".10" filter="url(#dbleed)"/>`;
+    // 鼎身没骨（淡墨 + 青铜黛色）
+    s += W([[40, 106], [290, 106], [282, 160], [262, 205], [228, 232], [165, 242], [102, 232], [68, 205], [48, 160]], "url(#dbody)", 1);
+    s += W([[60, 120], [120, 128], [110, 200], [84, 196]], "#15181b", 0.12);
+    s += W([[230, 128], [278, 122], [262, 190], [238, 210]], "#8a6a3a", 0.16);
+    // 足（三足，粗笔，起笔重、收笔出锋）
+    s += brush([[98, 222], [90, 244], [80, 266], [64, 284]], 20, { taper: 0.6, press: 1.35, op: 0.8, f: "drough" });
+    s += brush([[60, 286], [74, 288]], 9, { taper: 0.5, op: 0.6 });
+    s += brush([[165, 240], [163, 262], [158, 284], [150, 298]], 20, { taper: 0.6, press: 1.35, op: 0.86, f: "drough" });
+    s += brush([[146, 300], [160, 301]], 9, { taper: 0.5, op: 0.6 });
+    s += brush([[232, 222], [242, 244], [252, 266], [268, 284]], 18, { taper: 0.6, press: 1.3, op: 0.72, f: "drough" });
+    s += brush([[264, 286], [278, 287]], 8, { taper: 0.5, op: 0.5 });
+    s += `<ellipse cx="120" cy="190" rx="40" ry="26" fill="#15181b" opacity=".08" filter="url(#dbleed)"/><ellipse cx="220" cy="214" rx="36" ry="14" fill="#9a6a32" opacity=".12" filter="url(#dbleed)"/>`;
+    // 耳（两耳，竖起的环）
+    s += brush([[70, 104], [66, 72], [70, 46], [92, 42], [100, 70], [100, 102]], 9, { taper: 0.25, op: 0.86, f: "drough" });
+    s += brush([[82, 98], [80, 66], [88, 58]], 3, { taper: 0.4, op: 0.5 });
+    s += brush([[230, 102], [230, 70], [238, 44], [262, 44], [266, 72], [262, 104]], 9, { taper: 0.25, op: 0.86, f: "drough" });
+    s += brush([[248, 98], [250, 66], [244, 58]], 3, { taper: 0.4, op: 0.5 });
+    // 口沿（一笔横，浓墨），鼎口内深墨
+    s += `<ellipse cx="165" cy="106" rx="122" ry="14" fill="#15181b" opacity=".62" filter="url(#dbleed)"/>`;
+    s += brush([[34, 102], [100, 94], [165, 92], [232, 94], [296, 102]], 11, { taper: 0.2, press: 1.4, op: 0.9, f: "drough" });
+    s += brush([[40, 112], [110, 120], [165, 122], [222, 120], [290, 112]], 5, { taper: 0.3, op: 0.6, f: "drough" });
+    // 腹轮廓（左浓右淡，飞白感用两笔叠）
+    s += brush([[44, 110], [48, 160], [66, 204], [104, 232], [165, 244]], 8, { taper: 0.3, press: 1.3, op: 0.85, f: "drough" });
+    s += brush([[165, 244], [226, 232], [264, 204], [282, 160], [288, 112]], 6, { head: 0.05, taper: 0.4, op: 0.72, f: "drough" });
+    // 饕餮纹带（淡墨回纹）
+    s += brush([[62, 140], [120, 150], [165, 152], [210, 150], [268, 140]], 3, { taper: 0.3, op: 0.45 });
+    s += brush([[70, 172], [120, 182], [165, 184], [210, 182], [262, 172]], 3, { taper: 0.3, op: 0.4 });
+    for (const x of [96, 134, 165, 196, 234]) {
+      s += brush([[x - 8, 160], [x - 8, 168], [x + 4, 168], [x + 4, 162]], 2.4, { taper: 0.4, op: 0.5 });
+    }
+    s += `<circle cx="165" cy="166" r="9" fill="none" stroke="#15181b" stroke-width="2.4" opacity=".55"/><circle cx="165" cy="166" r="3" fill="#b8291a" opacity=".85"/>`;
+    // 高光留白
+    s += brush([[86, 132], [80, 160], [90, 192]], 6, { c: "#f5f0e3", op: 0.5, taper: 0.5 });
+    $("dingart").innerHTML = s;
+  }
+
+  // ---------------- 工具 ----------------
+  function toast(t, c = "") {
+    const e = document.createElement("div");
+    e.className = "ink-toast " + c;
+    e.textContent = t;
+    $("toasts").appendChild(e);
+    setTimeout(() => (e.style.transition = "opacity .6s", (e.style.opacity = 0)), 2200);
+    setTimeout(() => e.remove(), 2900);
+  }
+  const S = () => FG.S;
+  const qOK = (r, q) => FG.has(FG.mainOf(r), q) >= r.inputs[FG.mainOf(r)];
+  function defaultQ(r) {
+    const id = FG.mainOf(r), need = r.inputs[id];
+    for (let q = 3; q >= 0; q--) if (FG.has(id, q) >= need) return q;
+    for (let q = 3; q >= 0; q--) if (FG.has(id, q) > 0) return q;
+    return 0;
+  }
+  const curQ = (r) => (r.kind === "gear" ? sel.q[r.id] ?? (sel.q[r.id] = defaultQ(r)) : null);
+  function status(r) {
+    const c = FG.check(r, { q: r.kind === "gear" ? curQ(r) : undefined });
+    if (c.ok) return { t: "可炼", cls: "ok", c };
+    if (c.done) return { t: c.why, cls: "", c, dim: !0 };
+    if (c.lock) return { t: c.why + (c.how ? " · " + c.how.replace(/^.*· /, "") : ""), cls: "", c, dim: !0 };
+    const lk = c.lack.map((x) => FG.name(x.id));
+    return { t: `缺 ${lk.length} 味 · ${lk.slice(0, 2).join("、")}`, cls: "no", c };
+  }
+  const gname = (g) => FG.name(g.id);
+  const SLOTN = { sword: "法剑", robe: "法衣", jade: "玉佩" };
+
+  // ---------------- 左：分类 + 目录 ----------------
+  function renderCats() {
+    $("cats").innerHTML = FG.CATS.map(([k, n]) => `<span class="ink-vtab ${sel.cat === k ? "on" : ""}" data-cat="${k}">${n}</span>`).join("");
+  }
+  function listItems() {
+    const c = sel.cat;
+    if (c === "reforge") return FG.reforgeables().map((g) => ({ id: g.uid, icon: g.id, q: g.rarity, nm: gname(g), st: (g.worn ? "身上 · " : "仓库 · ") + RAR[g.rarity].name + (g.reforged ? ` · 重铸×${g.reforged}` : ""), cls: "" }));
+    if (c === "bind") return S().gear.map((g) => ({ id: g.uid, icon: g.id, q: g.rarity, nm: gname(g), st: g.bound ? "已认主" : (g.worn ? "身上 · " : "仓库 · ") + RAR[g.rarity].name, cls: g.bound ? "no" : "" }));
+    return FG.RECIPES.filter((r) => r.kind === c).map((r) => {
+      const s = status(r);
+      return { id: r.id, icon: FG.icon(r), q: 0, nm: FG.rname(r), st: s.t, cls: s.cls, dim: s.dim };
+    });
+  }
+  function selId() {
+    const c = sel.cat, items = listItems();
+    if (c === "reforge") { if (!items.find((x) => x.id === sel.rf)) sel.rf = (items[0] || {}).id; return sel.rf; }
+    if (c === "bind") { if (!items.find((x) => x.id === sel.bind)) sel.bind = (items.find((x) => S().gear.find((g) => g.uid === x.id).worn) || items[0] || {}).id; return sel.bind; }
+    if (!items.find((x) => x.id === sel.rec[c])) sel.rec[c] = (items.find((x) => x.cls === "ok") || items[0]).id;
+    return sel.rec[c];
+  }
+  function renderList() {
+    const items = listItems(), cur = selId();
+    const capt = { gear: "装备 · 炼成即已鉴定", item: "符箓 · 一炉数张", upgrade: "扩容 · 储物袋 / 锦囊 / 丹药囊", imbue: "附灵 · 给身上法剑", reforge: "重铸 · 灵品以上、带词条的装备", bind: "认主 · 身陨不遗落，只能一件" }[sel.cat];
+    $("list").innerHTML = `<div class="cap">${capt}</div>` + items.map((x) => `<div class="row ${x.id === cur ? "on" : ""} ${x.dim ? "dim" : ""}" data-id="${x.id}">${FG.tok(x.icon, { q: x.q, s: 44 })}<div class="tx"><div class="nm">${x.nm}</div><div class="st ${x.cls}">${x.st}</div></div></div>`).join("");
+  }
+
+  // ---------------- 中：鼎周围的材料 ----------------
+  // 位置（相对 #ding 520×604）：主位在鼎口上方，辅材左右两侧，灵石在鼎下
+  const POS = { top: [260, 92], l1: [70, 270], r1: [450, 270], l2: [92, 420], r2: [428, 420], bottom: [260, 530] };
+  const MOUTH = [260, 250];
+  function matsFor() {
+    const c = sel.cat, id = selId(), out = [];
+    if (c === "reforge" || c === "bind") {
+      const g = S().gear.find((x) => x.uid === id);
+      if (!g) return out;
+      out.push({ pos: "top", icon: g.id, q: g.rarity, s: 86, label: `<b class="qt q${g.rarity}" style="color:var(--qt)">${gname(g)}</b><span class="n">${RAR[g.rarity].name}${g.worn ? " · 身上" : ""}</span>`, gear: !0 });
+      if (c === "reforge") {
+        const a = g.affixes[sel.rfIdx];
+        const cost = FG.reforgeCost(g, a && !a.stat ? a : a);
+        cost.items.forEach((x, i) => out.push({ pos: i ? "r1" : "l1", id: x.id, icon: x.id, q: 0, have: x.have, need: x.n }));
+        out.push({ pos: "bottom", id: "spirit_stone", icon: "spirit_stone", q: 0, have: FG.has("spirit_stone"), need: cost.stones, s: 50 });
+      } else {
+        out.push({ pos: "bottom", id: "spirit_stone", icon: "spirit_stone", q: 0, have: FG.has("spirit_stone"), need: 100, s: 50 });
+        out.push({ pos: "l1", custom: `<span class="tk q4" style="--s:58px"><b style="font:28px var(--f-display);color:var(--zhu)">血</b></span>`, label: `<b>精血一滴</b><span class="n">下局气血上限 <i>−10%</i></span>` });
+      }
+      return out;
+    }
+    const r = FG.RECIPES.find((x) => x.id === id);
+    const ins = FG.inputs(r, curQ(r));
+    let k = 0;
+    if (r.kind === "imbue") {
+      const sw = FG.worn("sword");
+      out.push({ pos: "top", icon: sw.id, q: sw.rarity, s: 86, gear: !0, label: `<b style="color:var(--r${sw.rarity}t)">${gname(sw)}</b><span class="n">附灵目标 · 身上法剑</span>` });
+    }
+    const side = ["l1", "r1", "l2", "r2"];
+    for (const x of ins) {
+      if (x.stone) { out.push({ pos: "bottom", id: x.id, icon: x.id, q: 0, have: x.have, need: x.need, s: 50 }); continue; }
+      const pos = !out.some((o) => o.pos === "top") ? "top" : side[k++];
+      out.push({ pos, id: x.id, icon: x.id, q: x.q ?? 0, have: x.have, need: x.need, main: x.main, s: pos === "top" ? 80 : 60 });
+    }
+    return out;
+  }
+  function renderMats() {
+    const ms = matsFor();
+    let html = "", links = "";
+    for (const m of ms) {
+      const [x, y] = POS[m.pos];
+      const lack = m.need != null && m.have < m.need;
+      const tk = m.custom || FG.tok(m.icon, { q: m.q, s: m.s || 60, cls: lack ? "lack" : "" });
+      let lb = m.label;
+      if (!lb) {
+        const qn = m.main ? `<span class="mq">主材 · ${RAR[m.q].name}</span>` : "";
+        lb = `<b>${FG.name(m.id)}</b>${qn}<span class="n">${m.have} / ${m.need}${lack ? `<i>差 ${m.need - m.have}</i>` : "<s>足</s>"}</span>`;
+      }
+      html += `<div class="m ${m.pos === "top" ? "top" : ""} ${lack ? "lack" : ""}" style="left:${x}px;top:${y}px" ${m.id ? `data-mat="${m.id}"` : ""}>${tk}<div class="lb">${lb}</div></div>`;
+      // 投料线：从材料到鼎口的一道淡墨弧（缺的为朱色虚线）
+      if (m.pos !== "top" && m.pos !== "bottom") {
+        const sx = x + (x < 260 ? 34 : -34), sy = y - 10, cx = (sx + MOUTH[0]) / 2, cy = Math.min(sy, MOUTH[1]) - 40;
+        links += `<path d="M${sx} ${sy} Q${cx} ${cy} ${MOUTH[0] + (x < 260 ? -40 : 40)} ${MOUTH[1] + 8}" fill="none" stroke="${lack ? "#b8291a" : "#15181b"}" stroke-opacity="${lack ? 0.45 : 0.16}" stroke-width="1.6" ${lack ? 'stroke-dasharray="4 5"' : ""} stroke-linecap="round"/>`;
+      } else if (m.pos === "top") links += `<path d="M260 ${y + 64} L260 ${MOUTH[1] - 2}" stroke="#15181b" stroke-opacity=".14" stroke-width="1.6" stroke-dasharray="2 6" stroke-linecap="round"/>`;
+    }
+    $("mats").innerHTML = html;
+    $("links").innerHTML = links;
+    const lv = S().forgeLv;
+    $("ming").innerHTML = `<span class="t">鼎铭</span><span class="ink-seal ${lv >= 2 ? "gold" : ""}" style="--s:26px;font-size:12px">${FG.FORGE_FAC.lv[lv].slice(0, 1)}<br>阶</span><span>炼器鼎${FG.FORGE_FAC.lv[lv]} · 品质下限${RAR[lv - 1].name}${lv < 2 ? " · 认主未开" : ""}</span><span class="sep">｜</span><span class="go">${lv < 2 ? "升阶" : "鼎况"} ›</span>`;
+  }
+
+  // ---------------- 右：预览纸笺 ----------------
+  function head(icon, q, nm, sub, s = 62) {
+    return `<div class="head">${FG.tok(icon, { q, s })}<div><div class="nm" style="color:var(--r${q}t)">${nm}</div><div class="sub">${sub}</div></div></div>`;
+  }
+  function lockBlock(c) {
+    return `<div class="lockbox"><div class="why">${c.why}</div><div class="how">${c.how || ""}</div></div>`;
+  }
+  function gearCard(r) {
+    const d = FG.ITEM[r.out], q = curQ(r), main = FG.mainOf(r), need = r.inputs[main];
+    const st = status(r), dist = FG.dist(q), poss = dist.map((p, i) => [i, p]).filter(([, p]) => p > 0);
+    const top = poss[0][0];
+    let s = head(r.out, top, d.name, `装备 · ${SLOTN[d.slot]} · 占 2 格`);
+    s += `<div class="desc">${d.desc}</div>`;
+    if (st.c.lock) return s + lockBlock(st.c);
+    // 主材品质
+    s += `<div class="sec">主材品质<small>${FG.name(main)} · 需 ${need} 份</small></div><div class="qpick">`;
+    for (let i = 0; i < 4; i++) {
+      const hv = FG.has(main, i), ok = hv >= need;
+      s += `<div class="${ok ? "" : "off"} ${i === q ? "on" : ""}" data-q="${i}">${FG.tok(main, { q: i, s: 40, cls: ok ? "" : "ghost" })}<small>${RAR[i].name} · ${hv}</small><small>${ok ? "够" : `<i>差 ${need - hv}</i>`}</small></div>`;
+    }
+    s += `</div>`;
+    // 品质范围
+    s += `<div class="sec">炼成品质<small>鼎${FG.FORGE_FAC.lv[S().forgeLv]} · 下限${RAR[S().forgeLv - 1].name}</small></div><div class="qrange">`;
+    for (let i = 0; i < 5; i++) s += `<div class="q${i} ${dist[i] > 0 ? "on" : ""} ${i === top ? "main" : ""} ${i === 4 ? "no" : ""}"><b>${RAR[i].s}</b><small>${i === 4 ? "不出" : dist[i] > 0 ? Math.round(dist[i] * 100) + "%" : ""}</small></div>`;
+    s += `</div>`;
+    // 属性预览 vs 身上
+    const w = FG.worn(d.slot);
+    const wb = w ? FG.baseStats(w.id, w.level, w.rarity) : [];
+    const cols = poss.map(([i]) => i);
+    const stats = FG.baseStats(r.out, S().level, 0).map((x) => x.stat);
+    s += `<div class="sec">属性预览<small>练气五层 · ${S().level} 级</small></div><table class="stt"><tr><th></th>${cols.map((i) => `<th style="color:var(--r${i}t)">${RAR[i].name} ${Math.round(dist[i] * 100)}%</th>`).join("")}<th>身上 ${w ? RAR[w.rarity].s + "·" + gname(w) : "—"}</th></tr>`;
+    for (const st2 of stats) {
+      const wv = (wb.find((x) => x.stat === st2) || { v: 0 }).v;
+      s += `<tr><td>${FG.STAT[st2]}</td>${cols.map((i) => {
+        const v = FG.baseStats(r.out, S().level, i).find((x) => x.stat === st2).v, dv = Math.round((v - wv) * 100) / 100;
+        return `<td><b>${FG.fmt(st2, v).replace("+", "")}</b>${dv ? `<small class="${dv > 0 ? "up" : "down"}">${Math.abs(st2 === "crit" ? dv * 100 : dv).toFixed(st2 === "crit" ? 0 : 1).replace(/\.0$/, "")}</small>` : `<small style="color:var(--ink-dan)">=</small>`}</td>`;
+      }).join("")}<td>${FG.fmt(st2, wv).replace("+", "")}</td></tr>`;
+    }
+    const wa = w ? w.affixes.filter((a) => a.stat !== "imbue").length : 0;
+    s += `<tr><td>随机词条</td>${cols.map((i) => `<td><b>${FG.affixN(i)}</b> 条${i >= 3 ? "+心法" : ""}</td>`).join("")}<td>${wa} 条</td></tr></table>`;
+    s += `<div class="rule"><b>炼成即已鉴定</b> · 主材品质定上限，鼎阶定下限，25% 再升一品；辅材与灵草不影响品质。</div>`;
+    return s;
+  }
+  function itemCard(r) {
+    const d = FG.ITEM[r.out], st = status(r);
+    let s = head(r.out, 0, d.name, `符箓 · 一炉 ${r.n} 张 · 现有 ${FG.has(r.out)} 张`);
+    s += `<div class="desc">${d.desc}</div>`;
+    if (st.c.lock) return s + lockBlock(st.c);
+    s += `<div class="bigto"><b>${FG.has(r.out)}</b><span>→</span><b class="to">${FG.has(r.out) + r.n}</b><small>张</small></div>`;
+    s += `<div class="rule">符箓不分品级；一炉固定出 ${r.n} 张，放在行囊快捷位使用。五行符一次性破同属护盾。</div>`;
+    return s;
+  }
+  function upgradeCard(r) {
+    const st = status(r), u = FG.upgradeLine(r);
+    let s = head(r.icon, 0, r.name, `扩容 · ${u.what}`);
+    if (st.c.lock && !st.c.done) return s + `<div class="desc">${u.what}：现 ${u.from} ${u.unit}</div>` + lockBlock(st.c);
+    if (st.c.done) return s + `<div class="lockbox"><div class="why" style="color:#2c7d57">${st.c.why}</div><div class="how">${u.what}现 ${u.from} ${u.unit}${u.extra ? " · " + u.extra : ""}</div></div>`;
+    s += `<div class="bigto"><b>${u.from}</b><span>→</span><b class="to">${u.to}</b><small>${u.unit}</small></div>`;
+    if (r.target !== "pillCap") s += `<div class="cells">${Array.from({ length: u.to }, (_, i) => `<i class="${i >= u.from ? "n" : ""}"></i>`).join("")}</div>`;
+    s += `<div class="rule">${r.target === "bag" ? "储物袋格数决定一趟能背回多少；身陨时袋中物按区域比例遗落。" : r.target === "pouch" ? "贴身锦囊里的东西身陨不失；放入要 1 秒。" : "丹药囊每栏可带的枚数。"}${u.extra ? "<br>" + u.extra : ""}</div>`;
+    return s;
+  }
+  function imbueCard(r) {
+    const sw = FG.worn("sword"), old = sw.affixes.find((a) => a.stat === "imbue");
+    let s = head("fu_" + r.el, 0, "附灵 · " + FG.EL[r.el], "给身上法剑附一缕五行灵性");
+    s += `<div class="desc">${FG.IMBUE_DESC[r.el]}。</div>`;
+    s += `<div class="sec">目标<small>身上法剑</small></div><div class="tgt">${FG.tok(sw.id, { q: sw.rarity, s: 40 })}<b style="color:var(--r${sw.rarity}t)">${RAR[sw.rarity].name} ${gname(sw)}</b></div>`;
+    s += `<div class="imb">${old ? `<span class="el old">${FG.EL[old.el]}</span><span class="arr">→</span>` : ""}<span class="el" style="color:var(--ink-jiao)">${FG.EL[r.el]}</span></div>`;
+    s += old ? (old.el === r.el ? `<div class="warn">已附灵「${FG.EL[old.el]}」，再炼只是重来一遍。</div>` : `<div class="warn">附灵只留一条：现有的「${FG.EL[old.el]}」会被换掉。</div>`) : "";
+    s += `<div class="rule">附灵词条不参与重铸，换五行只能再走附灵。</div>`;
+    return s;
+  }
+  function reforgeCard(g) {
+    if (!g) return `<div class="nm" style="font:28px var(--f-display)">重铸</div><div class="desc">没有带词条的装备。灵品以上的装备才有词条可重铸。</div>`;
+    let s = head(g.id, g.rarity, gname(g), `${RAR[g.rarity].name} · ${g.worn ? "身上" : "仓库"} · 已重铸 ${g.reforged || 0} 次`);
+    s += `<div class="sec">选一条词条<small>不会掷出已有属性</small></div><div class="rf-list">`;
+    g.affixes.forEach((a, i) => {
+      const L = FG.affixLabel(a);
+      s += `<div class="rf-row ${sel.rfIdx === i ? "on" : ""} ${L.lock ? "off" : ""} ${L.sp ? "sp" : ""}" data-aff="${i}"><span class="k">${L.k}</span><span class="v">${L.v}${L.lock ? '<span class="lk">锁 · 走附灵</span>' : L.sp ? '<span class="lk">只换心法 · 价×2</span>' : ""}</span></div>`;
+    });
+    s += `</div>`;
+    const a = g.affixes[sel.rfIdx];
+    if (a && a.stat !== "imbue") {
+      const c = FG.reforgeCost(g, a);
+      s += `<div class="sec">花费<small>每重铸一次 ×1.15（最多 ×4）</small></div>`;
+      s += `<div class="cardrow"><span>灵石</span><b style="color:${FG.has("spirit_stone") >= c.stones ? "inherit" : "var(--zhu)"}">${c.stones}</b></div>`;
+      for (const x of c.items) s += `<div class="cardrow"><span>${x.name}</span><b style="color:${x.have >= x.n ? "inherit" : "var(--zhu)"}">${x.have} / ${x.n}</b></div>`;
+      const pool = FG.affixPool(g, sel.rfIdx);
+      s += `<div class="pool">可能掷出：${pool.slice(0, 6).join("、")}${pool.length > 6 ? ` 等 ${pool.length} 种` : ""}</div>`;
+    } else s += `<div class="pool">点上面一条词条，看重铸花费与可能掷出的词条。掷出后可保留原词条，花费不退。</div>`;
+    return s;
+  }
+  function bindCard(g) {
+    const lv = S().forgeLv, bound = S().gear.find((x) => x.bound);
+    let s = `<div class="head"><span class="ink-seal" style="--s:54px;font-size:22px">血</span><div><div class="nm">滴血认主</div><div class="sub">永久护住一件装备 · 只能一件</div></div></div>`;
+    s += `<div class="desc">以精血祭炼，此器从此与你性命相连：身陨不遗落。改认他物，原先那件便解除。</div>`;
+    if (lv < 2) return s + `<div class="lockbox"><div class="why">需二阶炼器鼎</div><div class="how">炼器鼎升二阶要先搬迁到竹海·溪谷灵脉。<br><span class="go-up" style="cursor:pointer;color:var(--ink-nong);border-bottom:1px dashed var(--ink-dan)">去看升阶 ›</span></div></div>`;
+    if (g) s += `<div class="sec">选中</div><div class="tgt">${FG.tok(g.id, { q: g.rarity, s: 40 })}<b style="color:var(--r${g.rarity}t)">${RAR[g.rarity].name} ${gname(g)}${g.bound ? "（已认主）" : ""}</b></div>`;
+    s += `<div class="cardrow"><span>现认主</span><b>${bound ? gname(bound) : "无"}</b></div>`;
+    s += `<div class="cardrow"><span>代价</span><b>灵石 100 · 下局气血上限 −10%</b></div>`;
+    return s;
+  }
+  function renderCard() {
+    const c = sel.cat, id = selId();
+    let s = "";
+    if (c === "reforge") s = reforgeCard(S().gear.find((g) => g.uid === id));
+    else if (c === "bind") s = bindCard(S().gear.find((g) => g.uid === id));
+    else {
+      const r = FG.RECIPES.find((x) => x.id === id);
+      s = { gear: gearCard, item: itemCard, upgrade: upgradeCard, imbue: imbueCard }[c](r);
+    }
+    $("card").innerHTML = '<i class="ink-sheet" aria-hidden="true"></i>' + s;
+  }
+
+  // ---------------- 右下：决断印 ----------------
+  function actState() {
+    const c = sel.cat, id = selId();
+    if (c === "reforge") {
+      const g = S().gear.find((x) => x.uid === id);
+      if (!g) return { ok: !1, t: "重铸", why: "没有可重铸的装备" };
+      if (pending) return { ok: !1, t: "重铸", why: "先定夺这一掷" };
+      const k = FG.canReforge(g, sel.rfIdx);
+      return { ok: k.ok, t: "重铸", why: k.ok ? "可重铸" : k.why };
+    }
+    if (c === "bind") {
+      const g = S().gear.find((x) => x.uid === id);
+      if (S().forgeLv < 2) return { ok: !1, t: "认主", why: "需二阶炼器鼎" };
+      if (!g) return { ok: !1, t: "认主", why: "没有装备" };
+      if (g.bound) return { ok: !1, t: "认主", why: "此件已认主" };
+      if (FG.has("spirit_stone") < 100) return { ok: !1, t: "认主", why: "灵石不足（需 100）" };
+      return { ok: !0, t: "认主", why: "可认主" };
+    }
+    const r = FG.RECIPES.find((x) => x.id === id), st = status(r);
+    return { ok: st.c.ok, t: r.kind === "imbue" ? "附灵" : "炼制", why: st.c.ok ? "可炼" : st.c.lack ? `缺 ${st.c.lack.length} 味` : st.c.why, sub: st.c.lack ? "点鼎边朱圈看何处可得" : st.c.lock ? "" : "" };
+  }
+  function renderAct() {
+    const a = actState();
+    $("act").innerHTML = `<div class="why"><b class="${a.ok ? "" : "no"}">${a.why}</b>${a.sub || (a.ok ? '<span class="key" style="margin:0">Space</span> 落印' : "")}</div><button class="ink-seal-btn ${a.ok ? "" : "is-disabled"}" id="go">${a.t}</button>`;
+  }
+
+  function renderPins() {
+    const ids = Object.keys(S().pins).filter((k) => S().pins[k]);
+    $("pins").innerHTML = `<div class="t">挂念<small>出行准备与天机镜会标出</small></div>` + (ids.length ? `<div class="ls">${ids.map((id) => FG.tok(id, { s: 36, n: FG.has(id) })).join("")}</div>` : `<div class="e">点鼎边缺料的朱圈，可把它记作挂念。</div>`);
+  }
+  function render() {
+    renderPins();
+    renderCats(); renderList(); renderMats(); renderCard(); renderAct();
+    $("stoneN").textContent = FG.has("spirit_stone");
+  }
+
+  // ---------------- 动作 ----------------
+  const fx = (html) => { $("fx").insertAdjacentHTML("beforeend", html); return $("fx").lastElementChild; };
+  function closeFx() { $("fx").innerHTML = ""; }
+  function clearStamp() { const L = $("ding").querySelector(".stamp-layer"); if (L) L.innerHTML = ""; }
+  function busy() { $("ding").classList.add("busy"); setTimeout(() => $("ding").classList.remove("busy"), 2000); }
+  function doGo() {
+    const a = actState();
+    if (!a.ok) return toast(a.why, "zhu");
+    FG.press($("go"));
+    const c = sel.cat, id = selId();
+    closeFx(); busy();
+    if (c === "reforge") {
+      const g = S().gear.find((x) => x.uid === id), idx = sel.rfIdx;
+      const res = FG.reforgeRoll(g, idx);
+      if (!res.ok) return toast(res.why, "zhu");
+      pending = { uid: g.uid, idx, old: res.old, neo: res.neo, n: g.reforged };
+      FG.stamp($("ding"), 260, 205, { q: g.rarity, text: "重铸", size: 84 });
+      render(); showReveal(g);
+      return;
+    }
+    if (c === "bind") return confirmBind(S().gear.find((x) => x.uid === id));
+    const r = FG.RECIPES.find((x) => x.id === id);
+    const res = FG.craft(r, curQ(r));
+    if (!res.ok) return toast(res.why, "zhu");
+    const q = res.rarity || 0;
+    FG.stamp($("ding"), 260, 205, { q, text: r.kind === "gear" ? RAR[q].name : r.kind === "imbue" ? "附灵" : "炼成", size: 92 });
+    if (r.kind === "gear" && FG.has(FG.mainOf(r), curQ(r)) < r.inputs[FG.mainOf(r)]) sel.q[r.id] = defaultQ(r);
+    render(); showResult(r, res);
+  }
+  function showResult(r, res) {
+    let body = "";
+    if (res.gear) {
+      const g = res.gear, d = FG.ITEM[g.id];
+      body = `<div class="hd">${FG.tok(g.id, { q: g.rarity, s: 58 })}<div><div class="nm" style="color:var(--r${g.rarity}t)">${RAR[g.rarity].name} ${d.name}</div><div class="sub">已鉴定 · ${g.level} 级${res.up ? " · <span style='color:var(--zhu)'>鼎中再升一品</span>" : ""}</div></div></div><div style="margin-top:8px">`;
+      for (const b of FG.baseStats(g.id, g.level, g.rarity)) body += `<div class="ln"><span>${FG.STAT[b.stat]}</span><b>${FG.fmt(b.stat, b.v).replace("+", "")}</b></div>`;
+      if (g.affixes.length) body += `<div class="lab2">词 条</div>`;
+      for (const a of g.affixes) { const L = FG.affixLabel(a); body += `<div class="ln af q${g.rarity}"><span>${L.k}</span><b>${L.v}</b></div>`; }
+      body += `</div>`;
+    } else if (res.item) body = `<div class="hd">${FG.tok(res.item, { s: 58 })}<div><div class="nm">${FG.name(res.item)} ×${res.n}</div><div class="sub">已收入仓库 · 现有 ${FG.has(res.item)} 张</div></div></div>`;
+    else if (res.upgrade) { const u = FG.upgradeLine(r); body = `<div class="hd">${FG.tok(r.icon, { s: 58 })}<div><div class="nm">${r.name}</div><div class="sub">${u.what}已扩至 ${res.upgrade === "pillCap" ? S().pillCap + " 枚 / 栏" : r.value + " 格"}</div></div></div>`; }
+    else if (res.imbue) { const sw = FG.worn("sword"); body = `<div class="hd">${FG.tok(sw.id, { q: sw.rarity, s: 58 })}<div><div class="nm" style="color:var(--r${sw.rarity}t)">${gname(sw)}</div><div class="sub">附灵 · ${FG.EL[res.imbue]}${res.old && res.old !== res.imbue ? `（原「${FG.EL[res.old]}」已散）` : ""}</div></div></div>`; }
+    const el = fx(`<section class="ink-paper result ${res.gear && res.gear.rarity >= 3 ? "sajin" : ""}">${body}<div class="acts"><span class="ink-btn" data-x="close">收下</span></div></section>`);
+    inkui.decorate(el.parentNode);
+    toast(res.gear ? `炼成 ${RAR[res.gear.rarity].name}${FG.ITEM[res.gear.id].name}` : res.item ? `炼成 ${FG.name(res.item)} ×${res.n}` : res.upgrade ? "扩容已成" : "附灵已成", "gold");
+  }
+  function showReveal(g) {
+    const P = pending, o = FG.affixLabel(P.old), n = FG.affixLabel(P.neo);
+    const el = fx(`<section class="ink-paper alt reveal"><div class="t">重铸 · 第 ${P.n} 次<small>花费已付，不退</small></div>
+      <div class="rf-cmp q${g.rarity}"><div class="side old"><small>原词条</small><b>${o.k}<br>${o.v}</b></div><div class="arr">→</div><div class="side neo q${g.rarity}"><small>新掷出</small><b>${n.k}<br>${n.v}</b></div></div>
+      <div class="acts"><span class="ink-btn" data-x="keep">保留原词条</span><span class="ink-btn primary" data-x="accept">接受新词条</span></div></section>`);
+    inkui.decorate(el.parentNode);
+  }
+  function confirmBind(g) {
+    const bound = S().gear.find((x) => x.bound);
+    const el = fx(`<div class="mask"><section class="ink-paper alt modal" style="width:480px"><h3>滴血认主</h3>
+      <p style="font:15px/1.8 var(--f-kai);color:var(--ink-nong);margin:14px 0 4px">以精血祭炼「<b style="color:var(--r${g.rarity}t);font-family:var(--f-display)">${RAR[g.rarity].name}${gname(g)}</b>」？</p>
+      <p style="font:13px/1.8 var(--f-kai);color:var(--ink-zhong);margin:0">灵石 100；<span style="color:var(--zhu)">下一局气血上限 −10%</span>。${bound ? `原认主的「${gname(bound)}」将解除。` : ""}</p>
+      <div class="foot"><span class="ink-btn" data-x="mclose">罢了</span><button class="ink-seal-btn" data-x="dobind">认主</button></div></section></div>`);
+    inkui.decorate(el);
+  }
+  function showUpgrade() {
+    const lv = S().forgeLv, F = FG.FORGE_FAC, cost = F.cost[lv], nx = F.effect[lv + 1];
+    let s = `<div class="mask"><section class="ink-paper alt modal"><h3>炼器鼎<span class="ink-seal ${lv >= 2 ? "gold" : ""}" style="--s:34px;font-size:14px">${F.lv[lv].slice(0, 1)}<br>阶</span><small style="font:13px var(--f-ui);color:var(--ink-dan);margin-left:auto;letter-spacing:0">设施 · 与器方无关</small></h3>`;
+    if (!cost) {
+      s += `<div class="cols" style="grid-template-columns:1fr"><div class="col nx"><div class="lv">二阶 · 已至顶</div>${F.effect[lv].map((t) => `<p>${t}</p>`).join("")}</div></div><div class="foot"><span class="ink-btn" data-x="mclose">合上</span></div></section></div>`;
+    } else {
+      s += `<div class="cols"><div class="col cur"><div class="lv">${F.lv[lv]} · 现</div>${F.effect[lv].map((t) => `<p>${t}</p>`).join("")}</div><div class="arr">→</div><div class="col nx"><div class="lv">${F.lv[lv + 1]}</div>${nx.map((t) => `<p class="new">${t}</p>`).join("")}</div></div>`;
+      s += `<div class="sec" style="font:400 17px var(--f-display);letter-spacing:.1em;color:var(--ink-nong);margin:10px 0 4px">升阶所需</div><div class="mats">`;
+      const rows = [["spirit_stone", cost.stones], ...Object.entries(cost.items)];
+      for (const [id, n] of rows) {
+        const hv = FG.has(id), ok = hv >= n, src = (FG.ITEM[id] || {}).src || [];
+        s += `<div class="mat ${ok ? "" : "short"}">${FG.tok(id, { s: 40, cls: ok ? "" : "lack" })}<div><span class="nm">${FG.name(id)}</span>${ok ? "" : `<span class="src">${src[0] || ""}</span>`}</div><span class="ct"><b>${hv}</b> / ${n}<span class="${ok ? "ok" : "no"}">${ok ? "足" : "缺"}</span></span></div>`;
+      }
+      s += `</div>`;
+      if (cost.relocate) s += `<div class="cond ${S().relocated ? "ok" : "no"}">${S().relocated ? "✓ 洞府已搬迁到竹海·溪谷灵脉" : "✗ 需先搬迁到竹海·溪谷灵脉（练气五层后可往）"}</div>`;
+      const ok = !(cost.relocate && !S().relocated) && FG.has("spirit_stone") >= cost.stones && Object.entries(cost.items).every(([id, n]) => FG.has(id) >= n);
+      s += `<div class="foot"><span class="ink-btn" data-x="mclose">罢了</span><button class="ink-seal-btn ${ok ? "" : "is-disabled"}" data-x="doup">升阶</button></div></section></div>`;
+    }
+    const el = fx(s);
+    inkui.decorate(el);
+  }
+  function showPop(m, id) {
+    closePop();
+    const it = FG.ITEM[id] || {}, need = (matsFor().find((x) => x.id === id) || {}).need, hv = (matsFor().find((x) => x.id === id) || {}).have;
+    const r = m.getBoundingClientRect();
+    const left = r.left < 640 ? r.right + 4 : r.left - 244, top = Math.min(560, Math.max(90, r.top - 10));
+    const pinned = S().pins[id];
+    const el = document.createElement("section");
+    el.className = "ink-tip pop";
+    el.style.left = left + "px"; el.style.top = top + "px";
+    el.innerHTML = `<div class="h"><b>${it.name || id}</b><small>有 ${hv} / 需 ${need}${hv < need ? ` <i>差 ${need - hv}</i>` : ""}</small></div><div class="lab">何 处 可 得</div>${(it.src || ["—"]).map((x) => `<div class="s">${x}</div>`).join("")}
+      <div class="ft"><span>${id === "spirit_stone" ? "" : "挂念后，出行准备与天机镜会标出它"}</span>${id === "spirit_stone" ? "" : `<span class="pin ${pinned ? "on" : ""}" data-pin="${id}">${pinned ? "已挂念" : "挂念"}</span>`}</div>`;
+    document.body.appendChild(el);
+    inkui.decorate(document.body);
+    pop = el;
+  }
+  function closePop() { if (pop) pop.remove(), (pop = null); }
+
+  // ---------------- 事件 ----------------
+  document.addEventListener("click", (e) => {
+    const t = e.target;
+    const x = t.closest("[data-x]");
+    if (x) {
+      const k = x.dataset.x;
+      if (k === "close") closeFx();
+      if (k === "keep" || k === "accept") {
+        const g = S().gear.find((y) => y.uid === pending.uid);
+        if (k === "accept") g.affixes[pending.idx] = pending.neo, toast(`${gname(g)}：${FG.affixLabel(pending.neo).k} ${FG.affixLabel(pending.neo).v}`, "gold");
+        else toast("原词条未动；灵石已耗去");
+        pending = null; closeFx(); render();
+      }
+      if (k === "mclose") closeFx();
+      if (k === "doup") {
+        if (x.classList.contains("is-disabled")) return toast("条件未齐", "zhu");
+        FG.press(x);
+        const r = FG.upgradeForge();
+        if (!r.ok) return toast(r.why, "zhu");
+        closeFx(); render();
+        FG.stamp($("ding"), 260, 205, { q: 3, text: "二阶", size: 92, bloom: !0 });
+        toast("炼器鼎升至二阶 · 认主已开 · 品质下限灵品", "gold");
+      }
+      if (k === "dobind") {
+        const g = S().gear.find((y) => y.uid === selId());
+        S().gear.forEach((y) => (y.bound = !1));
+        g.bound = !0; FG.take("spirit_stone", 100);
+        closeFx(); render();
+        FG.stamp($("ding"), 260, 205, { q: 4, text: "认主", size: 92 });
+        toast(`「${gname(g)}」已认主`, "gold");
+      }
+      return;
+    }
+    if (pop && !t.closest(".pop") && !t.closest("[data-mat]")) closePop();
+    const pin = t.closest("[data-pin]");
+    if (pin) { const id = pin.dataset.pin; S().pins[id] = !S().pins[id]; pin.classList.toggle("on"); pin.textContent = S().pins[id] ? "已挂念" : "挂念"; renderPins(); toast(S().pins[id] ? `已挂念 ${FG.name(id)}：出行时留意` : `不再挂念 ${FG.name(id)}`); return; }
+    const cat = t.closest("[data-cat]");
+    if (cat) { if (pending) return toast("先定夺这一掷", "zhu"); sel.cat = cat.dataset.cat; sel.rfIdx = null; closeFx(); closePop(); clearStamp(); return render(); }
+    const row = t.closest(".row[data-id]");
+    if (row) {
+      if (pending) return toast("先定夺这一掷", "zhu");
+      const id = row.dataset.id;
+      if (sel.cat === "reforge") (sel.rf = id), (sel.rfIdx = null); else if (sel.cat === "bind") sel.bind = id; else sel.rec[sel.cat] = id;
+      closeFx(); closePop(); clearStamp(); return render();
+    }
+    const mt = t.closest("[data-mat]");
+    if (mt) return showPop(mt, mt.dataset.mat);
+    const qp = t.closest(".qpick > div[data-q]");
+    if (qp) {
+      const r = FG.RECIPES.find((x) => x.id === selId()), q = +qp.dataset.q;
+      if (FG.has(FG.mainOf(r), q) < r.inputs[FG.mainOf(r)]) toast(`${RAR[q].name}${FG.name(FG.mainOf(r))}不够 ${r.inputs[FG.mainOf(r)]} 份`, "zhu");
+      sel.q[r.id] = q; return render();
+    }
+    const af = t.closest(".rf-row[data-aff]");
+    if (af) {
+      if (pending) return;
+      const g = S().gear.find((x) => x.uid === selId()), a = g.affixes[+af.dataset.aff];
+      if (a.stat === "imbue") return toast("附灵词条不能重铸，请走「附灵」", "zhu");
+      sel.rfIdx = +af.dataset.aff; return render();
+    }
+    if (t.closest("#go")) return doGo();
+    if (t.closest("#ming") || t.closest(".go-up")) return showUpgrade();
+    const tab = t.closest("[data-tab]");
+    if (tab) return toast("示意图只做炼器页；炼丹、药园沿用同一外壳");
+    if (t.closest("#back")) return toast("回洞府（示意）");
+    const ch = t.closest("[data-c]");
+    if (ch) {
+      const k = ch.dataset.c;
+      if (k === "reset") FG.reset(), (pending = null), (sel.q = {}), closeFx();
+      else FG.cheat(k), (sel.q = {});
+      toast({ mats: "材料已补齐（灵品）", move: "洞府已搬迁到竹海·溪谷", recipe: "得器方《法衣》", reset: "示意数据已重置" }[k]);
+      return render();
+    }
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Space") e.preventDefault(), doGo();
+    if (e.key === "Escape") closeFx(), closePop();
+  });
+
+  // ---------------- 启动 ----------------
+  const hm = /cat=(\w+)/.exec(location.hash);
+  if (hm && FG.CATS.some(([k]) => k === hm[1])) sel.cat = hm[1];
+  if (/rfidx=(\d)/.test(location.hash)) sel.rfIdx = +/rfidx=(\d)/.exec(location.hash)[1];
+  drawDing();
+  render();
+  inkui.decorate();
+  setTimeout(() => document.body.classList.remove("opening"), 600);
+  window.__ready = true;
+})();
+</script>
+</body></html>
